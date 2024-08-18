@@ -10,7 +10,7 @@
 
 ## 각종 리소스 파일 : 
 - res/drawable : 기본 앱 아이콘 제외하고 모두 삭제
-- res/font : pretender 폰트 파일 모두 삭제
+- res/font : pretender 폰트 삭제, WantedSans 폰트 추가
 - res/layout : 모든 레이아웃 xml 파일 삭제 후 빈 activity_main.xml만 작성
 - res/mipmap : drawable을 다 정리했기 때문에, 앱 아이콘 설정도 기본으로 세팅
 - res/values :
