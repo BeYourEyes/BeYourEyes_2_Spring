@@ -24,7 +24,7 @@ jobs:
     - name: Clean Bulid
       run: ./gradlew clean
     - name: Update LintDebug Baseline
-      run: ./gradlew lintDebug --update-baseline
+      run: ./gradlew lintDebug -Dlint.baselines.update=true
     - name: Build with Gradle
       run: ./gradlew build --stacktrace
       # run: ./gradlew build
