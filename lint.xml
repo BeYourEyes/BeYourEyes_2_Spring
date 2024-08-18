@@ -1,0 +1,6 @@
+<lint>
+    <!-- 특정 모듈 또는 파일을 제외하려면 path 속성을 사용합니다 -->
+    <issue id="IgnoreOpencvError">
+        <ignore path="**/opencv2/**" />
+    </issue>
+</lint>
