@@ -1,0 +1,32 @@
+package com.dna.beyoureyes.ui.myInfo
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.dna.beyoureyes.databinding.FragmentMyInfoBinding
+
+class MyInfoFragment : Fragment() {
+    private var _binding: FragmentMyInfoBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // val viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
+        _binding = FragmentMyInfoBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        return root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+}
