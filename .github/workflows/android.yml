@@ -21,12 +21,23 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+      
     - name: Clean Bulid
       run: ./gradlew clean
-    - name: Update LintDebug Baseline
-      run: ./gradlew lintDebug -Dlint.baselines.update=true
+      
+    - name: Run lint
+      run: ./gradlew lintDebug
+    - name: Upload lint report # 빌드 리포트를 저장하는 위치를 지정 GitHub Actions의 artifacts에 저장
+      uses: actions/upload-artifact@v4.1.8
+      with:
+        name: lint-report
+        path: app/build/reports/lint-results-debug.html
+    - name: Download a Build Artifact # 빌드 리포트 다운로드
+      uses: actions/download-artifact@v4.1.8
+      
     - name: Build with Gradle
-      run: ./gradlew build --stacktrace
+      run: ./gradlew build --stacktrace --continue
       # run: ./gradlew build
+      
     - name: hello world
       run: echo "Hello World!!"
