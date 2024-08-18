@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 오늘 섭취한 상세 영양소 바 Custom View 속성 -->
+    <declare-styleable name="NutritionIntakeBar">
+
+        <!-- String 속성 : 영양소명, 단위(g/mg) -->
+        <attr name="nutritionName" format="string"/>
+        <attr name="unit" format="string"/>
+
+        <!-- Integer 속성 : 경고 임계값, 바의 최대값(권장량), 바의 입력값(섭취량) -->
+        <attr name="cautionThresh" format="integer"/>
+        <attr name="maxValue" format="integer"/>
+        <attr name="curValue" format="integer"/>
+
+    </declare-styleable>
+
+</resources>

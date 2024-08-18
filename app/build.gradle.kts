@@ -59,6 +59,11 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 
+    // Fragment & Navigation
+    implementation("androidx.fragment:fragment-ktx:1.8.2")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+
     // Google Firebase
     // 익명 계정을 위한 dependency 추가
     // BoM for the Firebase platform
