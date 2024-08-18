@@ -118,7 +118,9 @@ android {
         targetCompatibility JavaVersion.VERSION_18
     }
 
-    
+    kotlinOptions {
+        jvmTarget = "18"  // Set to a valid JVM target version
+    }
 
     buildTypes {
         debug {

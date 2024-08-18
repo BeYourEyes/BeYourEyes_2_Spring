@@ -44,7 +44,6 @@ android {
     }
     lint {
         baseline = file("lint-baseline.xml")
-        lintConfig = file("lint.xml")
     }
     buildToolsVersion = "34.0.0"
 }
