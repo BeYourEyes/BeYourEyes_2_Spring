@@ -28,7 +28,7 @@ jobs:
     - name: Run lint
       run: ./gradlew lintDebug
     - name: Upload lint report # 빌드 리포트를 저장하는 위치를 지정 GitHub Actions의 artifacts에 저장
-      uses: actions/upload-artifact@v4.1.8
+      uses: actions/upload-artifact@v3
       with:
         name: lint-report
         path: app/build/reports/lint-results-debug.html
