@@ -1,21 +1,25 @@
 name: Android CI
 
+# 모든 브랜치에 대해 워크 플로우 실행 -> 성공하면 -> main으로 merge
 on:
   push:
-    branches: [ "main" ]
+    branches: 
+      - '**'
   pull_request:
-    branches: [ "main" ]
+    branches: 
+      - 'main'
 
 jobs:
   build:
+    # Ubuntu 최신 버전에서 실행
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4 # 소스 코드 깃허브에 checkout
     - name: set up JDK 18
       uses: actions/setup-java@v4
       with:
-        java-version: '18'
+        java-version: '18' # JDK 18을 설치하고 설정
         distribution: 'temurin'
         cache: gradle
 
@@ -23,14 +27,39 @@ jobs:
       run: chmod +x gradlew
       
     - name: Clean Bulid
-      run: ./gradlew clean
+      run: ./gradlew clean # Gradle 빌드 클린
       
     - name: Run lint
-      run: ./gradlew lintDebug -Dlint.baselines.continue=true
+      run: ./gradlew lintDebug -Dlint.baselines.continue=true # 코드 린트 실행해서 코드 품질 검사
 
     - name: Build with Gradle
+      # 프로젝트 빌드하고 에러 발생하면 스택 트레이스 출력
       run: ./gradlew build --stacktrace
       # run: ./gradlew build
-      
-    - name: hello world
-      run: echo "Hello World!!"
+
+    # 테스트용
+    # - name: hello world
+    #   run: echo "Hello World!!"
+
+    # 참고! 빌드 성공하면 자동으로 apk 생성하도록 함
+    - name: Build APK
+      run: ./gradlew assembleRelease
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: apk
+        path: app/build/outputs/apk/release/app-release.apk # APK 파일 경로
+
+    # 참고! 각 브랜치에서 빌드 성공하면 main으로 자동 병합
+    - name : Auto-merge to main
+      if: github.ref != 'refs/heads/main' && success()
+      run: |
+        git config --global user.email "github-actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git fetch origin
+        git checkout ${GITHUB_REF}
+        git merge origin/main --no-ff -m "${GITHUB_REF} branch BeyourEyes Merge success"
+        git push origin ${GITHUB_REF}
+        env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
