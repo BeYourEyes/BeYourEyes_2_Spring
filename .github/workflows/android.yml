@@ -64,18 +64,18 @@ jobs:
     #     env:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # 참고! 각 브랜치 빌드 성공하면 readme에 표시 -> 효율적인 병합위해.. 이건 고민해보기!
-    - name: Update README with branch status
-      if: success()
-      run: |
-        BRANCH_NAME=${GITHUB_REF#refs/heads/}
-        DATE=$(date '+%Y-%m-%d %H:%M:%S')
-        echo "## 빌드 상태" > README.md
-        echo "브랜치: $BRANCH_NAME - 빌드 성공 - $DATE" >> README.md
-        git config --global user.email "github-actions@github.com"
-        git config --global user.name "GitHub Actions"
-        git add README.md
-        git commit -m "README 업데이트: 브랜치 $BRANCH_NAME의 빌드 상태"
-        git push origin $BRANCH_NAME
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # # 참고! 각 브랜치 빌드 성공하면 readme에 표시 -> 효율적인 병합위해.. 이건 고민해보기!
+    # - name: Update README with branch status
+    #   if: success()
+    #   run: |
+    #     BRANCH_NAME=${GITHUB_REF#refs/heads/}
+    #     DATE=$(date '+%Y-%m-%d %H:%M:%S')
+    #     echo "## 빌드 상태" > README.md
+    #     echo "브랜치: $BRANCH_NAME - 빌드 성공 - $DATE" >> README.md
+    #     git config --global user.email "github-actions@github.com"
+    #     git config --global user.name "GitHub Actions"
+    #     git add README.md
+    #     git commit -m "README 업데이트: 브랜치 $BRANCH_NAME의 빌드 상태"
+    #     git push origin $BRANCH_NAME
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
