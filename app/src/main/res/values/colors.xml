@@ -8,21 +8,23 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- <color> 태그 바로 옆 주석은 Figma 상의 색상명 -->
+
     <!-- 포인트 색상 -->
-    <color name="blue_700">#1543E0</color>
-    <color name="blue_600">#265FF4</color>
-    <color name="blue_500">#3379FE</color>
-    <color name="blue_300">#8EC1FF</color>
-    <color name="blue_100">#D9E9FF</color>
-    <color name="alert_400">#FF7B64</color>
-    <color name="alert_50">#FFF3F1</color>
+    <color name="blue_700">#1543E0</color> <!--Blue Ribbon/700-->
+    <color name="blue_600">#265FF4</color> <!--Blue Ribbon/600-->
+    <color name="blue_500">#3379FE</color> <!--Blue Ribbon/500-->
+    <color name="blue_300">#8EC1FF</color> <!--Blue Ribbon/300-->
+    <color name="blue_100">#D9E9FF</color> <!--Blue Ribbon/100-->
+
+    <color name="alert_400">#FF7B64</color> <!--alert/400-->
+    <color name="alert_50">#FFF3F1</color> <!--alert/50-->
 
     <!-- 회색조 -->
-    <color name="text_default">#1F1F1F</color>
-    <color name="border">#5C5D61</color>
-    <color name="disabled">#8C8C93</color>
-    <color name="spacer">#B3B3BD</color>
-    <color name="bg_grey">#F6F7F9</color>
-    <color name="semi_white">#F6F7F9</color>
+    <color name="text_default">#1F1F1F</color> <!--textcolor_default-->
+    <color name="border">#5C5D61</color> <!--border-->
+    <color name="disabled">#8C8C93</color> <!--disabled-->
+    <color name="spacer">#B3B3BD</color> <!--spacer-->
+    <color name="semi_white">#F6F7F9</color> <!--Semiwhite-->
 
 </resources>

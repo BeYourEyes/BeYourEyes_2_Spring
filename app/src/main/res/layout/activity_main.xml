@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:background="@color/bg_grey"
+        android:background="@color/semi_white"
         android:paddingTop="13dp"
         android:paddingBottom="16dp"
         android:paddingHorizontal="27dp"

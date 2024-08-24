@@ -2,14 +2,16 @@
 <resources>
 
     <!-- 오늘 섭취한 상세 영양소 바 Custom View 속성 -->
-    <declare-styleable name="NutritionIntakeBar">
+    <declare-styleable name="IntakeBar">
 
-        <!-- String 속성 : 영양소명, 단위(g/mg) -->
+        <!-- String 속성 : 영양소명, 영양소량, 일일 권장량 -->
         <attr name="nutritionName" format="string"/>
-        <attr name="unit" format="string"/>
+        <attr name="massText" format="string"/>
+        <attr name="dailyValueText" format="string"/>
 
-        <!-- Integer 속성 : 경고 임계값, 바의 최대값(권장량), 바의 입력값(섭취량) -->
-        <attr name="cautionThresh" format="integer"/>
+        <!-- Integer 속성 : 경고 임계값(상한/하한), 바의 최대값(권장량), 바의 입력값(섭취량) -->
+        <attr name="upperThresh" format="integer"/>
+        <attr name="lowerThresh" format="integer"/>
         <attr name="maxValue" format="integer"/>
         <attr name="curValue" format="integer"/>
 
