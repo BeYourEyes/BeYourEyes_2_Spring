@@ -12,7 +12,7 @@ class IntakeAdapter(private val items: MutableList<Nutrition>,
         sortItems()
     }
 
-    //viewHolder - 섭취량바
+    // 뷰 홀더 생성
     class NutritionViewHolder(val bar: IntakeNutritionBar) : RecyclerView.ViewHolder(bar)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NutritionViewHolder {
@@ -20,7 +20,7 @@ class IntakeAdapter(private val items: MutableList<Nutrition>,
         return NutritionViewHolder(intakeBar)
     }
 
-    // IntakeNutritionBar 뷰 세팅(필요한 데이터를 세팅)
+    // 뷰 홀더 데이터 바인딩
     override fun onBindViewHolder(holder: NutritionViewHolder, position: Int) {
         val nutri = items[position]
         holder.bar.setData(nutri, age, isMan)
@@ -28,7 +28,7 @@ class IntakeAdapter(private val items: MutableList<Nutrition>,
 
     override fun getItemCount() = items.size
 
-    // 데이터 업데이트 시 정렬을 위한 메소드
+    // 데이터 업데이트 시 정렬
     fun updateItems(newItems: List<Nutrition>) {
         sortItems(newItems)
         notifyDataSetChanged()

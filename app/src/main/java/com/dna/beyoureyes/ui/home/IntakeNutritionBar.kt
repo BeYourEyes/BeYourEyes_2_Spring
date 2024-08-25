@@ -69,7 +69,7 @@ class IntakeNutritionBar(context: Context, attrs: AttributeSet?) :
                 // progressBar의 값 설정
                 bar.max = maxValue
                 setProgressBarValue(curValue) // 애니메이션 효과 없이 표시
-                //setProgressBarValueWithAnimation(curValue, 300) // 바 표시에 애니메이션 효과 적용
+                //setProgressBarValueWithAnimation(curValue) // 바 표시에 애니메이션 효과 적용
 
                 if (upperThresh == -1) upperThresh = null
                 if (lowerThresh == -1) lowerThresh = null
@@ -105,7 +105,7 @@ class IntakeNutritionBar(context: Context, attrs: AttributeSet?) :
         // progressBar의 값 설정
         bar.max = dv
         setProgressBarValue(nutrition.milligram) // 애니메이션 효과 없이 표시
-        //setProgressBarValueWithAnimation(curValue, 300) // 바 표시에 애니메이션 효과 적용
+        //setProgressBarValueWithAnimation(nutrition.milligram) // 바 표시에 애니메이션 효과 적용
 
         if ( nutrition.isInWarningRange(age, isMan) )
         {
@@ -121,7 +121,7 @@ class IntakeNutritionBar(context: Context, attrs: AttributeSet?) :
     // 애니메이션을 통해 ProgressBar의 표시
     fun setProgressBarValueWithAnimation(value: Int, duration: Long) {
         val animator = ObjectAnimator.ofInt(bar, "progress", (value*0.5).toInt(), value)
-        animator.duration = duration // 애니메이션 시간 (밀리초)
+        animator.duration = 300 // 애니메이션 시간 (밀리초)
         animator.start()
     }
 
