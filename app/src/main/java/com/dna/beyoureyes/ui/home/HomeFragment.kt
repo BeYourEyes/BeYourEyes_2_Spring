@@ -35,15 +35,16 @@ class HomeFragment : Fragment() {
 
         recyclerView = binding.intakeRecyclerView
         layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.layoutManager = layoutManager
+        recyclerView.layoutManager = layoutManager // 리사이클러 뷰 레이아웃 매니저 설정
 
+        // 표시할 영양소 데이터 -> 추후 뷰모델이 담당하도록 수정
         val items = mutableListOf(
             Carbs(100*1000), Sugar(45*1000),
             Protein(40*1000), Natrium(1700), Cholesterol(420),
             Fat(50*1000), SaturatedFat(15*1000)
         )
         adapter = IntakeAdapter(items, 20, false)
-        recyclerView.adapter = adapter
+        recyclerView.adapter = adapter // 리사이클러 뷰 어댑터 설정
 
         return root
     }
