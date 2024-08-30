@@ -1,4 +1,4 @@
-name: Android CI
+name: Android CI/CD
 
 # 모든 브랜치에 대해 워크 플로우 실행 -> 성공하면 -> main으로 merge
 on:
@@ -44,12 +44,17 @@ jobs:
     # 참고! 빌드 성공하면 자동으로 apk 생성하도록 함
     - name: Build APK
       run: ./gradlew assembleRelease
+      
+    - name: Build AAB
+      run: ./gradlew bundleRelease # AAB 파일 생성
 
-    - name: Upload APK
+    - name: Upload APK and AAB
       uses: actions/upload-artifact@v3
       with:
-        name: apk
-        path: app/build/outputs/apk/release/app-release.apk # APK 파일 경로
+        name: artifacts
+        path: |
+          app/build/outputs/apk/release/app-release.apk # APK 파일 경로
+          app/build/outputs/bundle/release/app-release.aab # AAB 파일 경로
 
     # # 참고! 각 브랜치에서 빌드 성공하면 main으로 자동 병합
     # - name : Auto-merge to main
