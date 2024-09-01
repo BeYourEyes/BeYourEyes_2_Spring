@@ -1,4 +1,6 @@
-# Beyoureyes_App v2.0
+## 당신의 안식 BeYourEyes 어플리케이션 - v2.0
+노인을 위한 영양정보 제공 앱 버전 2 어플리케이션입니다.
+
 기존 프로젝트 파일을 일부 초기화
 
 ## AndroidManifest.xml :
