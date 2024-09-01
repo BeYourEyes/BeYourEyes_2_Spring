@@ -24,3 +24,9 @@
 - opencv2 import, CI/CD 설정 보존
 - 타겟 api만 34로 업그레이드 후 gradle 파일 그대로 보존
   - 구글 플레이 앱스토어 정책 상 타겟을 34로 해야 앞으로 업로드 가능!
+ 
+## CI/CD 파이프라인 구축
+- main 제외한 모든 branch에 코드 push시, 자동 build, test 수행
+- build 완료 후 APK, AAB 파일 생성
+
+## OCR API + OPEN API 문자 추출 로직 개선
