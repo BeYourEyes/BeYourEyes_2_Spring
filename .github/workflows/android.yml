@@ -57,7 +57,6 @@ jobs:
           app/build/outputs/bundle/release/app-release.aab # AAB 파일 경로
 
 
-
     - name: Create service account key file
       run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/serviceAccountKey.json
 
@@ -66,9 +65,14 @@ jobs:
       with:
         appId: ${{ secrets.FIREBASE_APP_ID }}
         serviceCredentialsFile: $HOME/serviceAccountKey.json
-        groups: testers
+        groups: release-testers
         file: app/build/outputs/apk/release/app-release.apk
       continue-on-error: true
+
+    - name: Deploy to Firebase Hosting
+      run: firebase deploy --only hosting --project ${{ secrets.FIREBASE_PROJECT_ID }}
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
     # # 참고! 각 브랜치에서 빌드 성공하면 main으로 자동 병합
     # - name : Auto-merge to main
