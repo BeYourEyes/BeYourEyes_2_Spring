@@ -55,11 +55,9 @@ jobs:
         path: |
           app/build/outputs/apk/release/app-release.apk # APK 파일 경로
           app/build/outputs/bundle/release/app-release.aab # AAB 파일 경로
+          
     - name: Install Firebase CLI
       run: npm install -g firebase-tools
-
-    - name: Authenticate with Firebase
-      run: firebase login:ci --token ${{ secrets.FIREBASE_TOKEN }}
 
     - name: Deploy to Firebase Hosting
       run: firebase deploy --only hosting --project ${{ secrets.FIREBASE_PROJECT_ID }}
