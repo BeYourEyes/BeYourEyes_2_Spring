@@ -69,6 +69,7 @@ jobs:
         serviceCredentialsFile: $HOME/serviceAccountKey.json
         groups: testers
         file: app/build/outputs/apk/release/app-release.apk
+      continue-on-error: true
 
     # # 참고! 각 브랜치에서 빌드 성공하면 main으로 자동 병합
     # - name : Auto-merge to main
