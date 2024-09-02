@@ -57,6 +57,9 @@ jobs:
           app/build/outputs/bundle/release/app-release.aab # AAB 파일 경로
 
 
+    - name: Install Firebase CLI
+      run: npm install -g firebase-tools
+
     - name: Create service account key file
       run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/serviceAccountKey.json
 
@@ -67,6 +70,8 @@ jobs:
         serviceCredentialsFile: $HOME/serviceAccountKey.json
         groups: release-testers
         file: app/build/outputs/apk/release/app-release.apk
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       continue-on-error: true
 
     # # 참고! 각 브랜치에서 빌드 성공하면 main으로 자동 병합
