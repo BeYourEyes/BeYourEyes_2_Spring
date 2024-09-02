@@ -69,11 +69,6 @@ jobs:
         file: app/build/outputs/apk/release/app-release.apk
       continue-on-error: true
 
-    - name: Deploy to Firebase Hosting
-      run: firebase deploy --only hosting --project ${{ secrets.FIREBASE_PROJECT_ID }}
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-
     # # 참고! 각 브랜치에서 빌드 성공하면 main으로 자동 병합
     # - name : Auto-merge to main
     #   if: github.ref != 'refs/heads/main' && success()
