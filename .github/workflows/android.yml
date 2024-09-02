@@ -63,9 +63,6 @@ jobs:
     - name: Create service account key file
       run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/serviceAccountKey.json
 
-    - name: Create service account key file
-      run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/serviceAccountKey.json
-
     - name: Deploy APK to Firebase App Distribution
       uses: wzieba/Firebase-Distribution-Github-Action@v1
       with:
@@ -73,7 +70,9 @@ jobs:
         serviceCredentialsFile: $HOME/serviceAccountKey.json
         groups: release-testers
         file: app/build/outputs/apk/release/app-release.apk
-
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      continue-on-error: true
 
     # # 참고! 각 브랜치에서 빌드 성공하면 main으로 자동 병합
     # - name : Auto-merge to main
