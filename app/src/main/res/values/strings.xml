@@ -1,7 +1,28 @@
 <resources>
-    <string name="app_name">BeYourEyes</string>
-    <string name="uid">null</string>
+    <string name="app_name">routinetoday</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Toolbar-->
+    <string name="result_toolbar">식품 분석 결과</string>
 
-    <string name="appName">당신의 안(眼)식(食)</string>
-    <string name="your_web_client_id">39610226410-ole4b27oudmh6098eko824kldgn1rodu.apps.googleusercontent.com</string>
+    <!-- f_result_cal -->
+    <string name="result_cal_text1">총 칼로리는</string>
+    <string name="result_cal_text2">OOOkcal</string>
+    <string name="result_cal_text3">입니다.</string>
+
+    <!-- f_result_alg_caution -->
+    <string name="alg_caution_text1">님. 주의하세요</string>
+    <string name="alg_caution_text2">이 식품에 OO가 함유되어있어요</string>
+
+    <!-- f_result_alg -->
+    <string name="algResultText">식품 알레르기 정보</string>
+
+    <!-- description page -->
+    <string name="desciption_result_image">촬영한 식품의 이미지입니다.</string>
+    <string name="description_result_scrollbar">식품 분석 결과 화면입니다. 스크롤하여 정보를 확인할 수 있습니다.</string>
+    <string name="result_nutri_pie_chart_text1">분석한 식품의 영양 정보</string>
+    <string name="result_nutri_pie_chart_text2">이 식품의 영양정보는 대략적인 값으로 참고용입니다</string>
+    <string name="result_text1">전체 설명 듣기</string>
+    <string name="result_text2">등록하기</string>
+    <string name="result_fail_text">알레르기 인식에 실패했어요.</string>
 </resources>

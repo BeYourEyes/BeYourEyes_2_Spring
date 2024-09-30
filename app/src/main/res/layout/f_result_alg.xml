@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/result_background"
+    android:orientation="vertical"
+    tools:context=".ResultAlgFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/wantedsans_bold"
+        android:paddingLeft="18dp"
+        android:paddingTop="15dp"
+        android:text="@string/algResultText"
+        android:textColor="@color/text_default"
+        android:textSize="20dp" />
+
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/result_alg_chipGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="0dp"
+        android:padding="20dp"
+        app:chipSpacing="20dp"
+        app:chipSpacingHorizontal="20dp" />
+
+
+ </LinearLayout>
