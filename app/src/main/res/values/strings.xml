@@ -25,4 +25,14 @@
     <string name="result_text1">전체 설명 듣기</string>
     <string name="result_text2">등록하기</string>
     <string name="result_fail_text">알레르기 인식에 실패했어요.</string>
+
+    <!--eat page-->
+    <string name="result_eat_text_1">얼마나 드셨나요?</string>
+    <string name="result_eat_text_2">섭취하신 식품의 양을 선택해주세요.</string>
+    <string name="result_eat_button_25">1/4 섭취</string>
+    <string name="result_eat_button_50">1/2 섭취</string>
+    <string name="result_eat_button_75">3/4 섭취</string>
+    <string name="result_eat_button_100">1 섭취</string>
+    <string name="result_eat_dialog_text">섭취량 입력이 완료되었습니다.</string>
+    <string name="result_eat_dialog_button">확인하기</string>
 </resources>

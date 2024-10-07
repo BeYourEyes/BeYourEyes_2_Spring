@@ -6,7 +6,9 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-
+    <color name="azure_radience_500">#3379FE</color>
+    <color name="azure_radience_400">#599EFF</color>
+    <color name="azure_radience_100">#DAE9FF</color>
     <color name="blue_700">#1543E0</color> <!--Blue Ribbon/700-->
     <color name="blue_600">#265FF4</color> <!--Blue Ribbon/600-->
     <color name="blue_500">#3379FE</color> <!--Blue Ribbon/500-->
@@ -16,6 +18,10 @@
     <color name="alert_500">#FF5133</color> <!--alert/500-->
     <color name="alert_50">#FFF3F1</color> <!--alert/50-->
     <color name="athens_gray_950">#333239</color> <!--Athens Gray/950-->
+    <color name="athens_gray_700">#6F7086</color> <!--Athens Gray/700-->
+    <color name="athens_gray_500">#8D91A4</color> <!--Athens Gray/700-->
+    <color name="athens_gray_300">#C1C5CF</color> <!--Athens Gray/300-->
+    <color name="athens_gray_100">#E7E8EC</color>
     <color name="athens_gray_50">#F6F7F8</color> <!--Athens Gray/50-->
     <color name="text_default">#1F1F1F</color> <!--textcolor_default-->
     <color name="basic_950">#303236</color> <!--basic/950-->

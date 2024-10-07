@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/azure_radience_100" /> <!-- 칩의 배경 색상 -->
+    <size android:width="60dp" android:height="60dp" /> <!-- 칩 크기 -->
+    <stroke android:color="@color/azure_radience_400" android:width="2dp" />
+    <corners android:radius="10dp" />
+</shape>

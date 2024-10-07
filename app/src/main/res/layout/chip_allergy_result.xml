@@ -2,18 +2,14 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="80dp"
-    android:layout_height="120dp"
+    android:layout_width="98dp"
+    android:layout_height="58dp"
     android:orientation="vertical"
-    android:background="@drawable/allergy_chip_background"
-    android:gravity="center">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/chipImage"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/sample_pasta" />
+    android:background="@drawable/allergy_chip"
+    android:gravity="center"
+    android:clickable="true"
+    android:focusable="true"
+    android:onClick="onChipClick">
 
 
     <TextView
@@ -25,5 +21,5 @@
         android:gravity="center"
         android:text="OOO"
         android:textColor="@color/basic_950"
-        android:textSize="14sp" />
+        android:textSize="16sp" />
 </LinearLayout>
