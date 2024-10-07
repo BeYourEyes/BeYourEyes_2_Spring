@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/white" /> <!-- 칩의 배경 색상 -->
+    <stroke android:color="@color/athens_gray_300" android:width="1dp"/>
+    <size android:width="60dp" android:height="45dp" /> <!-- 칩 크기 -->
+    <corners android:radius="100dp" /> <!-- 원형으로 만들기 위해 반지름 설정 -->
+</shape>

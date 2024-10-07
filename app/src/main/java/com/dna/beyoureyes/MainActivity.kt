@@ -1,6 +1,7 @@
 package com.dna.beyoureyes
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +28,9 @@ class MainActivity : AppCompatActivity() {
             // OpenCV 기능 테스트
             testOpenCVFunction()
         }
+        //binding.chip.setChipText("메밀")
+        //startActivity(Intent(this, ResultEatActivity::class.java))
+
     }
 
     private fun testOpenCVFunction() {
