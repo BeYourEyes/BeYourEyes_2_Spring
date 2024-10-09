@@ -9,13 +9,18 @@
     android:layout_height="match_parent">
 
 
-    <com.dna.beyoureyes.CustomChip
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.google.android.material.chip.Chip
+        style="@style/AllergyChip"
+        android:id="@+id/chip2"
+        android:layout_width="98dp"
+        android:layout_height="58dp"
         android:layout_marginBottom="60dp"
+        android:text="메밀"
+        android:textAlignment="center"
+        android:textAppearance="@style/chipText"
+        app:chipMinTouchTargetSize="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
