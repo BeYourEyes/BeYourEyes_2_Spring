@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="false">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background color when not selected -->
+    <item android:drawable="@color/athens_gray_100" />
+
+    <!-- Background color when selected -->
+    <item android:state_selected="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/athens_gray_100" /> <!-- 칩의 배경 색상 -->
-            <size android:width="60dp" android:height="60dp" /> <!-- 칩 크기 -->
-            <corners android:radius="10dp" />
+            <solid android:color="@color/azure_radience_100" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/azure_radience_400" /> <!-- 테두리 색상 -->
+            <corners android:radius="10dp" /> <!-- 모서리 둥글기 -->
         </shape>
     </item>
 
-    <item android:state_selected="true">
-        <shape android:shape="rectangle">
-            <solid android:color="@color/azure_radience_100" /> <!-- 칩의 배경 색상 -->
-            <size android:width="60dp" android:height="60dp" /> <!-- 칩 크기 -->
-            <stroke android:color="@color/azure_radience_400" android:width="2dp" />
-            <corners android:radius="10dp" />
-        </shape>
-    </item>
-</selector>
+</layer-list>

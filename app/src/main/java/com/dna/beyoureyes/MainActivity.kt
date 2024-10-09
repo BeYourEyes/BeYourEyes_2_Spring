@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.dna.beyoureyes.databinding.ActivityMainBinding
 import org.opencv.android.OpenCVLoader
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             // OpenCV 기능 테스트
             testOpenCVFunction()
         }
-        //binding.chip.setChipText("메밀")
+        Log.d("Chip", "isStarted")
         //startActivity(Intent(this, ResultEatActivity::class.java))
 
     }
