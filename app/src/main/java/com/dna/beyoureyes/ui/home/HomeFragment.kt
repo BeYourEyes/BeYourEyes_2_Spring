@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        recyclerView = binding.intakeRecyclerView
+        recyclerView = binding.todayNutriRecyclerView
         layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager // 리사이클러 뷰 레이아웃 매니저 설정
 
