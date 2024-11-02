@@ -40,7 +40,7 @@
             android:fontFamily="@font/wanted_sans_semi_bold"
             android:text="콜레스테롤"
             android:textColor="@color/gray_950"
-            android:textSize="15sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/symbol"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,7 +51,7 @@
             android:fontFamily="@font/wanted_sans_bold"
             android:text="140%"
             android:textColor="@color/gray_950"
-            android:textSize="17sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/nutriLabel"
@@ -64,7 +64,7 @@
             android:fontFamily="@font/wanted_sans_bold"
             android:text="420mg"
             android:textColor="@color/gray_300"
-            android:textSize="13sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/dailyValue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -78,7 +78,7 @@
             android:fontFamily="@font/wanted_sans_semi_bold"
             android:text="일일 권장량 300mg"
             android:textColor="@color/gray_300"
-            android:textSize="11sp"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@+id/symbol"
             app:layout_constraintStart_toStartOf="@+id/nutriLabel"
             app:layout_constraintTop_toBottomOf="@id/nutriLabel" />
