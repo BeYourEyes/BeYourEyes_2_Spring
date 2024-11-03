@@ -17,4 +17,17 @@
 
     </declare-styleable>
 
+    <!-- 과거 분석한 영양 기록 Custom View 속성 -->
+    <declare-styleable name="FoodHistoryView">
+
+        <!-- String 속성 : 기록명, 기록 칼로리 -->
+        <attr name="historyLabel" format="string"/>
+        <attr name="kcalText" format="string"/>
+
+        <!-- Reference 속성 : 기록 이미지 -->
+        <attr name="historyImg" format="reference"/>
+
+    </declare-styleable>
+
+
 </resources>
