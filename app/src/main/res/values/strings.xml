@@ -35,4 +35,11 @@
     <string name="result_eat_button_100">1 섭취</string>
     <string name="result_eat_dialog_text">섭취량 입력이 완료되었습니다.</string>
     <string name="result_eat_dialog_button">확인하기</string>
+    <string name="result_nutri_bar_chart_text1">이 식품의 상세 영양성분 정보</string>
+    <string name="nutri_na">나트륨</string>
+    <string name="nutri_carb">탄수화물</string>
+    <string name="nutri_sugar">당류</string>
+    <string name="nutri_fat">포화지방</string>
+    <string name="nutri_chole">콜레스테롤</string>
+    <string name="nutri_protein">단백질</string>
 </resources>
