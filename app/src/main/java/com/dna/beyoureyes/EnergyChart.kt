@@ -7,6 +7,7 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.TextAppearanceSpan
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -61,12 +62,10 @@ class NutriIntakeBarDisplay(
         barChart.setDrawBarShadow(true) // 회색 배경(그림자 효과)
 
         // 모서리 둥근 바 차트
-        /*
         val renderer = BarChartCustomRenderer(barChart, barChart.animator, barChart.viewPortHandler)
         renderer.setRightRadius(20f)
         renderer.setLeftRadius(20f)
         barChart.renderer = renderer
-         */
 
         // XAxis (수평 막대 기준 왼쪽)
         barChart.xAxis.isEnabled = false
@@ -87,7 +86,7 @@ class NutriIntakeBarDisplay(
         val set = BarDataSet(entries, "Nutri Intake")
         set.setDrawIcons(false)
         set.setDrawValues(true)
-        set.color = R.color.blue_ribbon_500 // 색상 설정
+        set.color = ContextCompat.getColor(context, R.color.blue_ribbon_500)
         set.barShadowColor = ContextCompat.getColor(context, R.color.bg_lightgray)
 
         //set.valueFormatter = PercentFormatter() // 값 표시 String 포맷 설정
@@ -334,6 +333,7 @@ class NaIntakeBarDisplay(
     }
 
     fun setReviews(context: Context, intake:NutritionFacts, userDVs: NutrientDailyValues){
+        Log.d("setReview: ", "inFunc")
         var overNutris = arrayListOf<String>()
         var lackNutris = arrayListOf<String>()
 
@@ -353,12 +353,14 @@ class NaIntakeBarDisplay(
             totalIntake.natrium?.let {
                 natriumBar.setBarValue(context, it, userDVs.natrium)
             } ?: run {
-                natriumBar.setBarValue(context, Nutrition(0, UnitOfMass.MILLIGRAM), userDVs.natrium)
+                Log.d("BAR: ", "totalIntake let");
+                natriumBar.setBarValue(context, Nutrition(100, UnitOfMass.MILLIGRAM), userDVs.natrium)
             }
-
+            Log.d("BAR: ", "set Start");
             setReviews(context, totalIntake, userDVs)
         }?:run{
             // 사용자 맞춤 권장량 객체 null 일때 바 차트 다 숨김
+            Log.d("BAR: ", "UserDV let");
             natriumBar.hide()
         }
     }
