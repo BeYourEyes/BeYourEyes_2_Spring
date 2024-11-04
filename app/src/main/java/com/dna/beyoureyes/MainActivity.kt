@@ -44,6 +44,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val resultFragment = ResultNutriBarFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.testBarChart, resultFragment)
+            .commitNow()
+
+        supportFragmentManager.executePendingTransactions() // 프래그먼트 실행 후 실행
+
 
     }
 
