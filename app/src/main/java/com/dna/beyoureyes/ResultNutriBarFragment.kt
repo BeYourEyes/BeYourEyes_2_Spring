@@ -48,9 +48,6 @@ class ResultNutriBarFragment : Fragment() {
         val testNaBarChart = NutriIntakeBarDisplay(naBarChart, na)
 
         val testBarChart = NaIntakeBarDisplay(testNaBarChart)
-
-        val entries = arrayListOf<BarEntry>()
-        entries.add(BarEntry(100f, 30f))
         val intakeRangeMap = mapOf(
             IntakeRange.LACK to IntProgression.fromClosedRange(0, 500, 1),
             IntakeRange.LESS to IntProgression.fromClosedRange(501, 1000, 1),
@@ -62,19 +59,13 @@ class ResultNutriBarFragment : Fragment() {
             dailyValue = 2300, // 원하는 값을 여기에 설정합니다.
             intakeRange = intakeRangeMap
         )
-        testNaBarChart.setBarValue(requireContext(), Nutrition(100, UnitOfMass.MILLIGRAM), testDailyValue)
-        testNaBarChart.applyBarChart(requireContext(), entries, 100f)
+        //testNaBarChart.setBarValue(requireContext(), Nutrition(100, UnitOfMass.MILLIGRAM), testDailyValue)
         Log.d("BAR CHART : ", "now processing")
-        Toast.makeText(requireActivity(), "it coming", Toast.LENGTH_LONG).show()
-
-        /*
         val energyIntake = 0
-
+        val userDVs = NutrientDailyValues()
         var totalIntake = NutritionFacts()
         // 2.4. 총 섭취량 화면 표시 - 성분별 섭취량 바
         testBarChart.setAll(requireContext(), totalIntake, userDVs)
-         */
-
         return binding.root
     }
 
