@@ -104,5 +104,4 @@ class DailyValueImpl(
     override var dailyValue: Int,
     override var intakeRange: Map<IntakeRange, IntProgression>?
 ) : DailyValue {
-    // 추가적인 메서드나 프로퍼티가 필요하다면 여기서 정의합니다.
 }
