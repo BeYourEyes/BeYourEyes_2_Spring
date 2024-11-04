@@ -6,7 +6,7 @@
     android:background="@drawable/result_background"
     android:orientation="vertical"
     android:padding="17dp"
-    tools:context=".BlankFragment">
+    tools:context=".ResultNutriBarFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
