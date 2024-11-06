@@ -12,4 +12,4 @@
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: C:/Users/leeso/Desktop/BeYourEyes_2/opencv2/sdk/.cxx/Debug/4f6r3j4s/x86
+-- Build files have been written to: C:/Users/leeso/Desktop/BeYourEyes_2/opencv2/sdk/.cxx/Debug/4f6r3j4s/armeabi-v7a

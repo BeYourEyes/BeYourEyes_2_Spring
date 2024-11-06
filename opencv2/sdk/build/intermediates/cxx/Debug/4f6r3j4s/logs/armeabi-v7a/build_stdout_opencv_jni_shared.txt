@@ -1,0 +1,3 @@
+ninja: Entering directory `C:\Users\leeso\Desktop\BeYourEyes_2\opencv2\sdk\.cxx\Debug\4f6r3j4s\armeabi-v7a'
+[1/2] Building CXX object CMakeFiles/opencv_jni_shared.dir/dummy.cpp.o
+[2/2] Linking CXX static library libopencv_jni_shared.a
