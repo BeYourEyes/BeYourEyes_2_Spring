@@ -3,12 +3,10 @@ package com.dna.beyoureyes
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Paint
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.TextAppearanceSpan
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -44,7 +42,6 @@ class NutriIntakeBarDisplay(
 
     fun setZero(context: Context, unit: UnitOfMass, dv: DailyValue) {
         setBarValue(context, Nutrition(0, unit), dv)
-        Log.d("BAR: ", "setZero")
     }
 
     fun setBarValue(context: Context, nutri: Nutrition, dv: DailyValue) {
@@ -53,7 +50,6 @@ class NutriIntakeBarDisplay(
         val entries = arrayListOf<BarEntry>()
         entries.add(BarEntry(0f, percentIntake.toFloat()))
         applyBarChart(context, entries, 100f)
-        Log.d("BAR: ", "setBarValue")
     }
 
     // 바 표시 설정
@@ -105,23 +101,17 @@ class NutriIntakeBarDisplay(
 
         // 3. [BarData] 보여질 데이터 구성
         val data = BarData(set)
-        data.barWidth = 0.5f
         data.setValueTextColor(ContextCompat.getColor(context, R.color.white))
         data.setValueTextSize(14f)
         data.setValueTypeface(ResourcesCompat.getFont(context, R.font.wantedsans_extrabold))
 
         barChart.setExtraOffsets(0f, 0f, 0f, 0f)
-        barChart.setViewPortOffsets(0f, dpToPx(context, -15f), 0f, dpToPx(context, -15f))
-
-        val valuePaint = Paint()
-        valuePaint.setShadowLayer(3f, 2f, 2f, ContextCompat.getColor(context, R.color.black)) // 그림자 설정
-        barChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-        barChart.renderer.paintRender.setShadowLayer(3f, 5f, 3f, ContextCompat.getColor(context, R.color.athens_gray_300))
+        barChart.setViewPortOffsets(0f, dpToPx(context, -1f), 0f, dpToPx(context, -1f))
+        //barChart.setBackgroundColor(ContextCompat.getColor(context, R.color.chart_yellow)) // for checking spacings...
 
         // 모든 차트 및 데이터 설정 적용
         barChart.animateY(300)
         barChart.setData(data)
-        Log.d("BAR: ", "applybarChart")
         barChart.invalidate()
 
     }
@@ -338,7 +328,6 @@ class NaIntakeBarDisplay(
             setNoDataValues(context, it)
         }?:run{ // 사용자 맞춤 권장량 객체 null 일때 바 차트 다 숨김
             natriumBar.hide()
-            Log.d("BAR: ", "hide occured")
         }
     }
 
@@ -347,7 +336,6 @@ class NaIntakeBarDisplay(
     }
 
     fun setReviews(context: Context, intake:NutritionFacts, userDVs: NutrientDailyValues){
-        Log.d("setReview: ", "inFunc")
         var overNutris = arrayListOf<String>()
         var lackNutris = arrayListOf<String>()
 
@@ -367,20 +355,18 @@ class NaIntakeBarDisplay(
             totalIntake.natrium?.let {
                 natriumBar.setBarValue(context, it, userDVs.natrium)
             } ?: run {
-                Log.d("BAR: ", "totalIntake let");
                 natriumBar.setBarValue(context, Nutrition(100, UnitOfMass.MILLIGRAM), userDVs.natrium)
             }
-            Log.d("BAR: ", "set Start");
             setReviews(context, totalIntake, userDVs)
         }?:run{
             // 사용자 맞춤 권장량 객체 null 일때 바 차트 다 숨김
-            Log.d("BAR: ", "UserDV let");
             natriumBar.hide()
         }
     }
 
 }
 
+// calculate dp for unify ratio
 fun dpToPx(context: Context, dp: Float): Float {
     val density = context.resources.displayMetrics.density
     return dp * density
