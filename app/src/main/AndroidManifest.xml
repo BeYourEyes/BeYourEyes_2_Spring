@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- 인터넷 권한 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- 저장소 권한 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 저장소 권한 -->
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
-
-    <!-- 카메라 권한 -->
+        android:maxSdkVersion="18" /> <!-- 카메라 권한 -->
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
+
     <queries>
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
@@ -31,7 +28,38 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeYourEyes"
         tools:targetApi="31">
+        <activity
+            android:name=".PastDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OcrFailActivity"
+            android:exported="false"></activity>
+        <activity
+            android:name=".FoodCautionActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Onboardind2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".OnboardingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoadingActivity"
+            android:exported="false"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".LoadingActivity" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".FoodActivity" -->
+        <!-- android:exported="false" /> -->
         <!-- 임시 파일 저장소 -->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -41,23 +69,18 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-
-        <!-- 액티비티 -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <!-- 한글 OCR MLkit -->
+        </provider> <!-- 액티비티 -->
+        <!-- <activity -->
+        <!-- android:name=".MainActivity" -->
+        <!-- android:exported="true"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> &lt;!&ndash; 한글 OCR MLkit &ndash;&gt; -->
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="ocr_korean" />
-
     </application>
 
 </manifest>

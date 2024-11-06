@@ -1,4 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- MainActivity 하단 네비게이션바 스타일 -->
+    <style name="BottomNavigationTextStyle">
+        <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
+    <!-- 툴바 제목 스타일 -->
+    <style name="ToolBarTitleStyle">
+        <item name="android:fontFamily">@font/wanted_sans_extra_bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- 툴바 메뉴 스타일 -->
+    <style name="ToolBarMenuStyle">
+        <item name="android:fontFamily">@font/wanted_sans_extra_bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- 칩(글자만 표시) 스타일 -->
+    <style name="TextChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipCornerRadius">10dp</item>
+        <item name="chipMinHeight">58dp</item>
+        <item name="chipBackgroundColor">@color/chip_bg_color</item>
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="chipStrokeColor">@color/chip_stroke_color</item>
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="fontFamily">@font/wanted_sans_semi_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+    </style>
+
+    <!-- 숫자 피커 스타일 -->
+    <style name="DatePickerStyle" parent="">
+        <item name="android:background">@color/white</item>
+        <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColorPrimary">@color/gray_950</item>
+        <item name="android:textColorHighlight">@color/blue_100</item>
+        <item name="colorControlNormal">@android:color/transparent</item>
+    </style>
 
 </resources>

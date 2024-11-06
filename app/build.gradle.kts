@@ -94,5 +94,10 @@ dependencies {
     implementation ("androidx.camera:camera-view:1.4.0-rc01")
     implementation ("androidx.camera:camera-extensions:1.4.0-rc01")
 
+    //
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("com.tbuonomo:dotsindicator:4.3")
+
+
 
 }
