@@ -1,0 +1,9 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="24dp" /> <!-- 둥근 모서리 반경 설정 -->
+    <solid android:color="#3379FE" /> <!-- 버튼 배경색 설정 -->
+    <padding
+        android:left="10dp"
+        android:right="10dp"
+        android:top="5dp"
+        android:bottom="5dp" /> <!-- 패딩 설정 -->
+</shape>

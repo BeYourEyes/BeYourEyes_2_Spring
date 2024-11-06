@@ -4,4 +4,7 @@
 
     <string name="appName">당신의 안(眼)식(食)</string>
     <string name="your_web_client_id">39610226410-ole4b27oudmh6098eko824kldgn1rodu.apps.googleusercontent.com</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="chip">없음</string>
 </resources>
