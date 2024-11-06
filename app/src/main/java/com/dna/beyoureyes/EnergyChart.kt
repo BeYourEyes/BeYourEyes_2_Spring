@@ -3,6 +3,7 @@ package com.dna.beyoureyes
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Paint
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -43,6 +44,7 @@ class NutriIntakeBarDisplay(
 
     fun setZero(context: Context, unit: UnitOfMass, dv: DailyValue) {
         setBarValue(context, Nutrition(0, unit), dv)
+        Log.d("BAR: ", "setZero")
     }
 
     fun setBarValue(context: Context, nutri: Nutrition, dv: DailyValue) {
@@ -51,9 +53,11 @@ class NutriIntakeBarDisplay(
         val entries = arrayListOf<BarEntry>()
         entries.add(BarEntry(0f, percentIntake.toFloat()))
         applyBarChart(context, entries, 100f)
+        Log.d("BAR: ", "setBarValue")
     }
 
     // 바 표시 설정
+    @SuppressLint("ResourceAsColor")
     fun applyBarChart(context: Context, entries: List<BarEntry>, maximum: Float) {
 
         barChart.description.isEnabled = false // chart 밑에 description 표시 유무
@@ -63,8 +67,8 @@ class NutriIntakeBarDisplay(
 
         // 모서리 둥근 바 차트
         val renderer = BarChartCustomRenderer(barChart, barChart.animator, barChart.viewPortHandler)
-        renderer.setRightRadius(20f)
-        renderer.setLeftRadius(20f)
+        renderer.setRightRadius(80f)
+        renderer.setLeftRadius(80f)
         barChart.renderer = renderer
 
         // XAxis (수평 막대 기준 왼쪽)
@@ -95,20 +99,29 @@ class NutriIntakeBarDisplay(
         set.valueFormatter = object : ValueFormatter() { // 값 표시 String 포맷 설정
             override fun getFormattedValue(value: Float): String {
                 return value.toInt().toString() + "%"
+                //return value.toInt().toString() + "%"
             }
         }
 
         // 3. [BarData] 보여질 데이터 구성
         val data = BarData(set)
-        data.barWidth = 1f
+        data.barWidth = 0.5f
         data.setValueTextColor(ContextCompat.getColor(context, R.color.white))
         data.setValueTextSize(14f)
         data.setValueTypeface(ResourcesCompat.getFont(context, R.font.wantedsans_extrabold))
 
+        barChart.setExtraOffsets(0f, 0f, 0f, 0f)
+        barChart.setViewPortOffsets(0f, dpToPx(context, -15f), 0f, dpToPx(context, -15f))
+
+        val valuePaint = Paint()
+        valuePaint.setShadowLayer(3f, 2f, 2f, ContextCompat.getColor(context, R.color.black)) // 그림자 설정
+        barChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+        barChart.renderer.paintRender.setShadowLayer(3f, 5f, 3f, ContextCompat.getColor(context, R.color.athens_gray_300))
+
         // 모든 차트 및 데이터 설정 적용
         barChart.animateY(300)
         barChart.setData(data)
-
+        Log.d("BAR: ", "applybarChart")
         barChart.invalidate()
 
     }
@@ -325,6 +338,7 @@ class NaIntakeBarDisplay(
             setNoDataValues(context, it)
         }?:run{ // 사용자 맞춤 권장량 객체 null 일때 바 차트 다 숨김
             natriumBar.hide()
+            Log.d("BAR: ", "hide occured")
         }
     }
 
@@ -365,5 +379,10 @@ class NaIntakeBarDisplay(
         }
     }
 
+}
+
+fun dpToPx(context: Context, dp: Float): Float {
+    val density = context.resources.displayMetrics.density
+    return dp * density
 }
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.dna.beyoureyes.databinding.FResultNutriBarChartBinding
+import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.data.BarEntry
 
@@ -46,6 +47,7 @@ class ResultNutriBarFragment : Fragment() {
         val naBarChart : HorizontalBarChart = binding.naBarchart
         val na : TextView = binding.nutriBarResultNa
         val testNaBarChart = NutriIntakeBarDisplay(naBarChart, na)
+        val testcarbBarChart = NutriIntakeBarDisplay(binding.carbBarchart, binding.nutriBarResultCarb)
 
         val testBarChart = NaIntakeBarDisplay(testNaBarChart)
         val intakeRangeMap = mapOf(
@@ -59,13 +61,16 @@ class ResultNutriBarFragment : Fragment() {
             dailyValue = 2300, // 원하는 값을 여기에 설정합니다.
             intakeRange = intakeRangeMap
         )
-        //testNaBarChart.setBarValue(requireContext(), Nutrition(100, UnitOfMass.MILLIGRAM), testDailyValue)
+        testNaBarChart.setBarValue(requireContext(), Nutrition(600, UnitOfMass.MILLIGRAM), testDailyValue)
+        testcarbBarChart.setBarValue(requireContext(), Nutrition(1200, UnitOfMass.GRAM), testDailyValue)
         Log.d("BAR CHART : ", "now processing")
         val energyIntake = 0
         val userDVs = NutrientDailyValues()
         var totalIntake = NutritionFacts()
         // 2.4. 총 섭취량 화면 표시 - 성분별 섭취량 바
-        testBarChart.setAll(requireContext(), totalIntake, userDVs)
+        //testBarChart.setAll(requireContext(), totalIntake, userDVs)
+        //Log.d("BAR: ", "setAllFinished")
+
         return binding.root
     }
 
