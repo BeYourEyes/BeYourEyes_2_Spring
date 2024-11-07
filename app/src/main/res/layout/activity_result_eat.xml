@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:fontFamily="@font/wantedsans_semibold"
+                android:fontFamily="@font/wantedsans_semi_bold"
                 android:text="@string/result_eat_text_2"
                 android:textColor="@color/gray_700"
                 android:textSize="14sp" />
