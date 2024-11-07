@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/semi_white"
+    android:background="@color/gray_50"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include
@@ -25,7 +25,7 @@
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/wantedsans_semibold"
         android:text="STEP 5"
-        android:textColor="@color/azure_radience_500"
+        android:textColor="@color/blue_500"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -41,7 +41,7 @@
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/wantedsans_semibold"
         android:text="갖고있는 알레르기 정보를\n알려주세요."
-        android:textColor="@color/athens_gray_950"
+        android:textColor="@color/gray_950"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -190,7 +190,7 @@
             android:text="취소하기"
             android:fontFamily="@font/wantedsans_bold"
             android:textSize="14sp"
-            android:textColor="@color/azure_radience_50" />
+            android:textColor="@color/blue_50" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/nextBtn"

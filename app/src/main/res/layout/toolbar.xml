@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="@color/semi_white">
+    android:background="@color/gray_50">
 
     <TextView
         android:id="@+id/tv_logo"
@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:text="@string/result_toolbar"
         android:textAlignment="center"
-        android:textColor="@color/text_default"
+        android:textColor="@color/gray_950"
         android:fontFamily="@font/wantedsans_semibold"
         android:textSize="20sp"
         android:textStyle="bold" />

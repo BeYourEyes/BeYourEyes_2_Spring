@@ -6,35 +6,35 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="azure_radience_900">#19348F</color>
-    <color name="azure_radience_700">#1543E0</color>
-    <color name="azure_radience_600">#265FF4</color>
-    <color name="azure_radience_500">#3379FE</color>
-    <color name="azure_radience_300">#8EC1FF</color>
-    <color name="azure_radience_200">#BCD9FF</color>
-    <color name="azure_radience_100">#D9E9FF</color>
-    <color name="azure_radience_50">#EEF5FF</color>
-    <color name="alert_400">#FF7B64</color> <!--alert/400-->
-    <color name="alert_500">#FF5133</color> <!--alert/500-->
-    <color name="alert_50">#FFF3F1</color> <!--alert/50-->
-    <color name="athens_gray_950">#333239</color> <!--Athens Gray/950-->
-    <color name="athens_gray_700">#6F7086</color> <!--Athens Gray/700-->
-    <color name="athens_gray_500">#8D91A4</color> <!--Athens Gray/500-->
-    <color name="athens_gray_400">#A4A8B6</color> <!--Athens Gray/400-->
-    <color name="athens_gray_300">#C1C5CF</color> <!--Athens Gray/300-->
-    <color name="athens_gray_100">#E7E8EC</color> <!--Athens Gray/100-->
-    <color name="athens_gray_50">#F6F7F8</color> <!--Athens Gray/50-->
-    <color name="text_default">#1F1F1F</color> <!--textcolor_default-->
-    <color name="basic_950">#303236</color> <!--basic/950-->
-    <color name="basic_700">#787D8A</color> <!--basic/950-->
-    <color name="border">#5C5D61</color> <!--border-->
-    <color name="disabled">#8C8C93</color> <!--disabled-->
-    <color name="spacer">#B3B3BD</color> <!--spacer-->
-    <color name="spacer_light">#C8CBD0</color> <!--spacer_light-->
-    <color name="bg_lightgray">#E7E8EC</color> <!--Bg_lightgray-->
-    <color name="semi_white">#F6F7F9</color> <!--Semiwhite-->
     <color name="white">#FFFFFF</color>
+
+
+    <!-- 포인트 색상 -->
+    <color name="blue_900">#19348F</color> <!--Azure Radiance/900-->
+    <color name="blue_700">#1543E0</color> <!--Azure Radiance/700-->
+    <color name="blue_600">#265FF4</color> <!--Azure Radiance/600-->
+    <color name="blue_500">#3379FE</color> <!--Azure Radiance/500-->
+    <color name="blue_400">#599EFF</color> <!--Azure Radiance/400-->
+    <color name="blue_300">#8EC1FF</color> <!--Azure Radiance/300-->
+    <color name="blue_200">#BCD9FF</color> <!--Azure Radiance/200-->
+    <color name="blue_100">#D9E9FF</color> <!--Azure Radiance/100-->
+    <color name="blue_50">#EEF5FF</color> <!--Azure Radiance/50-->
+    <color name="alert_500">#FF5133</color> <!--alert/500-->
+    <color name="alert_400">#FF7B64</color> <!--alert/400-->
+    <color name="alert_50">#FFF3F1</color> <!--alert/50-->
+    <!-- 회색조 -->
+    <color name="gray_950">#333239</color> <!--Athens Gray/950-->
+    <color name="gray_900">#4D4E5B</color> <!--Athens Gray/900-->
+    <color name="gray_800">#5E5E6F</color> <!--Athens Gray/800-->
+    <color name="gray_700">#6F7086</color> <!--Athens Gray/700-->
+    <color name="gray_500">#8D91A4</color> <!--Athens Gray/500-->
+    <color name="gray_400">#A4A8B6</color> <!--Athens Gray/400-->
+    <color name="gray_300">#C1C5CF</color> <!--Athens Gray/300-->
+    <color name="gray_200">#DBDCE2</color> <!--Athens Gray/200-->
+    <color name="gray_100">#E7E8EC</color> <!--Athens Gray/100-->
+    <color name="gray_50">#F6F7F8</color>  <!--Athens Gray/50-->
+
+
     <color name="chart_yellow">#FFBD00</color> <!--Color1-->
-    <color name="transparent">#00FFFFFF</color>
 
 </resources>

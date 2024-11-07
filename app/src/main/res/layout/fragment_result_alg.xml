@@ -18,7 +18,7 @@
         android:paddingLeft="18dp"
         android:paddingTop="15dp"
         android:text="@string/algResultText"
-        android:textColor="@color/text_default"
+        android:textColor="@color/gray_950"
         android:textSize="20dp" />
 
 
