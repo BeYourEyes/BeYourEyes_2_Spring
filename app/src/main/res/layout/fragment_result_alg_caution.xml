@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/alg_caution_text1"
-            android:textColor="@color/text_default"
+            android:textColor="@color/gray_950"
             android:fontFamily="@font/wantedsans_bold"
             android:textSize="14sp" />
 
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/alg_caution_text2"
-            android:textColor="@color/text_default"
+            android:textColor="@color/gray_950"
             android:fontFamily="@font/wantedsans_bold"
             android:textSize="18sp"
             android:textStyle="bold" />

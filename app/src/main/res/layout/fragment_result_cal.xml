@@ -13,7 +13,7 @@
         android:gravity="center"
         android:text="@string/result_cal_text1"
         android:fontFamily="@font/wantedsans_semibold"
-        android:textColor="@color/text_default"
+        android:textColor="@color/gray_950"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
             android:gravity="center"
             android:text="@string/result_cal_text2"
             android:fontFamily="@font/wantedsans_black"
-            android:textColor="@color/text_default"
+            android:textColor="@color/gray_950"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -40,7 +40,7 @@
             android:gravity="center"
             android:text="@string/result_cal_text3"
             android:fontFamily="@font/wantedsans_semibold"
-            android:textColor="@color/text_default"
+            android:textColor="@color/gray_950"
             android:textSize="16sp"
             android:textStyle="bold" />
     </LinearLayout>

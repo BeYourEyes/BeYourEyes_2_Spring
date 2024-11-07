@@ -10,7 +10,7 @@ import android.util.Log
 enum class Status(val colorRID: Int) {
     WARNING(R.color.alert_500),    // 경고 - 빨간색 표시
     CAUTION(R.color.chart_yellow),    // 주의 - 노란색 표시
-    SATISFIED(R.color.blue_ribbon_500)   // 적정 - 초록색 표시
+    SATISFIED(R.color.blue_500)   // 적정 - 초록색 표시
 }
 
 // 섭취량이 기준치 미달인지 초과인지 분류하고 그에 따른 평가를 구분하기 위한 enum 객체

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AllergyChip" parent="@style/Widget.MaterialComponents.Chip.Choice">
-        <item name="chipStrokeColor">@color/azure_radience_400</item>
+        <item name="chipStrokeColor">@color/blue_400</item>
         <item name="chipStrokeWidth">0dp</item>
         <item name="chipBackgroundColor">@color/allergy_chip_background_color</item>
         <item name="android:textColor">@color/allergy_chip_text_color</item>
@@ -10,7 +10,7 @@
 
     <style name="chipText" parent="TextAppearance.MaterialComponents.Chip">
         <item name="android:fontFamily">@font/wantedsans_semibold</item>
-        <item name="android:textColor">@color/basic_950</item>
+        <item name="android:textColor">@color/gray_500</item>
         <item name="android:textSize">16sp</item>
     </style>
 </resources>

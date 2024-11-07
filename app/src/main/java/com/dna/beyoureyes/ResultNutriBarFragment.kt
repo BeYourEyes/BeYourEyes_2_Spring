@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import com.dna.beyoureyes.databinding.FResultNutriBarChartBinding
+import com.dna.beyoureyes.databinding.FragmentResultNutriBarChartBinding
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.data.BarEntry
@@ -27,7 +27,7 @@ class ResultNutriBarFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding : FResultNutriBarChartBinding? = null
+    private var _binding : FragmentResultNutriBarChartBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +43,7 @@ class ResultNutriBarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FResultNutriBarChartBinding.inflate(inflater, container, false)
+        _binding = FragmentResultNutriBarChartBinding.inflate(inflater, container, false)
         val naBarChart : HorizontalBarChart = binding.naBarchart
         val na : TextView = binding.nutriBarResultNa
         val testNaBarChart = NutriIntakeBarDisplay(naBarChart, na)

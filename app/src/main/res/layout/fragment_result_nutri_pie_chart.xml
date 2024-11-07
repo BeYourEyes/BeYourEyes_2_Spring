@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="@string/result_nutri_pie_chart_text1"
         android:fontFamily="@font/wantedsans_bold"
-        android:textColor="@color/text_default"
+        android:textColor="@color/gray_950"
         android:textSize="20sp"/>
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="@string/result_nutri_pie_chart_text2"
         android:fontFamily="@font/wantedsans_semibold"
-        android:textColor="@color/basic_700"
+        android:textColor="@color/gray_700"
         android:textSize="14sp" />
 
     <com.github.mikephil.charting.charts.PieChart

@@ -34,7 +34,7 @@ class ResultFailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.f_result_fail, container, false)
+        return inflater.inflate(R.layout.fragment_result_fail, container, false)
     }
 
     companion object {

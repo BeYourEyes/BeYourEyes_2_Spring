@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.dna.beyoureyes.databinding.FResultNutriPieChartBinding
+import com.dna.beyoureyes.databinding.FragmentResultNutriPieChartBinding
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -19,7 +19,7 @@ class ResultNutriPieChartFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding : FResultNutriPieChartBinding? = null
+    private var _binding : FragmentResultNutriPieChartBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class ResultNutriPieChartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FResultNutriPieChartBinding.inflate(inflater, container, false)
+        _binding = FragmentResultNutriPieChartBinding.inflate(inflater, container, false)
         val piechart = binding.resultNutriPiehart
         val energyChart = EnergyChart(piechart)
         energyChart.setChart(requireActivity())

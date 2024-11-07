@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/semi_white"
+    android:background="@color/gray_50"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".ResultFragment"> <!-- Center all children horizontally -->
@@ -67,7 +67,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:backgroundTint="@color/transparent"
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
@@ -79,7 +78,7 @@
             android:background="@drawable/shape_button_b100_200"
             android:fontFamily="@font/wantedsans_bold"
             android:text="@string/result_text1"
-            android:textColor="@color/azure_radience_900"
+            android:textColor="@color/blue_900"
             android:textSize="16sp"
             tools:ignore="TouchTargetSizeCheck" />
 
@@ -92,7 +91,7 @@
             android:background="@drawable/shape_button_b100_500"
             android:fontFamily="@font/wantedsans_bold"
             android:text="@string/result_text2"
-            android:textColor="@color/azure_radience_50"
+            android:textColor="@color/blue_50"
             android:textSize="16sp"
             tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
