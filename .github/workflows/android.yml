@@ -1,4 +1,4 @@
-name: Android CI/CD
+name: Android CI
 
 # 모든 브랜치에 대해 워크 플로우 실행 -> 성공하면 -> main으로 merge
 on:
@@ -44,35 +44,12 @@ jobs:
     # 참고! 빌드 성공하면 자동으로 apk 생성하도록 함
     - name: Build APK
       run: ./gradlew assembleRelease
-      
-    - name: Build AAB
-      run: ./gradlew bundleRelease # AAB 파일 생성
 
-    - name: Upload APK and AAB
+    - name: Upload APK
       uses: actions/upload-artifact@v3
       with:
-        name: artifacts
-        path: |
-          app\build\outputs\apk\debug\app-debug.apk # APK 파일 경로
-          app/build/outputs/bundle/release/app-release.aab # AAB 파일 경로
-
-
-    - name: Install Firebase CLI
-      run: npm install -g firebase-tools
-
-    - name: Create service account key file
-      run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/serviceAccountKey.json
-
-    - name: Deploy APK to Firebase App Distribution
-      uses: wzieba/Firebase-Distribution-Github-Action@v1
-      with:
-        appId: ${{ secrets.FIREBASE_APP_ID }}
-        serviceCredentialsFile: $HOME/serviceAccountKey.json
-        groups: release-testers
-        file: app\build\outputs\apk\debug\app-debug.apk
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      continue-on-error: true
+        name: apk
+        path: app/build/outputs/apk/release/app-release.apk # APK 파일 경로
 
     # # 참고! 각 브랜치에서 빌드 성공하면 main으로 자동 병합
     # - name : Auto-merge to main
