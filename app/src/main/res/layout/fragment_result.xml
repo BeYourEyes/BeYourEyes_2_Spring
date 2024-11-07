@@ -26,11 +26,26 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/ImageFragment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/sample_pasta"
+                    android:contentDescription="@string/desciption_result_image"/>
+
+                <ImageView
+                    android:id="@+id/gradientView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/gradient_layer_list_g50" />
+
+            </FrameLayout>
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/TotalCalorieFragment"

@@ -23,6 +23,6 @@
         android:layout_height="30dp"
         android:layout_gravity="left"
         android:layout_marginRight="15dp"
-        app:srcCompat="@drawable/arrow_back" />
+        app:srcCompat="@drawable/ic_arrow_back_24" />
 
 </androidx.appcompat.widget.Toolbar>
