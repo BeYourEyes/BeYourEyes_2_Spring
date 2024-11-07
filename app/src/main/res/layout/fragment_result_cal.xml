@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/result_cal_text1"
-        android:fontFamily="@font/wantedsans_semibold"
+        android:fontFamily="@font/wantedsans_semi_bold"
         android:textColor="@color/gray_950"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/result_cal_text3"
-            android:fontFamily="@font/wantedsans_semibold"
+            android:fontFamily="@font/wantedsans_semi_bold"
             android:textColor="@color/gray_950"
             android:textSize="16sp"
             android:textStyle="bold" />

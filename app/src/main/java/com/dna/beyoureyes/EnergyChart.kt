@@ -3,10 +3,6 @@ package com.dna.beyoureyes
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
-import android.text.style.TextAppearanceSpan
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -23,8 +19,6 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 
 //========================================================================
 // 오늘의 섭취량 통계 디스플레이 요소 관련 클래스들
@@ -103,7 +97,7 @@ class NutriIntakeBarDisplay(
         val data = BarData(set)
         data.setValueTextColor(ContextCompat.getColor(context, R.color.white))
         data.setValueTextSize(14f)
-        data.setValueTypeface(ResourcesCompat.getFont(context, R.font.wantedsans_extrabold))
+        data.setValueTypeface(ResourcesCompat.getFont(context, R.font.wantedsans_extra_bold))
 
         barChart.setExtraOffsets(0f, 0f, 0f, 0f)
         barChart.setViewPortOffsets(0f, dpToPx(context, -1f), 0f, dpToPx(context, -1f))
@@ -272,7 +266,7 @@ class EnergyChart(private val chart : PieChart) {
             setColors(colors) // 차트 요소별 색상 설정
             valueTextColor = Color.WHITE // 값(백분율) 표시 색상 설정
             valueTextSize = 14f // 값 크기
-            valueTypeface = ResourcesCompat.getFont(context, R.font.wantedsans_extrabold) // 글꼴 수정
+            valueTypeface = ResourcesCompat.getFont(context, R.font.wantedsans_extra_bold) // 글꼴 수정
 
         }
 
@@ -308,7 +302,7 @@ class EnergyChart(private val chart : PieChart) {
             centerText = null // 가운데 텍스트 없앰
             setEntryLabelTextSize(14f) // label 글씨 크기
             setEntryLabelColor(Color.WHITE) // label 색상
-            setEntryLabelTypeface(ResourcesCompat.getFont(context, R.font.wantedsans_extrabold))
+            setEntryLabelTypeface(ResourcesCompat.getFont(context, R.font.wantedsans_extra_bold))
             animateY(0, Easing.EaseInOutQuad) // 0.8초 동안 애니메이션 설정
             animate()
         }

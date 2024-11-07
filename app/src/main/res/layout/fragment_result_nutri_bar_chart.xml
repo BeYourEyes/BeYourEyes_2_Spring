@@ -13,7 +13,7 @@
         android:id="@+id/result_bar_chart_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/wantedsans_extrabold"
+        android:fontFamily="@font/wantedsans_extra_bold"
         android:text="@string/result_nutri_bar_chart_text1"
         android:textColor="@color/gray_950"
         android:textSize="16sp" />
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:layout_marginStart="4dp"
-            android:fontFamily="@font/wantedsans_extrabold"
+            android:fontFamily="@font/wantedsans_extra_bold"
             android:gravity="center|left"
             android:text="150mg"
             android:textColor="@color/blue_700" />
@@ -51,7 +51,7 @@
             android:layout_weight="1"
             android:gravity="right|center"
             android:text="권장 섭취량 00g"
-            android:fontFamily="@font/wantedsans_semibold"
+            android:fontFamily="@font/wantedsans_semi_bold"
             android:textSize="13sp"
             android:textColor="@color/gray_300" />
 
@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:layout_marginStart="4dp"
-            android:fontFamily="@font/wantedsans_extrabold"
+            android:fontFamily="@font/wantedsans_extra_bold"
             android:gravity="center|left"
             android:text="18.2g"
             android:textColor="@color/blue_700" />
@@ -103,7 +103,7 @@
             android:layout_weight="1"
             android:gravity="right|center"
             android:text="권장 섭취량 00g"
-            android:fontFamily="@font/wantedsans_semibold"
+            android:fontFamily="@font/wantedsans_semi_bold"
             android:textSize="13sp"
             android:textColor="@color/gray_300" />
 
@@ -144,7 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:layout_marginStart="4dp"
-            android:fontFamily="@font/wantedsans_extrabold"
+            android:fontFamily="@font/wantedsans_extra_bold"
             android:gravity="center|left"
             android:text="1.3g"
             android:textColor="@color/blue_700" />
@@ -156,7 +156,7 @@
             android:layout_weight="1"
             android:gravity="right|center"
             android:text="권장 섭취량 00g"
-            android:fontFamily="@font/wantedsans_semibold"
+            android:fontFamily="@font/wantedsans_semi_bold"
             android:textSize="13sp"
             android:textColor="@color/gray_300" />
 
@@ -196,7 +196,7 @@
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:layout_marginStart="4dp"
-            android:fontFamily="@font/wantedsans_extrabold"
+            android:fontFamily="@font/wantedsans_extra_bold"
             android:gravity="center|left"
             android:text="52g"
             android:textColor="@color/blue_700" />
@@ -208,7 +208,7 @@
             android:layout_weight="1"
             android:gravity="right|center"
             android:text="권장 섭취량 00g"
-            android:fontFamily="@font/wantedsans_semibold"
+            android:fontFamily="@font/wantedsans_semi_bold"
             android:textSize="13sp"
             android:textColor="@color/gray_300" />
 
@@ -248,7 +248,7 @@
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:layout_marginStart="4dp"
-            android:fontFamily="@font/wantedsans_extrabold"
+            android:fontFamily="@font/wantedsans_extra_bold"
             android:gravity="center|left"
             android:text="0g"
             android:textColor="@color/blue_700" />
@@ -260,7 +260,7 @@
             android:layout_weight="1"
             android:gravity="right|center"
             android:text="권장 섭취량 00g"
-            android:fontFamily="@font/wantedsans_semibold"
+            android:fontFamily="@font/wantedsans_semi_bold"
             android:textSize="13sp"
             android:textColor="@color/gray_300" />
 
@@ -300,7 +300,7 @@
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:layout_marginStart="4dp"
-            android:fontFamily="@font/wantedsans_extrabold"
+            android:fontFamily="@font/wantedsans_extra_bold"
             android:gravity="center|left"
             android:text="0g"
             android:textColor="@color/blue_700" />
@@ -312,7 +312,7 @@
             android:layout_weight="1"
             android:gravity="right|center"
             android:text="권장 섭취량 00g"
-            android:fontFamily="@font/wantedsans_semibold"
+            android:fontFamily="@font/wantedsans_semi_bold"
             android:textSize="13sp"
             android:textColor="@color/gray_300" />
 

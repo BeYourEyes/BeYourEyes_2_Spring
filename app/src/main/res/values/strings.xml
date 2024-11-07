@@ -42,4 +42,16 @@
     <string name="nutri_fat">포화지방</string>
     <string name="nutri_chole">콜레스테롤</string>
     <string name="nutri_protein">단백질</string>
+
+    <string name="allergy_none">없음</string>
+    <string name="allergy_buckwheat">메밀</string>
+    <string name="allergy_wheat">밀</string>
+    <string name="allergy_bean">대두</string>
+    <string name="allergy_peanut">땅콩</string>
+    <string name="allergy_walnut">호두</string>
+    <string name="allergy_pinenut">잣</string>
+    <string name="allergy_acid">아황산</string>
+    <string name="allergy_peach">복숭아</string>
+    <string name="allergy_tomato">토마토</string>
+    <string name="assign_start">시작하기</string>
 </resources>
