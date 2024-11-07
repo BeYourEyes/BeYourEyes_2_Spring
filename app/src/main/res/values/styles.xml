@@ -4,13 +4,13 @@
     <!-- MainActivity 하단 네비게이션바 스타일 -->
     <style name="BottomNavigationTextStyle">
         <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <!-- 툴바 제목 스타일 -->
     <style name="ToolBarTitleStyle">
-        <item name="android:fontFamily">@font/wanted_sans_extra_bold</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <!-- 툴바 메뉴 스타일 -->
