@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="320dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/result_background"
+    android:background="@drawable/shape_result_fragment_background_white_stroke_10"
     android:orientation="vertical"
     tools:context=".ResultAlgFragment">
 

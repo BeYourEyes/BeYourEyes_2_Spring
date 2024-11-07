@@ -26,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="@+id/groupLayout"
             app:layout_constraintStart_toStartOf="@+id/groupLayout"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/result_failed_img" />
+            app:srcCompat="@drawable/ic_result_fail_48" />
 
         <TextView
             android:id="@+id/textView"
