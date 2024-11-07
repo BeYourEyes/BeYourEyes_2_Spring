@@ -86,7 +86,7 @@ class NutriIntakeBarDisplay(
         val set = BarDataSet(entries, "Nutri Intake")
         set.setDrawIcons(false)
         set.setDrawValues(true)
-        set.color = ContextCompat.getColor(context, R.color.blue_ribbon_500)
+        set.color = ContextCompat.getColor(context, R.color.azure_radience_500)
         set.barShadowColor = ContextCompat.getColor(context, R.color.bg_lightgray)
 
         //set.valueFormatter = PercentFormatter() // 값 표시 String 포맷 설정
@@ -262,7 +262,7 @@ class EnergyChart(private val chart : PieChart) {
 
         // 색깔 적용
         val colors = listOf(
-            ContextCompat.getColor(context, R.color.blue_ribbon_500),
+            ContextCompat.getColor(context, R.color.azure_radience_500),
             ContextCompat.getColor(context, R.color.chart_yellow),
             ContextCompat.getColor(context, R.color.alert_500)
         )

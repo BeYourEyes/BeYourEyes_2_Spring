@@ -42,7 +42,7 @@
             android:fontFamily="@font/wantedsans_extrabold"
             android:gravity="center|left"
             android:text="150mg"
-            android:textColor="@color/blue_ribbon_700" />
+            android:textColor="@color/azure_radience_700" />
 
         <TextView
             android:id="@+id/naDV"
@@ -94,7 +94,7 @@
             android:fontFamily="@font/wantedsans_extrabold"
             android:gravity="center|left"
             android:text="18.2g"
-            android:textColor="@color/blue_ribbon_700" />
+            android:textColor="@color/azure_radience_700" />
 
         <TextView
             android:id="@+id/carbDV"
@@ -147,7 +147,7 @@
             android:fontFamily="@font/wantedsans_extrabold"
             android:gravity="center|left"
             android:text="1.3g"
-            android:textColor="@color/blue_ribbon_700" />
+            android:textColor="@color/azure_radience_700" />
 
         <TextView
             android:id="@+id/sugarDV"
@@ -199,7 +199,7 @@
             android:fontFamily="@font/wantedsans_extrabold"
             android:gravity="center|left"
             android:text="52g"
-            android:textColor="@color/blue_ribbon_700" />
+            android:textColor="@color/azure_radience_700" />
 
         <TextView
             android:id="@+id/fatDV"
@@ -251,7 +251,7 @@
             android:fontFamily="@font/wantedsans_extrabold"
             android:gravity="center|left"
             android:text="0g"
-            android:textColor="@color/blue_ribbon_700" />
+            android:textColor="@color/azure_radience_700" />
 
         <TextView
             android:id="@+id/choleDV"
@@ -303,7 +303,7 @@
             android:fontFamily="@font/wantedsans_extrabold"
             android:gravity="center|left"
             android:text="0g"
-            android:textColor="@color/blue_ribbon_700" />
+            android:textColor="@color/azure_radience_700" />
 
         <TextView
             android:id="@+id/proteinDV"
