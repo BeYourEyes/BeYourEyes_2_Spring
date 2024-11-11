@@ -29,5 +29,16 @@
 
     </declare-styleable>
 
+    <!-- 툴바 Custom View 속성 -->
+    <declare-styleable name="CustomToolbar">
+
+        <!-- String 속성 : 화면 제목 -->
+        <attr name="title" format="string"/>
+
+        <!-- Boolean 속성 : 건너뛰기 메뉴 활성화 -->
+        <attr name="skipEnabled" format="boolean"/>
+
+    </declare-styleable>
+
 
 </resources>

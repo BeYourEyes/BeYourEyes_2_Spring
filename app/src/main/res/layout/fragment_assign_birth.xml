@@ -6,42 +6,14 @@
     android:background="@color/gray_50"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.dna.beyoureyes.ui.CustomToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/gray_50"
-        app:contentInsetEnd="0dp"
-        app:contentInsetStart="0dp"
+        android:layout_height="wrap_content"
+        app:title="@string/assign_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!-- 뒤로가기 -->
-        <ImageButton
-            android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="뒤로가기"
-            android:padding="12dp"
-            android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/gray_950" />
-
-        <!-- 제목 -->
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="맞춤 설계"
-            android:textAppearance="@style/ToolBarTitleStyle"
-            android:textColor="@color/gray_950" />
-
-
-    </androidx.appcompat.widget.Toolbar>
-
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/stepText"
@@ -51,7 +23,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/wanted_sans_semi_bold"
-        android:text="STEP 3"
+        android:text="@string/assign_step3"
         android:textColor="@color/blue_500"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +39,7 @@
         android:layout_marginTop="0dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/wanted_sans_semi_bold"
-        android:text="고객님의 출생연도는\n몇년인가요?"
+        android:text="@string/assign_step3_question"
         android:textColor="@color/gray_950"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,10 +61,10 @@
             android:id="@+id/yearText"
             android:layout_width="81dp"
             android:layout_height="28dp"
-            android:background="@drawable/bg_gray_300_rds_20"
+            android:background="@drawable/shape_background_g300_20"
             android:fontFamily="@font/wanted_sans_semi_bold"
             android:gravity="center"
-            android:text="태어난 년도"
+            android:text="@string/assign_birth_year"
             android:textColor="@color/gray_950"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/yearPicker"
@@ -103,10 +75,10 @@
             android:id="@+id/monthText"
             android:layout_width="63dp"
             android:layout_height="28dp"
-            android:background="@drawable/bg_gray_300_rds_20"
+            android:background="@drawable/shape_background_g300_20"
             android:fontFamily="@font/wanted_sans_semi_bold"
             android:gravity="center"
-            android:text="월"
+            android:text="@string/assign_birth_month"
             android:textColor="@color/gray_950"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/monthPicker"
@@ -117,10 +89,10 @@
             android:id="@+id/dayText"
             android:layout_width="63dp"
             android:layout_height="28dp"
-            android:background="@drawable/bg_gray_300_rds_20"
+            android:background="@drawable/shape_background_g300_20"
             android:fontFamily="@font/wanted_sans_semi_bold"
             android:gravity="center"
-            android:text="일"
+            android:text="@string/assign_birth_day"
             android:textColor="@color/gray_950"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -167,8 +139,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="14dp"
-        android:background="@drawable/bg_round_blue_button"
-        android:text="다음으로"
+        android:background="@drawable/shape_button_b500_24"
+        android:text="@string/assign_button_next"
         android:fontFamily="@font/wanted_sans_bold"
         android:textSize="14sp"
         android:textColor="@color/white"

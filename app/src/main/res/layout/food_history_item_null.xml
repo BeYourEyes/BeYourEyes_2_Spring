@@ -5,11 +5,11 @@
     android:layout_width="136dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="0dp"
-    android:background="@drawable/bg_white_dash_rds_10"
+    android:background="@drawable/shape_background_g300_10_dash"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@drawable/bg_white_dash_rds_10"
+        android:background="@drawable/shape_background_g300_10_dash"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -22,6 +22,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/gray_200"
-            app:srcCompat="@drawable/ic_dining_32" />
+            app:srcCompat="@drawable/ic_myinfo_dining_32" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

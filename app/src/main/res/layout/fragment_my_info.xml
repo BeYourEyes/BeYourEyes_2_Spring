@@ -7,39 +7,14 @@
     android:background="@color/gray_50"
     tools:context=".ui.myInfo.MyInfoFragment">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.dna.beyoureyes.ui.CustomToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/gray_50"
-        app:contentInsetEnd="0dp"
-        app:contentInsetStart="0dp"
+        android:layout_height="wrap_content"
+        app:title="@string/my_info_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!-- 뒤로가기 -->
-        <ImageButton
-            android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="뒤로가기"
-            android:padding="12dp"
-            android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/gray_950" />
-
-        <!-- 제목 -->
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="내 정보"
-            android:textAppearance="@style/ToolBarTitleStyle"
-            android:textColor="@color/gray_950" />
-    </androidx.appcompat.widget.Toolbar>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ScrollView
         android:layout_width="0dp"
@@ -61,7 +36,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="28dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/bg_white_rds_10"
+                android:background="@drawable/shape_background_white_10"
                 android:paddingHorizontal="18dp"
                 android:paddingVertical="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/wanted_sans_bold"
-                    android:text="내가 가진 알레르기 정보"
+                    android:text="@string/my_info_allergy_view_label"
                     android:textColor="@color/gray_950"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/wanted_sans_semi_bold"
-                    android:text="수정"
+                    android:text="@string/my_info_edit"
                     android:textColor="@color/gray_500"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -112,7 +87,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="37dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/bg_white_rds_10"
+                android:background="@drawable/shape_background_white_10"
                 android:paddingHorizontal="18dp"
                 android:paddingVertical="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -124,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/wanted_sans_bold"
-                    android:text="내 질환"
+                    android:text="@string/my_info_disease_view_label"
                     android:textColor="@color/gray_950"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -138,7 +113,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/wanted_sans_semi_bold"
-                    android:text="수정"
+                    android:text="@string/my_info_edit"
                     android:textColor="@color/gray_500"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -172,7 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/wanted_sans_bold"
-                    android:text="SSO"
+                    android:text="@string/tmp_my_info_nickname"
                     android:textColor="@color/blue_500"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -184,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/wanted_sans_bold"
-                    android:text="님"
+                    android:text="@string/my_info_greeting1"
                     android:textColor="@color/gray_950"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="@+id/profileName"
@@ -197,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/wanted_sans_bold"
-                    android:text="건강한 하루 보내세요!"
+                    android:text="@string/my_info_greeting2"
                     android:textColor="@color/gray_950"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="@+id/profileName"
@@ -213,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/wanted_sans_semi_bold"
-                    android:text="정보 수정"
+                    android:text="@string/my_info_edit_profile"
                     android:textColor="@color/gray_500"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -256,7 +231,7 @@
                     android:scrollbarSize="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/historyInstruction">
+                    app:layout_constraintTop_toBottomOf="@+id/historyIntro">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -267,49 +242,49 @@
                             android:id="@+id/historyRecyclerView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="16dp"
+                            android:layout_marginEnd="16dp"
                             android:orientation="horizontal" />
 
                         <include
                             layout="@layout/food_history_item_null"
                             android:layout_width="136dp"
                             android:layout_height="169dp"
-                            android:layout_marginRight="16dp" />
+                            android:layout_marginEnd="16dp" />
 
                         <include
                             layout="@layout/food_history_item_null"
                             android:layout_width="136dp"
                             android:layout_height="169dp"
-                            android:layout_marginRight="16dp" />
+                            android:layout_marginEnd="16dp" />
 
                         <include
                             layout="@layout/food_history_item_null"
                             android:layout_width="136dp"
                             android:layout_height="169dp"
-                            android:layout_marginRight="16dp" />
+                            android:layout_marginEnd="16dp" />
 
                         <include
                             layout="@layout/food_history_item_null"
                             android:layout_width="136dp"
                             android:layout_height="169dp"
-                            android:layout_marginRight="16dp" />
+                            android:layout_marginEnd="16dp" />
 
                         <include
                             layout="@layout/food_history_item_null"
                             android:layout_width="136dp"
                             android:layout_height="169dp"
-                            android:layout_marginRight="16dp" />
+                            android:layout_marginEnd="16dp" />
                     </LinearLayout>
 
                 </HorizontalScrollView>
 
                 <TextView
-                    android:id="@+id/historyInstruction"
+                    android:id="@+id/historyIntro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="@font/wanted_sans_semi_bold"
-                    android:text="과거에 분석했던 식품들을 모아볼 수 있어요"
+                    android:text="@string/my_info_history_view_intro"
                     android:textColor="@color/gray_500"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -324,7 +299,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:fontFamily="@font/wanted_sans_semi_bold"
-                    android:text="수정"
+                    android:text="@string/my_info_edit"
                     android:textColor="@color/gray_300"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/historyLabel"
@@ -339,7 +314,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:fontFamily="@font/wanted_sans_semi_bold"
-                    android:text="1"
+                    android:text="@string/tmp_my_info_history_cnt"
                     android:textColor="@color/blue_400"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="@+id/historyLabel"
@@ -351,7 +326,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/wanted_sans_bold"
-                    android:text="과거에 분석한 영양 기록"
+                    android:text="@string/my_info_history_view_label"
                     android:textColor="@color/gray_950"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -373,7 +348,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/wanted_sans_bold"
-                    android:text="고객지원"
+                    android:text="@string/my_info_cs_view_label"
                     android:textColor="@color/gray_950"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -385,7 +360,7 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="12dp"
                     android:background="?android:attr/selectableItemBackground"
-                    android:drawableLeft="@drawable/ic_share_24"
+                    android:drawableStart="@drawable/ic_myinfo_share_24"
                     android:drawablePadding="16dp"
                     android:drawableTint="@color/gray_300"
                     android:fontFamily="@font/wanted_sans_semi_bold"
@@ -393,7 +368,7 @@
                     android:letterSpacing="0"
                     android:paddingHorizontal="20dp"
                     android:paddingVertical="0dp"
-                    android:text="앱 공유하기"
+                    android:text="@string/my_info_cs_share"
                     android:textColor="@color/gray_800"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -405,7 +380,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="?android:attr/selectableItemBackground"
-                    android:drawableLeft="@drawable/ic_chat_24"
+                    android:drawableStart="@drawable/ic_myinfo_chat_24"
                     android:drawablePadding="16dp"
                     android:drawableTint="@color/gray_300"
                     android:fontFamily="@font/wanted_sans_semi_bold"
@@ -413,7 +388,7 @@
                     android:letterSpacing="0"
                     android:paddingHorizontal="20dp"
                     android:paddingVertical="0dp"
-                    android:text="앱 스토어 리뷰 남기기"
+                    android:text="@string/my_info_cs_review"
                     android:textColor="@color/gray_800"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -425,7 +400,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="?android:attr/selectableItemBackground"
-                    android:drawableLeft="@drawable/ic_headset_24"
+                    android:drawableStart="@drawable/ic_myinfo_headset_24"
                     android:drawablePadding="16dp"
                     android:drawableTint="@color/gray_300"
                     android:fontFamily="@font/wanted_sans_semi_bold"
@@ -433,7 +408,7 @@
                     android:letterSpacing="0"
                     android:paddingHorizontal="20dp"
                     android:paddingVertical="0dp"
-                    android:text="고객센터 문의하기"
+                    android:text="@string/my_info_cs_contact"
                     android:textColor="@color/gray_800"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -446,7 +421,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="?android:attr/selectableItemBackground"
-                    android:drawableLeft="@drawable/ic_lock_24"
+                    android:drawableStart="@drawable/ic_myinfo_lock_24"
                     android:drawablePadding="16dp"
                     android:drawableTint="@color/gray_300"
                     android:fontFamily="@font/wanted_sans_semi_bold"
@@ -454,7 +429,7 @@
                     android:letterSpacing="0"
                     android:paddingHorizontal="20dp"
                     android:paddingVertical="0dp"
-                    android:text="개인정보 처리 방침"
+                    android:text="@string/my_info_cs_privacy_policy"
                     android:textColor="@color/gray_800"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -485,7 +460,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/wanted_sans_semi_bold"
-                    android:text="앱 버전"
+                    android:text="@string/my_info_app_version_label"
                     android:textColor="@color/gray_400"
                     android:textSize="14sp" />
 
@@ -496,7 +471,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/wanted_sans_semi_bold"
                     android:gravity="end|center_vertical"
-                    android:text="version 5.0"
+                    android:text="@string/tmp_my_info_app_version_value"
                     android:textColor="@color/gray_500"
                     android:textSize="14sp" />
             </LinearLayout>
