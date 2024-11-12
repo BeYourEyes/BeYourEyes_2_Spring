@@ -2,8 +2,8 @@
     <string name="app_name">routinetoday</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <!--Toolbar-->
-    <string name="result_toolbar">식품 분석 결과</string>
+    <!-- layout/toolbar.xml -->
+    <string name="toolbar_skip">건너뛰기</string>
 
     <!-- f_result_cal -->
     <string name="result_cal_text1">총 칼로리는</string>
@@ -54,4 +54,23 @@
     <string name="allergy_peach">복숭아</string>
     <string name="allergy_tomato">토마토</string>
     <string name="assign_start">시작하기</string>
+
+    <!-- Temporary Strings (개발 중 확인용 임시 텍스트) -->
+    <string name="tmp_toolbar">화면명</string>
+
+    <string name="tmp_home_kcal_diff_value">477</string>
+    <string name="tmp_home_kcal_value">1423</string>
+    <string name="tmp_home_kcal_daily_value">2000kcal</string>
+
+    <string name="tmp_my_info_nickname">SSO</string>
+    <string name="tmp_my_info_history_cnt">1</string>
+    <string name="tmp_my_info_app_version_value">version 5.0</string>
+
+    <string name="tmp_intake_bar_percent_value">140%</string>
+    <string name="tmp_intake_bar_mg_value">420mg</string>
+    <string name="tmp_intake_bar_daily_value">일일 권장량 300mg</string>
+
+    <string name="tmp_food_history_title">2024.11.11</string>
+    <string name="tmp_food_history_kcal">170kcal</string>
+
 </resources>
