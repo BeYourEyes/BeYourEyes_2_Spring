@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/result_nutri_pie_chart_text1"
-        android:fontFamily="@font/wantedsans_bold"
+        android:fontFamily="@font/wanted_sans_bold"
         android:textColor="@color/gray_950"
         android:textSize="20sp"/>
 
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/result_nutri_pie_chart_text2"
-        android:fontFamily="@font/wantedsans_semi_bold"
+        android:fontFamily="@font/wanted_sans_semi_bold"
         android:textColor="@color/gray_700"
         android:textSize="14sp" />
 

@@ -97,7 +97,7 @@ class NutriIntakeBarDisplay(
         val data = BarData(set)
         data.setValueTextColor(ContextCompat.getColor(context, R.color.white))
         data.setValueTextSize(14f)
-        data.setValueTypeface(ResourcesCompat.getFont(context, R.font.wantedsans_extra_bold))
+        data.setValueTypeface(ResourcesCompat.getFont(context, R.font.wanted_sans_extra_bold))
 
         barChart.setExtraOffsets(0f, 0f, 0f, 0f)
         barChart.setViewPortOffsets(0f, dpToPx(context, -1f), 0f, dpToPx(context, -1f))
@@ -266,7 +266,7 @@ class EnergyChart(private val chart : PieChart) {
             setColors(colors) // 차트 요소별 색상 설정
             valueTextColor = Color.WHITE // 값(백분율) 표시 색상 설정
             valueTextSize = 14f // 값 크기
-            valueTypeface = ResourcesCompat.getFont(context, R.font.wantedsans_extra_bold) // 글꼴 수정
+            valueTypeface = ResourcesCompat.getFont(context, R.font.wanted_sans_extra_bold) // 글꼴 수정
 
         }
 
@@ -287,7 +287,7 @@ class EnergyChart(private val chart : PieChart) {
             xEntrySpace = 24f // 항목과 항목 사이의 거리
             formSize = 10f // 형식의 크기
             textSize = 13f // 텍스트 크기
-            typeface = ResourcesCompat.getFont(context, R.font.wantedsans_regular)
+            typeface = ResourcesCompat.getFont(context, R.font.wanted_sans_regular)
 
         }
 
@@ -302,7 +302,7 @@ class EnergyChart(private val chart : PieChart) {
             centerText = null // 가운데 텍스트 없앰
             setEntryLabelTextSize(14f) // label 글씨 크기
             setEntryLabelColor(Color.WHITE) // label 색상
-            setEntryLabelTypeface(ResourcesCompat.getFont(context, R.font.wantedsans_extra_bold))
+            setEntryLabelTypeface(ResourcesCompat.getFont(context, R.font.wanted_sans_extra_bold))
             animateY(0, Easing.EaseInOutQuad) // 0.8초 동안 애니메이션 설정
             animate()
         }
