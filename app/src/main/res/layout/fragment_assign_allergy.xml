@@ -23,7 +23,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
-        android:fontFamily="@font/wantedsans_semi_bold"
+        android:fontFamily="@font/wanted_sans_semi_bold"
         android:text="STEP 5"
         android:textColor="@color/blue_500"
         android:textSize="18sp"
@@ -39,7 +39,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="20dp"
-        android:fontFamily="@font/wantedsans_semi_bold"
+        android:fontFamily="@font/wanted_sans_semi_bold"
         android:text="갖고있는 알레르기 정보를\n알려주세요."
         android:textColor="@color/gray_950"
         android:textSize="18sp"
@@ -188,7 +188,7 @@
             android:layout_marginEnd="5dp"
             android:background="@drawable/shape_button_g400_24"
             android:text="취소하기"
-            android:fontFamily="@font/wantedsans_bold"
+            android:fontFamily="@font/wanted_sans_bold"
             android:textSize="14sp"
             android:textColor="@color/blue_50" />
 
@@ -201,7 +201,7 @@
             android:layout_marginEnd="21dp"
             android:background="@drawable/shape_button_b500_24"
             android:text="@string/assign_start"
-            android:fontFamily="@font/wantedsans_bold"
+            android:fontFamily="@font/wanted_sans_bold"
             android:textSize="14sp"
             android:textColor="@color/white" />
 
