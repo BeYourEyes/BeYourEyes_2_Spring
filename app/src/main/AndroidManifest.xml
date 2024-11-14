@@ -31,7 +31,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeYourEyes"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ResultEatActivity"
+            android:exported="false" />
         <!-- 임시 파일 저장소 -->
         <provider
             android:name="androidx.core.content.FileProvider"

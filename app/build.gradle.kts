@@ -16,6 +16,10 @@ android {
         enable = true
     }
 
+    dataBinding {
+        enable = true
+    }
+
     defaultConfig {
         applicationId = "com.dna.beyoureyes"
         minSdk = 24
@@ -98,6 +102,19 @@ dependencies {
     implementation ("androidx.camera:camera-video:1.4.0-rc01")
     implementation ("androidx.camera:camera-view:1.4.0-rc01")
     implementation ("androidx.camera:camera-extensions:1.4.0-rc01")
+
+    //Circle Image
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    //View Animations
+    implementation("com.daimajia.androidanimations:library:2.4@aar")
+    // Fragment
+    implementation("androidx.fragment:fragment-ktx:1.8.2")
+    // MVVM pattern
+    implementation ("androidx.core:core-ktx:1.7.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation ("androidx.activity:activity-ktx:1.7.0")
+
 
 
 }
