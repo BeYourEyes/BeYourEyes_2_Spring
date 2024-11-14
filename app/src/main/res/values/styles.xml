@@ -46,9 +46,9 @@
 
     <!--알레르기 칩 스타일-->
     <style name="AllergyChip" parent="@style/Widget.MaterialComponents.Chip.Choice">
-        <item name="chipStrokeColor">@color/blue_400</item>
         <item name="chipStrokeWidth">0dp</item>
         <item name="chipBackgroundColor">@color/allergy_chip_background_color</item>
+        <item name="chipStrokeColor">@color/chip_stroke_color</item>
         <item name="android:textColor">@color/allergy_chip_text_color</item>
         <item name="chipCornerRadius">10dp</item>
     </style>
