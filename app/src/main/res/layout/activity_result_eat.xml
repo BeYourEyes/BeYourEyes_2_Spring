@@ -31,7 +31,8 @@
             android:layout_height="match_parent"
             android:clipChildren="true"
             android:orientation="vertical"
-            android:paddingBottom="30dp">
+            android:paddingBottom="30dp"
+            android:clipToPadding="false">
 
             <FrameLayout
                 android:id="@+id/frameLayout"
