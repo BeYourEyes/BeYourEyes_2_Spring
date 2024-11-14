@@ -73,5 +73,7 @@
     <string name="tmp_food_history_title">2024.11.11</string>
     <string name="tmp_food_history_kcal">170kcal</string>
     <string name="result_toolbar">식품 분석 결과</string>
+    <string name="assign_toolbar">맞춤설계</string>
+    <string name="assign_step5">STEP 5</string>
 
 </resources>
