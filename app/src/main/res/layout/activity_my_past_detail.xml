@@ -28,7 +28,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="뒤로가기"
             android:padding="12dp"
-            android:src="@drawable/my_past_detail_close"
+            android:src="@drawable/close"
             app:tint="@color/gray_950" />
 
         <!-- 제목 -->
