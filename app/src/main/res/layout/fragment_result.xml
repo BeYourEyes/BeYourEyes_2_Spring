@@ -5,17 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/gray_50"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context=".ResultFragment"> <!-- Center all children horizontally -->
-
-    <com.dna.beyoureyes.ui.CustomToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="@string/result_toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
