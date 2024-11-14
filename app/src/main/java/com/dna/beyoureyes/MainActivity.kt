@@ -20,30 +20,6 @@ class MainActivity : AppCompatActivity() {
         // 레이아웃 바인딩
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        /*
-        Log.d("Chip", "isStarted")
-        //startActivity(Intent(this, ResultEatActivity::class.java))
-        binding.chipTest.setOnCheckedChangeListener{ _, isChanged ->
-            if(isChanged) {
-                binding.chipTest.chipStrokeWidth = 2f.toDp(this)
-                val displayMetrics = resources.displayMetrics
-                val densityDpi = displayMetrics.densityDpi
-                println("Current screen density (DPI): $densityDpi")
-            } else {
-                binding.chipTest.chipStrokeWidth = 0f
-            }
-        }
-
-        val resultFragment = ResultNutriBarFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.testBarChart, resultFragment)
-            .commitNow()
-
-        supportFragmentManager.executePendingTransactions() // 프래그먼트 실행 후 실행
-
-         */
-
         // 하단 네비게이션 뷰 초기화
         val navView: BottomNavigationView = binding.navView
 

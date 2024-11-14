@@ -37,7 +37,7 @@
         <com.google.android.material.chip.Chip
             style="@style/AllergyChip"
             android:layout_width="85dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:text="@string/allergy_wheat"
             android:textAlignment="center"
             android:textAppearance="@style/chipText"
@@ -46,7 +46,7 @@
         <com.google.android.material.chip.Chip
             style="@style/AllergyChip"
             android:layout_width="85dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:text="@string/allergy_peach"
             android:textAlignment="center"
             android:textAppearance="@style/chipText"
@@ -55,7 +55,7 @@
         <com.google.android.material.chip.Chip
             style="@style/AllergyChip"
             android:layout_width="85dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:text="@string/allergy_tomato"
             android:textAlignment="center"
             android:textAppearance="@style/chipText"
