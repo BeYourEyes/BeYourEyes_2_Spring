@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_50"
+    tools:context=".ui.myInfo.MyInfoFragment">
+
+    <com.dna.beyoureyes.ui.CustomToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/my_info_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:scrollbarSize="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/allergyLayout"
+                android:layout_width="0dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/shape_background_white_10"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/diseaseLayout">
+
+                <TextView
+                    android:id="@+id/allergyLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/wanted_sans_bold"
+                    android:text="@string/my_info_allergy_view_label"
+                    android:textColor="@color/gray_950"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:id="@+id/editAllergy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/wanted_sans_semi_bold"
+                    android:text="@string/my_info_edit"
+                    android:textColor="@color/gray_500"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/allergyChipGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/allergyLabel"></com.google.android.material.chip.ChipGroup>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/diseaseLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="37dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/shape_background_white_10"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileLayout">
+
+                <TextView
+                    android:id="@+id/diseaseLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/wanted_sans_bold"
+                    android:text="@string/my_info_disease_view_label"
+                    android:textColor="@color/gray_950"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:id="@+id/editDisease"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/wanted_sans_semi_bold"
+                    android:text="@string/my_info_edit"
+                    android:textColor="@color/gray_500"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/diseaseChipGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/diseaseLabel"></com.google.android.material.chip.ChipGroup>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/profileLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="19dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/profileName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/wanted_sans_bold"
+                    android:text="@string/tmp_my_info_nickname"
+                    android:textColor="@color/blue_500"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/greetingMsgTop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/wanted_sans_bold"
+                    android:text="@string/my_info_greeting1"
+                    android:textColor="@color/gray_950"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/profileName"
+                    app:layout_constraintStart_toEndOf="@+id/profileName"
+                    app:layout_constraintTop_toTopOf="@+id/profileName" />
+
+                <TextView
+                    android:id="@+id/greetingMsgBottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/wanted_sans_bold"
+                    android:text="@string/my_info_greeting2"
+                    android:textColor="@color/gray_950"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="@+id/profileName"
+                    app:layout_constraintTop_toBottomOf="@+id/profileName" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/editProfile"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:gravity="start|center_vertical"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/wanted_sans_semi_bold"
+                    android:text="@string/my_info_edit_profile"
+                    android:textColor="@color/gray_500"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/greetingMsgBottom" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/profileCardView"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    app:cardCornerRadius="100dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/profileName">
+
+                    <ImageView
+                        android:id="@+id/profileImgView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintTop_toTopOf="@+id/profileName"
+                        tools:src="@tools:sample/avatars" />
+
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/historyLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="28dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/allergyLayout">
+
+                <HorizontalScrollView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:scrollbarSize="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/historyIntro">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/historyRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="16dp"
+                            android:orientation="horizontal" />
+
+                        <include
+                            layout="@layout/food_history_item_null"
+                            android:layout_width="136dp"
+                            android:layout_height="169dp"
+                            android:layout_marginEnd="16dp" />
+
+                        <include
+                            layout="@layout/food_history_item_null"
+                            android:layout_width="136dp"
+                            android:layout_height="169dp"
+                            android:layout_marginEnd="16dp" />
+
+                        <include
+                            layout="@layout/food_history_item_null"
+                            android:layout_width="136dp"
+                            android:layout_height="169dp"
+                            android:layout_marginEnd="16dp" />
+
+                        <include
+                            layout="@layout/food_history_item_null"
+                            android:layout_width="136dp"
+                            android:layout_height="169dp"
+                            android:layout_marginEnd="16dp" />
+
+                        <include
+                            layout="@layout/food_history_item_null"
+                            android:layout_width="136dp"
+                            android:layout_height="169dp"
+                            android:layout_marginEnd="16dp" />
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+                <TextView
+                    android:id="@+id/historyIntro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/wanted_sans_semi_bold"
+                    android:text="@string/my_info_history_view_intro"
+                    android:textColor="@color/gray_500"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/historyLabel" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:id="@+id/editHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/wanted_sans_semi_bold"
+                    android:text="@string/my_info_edit"
+                    android:textColor="@color/gray_300"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/historyLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/historyCnt"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/historyCnt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:fontFamily="@font/wanted_sans_semi_bold"
+                    android:text="@string/tmp_my_info_history_cnt"
+                    android:textColor="@color/blue_400"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/historyLabel"
+                    app:layout_constraintStart_toEndOf="@+id/historyLabel"
+                    app:layout_constraintTop_toTopOf="@+id/historyLabel" />
+
+                <TextView
+                    android:id="@+id/historyLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/wanted_sans_bold"
+                    android:text="@string/my_info_history_view_label"
+                    android:textColor="@color/gray_950"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/csLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/historyLayout">
+
+                <TextView
+                    android:id="@+id/csLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/wanted_sans_bold"
+                    android:text="@string/my_info_cs_view_label"
+                    android:textColor="@color/gray_950"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/shareBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="12dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:drawableStart="@drawable/ic_myinfo_share_24"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/gray_300"
+                    android:fontFamily="@font/wanted_sans_semi_bold"
+                    android:gravity="start|center_vertical"
+                    android:letterSpacing="0"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="0dp"
+                    android:text="@string/my_info_cs_share"
+                    android:textColor="@color/gray_800"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/csLabel" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/reviewBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:drawableStart="@drawable/ic_myinfo_chat_24"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/gray_300"
+                    android:fontFamily="@font/wanted_sans_semi_bold"
+                    android:gravity="start|center_vertical"
+                    android:letterSpacing="0"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="0dp"
+                    android:text="@string/my_info_cs_review"
+                    android:textColor="@color/gray_800"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/shareBtn" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/contactBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:drawableStart="@drawable/ic_myinfo_headset_24"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/gray_300"
+                    android:fontFamily="@font/wanted_sans_semi_bold"
+                    android:gravity="start|center_vertical"
+                    android:letterSpacing="0"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="0dp"
+                    android:text="@string/my_info_cs_contact"
+                    android:textColor="@color/gray_800"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/reviewBtn" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/privacyPolicyBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:drawableStart="@drawable/ic_myinfo_lock_24"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/gray_300"
+                    android:fontFamily="@font/wanted_sans_semi_bold"
+                    android:gravity="start|center_vertical"
+                    android:letterSpacing="0"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="0dp"
+                    android:text="@string/my_info_cs_privacy_policy"
+                    android:textColor="@color/gray_800"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/contactBtn" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/appVersionLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="73dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="25dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/csLayout">
+
+                <TextView
+                    android:id="@+id/appVersionLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/wanted_sans_semi_bold"
+                    android:text="@string/my_info_app_version_label"
+                    android:textColor="@color/gray_400"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/appVersionText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/wanted_sans_semi_bold"
+                    android:gravity="end|center_vertical"
+                    android:text="@string/tmp_my_info_app_version_value"
+                    android:textColor="@color/gray_500"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
