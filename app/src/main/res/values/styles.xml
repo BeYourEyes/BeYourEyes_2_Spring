@@ -4,13 +4,13 @@
     <!-- MainActivity 하단 네비게이션바 스타일 -->
     <style name="BottomNavigationTextStyle">
         <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <!-- 툴바 제목 스타일 -->
     <style name="ToolBarTitleStyle">
-        <item name="android:fontFamily">@font/wanted_sans_extra_bold</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <!-- 툴바 메뉴 스타일 -->
@@ -44,4 +44,24 @@
         <item name="colorControlNormal">@android:color/transparent</item>
     </style>
 
+    <!-- 툴바 제목 스타일 -->
+    <style name="ToolBarTitleStyle">
+        <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!--알레르기 칩 스타일-->
+    <style name="AllergyChip" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipStrokeColor">@color/blue_400</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="chipBackgroundColor">@color/allergy_chip_background_color</item>
+        <item name="android:textColor">@color/allergy_chip_text_color</item>
+        <item name="chipCornerRadius">10dp</item>
+    </style>
+    <!--알레르기 폰트 스타일-->
+    <style name="chipText" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
+        <item name="android:textColor">@color/gray_500</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

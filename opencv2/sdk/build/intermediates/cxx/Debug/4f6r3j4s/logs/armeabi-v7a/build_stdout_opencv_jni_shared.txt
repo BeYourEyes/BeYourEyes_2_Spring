@@ -1,2 +1,4 @@
+
 ninja: Entering directory `C:\Users\sojin\AndroidStudioProjects\0825\BeYourEyes_2\opencv2\sdk\.cxx\Debug\4f6r3j4s\armeabi-v7a'
+
 ninja: no work to do.
