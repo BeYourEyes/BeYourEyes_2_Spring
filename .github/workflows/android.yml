@@ -1,21 +1,25 @@
-name: Android CI
+name: Android CI/CD
 
+# 모든 브랜치에 대해 워크 플로우 실행 -> 성공하면 -> main으로 merge
 on:
   push:
-    branches: [ "main", "jiyoung" ]
+    branches: 
+      - '**'
   pull_request:
-    branches: [ "main", "jiyoung" ]
+    branches: 
+      - 'main'
 
 jobs:
   build:
+    # Ubuntu 최신 버전에서 실행
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4 # 소스 코드 깃허브에 checkout
     - name: set up JDK 18
       uses: actions/setup-java@v4
       with:
-        java-version: '18'
+        java-version: '18' # JDK 18을 설치하고 설정
         distribution: 'temurin'
         cache: gradle
 
@@ -23,21 +27,78 @@ jobs:
       run: chmod +x gradlew
       
     - name: Clean Bulid
-      run: ./gradlew clean
+      run: ./gradlew clean # Gradle 빌드 클린
       
     - name: Run lint
-      run: ./gradlew lintDebug -Dlint.baselines.continue=true --continue
-    - name: Upload lint report # 빌드 리포트를 저장하는 위치를 지정 GitHub Actions의 artifacts에 저장
+      run: ./gradlew lintDebug -Dlint.baselines.continue=true # 코드 린트 실행해서 코드 품질 검사
+
+    - name: Build with Gradle
+      # 프로젝트 빌드하고 에러 발생하면 스택 트레이스 출력
+      run: ./gradlew build --stacktrace
+      # run: ./gradlew build
+
+    # 테스트용
+    # - name: hello world
+    #   run: echo "Hello World!!"
+
+    # 참고! 빌드 성공하면 자동으로 apk 생성하도록 함
+    - name: Build APK
+      run: ./gradlew assembleRelease
+      
+    - name: Build AAB
+      run: ./gradlew bundleRelease # AAB 파일 생성
+
+    - name: Upload APK and AAB
       uses: actions/upload-artifact@v3
       with:
-        name: lint-report
-        path: app/build/reports/lint-results-debug.html
-    - name: Download a Build Artifact # 빌드 리포트 다운로드
-      uses: actions/download-artifact@v4.1.8
-      
-    - name: Build with Gradle
-      run: ./gradlew build --stacktrace --continue
-      # run: ./gradlew build
-      
-    - name: hello world
-      run: echo "Hello World!!"
+        name: artifacts
+        path: |
+          app\build\outputs\apk\debug\app-debug.apk # APK 파일 경로
+          app/build/outputs/bundle/release/app-release.aab # AAB 파일 경로
+
+
+    - name: Install Firebase CLI
+      run: npm install -g firebase-tools
+
+    - name: Create service account key file
+      run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/serviceAccountKey.json
+
+    - name: Deploy APK to Firebase App Distribution
+      uses: wzieba/Firebase-Distribution-Github-Action@v1
+      with:
+        appId: ${{ secrets.FIREBASE_APP_ID }}
+        serviceCredentialsFile: $HOME/serviceAccountKey.json
+        groups: release-testers
+        file: app\build\outputs\apk\debug\app-debug.apk
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      continue-on-error: true
+
+    # # 참고! 각 브랜치에서 빌드 성공하면 main으로 자동 병합
+    # - name : Auto-merge to main
+    #   if: github.ref != 'refs/heads/main' && success()
+    #   run: |
+    #     git config --global user.email "github-actions@github.com"
+    #     git config --global user.name "GitHub Actions"
+    #     git fetch origin
+    #     git checkout ${GITHUB_REF}
+    #     git merge origin/main --no-ff -m "${GITHUB_REF} branch BeyourEyes Merge success"
+    #     git push origin ${GITHUB_REF}
+    #     env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # # 참고! 각 브랜치 빌드 성공하면 readme에 표시 -> 효율적인 병합위해.. 이건 고민해보기!
+    # - name: Update README with branch status
+    #   if: success()
+    #   run: |
+    #     BRANCH_NAME=${GITHUB_REF#refs/heads/}
+    #     DATE=$(date '+%Y-%m-%d %H:%M:%S')
+    #     echo "## 빌드 상태" > README.md
+    #     echo "브랜치: $BRANCH_NAME - 빌드 성공 - $DATE" >> README.md
+    #     git config --global user.email "github-actions@github.com"
+    #     git config --global user.name "GitHub Actions"
+    #     git add README.md
+    #     git commit -m "README 업데이트: 브랜치 $BRANCH_NAME의 빌드 상태"
+    #     git push origin $BRANCH_NAME
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
