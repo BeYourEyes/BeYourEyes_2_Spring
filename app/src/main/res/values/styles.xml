@@ -3,7 +3,7 @@
 
     <!-- MainActivity 하단 네비게이션바 스타일 -->
     <style name="BottomNavigationTextStyle">
-        <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
+        <item name="android:fontFamily">@font/want`ed_sans_semi_bold</item>
         <item name="android:textSize">14sp</item>
     </style>
 
@@ -42,12 +42,6 @@
         <item name="android:textColorPrimary">@color/gray_950</item>
         <item name="android:textColorHighlight">@color/blue_100</item>
         <item name="colorControlNormal">@android:color/transparent</item>
-    </style>
-
-    <!-- 툴바 제목 스타일 -->
-    <style name="ToolBarTitleStyle">
-        <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
-        <item name="android:textSize">18sp</item>
     </style>
 
     <!--알레르기 칩 스타일-->
