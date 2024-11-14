@@ -1,61 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray_50"
-    tools:context=".MainActivity">
-
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/register_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/dots_indicator"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="프래그먼트 슬라이더"
-        app:layout_constraintHeight_percent="0.7" />
-
-
-    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-        android:id="@+id/dots_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/register_viewpager"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:dotsColor="@color/black"
-        app:dotsCornerRadius="8dp"
-        app:dotsSize="16dp"
-        app:dotsSpacing="4dp"
-        app:dotsWidthFactor="2.5"
-        app:progressMode="true"
-        app:selectedDotColor="@color/black" />
-
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dots_indicator"
-        app:layout_constraintVertical_bias="0.982">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
-            android:layout_width="320dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:background="@drawable/radius"
-            android:text="시작하기"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-    </FrameLayout>
+    android:layout_height="match_parent">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

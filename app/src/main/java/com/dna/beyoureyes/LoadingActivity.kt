@@ -1,14 +1,12 @@
 package com.dna.beyoureyes
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
-import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.widget.ProgressBar
 import android.widget.TextView
-
 
 class LoadingActivity : AppCompatActivity() {
 
