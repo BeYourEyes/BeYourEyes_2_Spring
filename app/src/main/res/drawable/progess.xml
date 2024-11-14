@@ -14,7 +14,11 @@
         <clip>
             <shape android:shape="rectangle">
                 <corners android:radius="20dp" /> <!-- 둥근 모서리 반경 설정 -->
-                <solid android:color="#3379FE" /> <!-- 진행색 (파란색) -->
+                <!-- 그라데이션 추가 -->
+                <gradient
+                    android:startColor="#33A9FE"
+                    android:endColor="#3379FE"
+                    android:angle="0" />
             </shape>
         </clip>
     </item>

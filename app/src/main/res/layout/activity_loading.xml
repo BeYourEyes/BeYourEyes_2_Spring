@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="식품 분석 결과"
+            android:text="@string/loading_title"
             android:textAppearance="@style/ToolBarTitleStyle"
             android:textColor="@color/gray_950" />
     </androidx.appcompat.widget.Toolbar>
@@ -48,7 +48,7 @@
         android:layout_height="28dp"
         android:fontFamily="@font/wanted_sans_semi_bold"
         android:gravity="center"
-        android:text="사진을 분석 중입니다."
+        android:text="@string/loading_maintext"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/status_text2"
@@ -62,7 +62,7 @@
         android:fontFamily="@font/wanted_sans_semi_bold"
         android:gravity="center"
         android:layout_marginBottom="28dp"
-        android:text="잠시만 기다려주세요."
+        android:text="@string/loading_subtext"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout"
@@ -92,7 +92,7 @@
             android:layout_height="29dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="38%"
+            android:text="@string/loading_percent"
             android:textColor="@color/black"
             android:textSize="16sp" />
     </FrameLayout>
