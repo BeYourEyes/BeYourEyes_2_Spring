@@ -19,22 +19,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+    <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
         android:id="@+id/dots_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        app:dotsColor="@color/black"
-        app:dotsCornerRadius="8dp"
-        app:dotsSize="16dp"
+        app:dotsColor="@color/gray_900"
+        app:dotsCornerRadius="10dp"
+        app:dotsStrokeWidth="3.5dp"
+        app:dotsStrokeColor="@color/gray_300"
+        app:dotsSize="7dp"
+        app:dotsWidthFactor="1"
         app:dotsSpacing="4dp"
-        app:dotsWidthFactor="2.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_viewpager"
-        app:progressMode="true"
-        app:selectedDotColor="@color/black" />
+        app:progressMode="true" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"

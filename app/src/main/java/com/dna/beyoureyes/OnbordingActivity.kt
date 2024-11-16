@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.AppCompatButton
 import androidx.viewpager.widget.ViewPager
-import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class OnbordingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,7 +12,7 @@ class OnbordingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_onbording)
 
         val viewPager = findViewById<ViewPager>(R.id.register_viewpager)
-        val dotsIndicator = findViewById<DotsIndicator>(R.id.dots_indicator)
+        val dotsIndicator = findViewById<WormDotsIndicator>(R.id.dots_indicator)
 
         // 어댑터 설정
         val adapter = RegisterPagerAdapter(supportFragmentManager)
