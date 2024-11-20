@@ -1,8 +1,10 @@
 package com.dna.beyoureyes
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.AppCompatButton
+import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
@@ -22,7 +24,10 @@ class OnbordingActivity : AppCompatActivity() {
 
         val startButton = findViewById<AppCompatButton>(R.id.button)
         startButton.setOnClickListener {
-            viewPager.currentItem = 0
+            //viewPager.currentItem = 0
+            val intent = Intent(this, AssignActivity::class.java)
+            startActivity(intent)
         }
     }
+
 }

@@ -5,14 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4de4957-33bd-4252-ac4c-9ac294a979dc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/styles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/dna/beyoureyes/AssignActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/dna/beyoureyes/AssignGenderFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/dna/beyoureyes/AssignNameFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/layout/activity_assign.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dna/beyoureyes/OnbordingActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dna/beyoureyes/OnbordingActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_assign_gender.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_assign_gender.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_assign_name.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_assign_name.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/Debug/4f6r3j4s/logs/arm64-v8a/generate_cxx_metadata_414_timing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/Debug/4f6r3j4s/logs/arm64-v8a/generate_cxx_metadata_414_timing.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/Debug/4f6r3j4s/logs/x86/build_model.json" beforeDir="false" afterPath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/Debug/4f6r3j4s/logs/x86/build_model.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/Debug/4f6r3j4s/logs/x86/generate_cxx_metadata_32_timing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/Debug/4f6r3j4s/logs/x86/generate_cxx_metadata_32_timing.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/Debug/4f6r3j4s/logs/x86/metadata_generation_record.json" beforeDir="false" afterPath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/Debug/4f6r3j4s/logs/x86/metadata_generation_record.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/abi_configuration_1s16rs2z.json" beforeDir="false" afterPath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/abi_configuration_1s16rs2z.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/abi_configuration_1s16rs2z_key.json" beforeDir="false" afterPath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/abi_configuration_1s16rs2z_key.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/create_cxx_tasks_250_timing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/create_cxx_tasks_250_timing.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/create_cxx_tasks_32_timing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../opencv2/sdk/build/intermediates/cxx/create_cxx_tasks_32_timing.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,9 +43,9 @@
       </map>
     </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-312" />
     <option name="y" value="95" />
@@ -65,7 +71,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "soyoung",
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
