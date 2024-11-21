@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.dna.beyoureyes.databinding.FragmentAssignDiseaseBinding
+import com.dna.beyoureyes.ui.CustomToolbar
+import com.dna.beyoureyes.ui.FragmentNavigationListener
 
 
 class AssignDiseaseFragment : Fragment() {
@@ -31,8 +33,14 @@ class AssignDiseaseFragment : Fragment() {
     ): View? {
         binding = FragmentAssignDiseaseBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
+        val listener = activity as? FragmentNavigationListener
         binding.nextBtn.setOnClickListener {
-            (activity as? AssignActivity)?.replaceFragment(AssignAllergyFragment())
+            listener?.onBtnClick(this, true)
+        }
+        binding.toolbar.backButtonClickListener = object : CustomToolbar.BackButtonClickListener {
+            override fun onBackButtonClicked() {
+                listener?.onBtnClick(this@AssignDiseaseFragment, false)
+            }
         }
         return binding.root
     }
