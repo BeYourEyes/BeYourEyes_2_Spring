@@ -132,7 +132,7 @@
             app:layout_constraintTop_toTopOf="@+id/yearPicker" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/nextBtn"
         android:layout_width="0dp"
         android:layout_height="44dp"

@@ -77,111 +77,111 @@ tools:context=".AssignDiseaseFragment">
     app:layout_constraintTop_toBottomOf="@+id/stepText" />
 
 
-<com.google.android.material.chip.ChipGroup
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="20dp"
-    android:layout_marginEnd="20dp"
-    app:chipSpacing="8dp"
-    app:layout_constraintBottom_toTopOf="@+id/nextBtn"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.48"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/questionText"
-    app:layout_constraintVertical_bias="0.106"
-    app:singleSelection="false"
-    tools:ignore="MissingConstraints">
-
-    <LinearLayout
+    <com.google.android.material.chip.ChipGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:chipSpacing="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/nextBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionText"
+        app:layout_constraintVertical_bias="0.106"
+        app:singleSelection="false"
+        tools:ignore="MissingConstraints">
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_margin="5dp"
-            android:layout_width="98dp"
-            android:layout_height="98dp"
-            android:background="@drawable/assign_disease_no" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/assign_disease_no"
-            android:fontFamily="@font/wanted_sans_semi_bold"
-            android:textSize="16sp"
-            android:textAlignment="center" />
-    </LinearLayout>
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="98dp"
+                android:layout_height="98dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/assign_disease_no" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_margin="5dp"
-            android:layout_width="98dp"
-            android:layout_height="98dp"
-            android:background="@drawable/assign_disease_diabetes" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/wanted_sans_semi_bold"
+                android:text="@string/assign_disease_no"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/assign_disease_diabetes"
-            android:fontFamily="@font/wanted_sans_semi_bold"
-            android:textSize="16sp"
-            android:textAlignment="center" />
-    </LinearLayout>
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="98dp"
+                android:layout_height="98dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/assign_disease_diabetes" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_margin="5dp"
-            android:layout_width="98dp"
-            android:layout_height="98dp"
-            android:background="@drawable/assign_disease_highblood" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/wanted_sans_semi_bold"
+                android:text="@string/assign_disease_diabetes"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/assign_disease_HighBloodPressure"
-            android:fontFamily="@font/wanted_sans_semi_bold"
-            android:textSize="16sp"
-            android:textAlignment="center" />
-    </LinearLayout>
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="98dp"
+                android:layout_height="98dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/assign_disease_highblood" />
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_margin="5dp"
-            android:layout_width="98dp"
-            android:layout_height="98dp"
-            android:background="@drawable/assign_disease_hyperlipidemia" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/wanted_sans_semi_bold"
+                android:text="@string/assign_disease_HighBloodPressure"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/assign_disease_hyperlipidemia"
-            android:fontFamily="@font/wanted_sans_semi_bold"
-            android:textSize="16sp"
-            android:textAlignment="center" />
-    </LinearLayout>
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="98dp"
+                android:layout_height="98dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/assign_disease_hyperlipidemia" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/wanted_sans_semi_bold"
+                android:text="@string/assign_disease_hyperlipidemia"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+        </LinearLayout>
 
 
-</com.google.android.material.chip.ChipGroup>
+    </com.google.android.material.chip.ChipGroup>
 
 <androidx.appcompat.widget.AppCompatButton
     android:id="@+id/nextBtn"
