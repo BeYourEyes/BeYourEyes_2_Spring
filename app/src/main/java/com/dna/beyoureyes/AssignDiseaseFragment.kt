@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.dna.beyoureyes.databinding.FragmentAssignDiseaseBinding
+import com.dna.beyoureyes.ui.CustomToolbar
+import com.dna.beyoureyes.ui.FragmentNavigationListener
 
 
 class AssignDiseaseFragment : Fragment() {
@@ -17,6 +20,7 @@ class AssignDiseaseFragment : Fragment() {
     private var isImageView2Clicked = false
     private var isImageView3Clicked = false
     private var isImageView4Clicked = false
+    private lateinit var binding : FragmentAssignDiseaseBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +31,18 @@ class AssignDiseaseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentAssignDiseaseBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_assign_disease, container, false)
+        val listener = activity as? FragmentNavigationListener
+        binding.nextBtn.setOnClickListener {
+            listener?.onBtnClick(this, true)
+        }
+        binding.toolbar.backButtonClickListener = object : CustomToolbar.BackButtonClickListener {
+            override fun onBackButtonClicked() {
+                listener?.onBtnClick(this@AssignDiseaseFragment, false)
+            }
+        }
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

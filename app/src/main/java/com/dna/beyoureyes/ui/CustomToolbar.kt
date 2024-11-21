@@ -18,6 +18,12 @@ class CustomToolbar(context: Context, attrs: AttributeSet?) :
     private val skipButton : AppCompatButton
     private val titleView : TextView
 
+    interface BackButtonClickListener {
+        fun onBackButtonClicked()
+    }
+
+    var backButtonClickListener: BackButtonClickListener? = null
+
     init {
         // 커스텀 툴바 View의 XML 레이아웃을 인플레이트
         LayoutInflater.from(context).inflate(R.layout.toolbar, this, true)
@@ -48,7 +54,9 @@ class CustomToolbar(context: Context, attrs: AttributeSet?) :
             typedArray.recycle()
         }
 
-        // backButton.setOnClickListener {  } <- 뒤로 가기 버튼 터치 시 동작 일괄 구현 가능
+        backButton.setOnClickListener {
+            backButtonClickListener?.onBackButtonClicked()
+        } //<- 뒤로 가기 버튼 터치 시 동작 일괄 구현 가능
         // skipButton.setOnClickLister {  }  <- 건너뛰기 버튼 터치 시 동작 일괄 구현 가능
     }
 }

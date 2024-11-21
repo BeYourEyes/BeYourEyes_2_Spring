@@ -136,39 +136,39 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- 확인하기 button -->
-    <string name = "okaybutton">확인하기</string>
-    <string name = "gobutton">시작하기</string>
-    <string name = "nextbutton">다음으로</string>
+    <string name="okaybutton">확인하기</string>
+    <string name="gobutton">시작하기</string>
+    <string name="nextbutton">다음으로</string>
 
     <!--  camera_fail  -->
-    <string name = "camer_fail_title">식품 분석 결과</string>
-    <string name = "camer_fail_maintext">사진이 너무 흐리게 나왔습니다.</string>
-    <string name = "camer_fail_subtext">초점을 잘 맞춰서 촬영해주세요.</string>
+    <string name="camer_fail_title">식품 분석 결과</string>
+    <string name="camer_fail_maintext">사진이 너무 흐리게 나왔습니다.</string>
+    <string name="camer_fail_subtext">초점을 잘 맞춰서 촬영해주세요.</string>
 
     <!--  food_caution  -->
-    <string name = "food_caution_title">식품 분석 유의사항</string>
-    <string name = "food_caution_text_1">물체를 사물과 잘 구별되는 배경에 \n놓고 촬영해주세요.</string>
-    <string name = "food_caution_text_2">초점을 잘 맞춰서 촬영해주세요.</string>
-    <string name = "food_caution_text_3">글씨가 잘 보이도록 가까기 찍되,\n전체 내용을 다 담을 수 있도록\n촬영해주세요.</string>
+    <string name="food_caution_title">식품 분석 유의사항</string>
+    <string name="food_caution_text_1">물체를 사물과 잘 구별되는 배경에 \n놓고 촬영해주세요.</string>
+    <string name="food_caution_text_2">초점을 잘 맞춰서 촬영해주세요.</string>
+    <string name="food_caution_text_3">글씨가 잘 보이도록 가까기 찍되,\n전체 내용을 다 담을 수 있도록\n촬영해주세요.</string>
 
     <!--  loading  -->
-    <string name = "loading_title">식품 분석 결과</string>
-    <string name = "loading_maintext">사진을 분석 중입니다.</string>
-    <string name = "loading_subtext">잠시만 기다려주세요.</string>
-    <string name = "loading_percent">38%</string>
+    <string name="loading_title">식품 분석 결과</string>
+    <string name="loading_maintext">사진을 분석 중입니다.</string>
+    <string name="loading_subtext">잠시만 기다려주세요.</string>
+    <string name="loading_percent">38%</string>
 
     <!--  my_past_detail  -->
-    <string name = "my_past_detail_title">과거 기록</string>
-    <string name = "my_past_detail_day">2024.06.24 (수)\n14:45PM</string>
+    <string name="my_past_detail_title">과거 기록</string>
+    <string name="my_past_detail_day">2024.06.24 (수)\n14:45PM</string>
 
     <!--  assign_disease  -->
-    <string name = "assign_disease_title">맞춤 설계</string>
-    <string name = "assign_disease_step4">STEP 4</string>
-    <string name = "assign_disease_maintext">갖고있는 질환 정보를\n알려주세요.</string>
-    <string name = "assign_disease_no">없음</string>
-    <string name = "assign_disease_diabetes">당뇨</string>
-    <string name = "assign_disease_HighBloodPressure">고혈압</string>
-    <string name = "assign_disease_hyperlipidemia">고지혈증</string>
+    <string name="assign_disease_title">맞춤 설계</string>
+    <string name="assign_disease_step4">STEP 4</string>
+    <string name="assign_disease_maintext">갖고있는 질환 정보를\n알려주세요.</string>
+    <string name="assign_disease_no">없음</string>
+    <string name="assign_disease_diabetes">당뇨</string>
+    <string name="assign_disease_HighBloodPressure">고혈압</string>
+    <string name="assign_disease_hyperlipidemia">고지혈증</string>
 
 
 </resources>
