@@ -27,6 +27,7 @@ class OnbordingActivity : AppCompatActivity() {
             //viewPager.currentItem = 0
             val intent = Intent(this, AssignActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 

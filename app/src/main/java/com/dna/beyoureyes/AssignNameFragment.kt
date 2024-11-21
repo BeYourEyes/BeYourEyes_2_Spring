@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.dna.beyoureyes.databinding.ActivityAssignBinding
 import com.dna.beyoureyes.databinding.FragmentAssignNameBinding
 import com.dna.beyoureyes.ui.CustomToolbar
@@ -42,13 +43,27 @@ class AssignNameFragment : Fragment() {
         // Inflate the layout for this fragment
         val listener = activity as? FragmentNavigationListener
         binding.nextBtn.setOnClickListener {
-            listener?.onBtnClick(this, true)
+            val name = binding.nameInput.text.toString().trim()
+            if (name.isEmpty()) {
+                Toast.makeText(requireContext(), "이름을 입력해주세요.", Toast.LENGTH_LONG).show()
+            }
+            else {
+                listener?.onNameInputRecieved(binding.nameInput.text.toString())
+                listener?.onBtnClick(this, true)
+            }
         }
+
+
         binding.toolbar.backButtonClickListener = object : CustomToolbar.BackButtonClickListener {
             override fun onBackButtonClicked() {
                 listener?.onBtnClick(this@AssignNameFragment, false)
             }
         }
+
+        binding.delBtn.setOnClickListener {
+            binding.nameInput.text = null
+        }
+
         return binding.root
     }
 
