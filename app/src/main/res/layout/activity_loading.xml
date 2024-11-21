@@ -84,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:progress="38"
-            android:progressDrawable="@drawable/progess" />
+            android:progressDrawable="@drawable/shape_progess" />
 
         <TextView
             android:id="@+id/progress_percentage"
