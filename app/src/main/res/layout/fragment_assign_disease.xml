@@ -7,42 +7,14 @@
     android:background="@color/gray_50"
     tools:context=".AssignDiseaseFragment">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.dna.beyoureyes.ui.CustomToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/gray_50"
-        app:contentInsetEnd="0dp"
-        app:contentInsetStart="0dp"
+        android:layout_height="wrap_content"
+        app:title="@string/assign_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!-- 뒤로가기 -->
-        <ImageButton
-            android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="뒤로가기"
-            android:padding="12dp"
-            android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/gray_950" />
-
-        <!-- 제목 -->
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/assign_disease_title"
-            android:textAppearance="@style/ToolBarTitleStyle"
-            android:textColor="@color/gray_950" />
-
-
-    </androidx.appcompat.widget.Toolbar>
-
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/stepText"
@@ -100,18 +72,18 @@
 
             <ImageView
                 android:id="@+id/imageView1"
+                android:layout_margin="5dp"
                 android:layout_width="98dp"
                 android:layout_height="98dp"
-                android:layout_margin="5dp"
                 android:background="@drawable/assign_disease_no" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/wanted_sans_semi_bold"
                 android:text="@string/assign_disease_no"
-                android:textAlignment="center"
-                android:textSize="16sp" />
+                android:fontFamily="@font/wanted_sans_semi_bold"
+                android:textSize="16sp"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -122,18 +94,18 @@
 
             <ImageView
                 android:id="@+id/imageView2"
+                android:layout_margin="5dp"
                 android:layout_width="98dp"
                 android:layout_height="98dp"
-                android:layout_margin="5dp"
                 android:background="@drawable/assign_disease_diabetes" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/wanted_sans_semi_bold"
                 android:text="@string/assign_disease_diabetes"
-                android:textAlignment="center"
-                android:textSize="16sp" />
+                android:fontFamily="@font/wanted_sans_semi_bold"
+                android:textSize="16sp"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -144,18 +116,18 @@
 
             <ImageView
                 android:id="@+id/imageView3"
+                android:layout_margin="5dp"
                 android:layout_width="98dp"
                 android:layout_height="98dp"
-                android:layout_margin="5dp"
                 android:background="@drawable/assign_disease_highblood" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/wanted_sans_semi_bold"
                 android:text="@string/assign_disease_HighBloodPressure"
-                android:textAlignment="center"
-                android:textSize="16sp" />
+                android:fontFamily="@font/wanted_sans_semi_bold"
+                android:textSize="16sp"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -166,37 +138,38 @@
 
             <ImageView
                 android:id="@+id/imageView4"
+                android:layout_margin="5dp"
                 android:layout_width="98dp"
                 android:layout_height="98dp"
-                android:layout_margin="5dp"
                 android:background="@drawable/assign_disease_hyperlipidemia" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/wanted_sans_semi_bold"
                 android:text="@string/assign_disease_hyperlipidemia"
-                android:textAlignment="center"
-                android:textSize="16sp" />
+                android:fontFamily="@font/wanted_sans_semi_bold"
+                android:textSize="16sp"
+                android:textAlignment="center" />
         </LinearLayout>
 
 
     </com.google.android.material.chip.ChipGroup>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/nextBtn"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="44dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="14dp"
         android:background="@drawable/shape_button_b500_24"
-        android:text="@string/nextbutton"
+        android:text="@string/assign_button_next"
         android:fontFamily="@font/wanted_sans_bold"
         android:textSize="14sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 
