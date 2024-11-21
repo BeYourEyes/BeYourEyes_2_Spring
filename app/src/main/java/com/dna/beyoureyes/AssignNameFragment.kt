@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.dna.beyoureyes.databinding.ActivityAssignBinding
 import com.dna.beyoureyes.databinding.FragmentAssignNameBinding
+import com.dna.beyoureyes.ui.CustomToolbar
+import com.dna.beyoureyes.ui.FragmentNavigationListener
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,8 +40,14 @@ class AssignNameFragment : Fragment() {
     ): View? {
         binding = FragmentAssignNameBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
+        val listener = activity as? FragmentNavigationListener
         binding.nextBtn.setOnClickListener {
-            (activity as? AssignActivity)?.replaceFragment(AssignGenderFragment())
+            listener?.onBtnClick(this, true)
+        }
+        binding.toolbar.backButtonClickListener = object : CustomToolbar.BackButtonClickListener {
+            override fun onBackButtonClicked() {
+                listener?.onBtnClick(this@AssignNameFragment, false)
+            }
         }
         return binding.root
     }
