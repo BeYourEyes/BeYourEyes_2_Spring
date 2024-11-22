@@ -12,9 +12,8 @@ interface FragmentNavigationListener {
     fun onGenderInputRecieved(gender : Int)
 
     fun onBirthInputRecieved(birth : String)
-    /*
     fun onDiseaseInputRecieved(userDiseaseList : ArrayList<String>)
-
+    /*
     fun onAllergyInputRecieved(userAllergyList : ArrayList<String>)
 
      */

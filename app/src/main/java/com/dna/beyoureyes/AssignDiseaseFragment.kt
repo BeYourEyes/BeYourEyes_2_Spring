@@ -7,21 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.dna.beyoureyes.databinding.FragmentAssignDiseaseBinding
+import com.dna.beyoureyes.model.diseaseInfo
 import com.dna.beyoureyes.ui.CustomToolbar
 import com.dna.beyoureyes.ui.FragmentNavigationListener
 
 
 class AssignDiseaseFragment : Fragment() {
-    private lateinit var imageView1: ImageView
-    private lateinit var imageView2: ImageView
-    private lateinit var imageView3: ImageView
-    private lateinit var imageView4: ImageView
-    private var isImageView1Clicked = false
-    private var isImageView2Clicked = false
-    private var isImageView3Clicked = false
-    private var isImageView4Clicked = false
     private lateinit var binding : FragmentAssignDiseaseBinding
-
+    private lateinit var diseaseArray: Array<diseaseInfo>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,6 +28,7 @@ class AssignDiseaseFragment : Fragment() {
         // Inflate the layout for this fragment
         val listener = activity as? FragmentNavigationListener
         binding.nextBtn.setOnClickListener {
+            listener?.onDiseaseInputRecieved(getClickedDiseaseList())
             listener?.onBtnClick(this, true)
         }
         binding.toolbar.backButtonClickListener = object : CustomToolbar.BackButtonClickListener {
@@ -47,47 +41,79 @@ class AssignDiseaseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // ImageView 초기화
-        imageView1 = view.findViewById(R.id.imageView1)
-        imageView2 = view.findViewById(R.id.imageView2)
-        imageView3 = view.findViewById(R.id.imageView3)
-        imageView4 = view.findViewById(R.id.imageView4)
-
-        // 클릭 리스너 설정
-        imageView1.setOnClickListener {
-            isImageView1Clicked = !isImageView1Clicked
-            if (isImageView1Clicked) {
-                imageView1.setBackgroundResource(R.drawable.assign_disease_no_click)
-            } else {
-                imageView1.setBackgroundResource(R.drawable.assign_disease_no)
-            }
+        // 초기화
+        diseaseArray = arrayOf(
+            diseaseInfo(
+                name = "no",
+                button = binding.imageView1,
+                isClicked = false,
+                normalImage = R.drawable.assign_disease_no,
+                clickedImage = R.drawable.assign_disease_no_click
+            ),
+            diseaseInfo(
+                name = "diabete",
+                button = binding.imageView2,
+                isClicked = false,
+                normalImage = R.drawable.assign_disease_diabetes,
+                clickedImage = R.drawable.assign_disease_diabetes_click
+            ),
+            diseaseInfo(
+                name = "highblood",
+                button = binding.imageView3,
+                isClicked = false,
+                normalImage = R.drawable.assign_disease_highblood,
+                clickedImage = R.drawable.assign_disease_highblood_click
+            ),
+            diseaseInfo(
+                name = "hyperlipidemia",
+                button = binding.imageView4,
+                isClicked = false,
+                normalImage = R.drawable.assign_disease_hyperlipidemia,
+                clickedImage = R.drawable.assign_disease_hyperlipidemia_click
+            )
+        )
+        for (i in 0 until 4) {
+            imageButtonClick(diseaseArray, i)
         }
 
-        imageView2.setOnClickListener {
-            isImageView2Clicked = !isImageView2Clicked
-            if (isImageView2Clicked) {
-                imageView2.setBackgroundResource(R.drawable.assign_disease_diabetes_click)
-            } else {
-                imageView2.setBackgroundResource(R.drawable.assign_disease_diabetes)
+    }
+
+    fun getClickedDiseaseList() : ArrayList<String>{
+        val clickedList = ArrayList<String>()
+        diseaseArray.forEach {
+            if (it.isClicked) {
+                clickedList.add(it.name)
             }
         }
+        return clickedList
+    }
 
-        imageView3.setOnClickListener {
-            isImageView3Clicked = !isImageView3Clicked
-            if (isImageView3Clicked) {
-                imageView3.setBackgroundResource(R.drawable.assign_disease_highblood_click)
-            } else {
-                imageView3.setBackgroundResource(R.drawable.assign_disease_highblood)
-            }
-        }
+    fun imageButtonClick(diseaseArray: Array<diseaseInfo>, idx: Int) {
+        diseaseArray[idx].button.setOnClickListener {
+            val clickedDisease = diseaseArray[idx]
 
-        imageView4.setOnClickListener {
-            isImageView4Clicked = !isImageView4Clicked
-            if (isImageView4Clicked) {
-                imageView4.setBackgroundResource(R.drawable.assign_disease_hyperlipidemia_click)
+            // 클릭 상태 전환
+            clickedDisease.isClicked = !clickedDisease.isClicked
+
+            if (clickedDisease.isClicked) {
+                // 선택된 버튼 이미지를 변경
+                clickedDisease.button.setBackgroundResource(clickedDisease.clickedImage)
+
+                if (idx == 0) { // "None" 버튼이 선택되었을 때
+                    diseaseArray.forEachIndexed { i, disease ->
+                        if (i != 0) { // "None" 버튼 제외
+                            disease.isClicked = false
+                            disease.button.setBackgroundResource(disease.normalImage)
+                        }
+                    }
+                } else { // 다른 질병 버튼이 선택되었을 때
+                    val noneDisease = diseaseArray[0]
+                    noneDisease.isClicked = false
+                    noneDisease.button.setBackgroundResource(noneDisease.normalImage)
+                }
             } else {
-                imageView4.setBackgroundResource(R.drawable.assign_disease_hyperlipidemia)
+                // 클릭 해제 시 기본 이미지로 변경
+                clickedDisease.button.setBackgroundResource(clickedDisease.normalImage)
             }
         }
     }
