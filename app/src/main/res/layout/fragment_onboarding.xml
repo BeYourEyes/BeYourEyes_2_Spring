@@ -8,8 +8,8 @@
     android:background="@color/gray_50"
     tools:context=".fragment_onboarding">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieView"
         android:layout_width="246dp"
         android:layout_height="246dp"
         android:layout_marginBottom="36dp"
@@ -17,7 +17,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        tools:src="@tools:sample/avatars" />
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/onboard_1" />
+
 
     <TextView
         android:id="@+id/textView"
