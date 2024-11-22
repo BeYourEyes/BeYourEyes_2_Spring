@@ -4,14 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.AppCompatButton
-import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
-class OnbordingActivity : AppCompatActivity() {
+class OnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_onbording)
+        setContentView(R.layout.activity_onboarding)
 
         val viewPager = findViewById<ViewPager>(R.id.register_viewpager)
         val dotsIndicator = findViewById<WormDotsIndicator>(R.id.dots_indicator)

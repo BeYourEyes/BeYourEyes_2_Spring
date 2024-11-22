@@ -44,7 +44,7 @@
             android:name=".MyPastDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".OnbordingActivity"
+            android:name=".OnboardingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
