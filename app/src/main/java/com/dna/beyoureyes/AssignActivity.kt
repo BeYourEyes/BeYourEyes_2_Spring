@@ -10,6 +10,7 @@ import com.dna.beyoureyes.ui.FragmentNavigationListener
 class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
     private var name : String? = null
     private var gender : Int? = null
+    private var birth : String? = null
     private var currentStep = 0
 
     override fun onNavigateToFragment(fragment: Fragment) {
@@ -22,6 +23,10 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
 
     override fun onGenderInputRecieved(gender: Int) {
         this.gender = gender
+    }
+
+    override fun onBirthInputRecieved(birth: String) {
+        this.birth = birth
     }
 
     override fun onBackPressed() {
@@ -47,7 +52,7 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
                 // currentStep이 5 이상일 경우 MainActivity로 전환
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-                Toast.makeText(this, "${name} ${gender}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "${name} ${birth}", Toast.LENGTH_SHORT).show()
                 finish()  // 현재 Activity 종료
             }
             else -> {
