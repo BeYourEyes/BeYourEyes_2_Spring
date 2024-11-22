@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import com.dna.beyoureyes.databinding.FragmentAssignDiseaseBinding
 import com.dna.beyoureyes.model.diseaseInfo
 import com.dna.beyoureyes.ui.CustomToolbar

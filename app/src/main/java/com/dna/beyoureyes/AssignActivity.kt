@@ -36,6 +36,10 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
         this.disease = userDiseaseList
     }
 
+    override fun onAllergyInputRecieved(userAllergyList: ArrayList<String>) {
+        this.allergy = userAllergyList
+    }
+
     override fun onBackPressed() {
         currentStep--
         super.onBackPressed()
@@ -59,10 +63,6 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
                 // currentStep이 5 이상일 경우 MainActivity로 전환
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-                Log.d("USER INFO", "name: ${name}")
-                Log.d("USER INFO", "gender: ${gender}")
-                Log.d("USER INFO", "disease: ${disease.joinToString(" ")}")
-                Log.d("USER INFO", "allergy: ${allergy.joinToString(" ")}")
                 finish()  // 현재 Activity 종료
             }
             else -> {
