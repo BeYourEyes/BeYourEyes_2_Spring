@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.dna.beyoureyes.model.FirebaseHelper
 import com.dna.beyoureyes.ui.FragmentNavigationListener
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
     private var name : String? = null
@@ -15,6 +18,7 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
     private var currentStep = 0
     private var disease : ArrayList<String> = ArrayList<String>()
     private var allergy : ArrayList<String> = ArrayList<String>()
+    private var profilr : String? = null
 
     override fun onNavigateToFragment(fragment: Fragment) {
         replaceFragment(fragment)
@@ -61,6 +65,7 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
             4 -> replaceFragment(AssignAllergyFragment())
             5 -> {
                 // currentStep이 5 이상일 경우 MainActivity로 전환
+                registInfo()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()  // 현재 Activity 종료
@@ -83,6 +88,20 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
         setContentView(R.layout.activity_assign)
 
         replaceFragment(AssignNameFragment())
+    }
+
+    fun registInfo() {
+        AppUser.info = UserInfo(name?:"", gender?:0, birth!!, disease, allergy)
+        val userInfo = hashMapOf(
+            "userId" to Firebase.auth.currentUser?.uid,
+            "userName" to name!!,
+            "userGender" to gender,
+            "userBirth" to birth,
+            "userDisease" to disease,
+            "userAllergy" to allergy,
+            "userProfile" to ""
+        )
+        FirebaseHelper.sendData(userInfo, "userInfo")
     }
 
 }
