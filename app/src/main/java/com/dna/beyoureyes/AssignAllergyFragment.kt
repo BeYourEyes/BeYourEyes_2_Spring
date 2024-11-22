@@ -9,6 +9,7 @@ import com.dna.beyoureyes.databinding.FragmentAssignAllergyBinding
 import com.dna.beyoureyes.databinding.FragmentAssignBirthBinding
 import com.dna.beyoureyes.ui.CustomToolbar
 import com.dna.beyoureyes.ui.FragmentNavigationListener
+import com.google.android.material.chip.Chip
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,6 +26,7 @@ class AssignAllergyFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding : FragmentAssignAllergyBinding
+    private var allergyArray : ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +41,33 @@ class AssignAllergyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAssignAllergyBinding.inflate(inflater, container, false)
+
+        binding.assignAllergyChipGroup.setOnCheckedStateChangeListener{ group, checkedIds ->
+            // "없음" 클릭 시 다른 칩 해제
+            if (checkedIds.contains(R.id.chip_none)) {
+                for (chipId in group.checkedChipIds) {
+                    if (chipId != R.id.chip_none) {
+                        group.findViewById<Chip>(chipId).isChecked = false
+                    }
+                }
+            }
+            // 다른 칩 클릭 시 "없음" 해제
+            else {
+                group.findViewById<Chip>(R.id.chip_none)?.isChecked = false
+            }
+
+            // 선택된 칩 리스트 업데이트
+            allergyArray.clear()
+            for (chipId in group.checkedChipIds) {
+                val chip: Chip = group.findViewById(chipId)
+                allergyArray.add(resources.getResourceEntryName(chip.id).substring(5))
+            }
+        }
+
         // Inflate the layout for this fragment
         val listener = activity as? FragmentNavigationListener
         binding.nextBtn.setOnClickListener {
+            listener?.onAllergyInputRecieved(allergyArray)
             listener?.onBtnClick(this, true)
         }
         binding.toolbar.backButtonClickListener = object : CustomToolbar.BackButtonClickListener {

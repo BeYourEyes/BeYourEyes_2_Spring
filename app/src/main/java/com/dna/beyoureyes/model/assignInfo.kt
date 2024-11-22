@@ -1,6 +1,7 @@
 package com.dna.beyoureyes.model
 
 import android.widget.ImageView
+import com.google.android.material.chip.Chip
 
 data class diseaseInfo (
     val name: String,
@@ -9,10 +10,4 @@ data class diseaseInfo (
     val normalImage: Int,
     val clickedImage: Int
 ){
-}
-
-data class allergyInfo (
-    val name: String,
-    val isClicked: Boolean = false
-) {
 }
