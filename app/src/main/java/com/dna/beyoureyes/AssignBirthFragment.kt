@@ -26,6 +26,7 @@ class AssignBirthFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding : FragmentAssignBirthBinding
+    private var birth = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -91,8 +92,14 @@ class AssignBirthFragment : Fragment() {
         day.value = 1
 
 
+
         val listener = activity as? FragmentNavigationListener
         binding.nextBtn.setOnClickListener {
+            val selectedYear = yearsDesc[year.value] // 역순으로 설정된 displayedValues 사용
+            val selectedMonth = month.value.toString().padStart(2, '0') // 1 -> "01"로 변환
+            val selectedDay = day.value.toString().padStart(2, '0')     // 1 -> "01"로 변환
+            birth = selectedYear + selectedMonth + selectedDay
+            listener?.onBirthInputRecieved(birth)
             listener?.onBtnClick(this, true)
         }
         binding.toolbar.backButtonClickListener = object : CustomToolbar.BackButtonClickListener {
@@ -105,7 +112,6 @@ class AssignBirthFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
     }
 
     // 특정 년도, 특정 월의 날짜 수 구하기
@@ -124,6 +130,7 @@ class AssignBirthFragment : Fragment() {
         }
         return displayValues.toTypedArray()
     }
+
 
     companion object {
         /**
