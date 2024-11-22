@@ -15,11 +15,11 @@ import android.widget.ImageView
 import android.widget.TextView
 
 
-class fragment_onbording : Fragment() {
+class fragment_onboarding : Fragment() {
     companion object {
         private const val ARG_NUMBER = "arg_number"
-        fun newInstance(number: Int): fragment_onbording {
-            val fragment = fragment_onbording()
+        fun newInstance(number: Int): fragment_onboarding {
+            val fragment = fragment_onboarding()
             val args = Bundle()
             args.putInt(ARG_NUMBER, number)
             fragment.arguments = args
@@ -56,7 +56,7 @@ class fragment_onbording : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_onbording, container, false)
+        val view = inflater.inflate(R.layout.fragment_onboarding, container, false)
 
         val number = arguments?.getInt(ARG_NUMBER) ?: 0
 

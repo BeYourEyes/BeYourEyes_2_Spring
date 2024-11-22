@@ -121,5 +121,7 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
     implementation ("androidx.activity:activity-ktx:1.7.0")
 
+    implementation("com.airbnb.android:lottie:6.6.0")
+
 
 }
