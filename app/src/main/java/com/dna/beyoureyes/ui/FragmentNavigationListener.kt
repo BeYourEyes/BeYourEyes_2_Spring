@@ -15,4 +15,5 @@ interface FragmentNavigationListener {
     fun onDiseaseInputRecieved(userDiseaseList : ArrayList<String>)
     fun onAllergyInputRecieved(userAllergyList : ArrayList<String>)
 
+
 }
