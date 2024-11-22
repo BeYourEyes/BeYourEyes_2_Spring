@@ -3,6 +3,7 @@ package com.dna.beyoureyes
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.dna.beyoureyes.ui.FragmentNavigationListener
@@ -12,6 +13,8 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
     private var gender : Int? = null
     private var birth : String? = null
     private var currentStep = 0
+    private var disease : ArrayList<String> = ArrayList<String>()
+    private var allergy : ArrayList<String> = ArrayList<String>()
 
     override fun onNavigateToFragment(fragment: Fragment) {
         replaceFragment(fragment)
@@ -27,6 +30,10 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
 
     override fun onBirthInputRecieved(birth: String) {
         this.birth = birth
+    }
+
+    override fun onDiseaseInputRecieved(userDiseaseList: ArrayList<String>) {
+        this.disease = userDiseaseList
     }
 
     override fun onBackPressed() {
@@ -52,7 +59,10 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
                 // currentStep이 5 이상일 경우 MainActivity로 전환
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-                Toast.makeText(this, "${name} ${birth}", Toast.LENGTH_SHORT).show()
+                Log.d("USER INFO", "name: ${name}")
+                Log.d("USER INFO", "gender: ${gender}")
+                Log.d("USER INFO", "disease: ${disease.joinToString(" ")}")
+                Log.d("USER INFO", "allergy: ${allergy.joinToString(" ")}")
                 finish()  // 현재 Activity 종료
             }
             else -> {
