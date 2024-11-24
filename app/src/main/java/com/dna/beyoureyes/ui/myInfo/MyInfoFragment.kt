@@ -1,5 +1,6 @@
 package com.dna.beyoureyes.ui.myInfo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,10 @@ class MyInfoFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: FoodHistoryAdapter
     private lateinit var layoutManager: RecyclerView.LayoutManager
+
+    private val shareTitle = "친구에게 공유하기"
+    private val appLink = "https://play.google.com/store/apps/details?id=com.dna.beyoureyes"
+    private val content = "더 건강한 식습관으로 당신의 삶을 변화시키세요!\n" + "지금 바로 앱을 다운로드하세요 ⬇️"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +43,26 @@ class MyInfoFragment : Fragment() {
         adapter = FoodHistoryAdapter(items)
         recyclerView.adapter = adapter // 리사이클러 뷰 어댑터 설정
 
+        // 앱 공유하기 버튼
+        binding.shareBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND_MULTIPLE)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, "$content\n\n$appLink")
+            startActivity(Intent.createChooser(intent, shareTitle))
+
+        }
+        // 앱 스토어 리뷰 남기기
+        binding.reviewBtn.setOnClickListener {
+
+        }
+        // 고객센터 문의하기
+        binding.contactBtn.setOnClickListener {
+
+        }
+        // 개인정보 처리 방침
+        binding.privacyPolicyBtn.setOnClickListener {
+
+        }
         return root
     }
 
