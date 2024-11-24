@@ -29,6 +29,15 @@
         android:theme="@style/Theme.BeYourEyes"
         tools:targetApi="31">
         <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".AssignActivity"
             android:exported="false" />
         <activity
@@ -45,13 +54,7 @@
             android:exported="false" />
         <activity
             android:name=".OnboardingActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".ResultEatActivity"
             android:exported="false" />
@@ -69,13 +72,13 @@
             android:name=".MainActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".FoodActivity"
             android:exported="false"
             android:label="식품 분석"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
+            tools:ignore="LockedOrientationActivity" />
 
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"

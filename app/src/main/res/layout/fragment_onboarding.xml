@@ -15,11 +15,11 @@
         android:layout_marginBottom="36dp"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/onboard_1" />
+        app:lottie_rawRes="@raw/onboard_2" />
 
 
     <TextView
