@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 홈 메뉴 -->
+    <item
+        android:id="@+id/navigation_food"
+        android:icon="@drawable/ic_navi_search_24"
+        android:title="@string/title_food"/>
+
+    <!-- 내 정보 메뉴 -->
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_navi_home_24"
+        android:title="@string/title_home"/>
+
+    <!-- 식품 분석 메뉴 -->
+    <item
+        android:id="@+id/navigation_user"
+        android:icon="@drawable/ic_navi_archive_24"
+        android:title="@string/title_user"/>
+
+</menu>

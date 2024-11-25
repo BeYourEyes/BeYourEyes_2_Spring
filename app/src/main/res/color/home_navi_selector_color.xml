@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- MainActivity 하단 네비게이션 바 색상 설정 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 활성 메뉴 색상 -->
+    <item android:color="@color/blue_500" android:state_checked="true"/>
+    <!-- 비활성 메뉴 색상 -->
+    <item android:color="@color/gray_300" android:state_checked="false"/>
+</selector>
