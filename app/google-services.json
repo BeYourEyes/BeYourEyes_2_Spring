@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "986899100704",
+    "project_id": "beyoureyes-dna-ef62c",
+    "storage_bucket": "beyoureyes-dna-ef62c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986899100704:android:7222970d5fc91c7a70b845",
+        "android_client_info": {
+          "package_name": "com.dna.beyoureyes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk7SRf14NjklXRFDFR7Vjrsr4FIO89pJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
