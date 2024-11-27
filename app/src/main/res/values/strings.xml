@@ -58,6 +58,7 @@
     <string name="home_overview_msg2_when_more">많습니다</string>
     <string name="home_overview_kcal_unit">Kcal</string>
     <string name="home_advice_when_less">더 든든하게 식사하세요!</string>
+    <string name="home_advice_when_good">목표를 충족했네요! 잘 하셨어요🎉</string>
     <string name="home_advice_when_more">과다 섭취에 주의하세요!</string>
     <string name="home_today_kcal_label">님의 오늘 칼로리 섭취량</string>
     <string name="home_slash">/</string>

@@ -1,5 +1,8 @@
 package com.dna.beyoureyes.model
 
+import com.dna.beyoureyes.AppUser
+import com.dna.beyoureyes.Gender
+
 class Protein(override var milligram: Int = 0) : Nutrition {
 
     // 인스턴스 영역
@@ -7,19 +10,22 @@ class Protein(override var milligram: Int = 0) : Nutrition {
     override val massString: String
         get() = (milligram/1000).toString() + "g"
 
-    override fun getDailyValue(age: Int, isMan: Boolean): Int
-            = Companion.getDailyValue(age, isMan)
-    override fun getDailyValueText(age: Int, isMan: Boolean): String
-            = Companion.getDailyValueText(age, isMan)
-    override fun isInWarningRange(age: Int, isMan: Boolean): Boolean
-            = Companion.isInWarningRange(milligram, age, isMan)
+    override fun getDailyValue(): Int
+            = Companion.getDailyValue()
+    override fun getDailyValueText(): String
+            = Companion.getDailyValueText()
+    override fun isInWarningRange(): Boolean
+            = Companion.isInWarningRange(milligram)
 
 
     // static 영역
     companion object {
         const val NAME = "단백질"
-        fun getDailyValue(age: Int, isMan: Boolean) : Int {
-            if (isMan) { // 남성의 경우
+        const val DB_FIELD_NAME = "protein"
+        fun getDailyValue() : Int {
+            // 나이, 성별에 따른 권장섭취량 분류
+            val age:Int = AppUser.info?.age ?:20
+            if (AppUser.info?.gender == Gender.MAN.ordinal) { // 남성의 경우
                 val dv = when(age){
                     in 15..49 -> 65 * 1000
                     in 50..Int.MAX_VALUE -> 60 * 1000
@@ -35,11 +41,13 @@ class Protein(override var milligram: Int = 0) : Nutrition {
                 return dv
             }
         }
-        fun getDailyValueText(age: Int, isMan: Boolean) : String {
-            return (getDailyValue(age, isMan) /1000).toString() + "g"
+        fun getDailyValueText() : String {
+            return (getDailyValue() /1000).toString() + "g"
         }
-        fun isInWarningRange(milligram: Int, age: Int, isMan: Boolean): Boolean {
-            if (isMan) {                                    // 남성의 경우
+        fun isInWarningRange(milligram:Int): Boolean {
+            // 나이, 성별에 따른 최소한의 섭취량 기준 확인 -> 이보다 적은지 검사
+            val age:Int = AppUser.info?.age ?:20
+            if (AppUser.info?.gender == Gender.MAN.ordinal) { // 남성의 경우
                 val lower = when(age){
                     in 15..18 -> 55 * 1000
                     in 19..Int.MAX_VALUE -> 50 * 1000

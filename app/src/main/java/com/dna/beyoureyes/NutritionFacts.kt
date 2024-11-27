@@ -1,5 +1,13 @@
 package com.dna.beyoureyes
 
+import com.dna.beyoureyes.model.Carbs
+import com.dna.beyoureyes.model.Cholesterol
+import com.dna.beyoureyes.model.Fat
+import com.dna.beyoureyes.model.Natrium
+import com.dna.beyoureyes.model.Protein
+import com.dna.beyoureyes.model.SaturatedFat
+import com.dna.beyoureyes.model.Sugar
+
 //========================================================================
 // 영양소 정보 관리를 위한 enum 객체
 //========================================================================
@@ -110,26 +118,25 @@ class NutritionFacts() {
     // Int?가 아니라 Any?로 매핑하도록 고려한 이유는... 혹시 정수형으로 저장되지 않은 데이터들이 있을 경우에 대응하기 위해
 
     fun setNutritionValues(nutritionMap: Map<String, Any?>) {
-        // firebaseDB 필드명 수정 시 아래 nutritionMap의 키값명 수정 필요!!(동일하게)
-        anyToInt(nutritionMap["나트륨"])?.let {
+        anyToInt(nutritionMap[Natrium.DB_FIELD_NAME])?.let {
             this.natrium = Nutrition(it, UnitOfMass.MILLIGRAM)
         }
-        anyToInt(nutritionMap["탄수화물"])?.let {
+        anyToInt(nutritionMap[Carbs.DB_FIELD_NAME])?.let {
             this.carbs = Nutrition(it, UnitOfMass.GRAM)
         }
-        anyToInt(nutritionMap["당류"])?.let {
+        anyToInt(nutritionMap[Sugar.DB_FIELD_NAME])?.let {
             this.sugar = Nutrition(it, UnitOfMass.GRAM)
         }
-        anyToInt(nutritionMap["단백질"])?.let {
+        anyToInt(nutritionMap[Protein.DB_FIELD_NAME])?.let {
             this.protein = Nutrition(it, UnitOfMass.GRAM)
         }
-        anyToInt(nutritionMap["지방"])?.let {
+        anyToInt(nutritionMap[Fat.DB_FIELD_NAME])?.let {
             this.fat = Nutrition(it, UnitOfMass.GRAM)
         }
-        anyToInt(nutritionMap["포화지방"])?.let {
+        anyToInt(nutritionMap[SaturatedFat.DB_FIELD_NAME])?.let {
             this.satFat = Nutrition(it, UnitOfMass.GRAM)
         }
-        anyToInt(nutritionMap["콜레스테롤"])?.let {
+        anyToInt(nutritionMap[Cholesterol.DB_FIELD_NAME])?.let {
             this.chol = Nutrition(it, UnitOfMass.MILLIGRAM)
         }
     }

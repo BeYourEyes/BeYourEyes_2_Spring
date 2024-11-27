@@ -75,7 +75,7 @@ class NatriumDRI() : DailyValue, DRIwithClosedRange {
     // 상한 섭취량 = CDPR로 설정
     private fun setUpperIntakeLevel(age: Int, disease: Array<String>?){
         upperIntake =
-            when(age){
+            when(age) {
                 in 15..64 -> 2300
                 in 65..74 -> 2100
                 in 75..Int.MAX_VALUE -> 1700
@@ -314,11 +314,10 @@ class SaturatedFatDRI() : DailyValue, DRIwithOpenStartRange {
 
     // 상한 섭취량
     private fun setUpperIntakeLevel(age:Int, energyReq: Int, disease: Array<String>?){
-        var ratio = 0.0
-        if( disease != null && disease.contains("고지혈증"))
-            ratio = 0.07
+        val ratio = if( disease != null && disease.contains("고지혈증"))
+            0.07
         else
-            ratio = when(age) {
+            when(age) {
                 in 15..18 -> 0.08
                 in 19..Int.MAX_VALUE -> 0.07
                 else -> 0.08

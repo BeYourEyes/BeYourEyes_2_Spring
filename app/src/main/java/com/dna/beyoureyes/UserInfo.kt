@@ -60,6 +60,30 @@ class UserInfo (
         val set = list.toSet() // 중복 없애기
         return set.toTypedArray()
     }
+
+    fun getDailyEnergyRequirement(): Int {
+        return if (gender == Gender.WOMAN.ordinal) { // 여성
+            when(age){
+                in 15..29 -> 2000
+                in 30..49 -> 1900
+                in 50..64 -> 1700
+                in 65..74 -> 1600
+                in 75..Int.MAX_VALUE -> 1500
+                else -> 2000
+            }
+        } else { // 남성
+            when(age){
+                in 15..18 -> 2700
+                in 19..29 -> 2600
+                in 30..49 -> 2500
+                in 50..64 -> 2200
+                in 65..74 -> 2000
+                in 75..Int.MAX_VALUE -> 1900
+                else -> 2700
+            }
+        }
+    }
+
     companion object {
 
         fun getAge(birth: String) : Int {
