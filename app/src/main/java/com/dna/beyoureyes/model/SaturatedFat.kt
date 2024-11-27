@@ -1,5 +1,7 @@
 package com.dna.beyoureyes.model
 
+import com.dna.beyoureyes.AppUser
+
 class SaturatedFat(override var milligram: Int = 0) : Nutrition {
 
     // 인스턴스 영역
@@ -7,25 +9,28 @@ class SaturatedFat(override var milligram: Int = 0) : Nutrition {
     override val massString: String
         get() = (milligram/1000).toString() + "g"
 
-    override fun getDailyValue(age: Int, isMan: Boolean): Int
+    override fun getDailyValue(): Int
             = Companion.getDailyValue()
-    override fun getDailyValueText(age: Int, isMan: Boolean): String
+    override fun getDailyValueText(): String
             = Companion.getDailyValueText()
-    override fun isInWarningRange(age: Int, isMan: Boolean): Boolean
+    override fun isInWarningRange(): Boolean
             = Companion.isInWarningRange(milligram)
 
 
     // static 영역
     companion object {
         const val NAME = "포화지방"
+        const val DB_FIELD_NAME = "satFat"
         fun getDailyValue() : Int {
-            return 15 * 1000
+            // 사용자 일일 권장 칼로리 구하기. 기본값은 2000kcal
+            val dailyEnergy = AppUser.info?.getDailyEnergyRequirement() ?:2000
+            return ((dailyEnergy * 0.07) / 9).toInt() * 1000  // 일일 권장 칼로리의 7% 이내
         }
         fun getDailyValueText() : String {
-            return (getDailyValue()/1000).toString() + "g"
+            return (getDailyValue()/1000).toString() + "g 이내"
         }
         fun isInWarningRange(milligram: Int): Boolean {
-            return milligram > 15 * 1000
+            return milligram > getDailyValue()
         }
     }
 }

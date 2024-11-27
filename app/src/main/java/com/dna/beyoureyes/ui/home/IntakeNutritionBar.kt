@@ -10,6 +10,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.dna.beyoureyes.AppUser
+import com.dna.beyoureyes.Gender
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.model.Nutrition
 
@@ -90,24 +92,24 @@ class IntakeNutritionBar(context: Context, attrs: AttributeSet?) :
         }
     }
 
-    fun setData(nutrition : Nutrition, age:Int, isMan:Boolean) {
-        val dv = nutrition.getDailyValue(age, isMan)
+    fun setData(nutrition : Nutrition) {
+        val dailyValue = nutrition.getDailyValue()
 
         // max값 대비 입력값의 퍼센테이지 구하기
-        val percentage = (nutrition.milligram.toFloat() / dv.toFloat() * 100).toInt()
+        val percentage = (nutrition.milligram.toFloat() / dailyValue.toFloat() * 100).toInt()
 
         // textView 세팅
         nutriLabel.text = nutrition.name
         massLabel.text = nutrition.massString
         percentLabel.text = "${percentage}%"
-        dailyValueLabel.text = "일일 권장량 ${nutrition.getDailyValueText(age, isMan)}"
+        dailyValueLabel.text = "일일 권장량 ${nutrition.getDailyValueText()}"
 
         // progressBar의 값 설정
-        bar.max = dv
+        bar.max = dailyValue
         setProgressBarValue(nutrition.milligram) // 애니메이션 효과 없이 표시
         //setProgressBarValueWithAnimation(nutrition.milligram) // 바 표시에 애니메이션 효과 적용
 
-        if ( nutrition.isInWarningRange(age, isMan) )
+        if ( nutrition.isInWarningRange() )
         {
             // 경고 범위에 들어오면 경고 심볼 표시 & 바를 경고 색상으로 변경
             symbol.setImageResource(R.drawable.ic_intake_caution_34)

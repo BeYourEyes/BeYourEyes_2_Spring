@@ -91,8 +91,6 @@ class AssignBirthFragment : Fragment() {
         month.value = 1
         day.value = 1
 
-
-
         val listener = activity as? FragmentNavigationListener
         binding.nextBtn.setOnClickListener {
             val selectedYear = yearsDesc[year.value] // 역순으로 설정된 displayedValues 사용
