@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="chip_width">85dp</dimen> <!-- 칩의 너비를 고정값으로 설정 -->
+    <dimen name="chip_height">40dp</dimen> <!-- 칩의 높이를 고정값으로 설정 -->
+</resources>
