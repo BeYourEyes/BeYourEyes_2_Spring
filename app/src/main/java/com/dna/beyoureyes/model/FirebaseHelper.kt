@@ -48,23 +48,32 @@ class FirebaseHelper {
                 }
         }
 
-        fun receiveUserData(userId: String) {
-
+        fun receiveUserData() : Boolean {
+            var hasData = true
             val db = Firebase.firestore
-            db.collection("userInfo")
-                .whereEqualTo("userId", AppUser.id!!)
-                .get()
-                .addOnSuccessListener { info ->
-                    for (document in info) {
-                        val userName = document.data.get("userName") as String
-                        val userGender = document.data.get("userGender") as Long
-                        val userBirth = document.data.get("userBirth") as Timestamp
-                        val userDisease = document.data.get("userDisease") as ArrayList<String>
-                        val userAllergy = document.data.get("userAllergy") as ArrayList<String>
-                        val profile = document.data.get("userProfile") as String
-                        AppUser.setInfo(userName, userGender.toInt(), userBirth, userDisease, userAllergy, profile)
+            if (AppUser.id != null) {
+                db.collection("userInfo")
+                    .whereEqualTo("userId", AppUser.id)
+                    .get()
+                    .addOnSuccessListener { info ->
+                        if (info.isEmpty) {
+                            Log.d("FIREBASE : ", "NO DATA FOUND")
+                            hasData = false
+                            return@addOnSuccessListener
+                        }
+                        for (document in info) {
+                            val userName = document.data.get("userName") as String
+                            val userGender = document.data.get("userGender") as Long
+                            val userBirth = document.data.get("userBirth") as Timestamp
+                            val userDisease = document.data.get("userDisease") as ArrayList<String>
+                            val userAllergy = document.data.get("userAllergy") as ArrayList<String>
+                            val profile = document.data.get("userProfile") as String
+                            AppUser.setInfo(userName, userGender.toInt(), userBirth, userDisease, userAllergy, profile)
+                        }
                     }
-                }
+            }
+            else { hasData = false }
+            return hasData
         }
     }
 }
