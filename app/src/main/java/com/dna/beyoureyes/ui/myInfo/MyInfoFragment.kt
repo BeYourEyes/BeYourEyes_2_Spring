@@ -2,9 +2,13 @@ package com.dna.beyoureyes.ui.myInfo
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -80,12 +84,24 @@ class MyInfoFragment : Fragment() {
     fun updateProfile() {
 
         val diseaseMap = mapOf(
-            "diabetes" to binding.diabetes,
+            "diabete" to binding.diabete,
             "highblood" to binding.highblood,
             "hyperlipidemia" to binding.hyperlipidemia
         )
+        val allergyMap = mapOf(
+            "buckwheat" to "메밀",
+            "wheat" to "밀",
+            "bean" to "대두",
+            "peanut" to "땅콩",
+            "walnut" to "호두",
+            "pinenut" to "잣",
+            "acid" to "아황산",
+            "peach" to "복숭아",
+            "tomato" to "토마토"
+        )
 
         val userDiseases = AppUser.info?.disease?.toSet() ?: emptySet()
+        val userAllergy = AppUser.info?.allergic?.toSet() ?: emptySet()
 
 
         binding.profileName.setText(AppUser.info?.name?:"")
@@ -102,13 +118,31 @@ class MyInfoFragment : Fragment() {
         binding.allergyChipGroup.layoutParams = layoutParams
         */
 
+
         AppUser.info?.allergic?.forEach {
             val chip = Chip(requireContext())
-            chip.text = it
-            chip.isCheckable = false
-            chip.width = 85
-            chip.height = 20
+            chip.text = allergyMap[it]
+            if (chip.text.length == 1) {
+                chip.text = " " + allergyMap[it] + " " // 한글자인 경우에는 width 설정이 안됐음ㅜㅜ...
+            }
+            val params = LinearLayout.LayoutParams(
+                resources.getDimensionPixelSize(R.dimen.chip_width), // 85dp
+                resources.getDimensionPixelSize(R.dimen.chip_height) // 40dp
+            )
+            params.gravity = Gravity.CENTER
+            chip.layoutParams = params
+
+            chip.setTextAppearanceResource(R.style.chipTextMyInfo)
+            chip.isChecked = true  // 클릭된 상태로 설정
+            chip.isClickable = false  // 클릭 불가능
+            //chip.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_50))
+            chip.setChipBackgroundColorResource(R.color.blue_50)
+            chip.setChipStrokeColorResource(R.color.blue_300)
             binding.allergyChipGroup.addView(chip)
+
+            chip.post {
+                Log.d("ChipWidth", "Chip ${chip.text} width: ${chip.width} px")
+            }
         }
     }
 

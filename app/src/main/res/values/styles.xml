@@ -58,4 +58,12 @@
         <item name="android:textColor">@color/gray_500</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="chipTextMyInfo" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
+        <item name="android:textColor">@color/blue_500</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
 </resources>
