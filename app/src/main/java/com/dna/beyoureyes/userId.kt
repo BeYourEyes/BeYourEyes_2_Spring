@@ -1,6 +1,6 @@
 package com.dna.beyoureyes
 
-import com.dna.beyoureyes.UserInfo
+import com.dna.beyoureyes.model.UserInfo
 import android.app.Application
 
 class userId : Application() {

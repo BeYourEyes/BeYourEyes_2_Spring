@@ -1,7 +1,8 @@
-package com.dna.beyoureyes
+package com.dna.beyoureyes.model
 
+import com.dna.beyoureyes.NutrientDailyValues
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.google.firebase.firestore.auth.User
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -15,7 +16,7 @@ enum class Gender {
 class UserInfo (
     var name : String,                  // 사용자 나이
     var gender : Int,               // 사용자 성별
-    var birth : String,     // 사용자 생일
+    var birth : Timestamp,     // 사용자 생일
     var disease : MutableSet<String>,   // 사용자 질병 정보(nullable - 해당사항 없을 수 있으므로)
     var allergic : MutableSet<String>,   // 사용자 알레르기 정보(nullable - 해당사항 없을 수 있으므로
     var age : Int,
@@ -24,15 +25,15 @@ class UserInfo (
     init {
         age = getAge(birth)
     }
-    constructor(name:String, gender:Int, birth: String, disease:ArrayList<String>, allergy:ArrayList<String>, age:Int)
+    constructor(name:String, gender:Int, birth: Timestamp, disease:ArrayList<String>, allergy:ArrayList<String>, age:Int)
             :this(name, gender, birth, disease.toMutableSet(), allergy.toMutableSet(), age)
-    constructor(name:String, gender:Int, birth: String, disease:ArrayList<String>, allergy:ArrayList<String>)
+    constructor(name:String, gender:Int, birth: Timestamp, disease:ArrayList<String>, allergy:ArrayList<String>)
             :this(name, gender, birth, disease.toMutableSet(), allergy.toMutableSet(), getAge(birth))
 
-    constructor(name:String, gender:Int, birth: String, disease:ArrayList<String>, allergy:ArrayList<String>, profile:String)
+    constructor(name:String, gender:Int, birth: Timestamp, disease:ArrayList<String>, allergy:ArrayList<String>, profile:String)
             :this(name, gender, birth, disease.toMutableSet(), allergy.toMutableSet(), getAge(birth), profile)
 
-    constructor(name:String, gender:Int, birth: String, profile: String)
+    constructor(name:String, gender:Int, birth: Timestamp, profile: String)
             :this(name, gender, birth, mutableSetOf(), mutableSetOf(), getAge(birth), profile)
 
     //  사용자 맞춤 권장량 정보를 제공하는 get 메소드
@@ -86,18 +87,13 @@ class UserInfo (
 
     companion object {
 
-        fun getAge(birth: String) : Int {
-            // 날짜 형식 정의
-            val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
-
-            val birthDate = dateFormat.parse(birth)
-
+        fun getAge(birth: Timestamp) : Int {
             val calendar = Calendar.getInstance()
             val currentYear = calendar.get(Calendar.YEAR)
             val currentMonth = calendar.get(Calendar.MONTH) + 1
             val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
 
-            calendar.time = birthDate
+            calendar.time = birth.toDate()
             val birthYear = calendar.get(Calendar.YEAR)
             val birthMonth = calendar.get(Calendar.MONTH) + 1
             val birthDay = calendar.get(Calendar.DAY_OF_MONTH)
@@ -111,7 +107,7 @@ class UserInfo (
         }
         fun parseFirebaseDoc(document: QueryDocumentSnapshot) : UserInfo? {
             val name = document.data.get("userName") as? String
-            val birth = document.data.get("userBirth") as? String
+            val birth = document.data.get("userBirth") as? Timestamp
             val gender = document.data.get("userGender") as? Long
             val diseaseList = document.data.get("userDisease") as ArrayList<String>
             val allergicList = document.data.get("userAllergy") as ArrayList<String>

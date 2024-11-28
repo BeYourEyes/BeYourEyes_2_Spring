@@ -8,7 +8,7 @@ import android.util.Log
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.dna.beyoureyes.databinding.ActivitySplashBinding
-import com.google.firebase.auth.EmailAuthProvider
+import com.dna.beyoureyes.model.UserInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -47,7 +47,8 @@ class SplashActivity : AppCompatActivity() {
             //Toast.makeText(this@SplashActivity, "이미 가입한 유저", Toast.LENGTH_LONG).show()
             userId = currentUser.uid
             AppUser.id = userId
-            Log.d("GOOGLE : ", AppUser.id.toString()+"  INIT")
+            Log.d("GOOGLE : ", AppUser.id.toString())
+
             //Toast.makeText(this@SplashActivity, userId, Toast.LENGTH_LONG).show()
             Handler().postDelayed({ startActivity(Intent(this, MainActivity::class.java)); finish(); }, 3 * 1000)
         }
@@ -57,6 +58,7 @@ class SplashActivity : AppCompatActivity() {
             Handler().postDelayed({ startActivity(Intent(this, OnboardingActivity::class.java)); finish(); }, 3 * 1000)
         }
         updateUI(currentUser)
+
 
     }
     // [END on_start_check_user]
@@ -73,7 +75,7 @@ class SplashActivity : AppCompatActivity() {
                     // 과연 절대로 null이 아닐까?
                     userId = user!!.uid
                     AppUser.id = userId
-                    Log.d("GOOGLE : ", AppUser.id.toString()+"  INIT")
+                    Log.d("SPLASH : ", AppUser.id.toString()+"  INIT")
                     //Toast.makeText(this@SplashActivity, userId, Toast.LENGTH_LONG).show()
                     updateUI(user)
                 } else {

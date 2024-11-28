@@ -2,7 +2,6 @@ package com.dna.beyoureyes.ui.home
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.dna.beyoureyes.Gender
 import com.dna.beyoureyes.model.Nutrition
 
 class IntakeAdapter(private val items: MutableList<Nutrition>)

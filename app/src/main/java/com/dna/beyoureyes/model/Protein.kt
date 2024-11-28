@@ -1,7 +1,6 @@
 package com.dna.beyoureyes.model
 
 import com.dna.beyoureyes.AppUser
-import com.dna.beyoureyes.Gender
 
 class Protein(override var milligram: Int = 0) : Nutrition {
 

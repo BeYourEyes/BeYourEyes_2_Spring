@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dna.beyoureyes.AppUser
-import com.dna.beyoureyes.Gender
 import com.dna.beyoureyes.NutritionFacts
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentHomeBinding
