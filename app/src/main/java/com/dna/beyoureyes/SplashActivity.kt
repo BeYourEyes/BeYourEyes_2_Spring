@@ -45,12 +45,12 @@ class SplashActivity : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
 
-        if (currentUser != null) { // 앱 이용한 적 있는 유저
+        if (currentUser != null && FirebaseHelper.receiveUserData()) { // 앱 이용한 적 있는 유저
             //Toast.makeText(this@SplashActivity, "이미 가입한 유저", Toast.LENGTH_LONG).show()
             userId = currentUser.uid
             AppUser.id = userId
             Log.d("GOOGLE : ", AppUser.id.toString())
-            FirebaseHelper.receiveUserData(userId)
+            //FirebaseHelper.receiveUserData()
             //Toast.makeText(this@SplashActivity, userId, Toast.LENGTH_LONG).show()
             Handler().postDelayed({ startActivity(Intent(this, MainActivity::class.java)); finish(); }, 3 * 1000)
         }
