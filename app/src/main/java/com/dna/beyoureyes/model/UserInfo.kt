@@ -25,8 +25,6 @@ class UserInfo (
     init {
         age = getAge(birth)
     }
-    constructor(name:String, gender:Int, birth: Timestamp, disease:ArrayList<String>, allergy:ArrayList<String>, age:Int)
-            :this(name, gender, birth, disease.toMutableSet(), allergy.toMutableSet(), age)
     constructor(name:String, gender:Int, birth: Timestamp, disease:ArrayList<String>, allergy:ArrayList<String>)
             :this(name, gender, birth, disease.toMutableSet(), allergy.toMutableSet(), getAge(birth))
 

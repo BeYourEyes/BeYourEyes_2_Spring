@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.dna.beyoureyes.AppUser
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentMyInfoBinding
 import com.dna.beyoureyes.model.FoodHistory
@@ -63,12 +64,18 @@ class MyInfoFragment : Fragment() {
         binding.privacyPolicyBtn.setOnClickListener {
 
         }
+
+        updateProfile()
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun updateProfile() {
+        binding.profileName.setText(AppUser.info?.name?:"")
     }
 
 }

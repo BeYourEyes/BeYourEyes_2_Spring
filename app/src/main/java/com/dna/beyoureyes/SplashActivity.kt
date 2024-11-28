@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.widget.Toast
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.dna.beyoureyes.databinding.ActivitySplashBinding
+import com.dna.beyoureyes.model.FirebaseHelper
 import com.dna.beyoureyes.model.UserInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -48,7 +50,7 @@ class SplashActivity : AppCompatActivity() {
             userId = currentUser.uid
             AppUser.id = userId
             Log.d("GOOGLE : ", AppUser.id.toString())
-
+            FirebaseHelper.receiveUserData(userId)
             //Toast.makeText(this@SplashActivity, userId, Toast.LENGTH_LONG).show()
             Handler().postDelayed({ startActivity(Intent(this, MainActivity::class.java)); finish(); }, 3 * 1000)
         }

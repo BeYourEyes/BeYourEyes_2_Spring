@@ -2,6 +2,8 @@ package com.dna.beyoureyes
 
 import com.dna.beyoureyes.model.UserInfo
 import android.app.Application
+import com.dna.beyoureyes.model.Gender
+import com.google.firebase.Timestamp
 
 class userId : Application() {
     var userId: String? = null
@@ -28,5 +30,10 @@ object AppUser {
         }?: run {
             return false
         }
+    }
+
+    fun setInfo(name : String, gender: Int, birth: Timestamp, disease : ArrayList<String>?, allergy : ArrayList<String>?, profile: String?) {
+        val info = UserInfo(name, gender, birth, disease?: ArrayList(), allergy?:ArrayList(), profile?:"")
+        this.info = info
     }
 }

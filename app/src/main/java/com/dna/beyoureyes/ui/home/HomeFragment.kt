@@ -89,6 +89,8 @@ class HomeFragment : Fragment() {
                     }
                     energyIntake = totalIntake.energy ?: 0 // 사용자의 칼로리 섭취량
                     Log.d("HOME", totalIntake.natrium?.getMilliGram().toString())
+                } else {
+                    Log.d("TODAYINTAKE", "user did not eat today")
                 }
             }
             .addOnFailureListener { exception -> // DB 연결 실패 처리
