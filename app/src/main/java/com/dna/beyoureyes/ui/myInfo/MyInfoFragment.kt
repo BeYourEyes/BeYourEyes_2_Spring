@@ -120,28 +120,30 @@ class MyInfoFragment : Fragment() {
 
 
         AppUser.info?.allergic?.forEach {
-            val chip = Chip(requireContext())
-            chip.text = allergyMap[it]
-            if (chip.text.length == 1) {
-                chip.text = " " + allergyMap[it] + " " // 한글자인 경우에는 width 설정이 안됐음ㅜㅜ...
-            }
-            val params = LinearLayout.LayoutParams(
-                resources.getDimensionPixelSize(R.dimen.chip_width), // 85dp
-                resources.getDimensionPixelSize(R.dimen.chip_height) // 40dp
-            )
-            params.gravity = Gravity.CENTER
-            chip.layoutParams = params
+            if (it != "none") {
+                val chip = Chip(requireContext())
+                chip.text = allergyMap[it]
+                if (chip.text.length == 1) {
+                    chip.text = " " + allergyMap[it] + " " // 한글자인 경우에는 width 설정이 안됐음ㅜㅜ...
+                }
+                val params = LinearLayout.LayoutParams(
+                    resources.getDimensionPixelSize(R.dimen.chip_width), // 85dp
+                    resources.getDimensionPixelSize(R.dimen.chip_height) // 40dp
+                )
+                params.gravity = Gravity.CENTER
+                chip.layoutParams = params
 
-            chip.setTextAppearanceResource(R.style.chipTextMyInfo)
-            chip.isChecked = true  // 클릭된 상태로 설정
-            chip.isClickable = false  // 클릭 불가능
-            //chip.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_50))
-            chip.setChipBackgroundColorResource(R.color.blue_50)
-            chip.setChipStrokeColorResource(R.color.blue_300)
-            binding.allergyChipGroup.addView(chip)
+                chip.setTextAppearanceResource(R.style.chipTextMyInfo)
+                chip.isChecked = true  // 클릭된 상태로 설정
+                chip.isClickable = false  // 클릭 불가능
+                //chip.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_50))
+                chip.setChipBackgroundColorResource(R.color.blue_50)
+                chip.setChipStrokeColorResource(R.color.blue_300)
+                binding.allergyChipGroup.addView(chip)
 
-            chip.post {
-                Log.d("ChipWidth", "Chip ${chip.text} width: ${chip.width} px")
+                chip.post {
+                    Log.d("ChipWidth", "Chip ${chip.text} width: ${chip.width} px")
+                }
             }
         }
     }
