@@ -9,7 +9,7 @@ class FirebaseHelper {
         private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
         // 데이터를 Firestore에 추가
-        fun sendData(userInfo: HashMap<String, Serializable?>, collectionName: String) {
+        fun sendData(userInfo: HashMap<String, Any?>, collectionName: String) {
             firestore.collection(collectionName)
                 .add(userInfo)
                 .addOnSuccessListener { documentReference ->
