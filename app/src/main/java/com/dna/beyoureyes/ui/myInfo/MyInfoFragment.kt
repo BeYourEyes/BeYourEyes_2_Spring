@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,8 @@ import com.dna.beyoureyes.AppUser
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentMyInfoBinding
 import com.dna.beyoureyes.model.FoodHistory
+import com.dna.beyoureyes.model.diseaseInfo
+import com.google.android.material.chip.Chip
 
 
 class MyInfoFragment : Fragment() {
@@ -75,7 +78,38 @@ class MyInfoFragment : Fragment() {
     }
 
     fun updateProfile() {
+
+        val diseaseMap = mapOf(
+            "diabetes" to binding.diabetes,
+            "highblood" to binding.highblood,
+            "hyperlipidemia" to binding.hyperlipidemia
+        )
+
+        val userDiseases = AppUser.info?.disease?.toSet() ?: emptySet()
+
+
         binding.profileName.setText(AppUser.info?.name?:"")
+        diseaseMap.forEach { diseaseName, diseaseButton ->
+            if (userDiseases.contains(diseaseName)) {
+                diseaseButton.visibility = View.VISIBLE
+            } else {
+                diseaseButton.visibility = View.GONE
+            }
+        }
+        /*
+        val layoutParams = binding.allergyChipGroup.layoutParams as ViewGroup.MarginLayoutParams
+        layoutParams.topMargin = 200
+        binding.allergyChipGroup.layoutParams = layoutParams
+        */
+
+        AppUser.info?.allergic?.forEach {
+            val chip = Chip(requireContext())
+            chip.text = it
+            chip.isCheckable = false
+            chip.width = 85
+            chip.height = 20
+            binding.allergyChipGroup.addView(chip)
+        }
     }
 
 }
