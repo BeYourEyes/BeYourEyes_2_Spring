@@ -1,13 +1,22 @@
 package com.dna.beyoureyes.ui.myInfo
 
 import android.content.Context
+import android.icu.util.Calendar
+import android.net.Uri
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.bumptech.glide.Glide
 import com.dna.beyoureyes.R
+import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.storage
+import java.lang.ref.Reference
 
 class FoodHistoryView(context: Context, attrs: AttributeSet?) :
     CardView(context, attrs) {
@@ -51,11 +60,26 @@ class FoodHistoryView(context: Context, attrs: AttributeSet?) :
         }
     }
 
-    fun setData(label:String, kcal:Int, imgResourceId:Int) {
+    fun setData(timestamp: Timestamp?, kcal:Int?, imgUri: Uri?) {
         // textView 세팅
-        kcalTextView.text = kcal.toString()+"kcal"      // 섭취 칼로리 text
-        historyLabel.text = label                       // 식품 기록 제목 text
-        historyImg.setImageResource(imgResourceId)      // 식품 사진 image view
+        kcalTextView.text = kcal?.let { it.toString()+"kcal" }?: run { "" } // 섭취 칼로리 text
+        historyLabel.text = timestamp?.let { getTimeText(it) }?: run { "" } // 식품 기록 제목 text
+        imgUri?.let { // 식품 사진 image view
+            Glide.with(this)
+                .load(imgUri)
+                .centerCrop() // 이미지를 크롭
+                .into(historyImg)
+        }
+    }
 
+    fun getTimeText(timestamp: Timestamp) : String { // 오전 HH시 mm분 형식의 텍스트 만들기
+        val calendar = Calendar.getInstance().apply {
+            time = timestamp.toDate()
+        }
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+        val amPm = if (hour < 12) "오전" else "오후"
+        val displayHour = if (hour == 0) 12 else if (hour > 12) hour - 12 else hour
+        return "$amPm ${displayHour}시 ${minute}분"
     }
 }
