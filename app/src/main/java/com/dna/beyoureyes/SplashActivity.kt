@@ -3,18 +3,20 @@ package com.dna.beyoureyes
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
-import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.dna.beyoureyes.databinding.ActivitySplashBinding
 import com.dna.beyoureyes.model.FirebaseHelper
-import com.dna.beyoureyes.model.UserInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SplashActivity : AppCompatActivity() {
 
@@ -43,25 +45,44 @@ class SplashActivity : AppCompatActivity() {
             .playOn(binding.appName)
 
         // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-
-        if (currentUser != null && FirebaseHelper.receiveUserData()) { // 앱 이용한 적 있는 유저
-            //Toast.makeText(this@SplashActivity, "이미 가입한 유저", Toast.LENGTH_LONG).show()
-            userId = currentUser.uid
-            AppUser.id = userId
-            Log.d("GOOGLE : ", AppUser.id.toString())
-            //FirebaseHelper.receiveUserData()
-            //Toast.makeText(this@SplashActivity, userId, Toast.LENGTH_LONG).show()
-            Handler().postDelayed({ startActivity(Intent(this, MainActivity::class.java)); finish(); }, 3 * 1000)
+        lifecycleScope.launch {
+            val currentUser = auth.currentUser
+            if (currentUser != null) {
+                val hasData = FirebaseHelper.receiveUserData(currentUser) // suspend 함수로 변경
+                Log.d("SPLASH", hasData.toString())
+                if (hasData) {
+                    //Toast.makeText(this@SplashActivity, "이미 가입한 유저", Toast.LENGTH_LONG).show()
+                    userId = currentUser.uid
+                    AppUser.id = userId
+                    Log.d("GOOGLE : ", AppUser.id.toString())
+                    //FirebaseHelper.receiveUserData()
+                    //Toast.makeText(this@SplashActivity, userId, Toast.LENGTH_LONG).show()
+                    delay(3000) // 3초 지연
+                    withContext(Dispatchers.Main) {
+                        startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                        finish()
+                    }
+                } else {
+                    // 최초 접속 (데이터 없음) - 익명 로그인 후 온보딩으로 이동
+                    signInAnonymously()
+                    delay(3000) // 3초 지연
+                    withContext(Dispatchers.Main) {
+                        startActivity(Intent(this@SplashActivity, OnboardingActivity::class.java))
+                        finish()
+                    }
+                }
+            } else {
+                // 최초 접속 (로그인 안됨) - 익명 로그인 후 온보딩으로 이동
+                //Toast.makeText(this@SplashActivity, "가입안한 유저", Toast.LENGTH_LONG).show()
+                signInAnonymously()
+                delay(3000) // 3초 지연
+                withContext(Dispatchers.Main) {
+                    startActivity(Intent(this@SplashActivity, OnboardingActivity::class.java))
+                    finish()
+                }
+            }
+            updateUI(currentUser) // UI 업데이트
         }
-        else { // 최초 접속
-            //Toast.makeText(this@SplashActivity, "가입안한 유저", Toast.LENGTH_LONG).show()
-            signInAnonymously()
-            Handler().postDelayed({ startActivity(Intent(this, OnboardingActivity::class.java)); finish(); }, 3 * 1000)
-        }
-        updateUI(currentUser)
-
-
     }
     // [END on_start_check_user]
 
