@@ -1,6 +1,7 @@
 package com.dna.beyoureyes
 
 import android.util.Log
+import com.dna.beyoureyes.model.Gender
 
 //========================================================================
 // 섭취 범위 관리를 위한 enum 객체들
