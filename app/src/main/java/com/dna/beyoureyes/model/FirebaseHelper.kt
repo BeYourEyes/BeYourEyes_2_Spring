@@ -1,13 +1,13 @@
 package com.dna.beyoureyes.model
 
 import android.util.Log
-import androidx.camera.core.processing.SurfaceProcessorNode.In
 import com.dna.beyoureyes.AppUser
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.io.Serializable
+import kotlinx.coroutines.tasks.await
 
 class FirebaseHelper {
     companion object {
@@ -48,19 +48,18 @@ class FirebaseHelper {
                 }
         }
 
-        fun receiveUserData() : Boolean {
-            var hasData = true
+        suspend fun receiveUserData(currentUser: FirebaseUser): Boolean {
             val db = Firebase.firestore
-            if (AppUser.id != null) {
-                db.collection("userInfo")
-                    .whereEqualTo("userId", AppUser.id)
-                    .get()
-                    .addOnSuccessListener { info ->
-                        if (info.isEmpty) {
-                            Log.d("FIREBASE : ", "NO DATA FOUND")
-                            hasData = false
-                            return@addOnSuccessListener
-                        }
+            return try {
+                    val info = db.collection("userInfo")
+                        .whereEqualTo("userId", currentUser.uid)
+                        .get()
+                        .await()
+                    if (info.isEmpty) {
+                        Log.d("RECEIVE_USER_DATA", "NO DATA FOUND")
+                        false
+                    } else {
+                        Log.d("RECEIVE_USER_DATA", "DATA FOUND")
                         for (document in info) {
                             val userName = document.data.get("userName") as String
                             val userGender = document.data.get("userGender") as Long
@@ -70,10 +69,12 @@ class FirebaseHelper {
                             val profile = document.data.get("userProfile") as String
                             AppUser.setInfo(userName, userGender.toInt(), userBirth, userDisease, userAllergy, profile)
                         }
+                        true
                     }
-            }
-            else { hasData = false }
-            return hasData
+                } catch (exception: Exception) {
+                    Log.d("RECEIVE_USER_DATA", "Error getting documents: ", exception)
+                    false
+                }
         }
     }
 }
