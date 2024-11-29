@@ -2,6 +2,7 @@ package com.dna.beyoureyes.model
 
 import com.dna.beyoureyes.AppUser
 import com.dna.beyoureyes.Gender
+import com.google.firebase.firestore.DocumentSnapshot
 
 class Protein(override var milligram: Int = 0) : Nutrition {
 
@@ -16,6 +17,8 @@ class Protein(override var milligram: Int = 0) : Nutrition {
             = Companion.getDailyValueText()
     override fun isInWarningRange(): Boolean
             = Companion.isInWarningRange(milligram)
+    override fun fromFirestore(document: DocumentSnapshot): Nutrition?
+            = Companion.fromFirestore(document)
 
 
     // static 영역
@@ -62,6 +65,9 @@ class Protein(override var milligram: Int = 0) : Nutrition {
                 }
                 return lower > milligram
             }
+        }
+        fun fromFirestore(document: DocumentSnapshot): Protein? {
+            return document.getLong(DB_FIELD_NAME)?.toInt()?.let { Protein(it) }
         }
     }
 }

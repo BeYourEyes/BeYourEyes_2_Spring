@@ -1,6 +1,7 @@
 package com.dna.beyoureyes.model
 
 import com.dna.beyoureyes.AppUser
+import com.google.firebase.firestore.DocumentSnapshot
 
 class SaturatedFat(override var milligram: Int = 0) : Nutrition {
 
@@ -15,6 +16,8 @@ class SaturatedFat(override var milligram: Int = 0) : Nutrition {
             = Companion.getDailyValueText()
     override fun isInWarningRange(): Boolean
             = Companion.isInWarningRange(milligram)
+    override fun fromFirestore(document: DocumentSnapshot): Nutrition?
+            = Companion.fromFirestore(document)
 
 
     // static 영역
@@ -31,6 +34,9 @@ class SaturatedFat(override var milligram: Int = 0) : Nutrition {
         }
         fun isInWarningRange(milligram: Int): Boolean {
             return milligram > getDailyValue()
+        }
+        fun fromFirestore(document: DocumentSnapshot): SaturatedFat? {
+            return document.getLong(DB_FIELD_NAME)?.toInt()?.let { SaturatedFat(it) }
         }
     }
 }
