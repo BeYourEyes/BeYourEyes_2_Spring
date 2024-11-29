@@ -1,6 +1,7 @@
 package com.dna.beyoureyes.model
 
 import com.dna.beyoureyes.AppUser
+import com.google.firebase.firestore.DocumentSnapshot
 
 class Natrium(override var milligram: Int = 0) : Nutrition {
 
@@ -15,6 +16,8 @@ class Natrium(override var milligram: Int = 0) : Nutrition {
             = Companion.getDailyValueText()
     override fun isInWarningRange(): Boolean
             = Companion.isInWarningRange(milligram)
+    override fun fromFirestore(document: DocumentSnapshot): Nutrition?
+            = Companion.fromFirestore(document)
 
 
     // static 영역
@@ -44,6 +47,9 @@ class Natrium(override var milligram: Int = 0) : Nutrition {
         }
         fun isInWarningRange(milligram: Int): Boolean {
             return getDailyValue() < milligram
+        }
+        fun fromFirestore(document: DocumentSnapshot): Natrium? {
+            return document.getLong(DB_FIELD_NAME)?.toInt()?.let { Natrium(it) }
         }
     }
 }

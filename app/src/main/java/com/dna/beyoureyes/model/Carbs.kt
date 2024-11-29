@@ -1,6 +1,6 @@
 package com.dna.beyoureyes.model
 
-import com.dna.beyoureyes.AppUser
+import com.google.firebase.firestore.DocumentSnapshot
 
 class Carbs(override var milligram: Int = 0) : Nutrition {
 
@@ -15,7 +15,8 @@ class Carbs(override var milligram: Int = 0) : Nutrition {
         = Companion.getDailyValueText()
     override fun isInWarningRange(): Boolean
         = Companion.isInWarningRange(milligram)
-
+    override fun fromFirestore(document: DocumentSnapshot): Nutrition?
+        = Companion.fromFirestore(document)
 
     // static 영역
     companion object {
@@ -29,6 +30,9 @@ class Carbs(override var milligram: Int = 0) : Nutrition {
         }
         fun isInWarningRange(milligram: Int): Boolean {
             return milligram < 100 * 1000  // 성별, 나이 무관 평균 필요량 100g (최소한의 섭취 기준)
+        }
+        fun fromFirestore(document: DocumentSnapshot): Carbs? {
+            return document.getLong(DB_FIELD_NAME)?.toInt()?.let { Carbs(it) }
         }
     }
 }

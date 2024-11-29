@@ -22,7 +22,7 @@ class FoodHistoryAdapter(private val items: MutableList<FoodHistory>)
     // 뷰 홀더 데이터 바인딩
     override fun onBindViewHolder(holder: FoodHistoryViewHolder, position: Int) {
         val history = items[position]
-        holder.historyView.setData(history.label, history.kcal, history.img)
+        holder.historyView.setData(history.timestamp, history.kcal, history.imgUri)
     }
 
     override fun getItemCount() = items.size

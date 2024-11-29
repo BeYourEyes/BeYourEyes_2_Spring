@@ -78,6 +78,9 @@ dependencies {
     implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.google.firebase:firebase-database-ktx")
 
+    // Glide (이미지 로드 라이브러리)
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
     // google login
     implementation ("com.google.android.gms:play-services-auth:21.2.0")
 

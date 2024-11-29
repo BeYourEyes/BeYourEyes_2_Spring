@@ -1,6 +1,7 @@
 package com.dna.beyoureyes.model
 
 import com.dna.beyoureyes.AppUser
+import com.google.firebase.firestore.DocumentSnapshot
 
 class Fat(override var milligram: Int = 0) : Nutrition {
 
@@ -15,7 +16,8 @@ class Fat(override var milligram: Int = 0) : Nutrition {
             = Companion.getDailyValueText()
     override fun isInWarningRange(): Boolean
             = Companion.isInWarningRange(milligram)
-
+    override fun fromFirestore(document: DocumentSnapshot): Nutrition?
+            = Companion.fromFirestore(document)
 
     // static 영역
     companion object {
@@ -40,6 +42,9 @@ class Fat(override var milligram: Int = 0) : Nutrition {
         }
         fun isInWarningRange(milligram: Int): Boolean {
             return milligram > getDailyValue() // 권장 범위를 초과하는지 검사
+        }
+        fun fromFirestore(document: DocumentSnapshot): Fat? {
+            return document.getLong(DB_FIELD_NAME)?.toInt()?.let { Fat(it) }
         }
     }
 }
