@@ -1,6 +1,7 @@
 package com.dna.beyoureyes.model
 
 import com.dna.beyoureyes.AppUser
+import com.google.firebase.firestore.DocumentSnapshot
 
 class Sugar(override var milligram: Int = 0) : Nutrition {
 
@@ -15,6 +16,8 @@ class Sugar(override var milligram: Int = 0) : Nutrition {
             = Companion.getDailyValueText()
     override fun isInWarningRange(): Boolean
             = Companion.isInWarningRange(milligram)
+    override fun fromFirestore(document: DocumentSnapshot): Nutrition?
+            = Companion.fromFirestore(document)
 
 
     // static 영역
@@ -31,6 +34,9 @@ class Sugar(override var milligram: Int = 0) : Nutrition {
         }
         fun isInWarningRange(milligram: Int): Boolean {
             return milligram > getDailyValue()*2  // 일일 권장 칼로리의 20% 이내인지 검사
+        }
+        fun fromFirestore(document: DocumentSnapshot): Sugar? {
+            return document.getLong(DB_FIELD_NAME)?.toInt()?.let { Sugar(it) }
         }
     }
 }

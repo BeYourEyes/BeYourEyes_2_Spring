@@ -121,7 +121,7 @@
     <string name="tmp_home_kcal_daily_value">2000kcal</string>
 
     <string name="tmp_my_info_nickname">SSO</string>
-    <string name="tmp_my_info_history_cnt">1</string>
+    <string name="tmp_my_info_history_cnt">0</string>
     <string name="tmp_my_info_app_version_value">version 5.0</string>
 
     <string name="tmp_intake_bar_percent_value">140%</string>
