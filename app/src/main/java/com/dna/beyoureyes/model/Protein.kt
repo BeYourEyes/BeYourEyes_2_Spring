@@ -1,7 +1,7 @@
 package com.dna.beyoureyes.model
 
 import com.dna.beyoureyes.AppUser
-import com.dna.beyoureyes.Gender
+import com.dna.beyoureyes.model.Gender
 import com.google.firebase.firestore.DocumentSnapshot
 
 class Protein(override var milligram: Int = 0) : Nutrition {

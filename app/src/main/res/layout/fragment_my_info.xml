@@ -32,7 +32,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/allergyLayout"
                 android:layout_width="0dp"
-                android:layout_height="53dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="28dp"
                 android:layout_marginEnd="20dp"
@@ -69,14 +69,23 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/allergyChipGroup"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/allergyLabel"></com.google.android.material.chip.ChipGroup>
+                    app:layout_constraintTop_toBottomOf="@+id/allergyLabel">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/allergyChipGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipSpacing="15dp" />
+                </LinearLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -119,14 +128,91 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/diseaseChipGroup"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/diseaseLabel"></com.google.android.material.chip.ChipGroup>
+                    app:layout_constraintTop_toBottomOf="@+id/diseaseLabel">
+
+                    <LinearLayout
+                        android:id="@+id/diabete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="84dp"
+                            android:layout_height="84dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/assign_disease_diabetes_click" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/wanted_sans_semi_bold"
+                            android:text="@string/assign_disease_diabetes"
+                            android:textAlignment="center"
+                            android:textColor="@color/gray_950"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/highblood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="14dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="84dp"
+                            android:layout_height="84dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/assign_disease_highblood_click" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/wanted_sans_semi_bold"
+                            android:text="@string/assign_disease_HighBloodPressure"
+                            android:textAlignment="center"
+                            android:textColor="@color/gray_950"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/hyperlipidemia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="14dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageView4"
+                            android:layout_width="84dp"
+                            android:layout_height="84dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/assign_disease_hyperlipidemia_click" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/wanted_sans_semi_bold"
+                            android:text="@string/assign_disease_hyperlipidemia"
+                            android:textAlignment="center"
+                            android:textColor="@color/gray_950"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

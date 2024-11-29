@@ -41,7 +41,6 @@ class AssignAllergyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAssignAllergyBinding.inflate(inflater, container, false)
-
         binding.assignAllergyChipGroup.setOnCheckedStateChangeListener{ group, checkedIds ->
             // "없음" 클릭 시 다른 칩 해제
             if (checkedIds.contains(R.id.chip_none)) {
@@ -64,6 +63,7 @@ class AssignAllergyFragment : Fragment() {
             }
         }
 
+
         // Inflate the layout for this fragment
         val listener = activity as? FragmentNavigationListener
         binding.nextBtn.setOnClickListener {
@@ -76,6 +76,10 @@ class AssignAllergyFragment : Fragment() {
             }
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     companion object {

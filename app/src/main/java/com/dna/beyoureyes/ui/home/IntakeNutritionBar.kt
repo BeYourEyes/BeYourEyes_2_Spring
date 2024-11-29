@@ -10,8 +10,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.dna.beyoureyes.AppUser
-import com.dna.beyoureyes.Gender
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.model.Nutrition
 
