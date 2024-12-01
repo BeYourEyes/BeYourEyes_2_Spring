@@ -1,14 +1,15 @@
 package com.dna.beyoureyes.model
 
 import android.util.Log
-import androidx.camera.core.processing.SurfaceProcessorNode.In
 import com.dna.beyoureyes.AppUser
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.Serializable
+import kotlinx.coroutines.tasks.await
 
 class FirebaseHelper {
     companion object {
@@ -48,42 +49,33 @@ class FirebaseHelper {
                     Log.d("REGISTERFIRESTORE : ", "Error deleting documents.", exception)
                 }
         }
-
-        suspend fun receiveUserData() : Boolean {
-            var hasData = true
-            val db = FirebaseFirestore.getInstance()
-            return if (AppUser.id != null) {
-                suspendCancellableCoroutine { continuation ->
-                    db.collection("userInfo")
-                        .whereEqualTo("userId", AppUser.id)
+        suspend fun receiveUserData(currentUser: FirebaseUser): Boolean {
+            val db = Firebase.firestore
+            return try {
+                    val info = db.collection("userInfo")
+                        .whereEqualTo("userId", currentUser.uid)
                         .get()
-                        .addOnSuccessListener { info ->
-                            var hasData = false
-                            if (info.isEmpty) {
-                                Log.d("INFO", "NO DATA FOUND")
-                                continuation.resume(false) { }
-                            } else {
-                                for (document in info) {
-                                    val userName = document.data["userName"] as String
-                                    val userGender = (document.data["userGender"] as Long).toInt()
-                                    val userBirth = document.data["userBirth"] as Timestamp
-                                    val userDisease = document.data["userDisease"] as ArrayList<String>
-                                    val userAllergy = document.data["userAllergy"] as ArrayList<String>
-                                    val profile = document.data["userProfile"] as String
-                                    AppUser.setInfo(userName, userGender, userBirth, userDisease, userAllergy, profile)
-                                    hasData = true
-                                }
-                                continuation.resume(hasData) { }
-                            }
+                        .await()
+                    if (info.isEmpty) {
+                        Log.d("RECEIVE_USER_DATA", "NO DATA FOUND")
+                        false
+                    } else {
+                        Log.d("RECEIVE_USER_DATA", "DATA FOUND")
+                        for (document in info) {
+                            val userName = document.data.get("userName") as String
+                            val userGender = document.data.get("userGender") as Long
+                            val userBirth = document.data.get("userBirth") as Timestamp
+                            val userDisease = document.data.get("userDisease") as ArrayList<String>
+                            val userAllergy = document.data.get("userAllergy") as ArrayList<String>
+                            val profile = document.data.get("userProfile") as String
+                            AppUser.setInfo(userName, userGender.toInt(), userBirth, userDisease, userAllergy, profile)
                         }
-                        .addOnFailureListener { e ->
-                            Log.e("INFO", "Error fetching data", e)
-                            continuation.resumeWith(Result.failure(e))
-                        }
+                        true
+                    }
+                } catch (exception: Exception) {
+                    Log.d("RECEIVE_USER_DATA", "Error getting documents: ", exception)
+                    false
                 }
-            } else {
-                false
-            }
         }
     }
 }
