@@ -7,6 +7,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.Serializable
 
 class FirebaseHelper {
@@ -18,10 +19,10 @@ class FirebaseHelper {
             firestore.collection(collectionName)
                 .add(userInfo)
                 .addOnSuccessListener { documentReference ->
-                    Log.d("FIREBASE :", "SUCCESS added with ID: ${documentReference.id}")
+                    Log.d("INFO", "SUCCESS added with ID: ${documentReference.id}")
                 }
                 .addOnFailureListener { e ->
-                    Log.w("FIREBASE :", "Error adding document", e)
+                    Log.w("INFO", "Error adding document", e)
                 }
         }
 
@@ -48,32 +49,41 @@ class FirebaseHelper {
                 }
         }
 
-        fun receiveUserData() : Boolean {
+        suspend fun receiveUserData() : Boolean {
             var hasData = true
-            val db = Firebase.firestore
-            if (AppUser.id != null) {
-                db.collection("userInfo")
-                    .whereEqualTo("userId", AppUser.id)
-                    .get()
-                    .addOnSuccessListener { info ->
-                        if (info.isEmpty) {
-                            Log.d("FIREBASE : ", "NO DATA FOUND")
-                            hasData = false
-                            return@addOnSuccessListener
+            val db = FirebaseFirestore.getInstance()
+            return if (AppUser.id != null) {
+                suspendCancellableCoroutine { continuation ->
+                    db.collection("userInfo")
+                        .whereEqualTo("userId", AppUser.id)
+                        .get()
+                        .addOnSuccessListener { info ->
+                            var hasData = false
+                            if (info.isEmpty) {
+                                Log.d("INFO", "NO DATA FOUND")
+                                continuation.resume(false) { }
+                            } else {
+                                for (document in info) {
+                                    val userName = document.data["userName"] as String
+                                    val userGender = (document.data["userGender"] as Long).toInt()
+                                    val userBirth = document.data["userBirth"] as Timestamp
+                                    val userDisease = document.data["userDisease"] as ArrayList<String>
+                                    val userAllergy = document.data["userAllergy"] as ArrayList<String>
+                                    val profile = document.data["userProfile"] as String
+                                    AppUser.setInfo(userName, userGender, userBirth, userDisease, userAllergy, profile)
+                                    hasData = true
+                                }
+                                continuation.resume(hasData) { }
+                            }
                         }
-                        for (document in info) {
-                            val userName = document.data.get("userName") as String
-                            val userGender = document.data.get("userGender") as Long
-                            val userBirth = document.data.get("userBirth") as Timestamp
-                            val userDisease = document.data.get("userDisease") as ArrayList<String>
-                            val userAllergy = document.data.get("userAllergy") as ArrayList<String>
-                            val profile = document.data.get("userProfile") as String
-                            AppUser.setInfo(userName, userGender.toInt(), userBirth, userDisease, userAllergy, profile)
+                        .addOnFailureListener { e ->
+                            Log.e("INFO", "Error fetching data", e)
+                            continuation.resumeWith(Result.failure(e))
                         }
-                    }
+                }
+            } else {
+                false
             }
-            else { hasData = false }
-            return hasData
         }
     }
 }
