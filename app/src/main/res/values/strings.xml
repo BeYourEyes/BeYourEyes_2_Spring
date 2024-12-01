@@ -122,7 +122,6 @@
 
     <string name="tmp_my_info_nickname">SSO</string>
     <string name="tmp_my_info_history_cnt">0</string>
-    <string name="tmp_my_info_app_version_value">version 5.0</string>
 
     <string name="tmp_intake_bar_percent_value">140%</string>
     <string name="tmp_intake_bar_mg_value">420mg</string>
