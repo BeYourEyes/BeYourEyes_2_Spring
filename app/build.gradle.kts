@@ -5,6 +5,9 @@ plugins {
     id("org.jetbrains.kotlin.android")
     //Google Firebase plugin
     id("com.google.gms.google-services")
+    // navigation safeargs, classpath
+    id("androidx.navigation.safeargs.kotlin")
+
 
 }
 

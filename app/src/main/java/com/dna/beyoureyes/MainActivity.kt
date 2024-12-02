@@ -4,7 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
+import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.dna.beyoureyes.databinding.ActivityMainBinding
@@ -18,6 +21,7 @@ import java.util.Calendar
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
 
     val foodHistoryItems = mutableListOf<FoodHistory>() // 음식 기록 리스트
 
@@ -33,8 +37,22 @@ class MainActivity : AppCompatActivity() {
 
         // 프래그먼트 뷰에 네비게이션 컨트롤러 연결
         // -> 네비게이션 파일에 설정한대로 처리할 수 있게
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        navController = findNavController(R.id.nav_host_fragment_activity_main)
         navView.setupWithNavController(navController)
+
+        // 프래그먼트 교체 시 하단 네비게이션 바를 숨겨야 할 때
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.navigation_past_detail) { // 과거 기록 뷰는 하단 바 숨김
+                navView.visibility = View.GONE
+            } else {
+                // 그 외는 표시. 사라졌다가 등장시킬 시 애니메이션 효과 추가
+                if (navView.visibility == View.GONE) {
+                    val slideIn = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom)
+                    navView.startAnimation(slideIn)
+                    navView.visibility = View.VISIBLE
+                }
+            }
+        }
 
         // 오늘의 시작 시간 (자정)
         val calendar = Calendar.getInstance()
@@ -78,8 +96,12 @@ class MainActivity : AppCompatActivity() {
                 Log.w("HOME", "Error getting documents.", exception)
             }.addOnCompleteListener {
                 // 데이터 로드를 마친 후 프래그먼트 화면 갱신
-                navController.navigate(R.id.navigation_home)
+                navigateToHomeFragment()
             }
+    }
+
+    fun navigateToHomeFragment() {
+        navController.navigate(R.id.navigation_home)
     }
 
     private fun Float.toDp(context: Context): Float {

@@ -8,25 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
-import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.dna.beyoureyes.MainActivity
 import com.dna.beyoureyes.AppUser
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentMyInfoBinding
-import com.dna.beyoureyes.model.FoodHistory
-import com.dna.beyoureyes.model.diseaseInfo
+import com.dna.beyoureyes.ui.CustomToolbar
 import com.google.android.material.chip.Chip
 
 class MyInfoFragment : Fragment() {
     private var _binding: FragmentMyInfoBinding? = null
     private val binding get() = _binding!!
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: FoodHistoryAdapter
-    private lateinit var layoutManager: RecyclerView.LayoutManager
+    private lateinit var foodHistoryAdapter: FoodHistoryAdapter
 
     private val shareTitle = "친구에게 공유하기"
     private val appLink = "https://play.google.com/store/apps/details?id=com.dna.beyoureyes"
@@ -42,14 +37,20 @@ class MyInfoFragment : Fragment() {
         _binding = FragmentMyInfoBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        recyclerView = binding.historyRecyclerView
-        layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.layoutManager = layoutManager // 리사이클러 뷰 레이아웃 매니저 설정
 
         val activity = requireActivity() as MainActivity
-        adapter = FoodHistoryAdapter(activity.foodHistoryItems)
-        recyclerView.adapter = adapter // 리사이클러 뷰 어댑터 설정
-        binding.historyCnt.text = "${adapter.itemCount}"
+        foodHistoryAdapter = FoodHistoryAdapter(activity.foodHistoryItems) {
+                foodHistory ->
+            val action = MyInfoFragmentDirections.actionMyInfoToPastDetail(foodHistory)
+            findNavController().navigate(action)
+        } // 리사이클러 뷰 어댑터 정의 - 데이터 전달 & 아이템 클릭 시 액션 정의(프래그먼트 교체)
+
+        binding.historyRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = foodHistoryAdapter
+        }
+
+        binding.historyCnt.text = "${foodHistoryAdapter.itemCount}"
 
         // 앱 공유하기 버튼
         binding.shareBtn.setOnClickListener {
@@ -70,6 +71,11 @@ class MyInfoFragment : Fragment() {
         // 개인정보 처리 방침
         binding.privacyPolicyBtn.setOnClickListener {
 
+        }
+        binding.toolbar.backButtonClickListener = object : CustomToolbar.BackButtonClickListener {
+            override fun onBackButtonClicked() {
+                findNavController().popBackStack()
+            }
         }
 
         updateProfile()

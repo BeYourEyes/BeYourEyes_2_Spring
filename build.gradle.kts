@@ -9,4 +9,6 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.9.0" apply false
     //Google FIrebase 초기 설정
     id("com.google.gms.google-services") version "4.4.2" apply false
+    // navigation safeargs, classpath
+    id("androidx.navigation.safeargs.kotlin") version "2.7.7" apply false
 }

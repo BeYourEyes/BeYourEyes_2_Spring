@@ -50,9 +50,6 @@
             android:name=".CameraFailActivity"
             android:exported="false" />
         <activity
-            android:name=".MyPastDetailActivity"
-            android:exported="false" />
-        <activity
             android:name=".OnboardingActivity"
             android:exported="false" />
         <activity

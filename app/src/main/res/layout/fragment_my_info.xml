@@ -81,7 +81,7 @@
 
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/allergyChipGroup"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:chipSpacing="15dp" />
                 </LinearLayout>
@@ -132,7 +132,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="12dp"
-                    android:gravity="center"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +148,7 @@
                             android:id="@+id/imageView2"
                             android:layout_width="84dp"
                             android:layout_height="84dp"
-                            android:layout_margin="5dp"
+                            android:layout_marginBottom="3dp"
                             android:background="@drawable/assign_disease_diabetes_click" />
 
                         <TextView
@@ -174,7 +173,7 @@
                             android:id="@+id/imageView3"
                             android:layout_width="84dp"
                             android:layout_height="84dp"
-                            android:layout_margin="5dp"
+                            android:layout_marginBottom="3dp"
                             android:background="@drawable/assign_disease_highblood_click" />
 
                         <TextView
@@ -199,7 +198,7 @@
                             android:id="@+id/imageView4"
                             android:layout_width="84dp"
                             android:layout_height="84dp"
-                            android:layout_margin="5dp"
+                            android:layout_marginBottom="3dp"
                             android:background="@drawable/assign_disease_hyperlipidemia_click" />
 
                         <TextView

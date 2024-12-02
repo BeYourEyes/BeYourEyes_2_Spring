@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="320dp"
-    android:layout_height="512dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/shape_result_fragment_background_white_stroke_10"
     android:orientation="vertical"
     android:padding="17dp"
@@ -26,7 +26,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/nutri_bar_result_na"
+            android:id="@+id/naName"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:fontFamily="@font/wanted_sans_bold"
@@ -35,7 +35,7 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/nutri_bar_result_na_quant"
+            android:id="@+id/naQuant"
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:layout_marginStart="4dp"
@@ -78,7 +78,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/nutri_bar_result_carb"
+            android:id="@+id/carbName"
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:fontFamily="@font/wanted_sans_bold"
@@ -87,7 +87,7 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/nutri_bar_result_carb_quant"
+            android:id="@+id/carbQuant"
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:layout_marginStart="4dp"
@@ -131,7 +131,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/nutri_bar_result_sugar"
+            android:id="@+id/sugarName"
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:fontFamily="@font/wanted_sans_bold"
@@ -140,7 +140,7 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/nutri_bar_result_sugar_quant"
+            android:id="@+id/sugarQuant"
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:layout_marginStart="4dp"
@@ -183,7 +183,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/nutri_bar_result_fat"
+            android:id="@+id/fatName"
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:fontFamily="@font/wanted_sans_bold"
@@ -192,7 +192,7 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/nutri_bar_result_fat_quant"
+            android:id="@+id/fatQuant"
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:layout_marginStart="4dp"
@@ -213,7 +213,6 @@
             android:textColor="@color/gray_300" />
 
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -235,7 +234,59 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/nutri_bar_result_chole"
+            android:id="@+id/satFatName"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:fontFamily="@font/wanted_sans_bold"
+            android:gravity="center|left"
+            android:text="@string/nutri_satFat"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/satFatQuant"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/wanted_sans_extra_bold"
+            android:gravity="center|left"
+            android:text="52g"
+            android:textColor="@color/blue_700" />
+
+        <TextView
+            android:id="@+id/satFatDV"
+            android:layout_width="match_parent"
+            android:layout_height="23dp"
+            android:layout_weight="1"
+            android:gravity="right|center"
+            android:text="권장 섭취량 00g"
+            android:fontFamily="@font/wanted_sans_semi_bold"
+            android:textSize="13sp"
+            android:textColor="@color/gray_300" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.github.mikephil.charting.charts.HorizontalBarChart
+            android:id="@+id/satFatBarchart"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="23dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/choleName"
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:fontFamily="@font/wanted_sans_bold"
@@ -244,7 +295,7 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/nutri_bar_result_chole_quant"
+            android:id="@+id/choleQuant"
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:layout_marginStart="4dp"
@@ -287,7 +338,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/nutri_bar_result_protein"
+            android:id="@+id/proteinName"
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:fontFamily="@font/wanted_sans_bold"
@@ -296,7 +347,7 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/nutri_bar_result_protein_quant"
+            android:id="@+id/proteinQuant"
             android:layout_width="wrap_content"
             android:layout_height="23dp"
             android:layout_marginStart="4dp"

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.dna.beyoureyes.model.Nutrition
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
@@ -27,6 +28,8 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 // primary 생성자 - 액티비티 내 바 차트 객체 및 관련 텍스트뷰를 전달
 class NutriIntakeBarDisplay(
     val barChart : BarChart,
+    val nameTextView: TextView,
+    val massTextView: TextView,
     val dvTextView : TextView) {
 
     fun hide(){
@@ -34,13 +37,11 @@ class NutriIntakeBarDisplay(
         dvTextView.visibility = View.GONE
     }
 
-    fun setZero(context: Context, unit: UnitOfMass, dv: DailyValue) {
-        setBarValue(context, Nutrition(0, unit), dv)
-    }
-
-    fun setBarValue(context: Context, nutri: Nutrition, dv: DailyValue) {
-        val milliIntake = nutri.getMilliGram()
-        val percentIntake = nutri.getPercentageOfDailyValue(dv.dailyValue)
+    fun set(context: Context, nutri: Nutrition) {
+        nameTextView.text = nutri.name
+        massTextView.text = nutri.massString
+        dvTextView.text = "권장 섭취량 " + nutri.getDailyValueText()
+        val percentIntake = nutri.percentageOfDailyValue
         val entries = arrayListOf<BarEntry>()
         entries.add(BarEntry(0f, percentIntake.toFloat()))
         applyBarChart(context, entries, 100f)
@@ -109,104 +110,6 @@ class NutriIntakeBarDisplay(
         barChart.invalidate()
 
     }
-}
-
-// set All Bar Chart
-class AllIntakeBarDisplay(
-    val natriumBar: NutriIntakeBarDisplay,
-    val carbsBar: NutriIntakeBarDisplay,
-    val sugarBar: NutriIntakeBarDisplay,
-    val proteinBar: NutriIntakeBarDisplay,
-    val fatBar: NutriIntakeBarDisplay,
-    val satFatBar: NutriIntakeBarDisplay,
-    val cholBar: NutriIntakeBarDisplay,
-    val lackIntakeReview : TextView,
-    val overIntakeReview : TextView
-) {
-
-
-    fun hide(context: Context, userDVs: NutrientDailyValues?) {
-
-        userDVs?.let { // 사용자 맞춤 권장량 O
-            setNoDataValues(context, it)
-        }?:run{ // 사용자 맞춤 권장량 객체 null 일때 바 차트 다 숨김
-            natriumBar.hide()
-            carbsBar.hide()
-            sugarBar.hide()
-            proteinBar.hide()
-            fatBar.hide()
-            satFatBar.hide()
-            cholBar.hide()
-        }
-
-        lackIntakeReview.visibility = View.GONE
-        overIntakeReview.visibility = View.GONE
-    }
-
-    fun setNoDataValues(context: Context, userDVs: NutrientDailyValues) {
-        natriumBar.setZero(context, UnitOfMass.MILLIGRAM, userDVs.natrium)
-        carbsBar.setZero(context, UnitOfMass.GRAM, userDVs.carbs)
-        sugarBar.setZero(context, UnitOfMass.GRAM, userDVs.sugar)
-        proteinBar.setZero(context, UnitOfMass.GRAM, userDVs.protein)
-        fatBar.setZero(context, UnitOfMass.GRAM, userDVs.fat)
-        satFatBar.setZero(context, UnitOfMass.GRAM, userDVs.satFat)
-        cholBar.setZero(context, UnitOfMass.MILLIGRAM, userDVs.chol)
-    }
-    fun setAll(context: Context, totalIntake:NutritionFacts, userDVs: NutrientDailyValues?) {
-        userDVs?.let { userDVs ->
-            totalIntake.natrium?.let {
-                natriumBar.setBarValue(context, it, userDVs.natrium)
-            } ?: run {
-                natriumBar.setBarValue(context, Nutrition(0, UnitOfMass.MILLIGRAM), userDVs.natrium)
-            }
-
-            totalIntake.carbs?.let {
-                carbsBar.setBarValue(context, it, userDVs.carbs)
-            } ?: run {
-                carbsBar.setBarValue(context, Nutrition(0, UnitOfMass.GRAM), userDVs.carbs)
-            }
-
-            totalIntake.sugar?.let {
-                sugarBar.setBarValue(context, it, userDVs.sugar)
-            } ?: run {
-                sugarBar.setBarValue(context, Nutrition(0, UnitOfMass.GRAM), userDVs.sugar)
-            }
-
-            totalIntake.protein?.let {
-                proteinBar.setBarValue(context, it, userDVs.protein)
-            } ?: run {
-                proteinBar.setBarValue(context, Nutrition(0, UnitOfMass.GRAM), userDVs.protein)
-            }
-
-            totalIntake.fat?.let {
-                fatBar.setBarValue(context, it, userDVs.fat)
-            } ?: run {
-                fatBar.setBarValue(context, Nutrition(0, UnitOfMass.GRAM), userDVs.fat)
-            }
-
-            totalIntake.satFat?.let {
-                satFatBar.setBarValue(context, it, userDVs.satFat)
-            } ?: run {
-                satFatBar.setBarValue(context, Nutrition(0, UnitOfMass.GRAM), userDVs.satFat)
-            }
-
-            totalIntake.chol?.let {
-                cholBar.setBarValue(context, it, userDVs.chol)
-            } ?: run {
-                cholBar.setBarValue(context, Nutrition(0, UnitOfMass.MILLIGRAM), userDVs.chol)
-            }
-        }?:run{
-            // 사용자 맞춤 권장량 객체 null 일때 바 차트 다 숨김
-            natriumBar.hide()
-            carbsBar.hide()
-            sugarBar.hide()
-            proteinBar.hide()
-            fatBar.hide()
-            satFatBar.hide()
-            cholBar.hide()
-        }
-    }
-
 }
 
 // PieChartSetting
@@ -307,57 +210,6 @@ class EnergyChart(private val chart : PieChart) {
             animate()
         }
     }
-}
-
-
-
-class NaIntakeBarDisplay(
-    val natriumBar: NutriIntakeBarDisplay
-) {
-
-
-    fun hide(context: Context, userDVs: NutrientDailyValues?) {
-
-        userDVs?.let { // 사용자 맞춤 권장량 O
-            setNoDataValues(context, it)
-        }?:run{ // 사용자 맞춤 권장량 객체 null 일때 바 차트 다 숨김
-            natriumBar.hide()
-        }
-    }
-
-    fun setNoDataValues(context: Context, userDVs: NutrientDailyValues) {
-        natriumBar.setZero(context, UnitOfMass.MILLIGRAM, userDVs.natrium)
-    }
-
-    fun setReviews(context: Context, intake:NutritionFacts, userDVs: NutrientDailyValues){
-        var overNutris = arrayListOf<String>()
-        var lackNutris = arrayListOf<String>()
-
-        intake.natrium?.let {
-            userDVs.natrium.getIntakeStatus(it.getMilliGram())?.let { range ->
-                when (range) {
-                    IntakeRange.LACK -> lackNutris.add("나트륨")
-                    IntakeRange.OVER -> overNutris.add("나트륨")
-                    else -> {}
-                }
-            }
-        }
-    }
-
-    fun setAll(context: Context, totalIntake:NutritionFacts, userDVs: NutrientDailyValues?) {
-        userDVs?.let { userDVs ->
-            totalIntake.natrium?.let {
-                natriumBar.setBarValue(context, it, userDVs.natrium)
-            } ?: run {
-                natriumBar.setBarValue(context, Nutrition(100, UnitOfMass.MILLIGRAM), userDVs.natrium)
-            }
-            setReviews(context, totalIntake, userDVs)
-        }?:run{
-            // 사용자 맞춤 권장량 객체 null 일때 바 차트 다 숨김
-            natriumBar.hide()
-        }
-    }
-
 }
 
 // calculate dp for unify ratio
