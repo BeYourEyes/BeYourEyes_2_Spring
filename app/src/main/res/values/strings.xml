@@ -1,5 +1,4 @@
 <resources>
-
     <!-- layout/toolbar.xml -->
     <string name="toolbar_skip">건너뛰기</string>
 
