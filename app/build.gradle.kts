@@ -28,9 +28,13 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 20
-        versionName = "2.2"
-
+        versionName = "2.2.0"
+        println ("Current defaultConfig versionName: ${versionName}")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {

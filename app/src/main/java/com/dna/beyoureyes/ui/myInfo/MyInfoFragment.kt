@@ -18,7 +18,7 @@ import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentMyInfoBinding
 import com.dna.beyoureyes.ui.CustomToolbar
 import com.google.android.material.chip.Chip
-import com.google.firebase.BuildConfig
+import com.dna.beyoureyes.BuildConfig
 
 class MyInfoFragment : Fragment() {
     private var _binding: FragmentMyInfoBinding? = null
