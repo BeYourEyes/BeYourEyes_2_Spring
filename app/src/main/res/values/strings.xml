@@ -1,11 +1,11 @@
 <resources>
+
     <!-- layout/toolbar.xml -->
     <string name="toolbar_skip">건너뛰기</string>
 
     <!-- f_result_cal -->
-    <string name="result_cal_text1">총 칼로리는</string>
-    <string name="result_cal_text2">OOOkcal</string>
-    <string name="result_cal_text3">입니다.</string>
+    <string name="result_cal_prefix">총 칼로리는</string>
+    <string name="result_cal_suffix">입니다.</string>
 
     <!-- f_result_alg_caution -->
     <string name="alg_caution_text1">님. 주의하세요</string>
@@ -96,7 +96,8 @@
     <string name="nutri_na">나트륨</string>
     <string name="nutri_carb">탄수화물</string>
     <string name="nutri_sugar">당류</string>
-    <string name="nutri_fat">포화지방</string>
+    <string name="nutri_fat">지방</string>
+    <string name="nutri_satFat">포화지방</string>
     <string name="nutri_chole">콜레스테롤</string>
     <string name="nutri_protein">단백질</string>
 
@@ -112,29 +113,6 @@
     <string name="allergy_peach">복숭아</string>
     <string name="allergy_tomato">토마토</string>
     <string name="assign_start">시작하기</string>
-
-    <!-- Temporary Strings (개발 중 확인용 임시 텍스트) -->
-    <string name="tmp_toolbar">화면명</string>
-
-    <string name="tmp_home_kcal_diff_value">477</string>
-    <string name="tmp_home_kcal_value">1423</string>
-    <string name="tmp_home_kcal_daily_value">2000kcal</string>
-
-    <string name="tmp_my_info_nickname">SSO</string>
-    <string name="tmp_my_info_history_cnt">0</string>
-    <string name="tmp_my_info_app_version_value">version 5.0</string>
-
-    <string name="tmp_intake_bar_percent_value">140%</string>
-    <string name="tmp_intake_bar_mg_value">420mg</string>
-    <string name="tmp_intake_bar_daily_value">일일 권장량 300mg</string>
-
-    <string name="tmp_food_history_title">2024.11.11</string>
-    <string name="tmp_food_history_kcal">170kcal</string>
-
-    <string name="appName">당신의 안(眼)식(食)</string>
-    <string name="your_web_client_id">39610226410-ole4b27oudmh6098eko824kldgn1rodu.apps.googleusercontent.com</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- 확인하기 button -->
     <string name="okaybutton">확인하기</string>
@@ -160,7 +138,8 @@
 
     <!--  my_past_detail  -->
     <string name="my_past_detail_title">과거 기록</string>
-    <string name="my_past_detail_day">2024.06.24 (수)\n14:45PM</string>
+    <string name="my_past_detail_date">2024.06.24 (수)</string>
+    <string name="my_past_detail_time">14:45 PM</string>
 
     <!--  assign_disease  -->
     <string name="assign_disease_title">맞춤 설계</string>
@@ -171,5 +150,29 @@
     <string name="assign_disease_HighBloodPressure">고혈압</string>
     <string name="assign_disease_hyperlipidemia">고지혈증</string>
 
+    <string name="appName">당신의 안(眼)식(食)</string>
+    <string name="your_web_client_id">39610226410-ole4b27oudmh6098eko824kldgn1rodu.apps.googleusercontent.com</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Temporary Strings (개발 중 확인용 임시 텍스트) -->
+    <string name="tmp_toolbar">화면명</string>
+
+    <string name="tmp_result_cal">170kcal</string>
+
+    <string name="tmp_home_kcal_diff_value">477</string>
+    <string name="tmp_home_kcal_value">1423</string>
+    <string name="tmp_home_kcal_daily_value">2000kcal</string>
+
+    <string name="tmp_my_info_nickname">SSO</string>
+    <string name="tmp_my_info_history_cnt">0</string>
+    <string name="tmp_my_info_app_version_value">version 5.0</string>
+
+    <string name="tmp_intake_bar_percent_value">140%</string>
+    <string name="tmp_intake_bar_mg_value">420mg</string>
+    <string name="tmp_intake_bar_daily_value">일일 권장량 300mg</string>
+
+    <string name="tmp_food_history_title">2024.11.11</string>
+    <string name="tmp_food_history_kcal">170kcal</string>
 
 </resources>

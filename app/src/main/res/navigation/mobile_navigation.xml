@@ -17,7 +17,15 @@
         android:id="@+id/navigation_user"
         android:name="com.dna.beyoureyes.ui.myInfo.MyInfoFragment"
         android:label="@string/title_user"
-        tools:layout="@layout/fragment_my_info"/>
+        tools:layout="@layout/fragment_my_info">
+        <action
+            android:id="@+id/action_myInfo_to_pastDetail"
+            app:destination="@id/navigation_past_detail">
+            <argument
+                android:name="foodHistory"
+                app:argType="com.dna.beyoureyes.model.FoodHistory" />
+        </action>
+    </fragment>
 
     <!-- 식품 분석 메뉴(FoodActivity 연결) -->
     <activity
@@ -25,5 +33,34 @@
         android:name="com.dna.beyoureyes.FoodActivity"
         android:label="@string/title_food"
         tools:layout="@layout/activity_food" />
+
+    <!-- 과거 기록 Fragment -->
+    <fragment
+        android:id="@+id/navigation_past_detail"
+        android:name="com.dna.beyoureyes.ui.myPastDetail.MyPastDetailFragment"
+        android:label="@string/my_past_detail_title"
+        tools:layout="@layout/fragment_my_past_detail">
+        <argument
+            android:name="foodHistory"
+            app:argType="com.dna.beyoureyes.model.FoodHistory" />
+    </fragment>
+
+    <!-- 상세 영양성분 정보 Fragment -->
+    <fragment
+        android:id="@+id/nutri_bar_fragment"
+        android:name="com.dna.beyoureyes.ResultNutriBarFragment">
+        <argument
+            android:name="nutritionList"
+            app:argType="com.dna.beyoureyes.model.NutritionWrapper[]" />
+    </fragment>
+
+    <!-- 식품 칼로리 정보 Fragment -->
+    <fragment
+        android:id="@+id/kcal_fragment"
+        android:name="com.dna.beyoureyes.ResultKcalFragment">
+        <argument
+            android:name="kcal"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

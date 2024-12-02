@@ -35,8 +35,10 @@
         <!-- String 속성 : 화면 제목 -->
         <attr name="title" format="string"/>
 
-        <!-- Boolean 속성 : 건너뛰기 메뉴 활성화 -->
+        <!-- Boolean 속성 : 뒤로가기, 건너뛰기, 닫기 메뉴 활성화 -->
         <attr name="skipEnabled" format="boolean"/>
+        <attr name="backEnabled" format="boolean"/>
+        <attr name="closeEnabled" format="boolean"/>
 
     </declare-styleable>
 

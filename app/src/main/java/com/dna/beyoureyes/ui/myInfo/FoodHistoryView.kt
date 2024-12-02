@@ -17,6 +17,8 @@ import com.google.firebase.Timestamp
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import java.lang.ref.Reference
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class FoodHistoryView(context: Context, attrs: AttributeSet?) :
     CardView(context, attrs) {
@@ -66,20 +68,15 @@ class FoodHistoryView(context: Context, attrs: AttributeSet?) :
         historyLabel.text = timestamp?.let { getTimeText(it) }?: run { "" } // 식품 기록 제목 text
         imgUri?.let { // 식품 사진 image view
             Glide.with(this)
-                .load(imgUri)
+                .load(it)
                 .centerCrop() // 이미지를 크롭
                 .into(historyImg)
         }
     }
 
     fun getTimeText(timestamp: Timestamp) : String { // 오전 HH시 mm분 형식의 텍스트 만들기
-        val calendar = Calendar.getInstance().apply {
-            time = timestamp.toDate()
-        }
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
-        val amPm = if (hour < 12) "오전" else "오후"
-        val displayHour = if (hour == 0) 12 else if (hour > 12) hour - 12 else hour
-        return "$amPm ${displayHour}시 ${minute}분"
+        val datetime = timestamp.toDate()
+        val timeFormat = SimpleDateFormat("a H시 m분", Locale.KOREA) // 시간 형식
+        return timeFormat.format(datetime)
     }
 }

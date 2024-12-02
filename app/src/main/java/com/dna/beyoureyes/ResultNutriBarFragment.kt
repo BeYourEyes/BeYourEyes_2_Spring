@@ -6,98 +6,77 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import com.dna.beyoureyes.databinding.FragmentResultNutriBarChartBinding
-import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.charts.HorizontalBarChart
-import com.github.mikephil.charting.data.BarEntry
+import com.dna.beyoureyes.model.Carbs
+import com.dna.beyoureyes.model.Cholesterol
+import com.dna.beyoureyes.model.Fat
+import com.dna.beyoureyes.model.Natrium
+import com.dna.beyoureyes.model.NutritionWrapper
+import com.dna.beyoureyes.model.Protein
+import com.dna.beyoureyes.model.SaturatedFat
+import com.dna.beyoureyes.model.Sugar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ResultNutriBarFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ResultNutriBarFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
     private var _binding : FragmentResultNutriBarChartBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentResultNutriBarChartBinding.inflate(inflater, container, false)
-        val naBarChart : HorizontalBarChart = binding.naBarchart
-        val na : TextView = binding.nutriBarResultNa
-        val testNaBarChart = NutriIntakeBarDisplay(naBarChart, na)
-        val testcarbBarChart = NutriIntakeBarDisplay(binding.carbBarchart, binding.nutriBarResultCarb)
-
-        val testBarChart = NaIntakeBarDisplay(testNaBarChart)
-        val intakeRangeMap = mapOf(
-            IntakeRange.LACK to IntProgression.fromClosedRange(0, 500, 1),
-            IntakeRange.LESS to IntProgression.fromClosedRange(501, 1000, 1),
-            IntakeRange.ENOUGH to IntProgression.fromClosedRange(1001, 2000, 1),
-            IntakeRange.OVER to IntProgression.fromClosedRange(2001, 5000, 1)
-        )
-        val testDailyValue = DailyValueImpl(
-            unit = UnitOfMass.MILLIGRAM,
-            dailyValue = 2300, // 원하는 값을 여기에 설정합니다.
-            intakeRange = intakeRangeMap
-        )
-        testNaBarChart.setBarValue(requireContext(), Nutrition(600, UnitOfMass.MILLIGRAM), testDailyValue)
-        testcarbBarChart.setBarValue(requireContext(), Nutrition(1200, UnitOfMass.GRAM), testDailyValue)
-        Log.d("BAR CHART : ", "now processing")
-        val energyIntake = 0
-        val userDVs = NutrientDailyValues()
-        var totalIntake = NutritionFacts()
-        // 2.4. 총 섭취량 화면 표시 - 성분별 섭취량 바
-        //testBarChart.setAll(requireContext(), totalIntake, userDVs)
-        //Log.d("BAR: ", "setAllFinished")
 
         return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ResultNutriBarFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ResultNutriBarFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // 외부에서 Bundle로 전달받은 영양소 데이터
+        val nutritionWrapperList : List<NutritionWrapper>? =
+            arguments?.getParcelableArrayList("nutritionList")
+        val nutritionList = nutritionWrapperList?.map { it.nutrition }
+
+        // 영양소 바 그래프들 바인딩
+        val natriumBar = NutriIntakeBarDisplay(
+            binding.naBarchart, binding.naName, binding.naQuant, binding.naDV)
+        val carbsBar = NutriIntakeBarDisplay(
+            binding.carbBarchart, binding.carbName, binding.carbQuant, binding.carbDV)
+        val sugarBar = NutriIntakeBarDisplay(
+            binding.sugarBarchart, binding.sugarName, binding.sugarQuant, binding.sugarDV)
+        val fatBar = NutriIntakeBarDisplay(
+            binding.fatBarchart, binding.fatName, binding.fatQuant, binding.fatDV)
+        val satFatBar = NutriIntakeBarDisplay(
+            binding.satFatBarchart, binding.satFatName, binding.satFatQuant, binding.satFatDV)
+        val cholBar = NutriIntakeBarDisplay(
+            binding.choleBarchart, binding.choleName, binding.choleQuant, binding.choleDV)
+        val proteinBar = NutriIntakeBarDisplay(
+            binding.proteinBarchart, binding.proteinName, binding.proteinQuant, binding.proteinDV)
+
+        nutritionList?.let {
+            Log.d("NUTRI BAR", "nutritionList exists.")
+            for (nutri in it){
+                when(nutri) {
+                    is Natrium -> natriumBar.set(requireContext(), nutri)
+                    is Carbs -> carbsBar.set(requireContext(), nutri)
+                    is Sugar -> sugarBar.set(requireContext(), nutri)
+                    is Fat -> fatBar.set(requireContext(), nutri)
+                    is SaturatedFat -> satFatBar.set(requireContext(), nutri)
+                    is Cholesterol -> cholBar.set(requireContext(), nutri)
+                    is Protein -> proteinBar.set(requireContext(), nutri)
                 }
             }
+        } ?: run {
+            Log.d("NUTRI BAR", "nutritionList doesn't exist.")
+        }
     }
-}
 
-class DailyValueImpl(
-    override val unit: UnitOfMass,
-    override var dailyValue: Int,
-    override var intakeRange: Map<IntakeRange, IntProgression>?
-) : DailyValue {
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

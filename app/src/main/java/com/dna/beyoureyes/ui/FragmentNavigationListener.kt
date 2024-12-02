@@ -10,6 +10,4 @@ interface FragmentNavigationListener {
     fun onBirthInputRecieved(birth : String)
     fun onDiseaseInputRecieved(userDiseaseList : ArrayList<String>)
     fun onAllergyInputRecieved(userAllergyList : ArrayList<String>)
-
-
 }
