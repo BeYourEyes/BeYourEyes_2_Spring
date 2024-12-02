@@ -556,7 +556,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/wanted_sans_semi_bold"
                     android:gravity="end|center_vertical"
-                    android:text="@string/tmp_my_info_app_version_value"
                     android:textColor="@color/gray_500"
                     android:textSize="14sp" />
             </LinearLayout>

@@ -1,6 +1,7 @@
 package com.dna.beyoureyes.ui.myInfo
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -17,6 +18,7 @@ import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentMyInfoBinding
 import com.dna.beyoureyes.ui.CustomToolbar
 import com.google.android.material.chip.Chip
+import com.google.firebase.BuildConfig
 
 class MyInfoFragment : Fragment() {
     private var _binding: FragmentMyInfoBinding? = null
@@ -26,6 +28,8 @@ class MyInfoFragment : Fragment() {
     private val shareTitle = "친구에게 공유하기"
     private val appLink = "https://play.google.com/store/apps/details?id=com.dna.beyoureyes"
     private val content = "더 건강한 식습관으로 당신의 삶을 변화시키세요!\n" + "지금 바로 앱을 다운로드하세요 ⬇️"
+    private val policyLink = "https://polar-wolf-52e.notion.site/3ff38ff000ef47b99fa8d4e890a6b4a7?pvs=74"
+    private val contactLink = "http://pf.kakao.com/_Bdqun/chat"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,12 +70,17 @@ class MyInfoFragment : Fragment() {
         }
         // 고객센터 문의하기
         binding.contactBtn.setOnClickListener {
-
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(contactLink))
+            startActivity(intent)
         }
         // 개인정보 처리 방침
         binding.privacyPolicyBtn.setOnClickListener {
-
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(policyLink))
+            startActivity(intent)
         }
+        // 버전 이름
+        binding.appVersionText.setText("version ${BuildConfig.VERSION_NAME}")
+        // 뒤로 가기 버튼 기능 연결
         binding.toolbar.backButtonClickListener = object : CustomToolbar.BackButtonClickListener {
             override fun onBackButtonClicked() {
                 findNavController().popBackStack()

@@ -7,6 +7,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.suspendCancellableCoroutine
+import java.io.Serializable
 import kotlinx.coroutines.tasks.await
 
 class FirebaseHelper {
@@ -18,10 +20,10 @@ class FirebaseHelper {
             firestore.collection(collectionName)
                 .add(userInfo)
                 .addOnSuccessListener { documentReference ->
-                    Log.d("FIREBASE :", "SUCCESS added with ID: ${documentReference.id}")
+                    Log.d("INFO", "SUCCESS added with ID: ${documentReference.id}")
                 }
                 .addOnFailureListener { e ->
-                    Log.w("FIREBASE :", "Error adding document", e)
+                    Log.w("INFO", "Error adding document", e)
                 }
         }
 
@@ -47,7 +49,6 @@ class FirebaseHelper {
                     Log.d("REGISTERFIRESTORE : ", "Error deleting documents.", exception)
                 }
         }
-
         suspend fun receiveUserData(currentUser: FirebaseUser): Boolean {
             val db = Firebase.firestore
             return try {
