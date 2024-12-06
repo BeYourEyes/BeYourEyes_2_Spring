@@ -77,5 +77,19 @@ class FirebaseHelper {
                     false
                 }
         }
+
+        suspend fun checkDuplicateName(nickname: String): Boolean {
+            val db = Firebase.firestore
+            return try {
+                val querySnapshot = db.collection("userInfo")
+                    .whereEqualTo("userName", nickname)
+                    .get()
+                    .await()
+                !querySnapshot.isEmpty // 결과가 비어있지 않으면 중복
+            } catch (exception: Exception) {
+                Log.e("REGISTERFIRESTORE", "Error checking nickname", exception)
+                false // 오류 발생 시 기본값 반환
+            }
+        }
     }
 }
