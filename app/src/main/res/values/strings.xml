@@ -42,7 +42,7 @@
     <string name="assign_step2_question">고객님의 성별은 무엇인가요?</string>
     <string name="assign_step3_question">고객님의 출생연도는\n몇년인가요?</string>
     <string name="assign_name_placeholder">닉네임 입력</string>
-    <string name="assign_name_check_ok">supporting</string>
+    <string name="assign_name_check_ok">중복 확인을 진행해주세요.</string>
     <string name="assign_name_check_no">누군가가 이미 사용 중입니다.</string>
     <string name="assign_female">여성</string>
     <string name="assign_male">남성</string>
