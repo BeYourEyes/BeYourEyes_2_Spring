@@ -10,7 +10,7 @@ plugins {
 }
 
 fun getApiKey(propertyKey: String): String {
-    return gradleLocalProperties(rootDir).getProperty(propertyKey)
+    return gradleLocalProperties(rootDir).getProperty(propertyKey) ?: "No Key"
 }
 
 android {
