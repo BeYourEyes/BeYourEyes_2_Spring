@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/result_toolbar"
+        app:title="@string/result_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -40,7 +40,7 @@
                 android:layout_height="200dp">
 
                 <ImageView
-                    android:id="@+id/ImageGradient"
+                    android:id="@+id/ImageCaptured"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/desciption_result_image"
@@ -48,7 +48,7 @@
                     android:src="@drawable/sample_pasta" />
 
                 <ImageView
-                    android:id="@+id/ImageCaptured"
+                    android:id="@+id/ImageGradient"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:importantForAccessibility="no"

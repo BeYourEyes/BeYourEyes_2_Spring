@@ -1,16 +1,20 @@
-package com.dna.beyoureyes
+package com.dna.beyoureyes.ui.foodDetail
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.dna.beyoureyes.databinding.FragmentResultCalBinding
+import com.dna.beyoureyes.ui.foodAnalysis.FoodViewModel
 
 class ResultKcalFragment : Fragment() {
 
     private var _binding: FragmentResultCalBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: FoodViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,6 +22,10 @@ class ResultKcalFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentResultCalBinding.inflate(inflater, container, false)
+
+        viewModel.foodData.observe(viewLifecycleOwner) { food ->
+            food.kcal?.let{ binding.kcalTextView.text = "${it}kcal" }
+        }
 
         return binding.root
     }

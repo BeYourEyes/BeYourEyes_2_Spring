@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/food_navigation"
+    app:startDestination="@+id/food_navi_caution">
+
+    <!-- 식품 분석 유의사항 -->
+    <fragment
+        android:id="@+id/food_navi_caution"
+        android:name="com.dna.beyoureyes.ui.foodAnalysis.FoodCautionFragment"
+        android:label="@string/food_caution_title"
+        tools:layout="@layout/fragment_food_caution" >
+    </fragment>
+
+    <!-- 식품 분석 실패 -->
+    <fragment
+        android:id="@+id/food_navi_fail"
+        android:name="com.dna.beyoureyes.ui.foodAnalysis.CameraFailFragment"
+        android:label="@string/result_title"
+        tools:layout="@layout/fragment_camera_fail" >
+    </fragment>
+
+    <!-- 식품 분석 중 로딩 -->
+    <fragment
+        android:id="@+id/food_navi_loading"
+        android:name="com.dna.beyoureyes.ui.foodAnalysis.LoadingFragment"
+        android:label="@string/result_title"
+        tools:layout="@layout/fragment_loading" >
+    </fragment>
+
+    <!-- 식품 분석 결과 -->
+    <fragment
+        android:id="@+id/food_navi_result"
+        android:name="com.dna.beyoureyes.ui.foodAnalysis.FoodResultFragment"
+        android:label="@string/result_title"
+        tools:layout="@layout/fragment_result" >
+    </fragment>
+
+    <!-- 식품 섭취량 등록 -->
+    <fragment
+        android:id="@+id/food_navi_eat"
+        android:name="com.dna.beyoureyes.ui.foodAnalysis.ResultEatFragment"
+        android:label="@string/result_title"
+        tools:layout="@layout/fragment_result_eat" >
+    </fragment>
+
+</navigation>

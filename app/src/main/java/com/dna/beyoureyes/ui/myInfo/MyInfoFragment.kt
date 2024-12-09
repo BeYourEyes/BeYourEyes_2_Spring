@@ -81,8 +81,8 @@ class MyInfoFragment : Fragment() {
         // 버전 이름
         binding.appVersionText.setText("version ${BuildConfig.VERSION_NAME}")
         // 뒤로 가기 버튼 기능 연결
-        binding.toolbar.backButtonClickListener = object : CustomToolbar.BackButtonClickListener {
-            override fun onBackButtonClicked() {
+        binding.toolbar.backButtonClickListener = object : CustomToolbar.ButtonClickListener {
+            override fun onClicked() {
                 findNavController().popBackStack()
             }
         }

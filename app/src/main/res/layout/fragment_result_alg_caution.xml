@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="320dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_result_fragment_background_white_stroke_10"
-    android:gravity="center"
-    tools:context=".ResultAlgCautionFragment">
+    android:paddingVertical="14dp"
+    android:paddingHorizontal="22dp"
+    android:background="@drawable/shape_result_fragment_background_white_stroke_10">
 
 
     <ImageView

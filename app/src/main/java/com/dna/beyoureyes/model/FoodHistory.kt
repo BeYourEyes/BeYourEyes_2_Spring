@@ -3,8 +3,6 @@ package com.dna.beyoureyes.model
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Log
-import com.bumptech.glide.Glide
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
@@ -37,7 +35,7 @@ class FoodHistory(
     {
         // 이미지 Uri 로드는 파이어스토어와의 통신이 필요하므로 CouroutineScoope에서 정의하여 값 동기화
         val imgPath = document.getString("imgPath")
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             _imgUri = try {
                 imgPath?.let {
                     val storageRef = Firebase.storage.reference.child(it)
@@ -50,7 +48,7 @@ class FoodHistory(
         }
     }
 
-    // 3. Parcel 생성자
+    // 4. Parcel 생성자
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(Timestamp::class.java.classLoader),
         parcel.readValue(Int::class.java.classLoader) as? Int,

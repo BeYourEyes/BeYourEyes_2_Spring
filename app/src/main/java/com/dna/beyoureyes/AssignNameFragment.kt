@@ -54,8 +54,8 @@ class AssignNameFragment : Fragment() {
         }
 
 
-        binding.toolbar.backButtonClickListener = object : CustomToolbar.BackButtonClickListener {
-            override fun onBackButtonClicked() {
+        binding.toolbar.backButtonClickListener = object : CustomToolbar.ButtonClickListener {
+            override fun onClicked() {
                 listener?.onBtnClick(this@AssignNameFragment, false)
             }
         }
