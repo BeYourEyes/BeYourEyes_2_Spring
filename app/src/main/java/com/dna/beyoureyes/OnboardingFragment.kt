@@ -17,11 +17,11 @@ import com.airbnb.lottie.Lottie
 import com.airbnb.lottie.LottieAnimationView
 
 
-class fragment_onboarding : Fragment() {
+class OnboardingFragment : Fragment() {
     companion object {
         private const val ARG_NUMBER = "arg_number"
-        fun newInstance(number: Int): fragment_onboarding {
-            val fragment = fragment_onboarding()
+        fun newInstance(number: Int): OnboardingFragment  {
+            val fragment = OnboardingFragment ()
             val args = Bundle()
             args.putInt(ARG_NUMBER, number)
             fragment.arguments = args

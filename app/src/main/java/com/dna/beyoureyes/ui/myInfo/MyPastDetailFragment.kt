@@ -1,4 +1,4 @@
-package com.dna.beyoureyes.ui.myPastDetail
+package com.dna.beyoureyes.ui.myInfo
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.dna.beyoureyes.ResultKcalFragment
-import com.dna.beyoureyes.ResultNutriBarFragment
+import com.dna.beyoureyes.ui.foodDetail.ResultKcalFragment
+import com.dna.beyoureyes.ui.foodDetail.ResultNutriBarFragment
 import com.dna.beyoureyes.databinding.FragmentMyPastDetailBinding
 import com.dna.beyoureyes.model.NutritionWrapper
+import com.dna.beyoureyes.ui.CustomToolbar
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -65,6 +66,12 @@ class MyPastDetailFragment : Fragment() {
             putParcelableArrayList(
                 "nutritionList", ArrayList(foodHistory.nutritions.map{ NutritionWrapper(it) })
             )
+        }
+
+        binding.toolbar.closeButtonClickListener= object : CustomToolbar.ButtonClickListener {
+            override fun onClicked() {
+                requireActivity().supportFragmentManager.popBackStack()
+            }
         }
     }
 

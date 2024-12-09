@@ -1,4 +1,4 @@
-import com.android.build.api.dsl.LintOptions
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
     id("com.android.application")
@@ -7,8 +7,10 @@ plugins {
     id("com.google.gms.google-services")
     // navigation safeargs, classpath
     id("androidx.navigation.safeargs.kotlin")
+}
 
-
+fun getApiKey(propertyKey: String): String {
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
 
 android {
@@ -31,6 +33,7 @@ android {
         versionName = "2.2.0"
         println ("Current defaultConfig versionName: ${versionName}")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "OPEN_API_KEY", getApiKey("OPEN_API_KEY"))
     }
 
     buildFeatures {
@@ -132,6 +135,9 @@ dependencies {
     implementation ("androidx.activity:activity-ktx:1.7.0")
 
     implementation("com.airbnb.android:lottie:6.6.0")
+
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0") // Retrofit
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0") // Converter ( JSON -> 객체 매핑 )
 
 
 }

@@ -37,7 +37,7 @@
     <!-- 과거 기록 Fragment -->
     <fragment
         android:id="@+id/navigation_past_detail"
-        android:name="com.dna.beyoureyes.ui.myPastDetail.MyPastDetailFragment"
+        android:name="com.dna.beyoureyes.ui.myInfo.MyPastDetailFragment"
         android:label="@string/my_past_detail_title"
         tools:layout="@layout/fragment_my_past_detail">
         <argument
@@ -48,7 +48,7 @@
     <!-- 상세 영양성분 정보 Fragment -->
     <fragment
         android:id="@+id/nutri_bar_fragment"
-        android:name="com.dna.beyoureyes.ResultNutriBarFragment">
+        android:name="com.dna.beyoureyes.ui.foodDetail.ResultNutriBarFragment">
         <argument
             android:name="nutritionList"
             app:argType="com.dna.beyoureyes.model.NutritionWrapper[]" />
@@ -57,7 +57,7 @@
     <!-- 식품 칼로리 정보 Fragment -->
     <fragment
         android:id="@+id/kcal_fragment"
-        android:name="com.dna.beyoureyes.ResultKcalFragment">
+        android:name="com.dna.beyoureyes.ui.foodDetail.ResultKcalFragment">
         <argument
             android:name="kcal"
             app:argType="integer" />

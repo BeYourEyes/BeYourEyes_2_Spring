@@ -8,8 +8,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.dna.beyoureyes.R
 
 
@@ -22,13 +20,13 @@ class CustomToolbar(context: Context, attrs: AttributeSet?) :
     private val skipButton : AppCompatButton
     private val titleView : TextView
 
-    interface BackButtonClickListener {
-        fun onBackButtonClicked()
+    interface ButtonClickListener {
+        fun onClicked()
     }
 
-    var backButtonClickListener: BackButtonClickListener? = null
-    // var skipButtonClickListener: BackButtonClickListener? = null
-    // var closeButtonClickListener: BackButtonClickListener? = null
+    var backButtonClickListener: ButtonClickListener? = null
+    var skipButtonClickListener: ButtonClickListener? = null
+    var closeButtonClickListener: ButtonClickListener? = null
 
     init {
         // 커스텀 툴바 View의 XML 레이아웃을 인플레이트
@@ -84,15 +82,18 @@ class CustomToolbar(context: Context, attrs: AttributeSet?) :
 
         // 뒤로 가기 버튼 터치 시 동작
         backButton.setOnClickListener {
-            backButtonClickListener?.onBackButtonClicked() // 리스너 연결
+            backButtonClickListener?.onClicked() // 리스너 연결
+        }
+
+        // 건너뛰기 버튼 터치 시 동작
+        skipButton.setOnClickListener {
+            skipButtonClickListener?.onClicked()  // 리스너 연결
         }
 
         // 닫기 버튼 터치 시 동작
         closeButton.setOnClickListener {
-            findNavController().popBackStack()
-            // closeButtonClickListener?.onBackButtonClicked()  // 리스너 연결
+            closeButtonClickListener?.onClicked()  // 리스너 연결
         }
-
 
     }
 }
