@@ -10,7 +10,8 @@ plugins {
 }
 
 fun getApiKey(propertyKey: String): String {
-    return gradleLocalProperties(rootDir).getProperty(propertyKey) ?: "No Key"
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
+        ?: "\"No Key\"".also { println("in build.gradle: Can't Find $propertyKey") }
 }
 
 android {
@@ -34,6 +35,7 @@ android {
         println ("Current defaultConfig versionName: ${versionName}")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "OPEN_API_KEY", getApiKey("OPEN_API_KEY"))
+        println(getApiKey("OPEN_API_KEY"))
     }
 
     buildFeatures {
