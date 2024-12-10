@@ -179,7 +179,7 @@ class FoodTextRecognizer(private val context: Context) {
             percentRegex.findAll(lineText)
                 .map { it.groupValues[1].toIntOrNull() }
                 .filterNotNull()
-                .map { it.coerceIn(0, 100) }
+                .map { it.coerceIn(0, 1000) }
                 .toList()
         )
 
