@@ -1,6 +1,7 @@
 package com.dna.beyoureyes.ui.foodDetail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,8 @@ class ResultAllergyFragment : Fragment() {
 
         viewModel.foodData.observe(viewLifecycleOwner) { food ->
             food.allergy?.forEach {
+                Log.d("Allergy",  "${it}")
+
                 val chip = Chip(requireContext())
                 chip.text = it
                 if (chip.text.length == 1) {
