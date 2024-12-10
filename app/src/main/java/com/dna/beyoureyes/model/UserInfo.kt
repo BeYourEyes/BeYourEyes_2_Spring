@@ -1,5 +1,6 @@
 package com.dna.beyoureyes.model
 
+import android.net.Uri
 import com.dna.beyoureyes.NutrientDailyValues
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.QueryDocumentSnapshot
@@ -20,11 +21,15 @@ class UserInfo (
     var disease : MutableSet<String>,   // 사용자 질병 정보(nullable - 해당사항 없을 수 있으므로)
     var allergic : MutableSet<String>,   // 사용자 알레르기 정보(nullable - 해당사항 없을 수 있으므로
     var age : Int,
-    var userProfile: String = ""
+    var profileImgPath: String = "" // 프로필 사진 DB 저장 경로
 ) {
+    val profileImgUri : Uri? get() = _profileImgUri
+    private var _profileImgUri : Uri? = null // 프로필 사진 uri 값은 일단 private으로
+
     init {
         age = getAge(birth)
     }
+
     constructor(name:String, gender:Int, birth: Timestamp, disease:ArrayList<String>, allergy:ArrayList<String>)
             :this(name, gender, birth, disease.toMutableSet(), allergy.toMutableSet(), getAge(birth))
 
@@ -33,6 +38,10 @@ class UserInfo (
 
     constructor(name:String, gender:Int, birth: Timestamp, profile: String)
             :this(name, gender, birth, mutableSetOf(), mutableSetOf(), getAge(birth), profile)
+
+    fun setProfileImgUri(uri:Uri) {
+        _profileImgUri = uri
+    }
 
     //  사용자 맞춤 권장량 정보를 제공하는 get 메소드
     fun getDailyValues() : NutrientDailyValues {

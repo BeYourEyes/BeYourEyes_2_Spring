@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.storage
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.Serializable
 import kotlinx.coroutines.tasks.await
@@ -69,6 +70,12 @@ class FirebaseHelper {
                             val userAllergy = document.data.get("userAllergy") as ArrayList<String>
                             val profile = document.data.get("userProfile") as String
                             AppUser.setInfo(userName, userGender.toInt(), userBirth, userDisease, userAllergy, profile)
+
+                            // 프로필 사진 uri 로드하여 저장
+                            val storageRef = com.google.firebase.Firebase.storage.reference.child(profile)
+                            storageRef.downloadUrl.await()?.let { // 비동기 작업을 동기적으로 기다림
+                                AppUser.setProfileImgUri(it)
+                            }
                         }
                         true
                     }
