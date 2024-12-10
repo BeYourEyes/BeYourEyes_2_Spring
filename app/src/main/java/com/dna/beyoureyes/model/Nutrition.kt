@@ -15,4 +15,8 @@ interface Nutrition {
     fun isInWarningRange() : Boolean   // 영양소의 질량이 권장량 대비 경고 범위에 포함되었는지 검사
 
     fun fromFirestore(document: DocumentSnapshot): Nutrition? // 파이어스토어 문서 파싱하여 객체 생성
+
+    fun scaleQuantityByFactor(factor: Double) {
+        milligram = (milligram * factor).toInt()
+    }
 }

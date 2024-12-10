@@ -9,9 +9,9 @@ class RegisterPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm,
 ) {
     override fun getItem(position: Int): Fragment {
         return when(position){
-            0 -> fragment_onboarding.newInstance(1)
-            1 -> fragment_onboarding.newInstance(2)
-            else -> fragment_onboarding.newInstance(3)
+            0 -> OnboardingFragment.newInstance(1)
+            1 -> OnboardingFragment.newInstance(2)
+            else -> OnboardingFragment.newInstance(3)
         }
     }
 

@@ -1,6 +1,7 @@
 package com.dna.beyoureyes
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -36,13 +37,36 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         // 프래그먼트 뷰에 네비게이션 컨트롤러 연결
-        // -> 네비게이션 파일에 설정한대로 처리할 수 있게
         navController = findNavController(R.id.nav_host_fragment_activity_main)
         navView.setupWithNavController(navController)
 
+        /*
+        navView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_food -> {
+                    // FoodActivity로 이동하는 코드
+                    val intent = Intent(this, FoodActivity::class.java)
+                    startActivity(intent)
+                    // finish()
+                    true
+                }
+                R.id.navigation_home -> {
+                    navController.navigate(R.id.navigation_home)
+                    true
+                }
+                R.id.navigation_user -> {
+                    navController.navigate(R.id.navigation_user)
+                    true
+                }
+                // 다른 메뉴 아이템에 대한 처리
+                else -> false
+            }
+        }
+         */
+
         // 프래그먼트 교체 시 하단 네비게이션 바를 숨겨야 할 때
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.navigation_past_detail) { // 과거 기록 뷰는 하단 바 숨김
+            if (destination.id == R.id.navigation_past_detail) { // 과거 기록 화면은 하단 바 숨김
                 navView.visibility = View.GONE
             } else {
                 // 그 외는 표시. 사라졌다가 등장시킬 시 애니메이션 효과 추가
@@ -54,6 +78,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // 파이어베이스에서 데이터 불러와 홈 화면에 반영
+        loadUserDataFromFirebase()
+    }
+
+    private fun loadUserDataFromFirebase() {
         // 오늘의 시작 시간 (자정)
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, 0)
@@ -86,6 +115,7 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener { result -> // DB 연결 성공
                 if (!result.isEmpty) {
                     // 쿼리 결과 있는지 검사 = 오늘 섭취 기록 존재.
+                    foodHistoryItems.clear()
                     for (document in result) {
                         val history = FoodHistory(document) // 문서로부터 음식 기록 객체 생성
                         foodHistoryItems.add(history) // 리스트에 저장
@@ -96,12 +126,13 @@ class MainActivity : AppCompatActivity() {
                 Log.w("HOME", "Error getting documents.", exception)
             }.addOnCompleteListener {
                 // 데이터 로드를 마친 후 프래그먼트 화면 갱신
-                navigateToHomeFragment()
+                navController.navigate(R.id.navigation_home)
             }
     }
 
-    fun navigateToHomeFragment() {
-        navController.navigate(R.id.navigation_home)
+    override fun onRestart() {
+        super.onRestart()
+        loadUserDataFromFirebase() // 중단했다가 다시 시작할 시 다시 DB 읽고 뷰 갱신
     }
 
     private fun Float.toDp(context: Context): Float {
