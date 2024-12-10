@@ -33,7 +33,8 @@ class FoodTextRecognizer(private val context: Context) {
             "난류", "우유", "새우", "고등어", "오징어", "게", "조개류", "돼지고기", "쇠고기", "닭고기"
         )
         val NUTRI_PREFIX_KEYWORDS = hashSetOf(
-            "나트", "탄수", "지방", "당류", "트랜스", "포화", "콜레", "단백")
+            "나트", "탄수", "지방", "당류", "트랜스", "포화", "콜레", "단백"
+        )
         const val NATRIUM_DEFAULT_DV_MILLI = 2000
         const val CARBS_DEFAULT_DV_MILLI = 324 * 1000
         const val SUGAR_DEFAULT_DV_MILLI = 100 * 1000
@@ -65,6 +66,7 @@ class FoodTextRecognizer(private val context: Context) {
                 Log.d("OCR", "Got ML kit Response")
                 val lines = result.text.split('\n')
                 val allergyData = extractAllergyData(lines) // 알레르기 정보 추출
+                Log.d("Allergy", "${allergyData}")
                 _progress.value = 45
                 Log.d("OCR", "Extracted Allergy Data")
                 val itemMnftrRptNo = apiHelper.extractItemMnftrRptNo(lines) // 품목보고 번호 추출
@@ -103,7 +105,7 @@ class FoodTextRecognizer(private val context: Context) {
     }
 
     // 정보가 하나라도 있는지 최종 검증. 없으면 null 있으면 그대로 Food 데이터 반환
-    fun validateFoodData(food: Food) : Food? {
+    fun validateFoodData(food: Food): Food? {
         return if (food.kcal != null || food.nutritions != null || food.allergy != null) food else null
     }
 
@@ -147,9 +149,11 @@ class FoodTextRecognizer(private val context: Context) {
                  */
                 val (firstKcal, secondKcal) = kcalList
                 if (secondKcal != 0) {
-                    ((firstKcal.toDouble() / secondKcal) * (gList.firstOrNull() ?: 1.0).toDouble()).toInt()
+                    ((firstKcal.toDouble() / secondKcal) * (gList.firstOrNull()
+                        ?: 1.0).toDouble()).toInt()
                 } else null
             }
+
             else -> null // kcalList 크기가 0 또는 3 이상인 경우 오류
         }
 
@@ -160,10 +164,12 @@ class FoodTextRecognizer(private val context: Context) {
         return Food(kcal, nutritionList)
     }
 
-    private fun extractNutrientData(lineText: String,
-                                    gList: MutableList<Int>,
-                                    percentList: MutableList<Int>,
-                                    kcalList: MutableList<Int>) {
+    private fun extractNutrientData(
+        lineText: String,
+        gList: MutableList<Int>,
+        percentList: MutableList<Int>,
+        kcalList: MutableList<Int>
+    ) {
         // mg 키워드로 모든 숫자값 추출 (g/mg/9)
         val gRegex = """(\d+(?:\.\d+)?)\s?(?:g|mg|9)(?!\s*당)""".toRegex()
         gList.addAll(
@@ -214,15 +220,19 @@ class FoodTextRecognizer(private val context: Context) {
     }
 
     // 알레르기 추출 함수
-    private fun extractAllergyData(lines: List<String>) : Set<String>? {
+    private fun extractAllergyData(lines: List<String>): Set<String>? {
         val targetWordsRegex = Regex(ALLERGY_KEYWORDS.joinToString("|")) // 정규식 생성
 
         val targetEndIndex = lines.indexOfFirst { it.contains("함유") } // "함유" 위치 찾기
         if (targetEndIndex != -1) {
-            val targetLines = lines.subList(maxOf(0, targetEndIndex - 1), lines.size) // 대상 줄 추출(바로 직전과 현재 line)
-            return targetLines.flatMap { line ->
-                    targetWordsRegex.findAll(line).map { it.value }.distinct() // 단어 추출 및 중복 제거
-                }.toSet()
+            val targetLines =
+                lines.subList(maxOf(0, targetEndIndex - 1), lines.size) // 대상 줄 추출(바로 직전과 현재 line)
+            val extractedData = targetLines.flatMap { line ->
+                Log.d("Allergy", "Line : ${line}")
+                targetWordsRegex.findAll(line).map { it.value }.distinct() // 단어 추출 및 중복 제거
+            }.toSet()
+            Log.d("Allergy", "${extractedData}")
+            return extractedData
         }
         return null
     }
