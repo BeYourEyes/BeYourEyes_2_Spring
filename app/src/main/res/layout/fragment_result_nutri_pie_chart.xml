@@ -6,7 +6,7 @@
     android:padding="16dp"
     android:background="@drawable/shape_result_fragment_background_white_stroke_10"
     android:orientation="vertical"
-    tools:context=".ResultNutriPieChartFragment">
+    tools:context=".ui.foodDetail.ResultNutriPieFragment">
 
     <TextView
         android:id="@+id/textView6"

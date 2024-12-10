@@ -1,13 +1,15 @@
-package com.dna.beyoureyes
+package com.dna.beyoureyes.model
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import com.dna.beyoureyes.model.Nutrition
+import com.dna.beyoureyes.BarChartCustomRenderer
+import com.dna.beyoureyes.R
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
@@ -120,9 +122,9 @@ class EnergyChart(private val chart : PieChart) {
     // =========================================================================
 
     // primary 생성자 - 탄단지 칼로리 값은 일단 0으로 초기화
-    private var carbsCal = 40f
-    private var proteinCal = 15f
-    private var fatCal = 20f
+    private var carbsCal = 1f
+    private var proteinCal = 1f
+    private var fatCal = 1f
 
     init {
         chart.setUsePercentValues(true)
@@ -146,7 +148,24 @@ class EnergyChart(private val chart : PieChart) {
         proteinCal = protein
         fatCal = fat
     }
-
+    fun setCarbs(carbs: Float) {
+        carbsCal = carbs
+    }
+    fun setProtein(protein: Float) {
+        proteinCal = protein
+    }
+    fun setFat(fat : Float) {
+        fatCal = fat
+    }
+    fun getCarbs() : Float {
+        return carbsCal
+    }
+    fun getProtein() : Float {
+        return proteinCal
+    }
+    fun getFat() : Float {
+        return fatCal
+    }
     // 앱 전체에서 쓰는 색상 정의 xml 활용하기 위해 context 전달 필요.
     // 액티비티 내에서 쓸 때 this로 context 전달하면 됨. ex) setChart(this)
     fun setChart(context: Context) {

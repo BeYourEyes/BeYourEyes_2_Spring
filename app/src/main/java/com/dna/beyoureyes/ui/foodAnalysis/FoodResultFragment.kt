@@ -7,18 +7,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentResultBinding
 import com.dna.beyoureyes.ui.CustomToolbar
 import com.dna.beyoureyes.ui.foodDetail.ResultAllergyFragment
+import com.dna.beyoureyes.ui.foodDetail.ResultFailFragment
 import com.dna.beyoureyes.ui.foodDetail.ResultKcalFragment
 import com.dna.beyoureyes.ui.foodDetail.ResultNutriBarFragment
+import com.dna.beyoureyes.ui.foodDetail.ResultNutriPieFragment
 
 
 class FoodResultFragment: Fragment() {
     private var _binding: FragmentResultBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
+    private val resultFragments = mutableListOf<Fragment>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +53,7 @@ class FoodResultFragment: Fragment() {
         // 데이터 존재 여부에 따른 프래그먼트 조정 예시...
         // -> 표시할 프래그먼트 개수가 유동적이니... 아예 프래그먼트를 recyclerView로 관리할까?
         if (viewModel.isKcalValid()) { // 칼로리 정보 있으면 해당 프래그먼트 추가
+            resultFragments.add(ResultKcalFragment())
             fragmentManager
                 .beginTransaction()
                 .replace(binding.TotalCalorieFragment.id, ResultKcalFragment())
@@ -56,15 +61,27 @@ class FoodResultFragment: Fragment() {
         }
 
         if (viewModel.isNutritionDataValid()) { // 영양성분 정보 있으면 해당 프래그먼트 추가
+            resultFragments.add(ResultNutriBarFragment())
             fragmentManager
                 .beginTransaction()
                 .replace(binding.NutriBarFragment.id, ResultNutriBarFragment())
                 .commit()
+            fragmentManager
+                .beginTransaction()
+                .replace(binding.NutriPieFragment.id, ResultNutriPieFragment())
+                .commit()
         }
         if (viewModel.isAllergyDataValid()) { // 알레르기 정보 있으면 해당 프래그먼트 추가
+            resultFragments.add(ResultAllergyFragment())
             fragmentManager
                 .beginTransaction()
                 .replace(binding.AllergyFragment.id, ResultAllergyFragment())
+                .commit()
+        }
+        else {
+            fragmentManager
+                .beginTransaction()
+                .replace(binding.AllergyFragment.id, ResultFailFragment())
                 .commit()
         }
 

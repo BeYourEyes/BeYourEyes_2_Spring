@@ -56,8 +56,22 @@
 
             </FrameLayout>
 
+            <FrameLayout
+                android:id="@+id/fragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"/>
+
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/TotalCalorieFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/NutriPieFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -87,6 +101,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp" />
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp"/>

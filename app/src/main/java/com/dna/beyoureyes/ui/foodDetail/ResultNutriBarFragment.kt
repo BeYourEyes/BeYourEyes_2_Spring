@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.dna.beyoureyes.NutriIntakeBarDisplay
+import com.dna.beyoureyes.model.NutriIntakeBarDisplay
 import com.dna.beyoureyes.databinding.FragmentResultNutriBarChartBinding
 import com.dna.beyoureyes.model.Carbs
 import com.dna.beyoureyes.model.Cholesterol
