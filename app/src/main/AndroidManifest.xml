@@ -30,6 +30,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeYourEyes"
         tools:targetApi="31">
+        <!-- 파일 저장소 사용을 위한 FileProvider 선언 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <!-- 액티비티 -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -43,30 +54,8 @@
             android:name=".AssignActivity"
             android:exported="false" />
         <activity
-            android:name=".LoadingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FoodCautionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CameraFailActivity"
-            android:exported="false" />
-        <activity
             android:name=".OnboardingActivity"
             android:exported="false" />
-        <activity
-            android:name=".ResultEatActivity"
-            android:exported="false" />
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider> <!-- 액티비티 -->
         <activity
             android:name=".MainActivity"
             android:exported="false"
@@ -78,7 +67,6 @@
             android:label="식품 분석"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="ocr_korean" />

@@ -30,8 +30,8 @@ class AssignDiseaseFragment : Fragment() {
             listener?.onDiseaseInputRecieved(getClickedDiseaseList())
             listener?.onBtnClick(this, true)
         }
-        binding.toolbar.backButtonClickListener = object : CustomToolbar.BackButtonClickListener {
-            override fun onBackButtonClicked() {
+        binding.toolbar.backButtonClickListener = object : CustomToolbar.ButtonClickListener {
+            override fun onClicked() {
                 listener?.onBtnClick(this@AssignDiseaseFragment, false)
             }
         }
