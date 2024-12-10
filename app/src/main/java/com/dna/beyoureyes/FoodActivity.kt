@@ -108,4 +108,8 @@ class FoodActivity : AppCompatActivity() {
         super.onDestroy()
         imageProcessor.deleteImagesFromInternalStorage() // 내부 저장소 임시 이미지 파일 정리
     }
-}
+
+    private fun testCamera() {
+
+
+    }}
