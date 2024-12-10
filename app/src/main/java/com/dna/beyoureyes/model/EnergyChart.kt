@@ -29,12 +29,13 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 
 // primary 생성자 - 액티비티 내 바 차트 객체 및 관련 텍스트뷰를 전달
 class NutriIntakeBarDisplay(
-    val barChart : BarChart,
+    val barChart: BarChart,
     val nameTextView: TextView,
     val massTextView: TextView,
-    val dvTextView : TextView) {
+    val dvTextView: TextView
+) {
 
-    fun hide(){
+    fun hide() {
         barChart.visibility = View.GONE
         dvTextView.visibility = View.GONE
     }
@@ -68,7 +69,7 @@ class NutriIntakeBarDisplay(
         barChart.xAxis.isEnabled = false
 
         // YAxis(Left) (수평 막대 기준 위쪽)
-        val axisLeft: YAxis = barChart.getAxisLeft()
+        val axisLeft: YAxis = barChart.axisLeft
         axisLeft.axisMinimum = 0f // 최솟값
         axisLeft.axisMaximum = maximum // 최댓값
         axisLeft.isEnabled = false
@@ -108,14 +109,14 @@ class NutriIntakeBarDisplay(
 
         // 모든 차트 및 데이터 설정 적용
         barChart.animateY(300)
-        barChart.setData(data)
+        barChart.data = data
         barChart.invalidate()
 
     }
 }
 
 // PieChartSetting
-class EnergyChart(private val chart : PieChart) {
+class EnergyChart(private val chart: PieChart) {
 
     // =========================================================================
     // 생성자
@@ -135,37 +136,44 @@ class EnergyChart(private val chart : PieChart) {
     // set 메소드
     // =========================================================================
 
-    fun hide(){
+    fun hide() {
         chart.visibility = View.GONE
     }
 
-    fun setNoDataText(text:String){
+    fun setNoDataText(text: String) {
         chart.setNoDataText(text)
     }
 
-    fun setCaloreis(carbs: Float, protein: Float, fat: Float ) {
+    fun setCaloreis(carbs: Float, protein: Float, fat: Float) {
         carbsCal = carbs
         proteinCal = protein
         fatCal = fat
     }
+
     fun setCarbs(carbs: Float) {
         carbsCal = carbs
     }
+
     fun setProtein(protein: Float) {
         proteinCal = protein
     }
-    fun setFat(fat : Float) {
+
+    fun setFat(fat: Float) {
         fatCal = fat
     }
-    fun getCarbs() : Float {
+
+    fun getCarbs(): Float {
         return carbsCal
     }
-    fun getProtein() : Float {
+
+    fun getProtein(): Float {
         return proteinCal
     }
-    fun getFat() : Float {
+
+    fun getFat(): Float {
         return fatCal
     }
+
     // 앱 전체에서 쓰는 색상 정의 xml 활용하기 위해 context 전달 필요.
     // 액티비티 내에서 쓸 때 this로 context 전달하면 됨. ex) setChart(this)
     fun setChart(context: Context) {

@@ -32,35 +32,6 @@
         app:chipSpacing="15dp"
         app:chipSpacingHorizontal="15dp">
 
-        <!-- 구현 시 삭제 -->
-        <com.google.android.material.chip.Chip
-            style="@style/AllergyChip"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="@string/allergy_wheat"
-            android:textAlignment="center"
-            android:textAppearance="@style/chipText"
-            app:chipMinTouchTargetSize="0dp" />
-
-        <com.google.android.material.chip.Chip
-            style="@style/AllergyChip"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="@string/allergy_peach"
-            android:textAlignment="center"
-            android:textAppearance="@style/chipText"
-            app:chipMinTouchTargetSize="0dp" />
-
-        <com.google.android.material.chip.Chip
-            style="@style/AllergyChip"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="@string/allergy_tomato"
-            android:textAlignment="center"
-            android:textAppearance="@style/chipText"
-            app:chipMinTouchTargetSize="0dp" />
-
-
     </com.google.android.material.chip.ChipGroup>
 
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -71,6 +72,14 @@ class FoodResultFragment: Fragment() {
                 .replace(binding.NutriPieFragment.id, ResultNutriPieFragment())
                 .commit()
         }
+        else {
+            binding.NutriPieFragment.isVisible = false
+            binding.NutriBarFragment.isVisible = false
+            fragmentManager
+                .beginTransaction()
+                .replace(binding.NutriFailFragment.id, ResultFailFragment())
+                .commit()
+        }
         if (viewModel.isAllergyDataValid()) { // 알레르기 정보 있으면 해당 프래그먼트 추가
             resultFragments.add(ResultAllergyFragment())
             fragmentManager
@@ -79,9 +88,11 @@ class FoodResultFragment: Fragment() {
                 .commit()
         }
         else {
+            binding.AllergyFragment.isVisible = false
+            binding.AllergyCautionFragment.isVisible = false
             fragmentManager
                 .beginTransaction()
-                .replace(binding.AllergyFragment.id, ResultFailFragment())
+                .replace(binding.NutriFailFragment.id, ResultFailFragment())
                 .commit()
         }
 
