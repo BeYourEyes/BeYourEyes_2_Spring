@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.dna.beyoureyes.databinding.FragmentResultNutriPieChartBinding
+import com.dna.beyoureyes.model.EnergyChart
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
