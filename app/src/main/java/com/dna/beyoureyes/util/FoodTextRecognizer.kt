@@ -79,12 +79,12 @@ class FoodTextRecognizer(private val context: Context) {
                         Log.d("OCR", "Got Food Data From Open Api Response")
                         _progress.value = 100
                         apiData.setAllergyData(allergyData)
-                        apiData // api 데이터 기반 리턴
+                        validateFoodData(apiData) // api 데이터 기반 리턴
                     } ?: extractNutriDataFromOcrResult(result).let { ocrData ->
                         Log.d("OCR", "Got Food Data From OCR Result")
                         _progress.value = 100
                         ocrData.setAllergyData(allergyData)
-                        ocrData // ocr 기반 리턴
+                        validateFoodData(ocrData) // ocr 기반 리턴
                     }
                 } else { // 품목보고번호가 없는 경우: OCR 데이터 처리
                     Log.d("OCR", "No Manufact Number.")
@@ -92,7 +92,7 @@ class FoodTextRecognizer(private val context: Context) {
                         Log.d("OCR", "Got Food Data From OCR Result")
                         _progress.value = 100
                         ocrData.setAllergyData(allergyData)
-                        ocrData // ocr 기반 리턴
+                        validateFoodData(ocrData) // ocr 기반 리턴
                     }
                 }
             } catch (e: Exception) {
@@ -100,6 +100,11 @@ class FoodTextRecognizer(private val context: Context) {
                 null // 오류 발생 시 null 리턴
             }
         }
+    }
+
+    // 정보가 하나라도 있는지 최종 검증. 없으면 null 있으면 그대로 Food 데이터 반환
+    fun validateFoodData(food: Food) : Food? {
+        return if (food.kcal != null || food.nutritions != null || food.allergy != null) food else null
     }
 
     // OCR API 호출 함수
