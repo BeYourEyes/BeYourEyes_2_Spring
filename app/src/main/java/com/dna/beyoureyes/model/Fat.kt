@@ -2,13 +2,14 @@ package com.dna.beyoureyes.model
 
 import com.dna.beyoureyes.AppUser
 import com.google.firebase.firestore.DocumentSnapshot
+import java.text.DecimalFormat
 
 class Fat(override var milligram: Int = 0) : Nutrition {
 
     // 인스턴스 영역
     override val name: String = NAME
     override val massString: String
-        get() = (milligram/1000).toString() + "g"
+        get() = DecimalFormat("#.##g").format(milligram.toDouble()/1000)
 
     override fun getDailyValue(): Int
             = Companion.getDailyValue()

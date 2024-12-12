@@ -23,6 +23,7 @@ class BarChartCustomRenderer (
 
     companion object {
         private const val Y_MINIMUM_RATIO = 0.13f
+        private const val Y_MAXIMUM_RATIO = 0.85f
         private const val TEXT_POS_ADJUSTMENT = 0.21f
         private const val Y_VALUE_THRESHOLD = 20f
     }
@@ -79,7 +80,11 @@ class BarChartCustomRenderer (
                     c, valueText,
                     Y_MINIMUM_RATIO * mViewPortHandler.contentRight() * TEXT_POS_ADJUSTMENT,
                     y, textColor )
-            } else { super.drawValue(c, valueText, x, y, color) }
+            } else if (yValue > 100f ) {
+                super.drawValue(c, valueText, mViewPortHandler.contentRight() * Y_MAXIMUM_RATIO, y, color)
+            } else {
+                super.drawValue(c, valueText, x, y, color)
+            }
         } else {
             super.drawValue(c, valueText, x, y, color)
         }
@@ -114,8 +119,11 @@ class BarChartCustomRenderer (
         val barValue = mChart.barData.dataSets[0]
 
         if (drawBorder) {
-            val barRight = if (barValue.getEntryForIndex(0).y < Y_VALUE_THRESHOLD)
-                Y_MINIMUM_RATIO * mViewPortHandler.contentRight() else buffer.buffer[2]
+            val barY = barValue.getEntryForIndex(0).y
+            val barRight = if ( barY < Y_VALUE_THRESHOLD && barY != 0f)
+                Y_MINIMUM_RATIO * mViewPortHandler.contentRight()
+            else if (barY > 100f ) mViewPortHandler.contentRight()
+            else buffer.buffer[2]
             c.drawRect(
                 buffer.buffer[0],
                 buffer.buffer[1], barRight,
@@ -140,8 +148,11 @@ class BarChartCustomRenderer (
                 mRenderPaint.color = dataSet.getColor(0)
             }
             val barValue = mChart.barData.dataSets[0]
-            val barRight = if (barValue.getEntryForIndex(0).y < Y_VALUE_THRESHOLD)
-                Y_MINIMUM_RATIO * mViewPortHandler.contentRight() else buffer.buffer[2]
+            val barY = barValue.getEntryForIndex(0).y
+            val barRight = if ( barY < Y_VALUE_THRESHOLD && barY != 0f)
+                Y_MINIMUM_RATIO * mViewPortHandler.contentRight()
+            else if (barY > 100f ) mViewPortHandler.contentRight()
+            else buffer.buffer[2]
 
             c.drawRoundRect(
                 RectF(

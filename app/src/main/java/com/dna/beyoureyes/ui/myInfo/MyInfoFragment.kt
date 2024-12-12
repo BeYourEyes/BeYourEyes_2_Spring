@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.dna.beyoureyes.MainActivity
 import com.dna.beyoureyes.AppUser
 import com.dna.beyoureyes.R
@@ -41,19 +42,22 @@ class MyInfoFragment : Fragment() {
         _binding = FragmentMyInfoBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
         val activity = requireActivity() as MainActivity
+
+        // 식사 기록 리사이클러 뷰 어댑터 정의 - 데이터 전달 & 아이템 클릭 시 액션 정의(프래그먼트 교체)
         foodHistoryAdapter = FoodHistoryAdapter(activity.foodHistoryItems) {
                 foodHistory ->
             val action = MyInfoFragmentDirections.actionMyInfoToPastDetail(foodHistory)
             findNavController().navigate(action)
-        } // 리사이클러 뷰 어댑터 정의 - 데이터 전달 & 아이템 클릭 시 액션 정의(프래그먼트 교체)
+        }
 
+        // 정의한 어댑터와 레이아웃 매니저를 식사 기록 리사이클러 뷰에 세팅
         binding.historyRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = foodHistoryAdapter
         }
 
+        // 식사 기록 개수 세팅
         binding.historyCnt.text = "${foodHistoryAdapter.itemCount}"
 
         // 앱 공유하기 버튼
@@ -98,11 +102,13 @@ class MyInfoFragment : Fragment() {
 
     fun updateProfile() {
 
+        // 질환 DB 필드명 -> 레이아웃 바인드 맵
         val diseaseMap = mapOf(
             "diabete" to binding.diabete,
             "highblood" to binding.highblood,
             "hyperlipidemia" to binding.hyperlipidemia
         )
+        // 알레르기 성분 DB 필드명 -> 한글 성분명 맵
         val allergyMap = mapOf(
             "buckwheat" to "메밀",
             "wheat" to "밀",
@@ -115,11 +121,22 @@ class MyInfoFragment : Fragment() {
             "tomato" to "토마토"
         )
 
+        // 사용자 질환, 알레르기 정보 가져오기
         val userDiseases = AppUser.info?.disease?.toSet() ?: emptySet()
         val userAllergy = AppUser.info?.allergic?.toSet() ?: emptySet()
 
-
+        // 이름 설정
         binding.profileName.setText(AppUser.info?.name?:"")
+
+        // 프로필 설정
+        AppUser.info?.profileImgUri?.let {
+            Glide.with(this)
+                .load(it)
+                .centerCrop() // 이미지를 크롭
+                .into(binding.profileImgView)
+        }
+
+        // 질환 설정
         diseaseMap.forEach { diseaseName, diseaseButton ->
             if (userDiseases.contains(diseaseName)) {
                 diseaseButton.visibility = View.VISIBLE
@@ -133,7 +150,7 @@ class MyInfoFragment : Fragment() {
         binding.allergyChipGroup.layoutParams = layoutParams
         */
 
-
+        // 알레르기 설정
         AppUser.info?.allergic?.forEach {
             if (it != "none") {
                 val chip = Chip(requireContext())
