@@ -1,9 +1,11 @@
 package com.dna.beyoureyes.ui.foodAnalysis
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentResultBinding
 import com.dna.beyoureyes.ui.CustomToolbar
+import com.dna.beyoureyes.ui.foodDetail.ResultAllergyCautionFragment
 import com.dna.beyoureyes.ui.foodDetail.ResultAllergyFragment
 import com.dna.beyoureyes.ui.foodDetail.ResultFailFragment
 import com.dna.beyoureyes.ui.foodDetail.ResultKcalFragment
@@ -79,12 +82,17 @@ class FoodResultFragment: Fragment() {
                 .beginTransaction()
                 .replace(binding.NutriFailFragment.id, ResultFailFragment())
                 .commit()
+            Log.d("Result", "영양성분 인식 실패")
         }
         if (viewModel.isAllergyDataValid()) { // 알레르기 정보 있으면 해당 프래그먼트 추가
             resultFragments.add(ResultAllergyFragment())
             fragmentManager
                 .beginTransaction()
                 .replace(binding.AllergyFragment.id, ResultAllergyFragment())
+                .commit()
+            fragmentManager
+                .beginTransaction()
+                .replace(binding.AllergyCautionFragment.id, ResultAllergyCautionFragment())
                 .commit()
         }
         else {
@@ -94,6 +102,7 @@ class FoodResultFragment: Fragment() {
                 .beginTransaction()
                 .replace(binding.NutriFailFragment.id, ResultFailFragment())
                 .commit()
+            Log.d("Result", "알레르기 인식 실패")
         }
 
         // 먹기 버튼
