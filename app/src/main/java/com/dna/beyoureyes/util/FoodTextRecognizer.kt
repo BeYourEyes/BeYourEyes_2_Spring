@@ -153,8 +153,7 @@ class FoodTextRecognizer(private val context: Context) {
             else -> null // kcalList 크기가 0 또는 3 이상인 경우 오류
         }
 
-        // OCR 데이터를 기반으로 moPercentList 생성 : % 정보를 -> g 정보로 변형
-        // 이거 원래 코드에서 왜 kcalList.size == 2일때만 하는 지??
+        // % 정보를 -> g 정보로 변형하여 영양소 함유량 가져오기
         val nutritionList = getNutritionListFromPercentList(percentList)
 
         return Food(kcal, nutritionList)

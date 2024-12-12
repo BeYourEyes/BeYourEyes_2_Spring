@@ -65,19 +65,20 @@ class FoodOpenApiHelper {
         itemMnftrRptNo: String
     ): Pair<Int, List<NutrientResult>>? {
         return try {
+            Log.d("OpenApiHelper", "API Call Start")
             val response = RetrofitClient.apiService.getFood(
                 pageNo = pageNo,
                 numOfRows = numOfRows,
                 type = type,
                 itemMnftrRptNp = itemMnftrRptNo
             )
+            Log.d("OpenApiHelper", "Got Response")
             val items = response.response.body.items
             Log.d("OpenApiHelper", "API Call Succeed")
-            // Log.d("Items_success", items.toString())
             calculateNutrient(items) // foodSize 기준으로 mg 계산하여 반환
         } catch (e: Exception) {
             Log.d("OpenApiHelper", "API Call Error")
-            // Log.e("ApiResponse", "API 호출 실패: ${e.message}")
+            Log.e("OpenApiHelper", "API 호출 실패: ${e.message}")
             null
         }
     }
@@ -97,13 +98,15 @@ class FoodOpenApiHelper {
             // Log.d("Debug_foodSize", "Raw foodSize: $rawFoodSize, Extracted foodSize: $foodSize")
 
             // 여기서 직접 Nutrient 형식 데이터로 만들어도 될 듯... 일단 왜 리스트 형식인지부터 알아보고
-            val prot = ((item.prot.toDoubleOrNull() ?: 0.0) / 100.0 * foodSize).toInt()
-            val fatce = ((item.fatce.toDoubleOrNull() ?: 0.0) / 100.0 * foodSize).toInt()
-            val chocdf = ((item.chocdf.toDoubleOrNull() ?: 0.0) / 100.0 * foodSize).toInt()
-            val sugar = ((item.sugar.toDoubleOrNull() ?: 0.0) / 100.0 * foodSize).toInt()
-            val nat = ((item.nat.toDoubleOrNull() ?: 0.0) / 100.0 * foodSize).toInt()
-            val chole = ((item.chole.toDoubleOrNull() ?: 0.0) / 100.0 * foodSize).toInt()
-            val fasat = ((item.fasat.toDoubleOrNull() ?: 0.0) / 100.0 * foodSize).toInt()
+            // g 단위로 정보 제공됨
+            val prot = ((item.prot.toDoubleOrNull() ?: 0.0) * 1000 / 100.0 * foodSize).toInt() // 단백질
+            val fatce = ((item.fatce.toDoubleOrNull() ?: 0.0) * 1000 / 100.0 * foodSize).toInt() // 지방
+            val chocdf = ((item.chocdf.toDoubleOrNull() ?: 0.0) * 1000 / 100.0 * foodSize).toInt() // 탄수
+            val sugar = ((item.sugar.toDoubleOrNull() ?: 0.0) * 1000 / 100.0 * foodSize).toInt() // 당
+            val fasat = ((item.fasat.toDoubleOrNull() ?: 0.0) * 1000 / 100.0 * foodSize).toInt() // 포화지방
+            // mg 단위로 정보 제공됨
+            val nat = ((item.nat.toDoubleOrNull() ?: 0.0) / 100.0 * foodSize).toInt() // 나트륨
+            val chole = ((item.chole.toDoubleOrNull() ?: 0.0) / 100.0 * foodSize).toInt() // 콜레스테롤
             // Log.d("kcal_s", item.enerc)
             kcal = ((item.enerc.toDoubleOrNull() ?: 0.0)/ 100.0 * foodSize).toInt()
 
