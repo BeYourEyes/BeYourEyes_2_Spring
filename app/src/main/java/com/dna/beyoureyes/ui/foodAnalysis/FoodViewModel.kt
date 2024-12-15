@@ -4,6 +4,8 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
+import com.dna.beyoureyes.AppUser
 import com.dna.beyoureyes.model.Food
 
 
@@ -15,12 +17,24 @@ class FoodViewModel : ViewModel() {
     val capturedImageUri: LiveData<Uri> = _capturedImageUri
     val processedImageUri: LiveData<Uri> = _processedImageUri
 
+    /*
+    // foodData 라이브 데이터에 map을 활용하여 필요한 상세 정보를 아래와 같이 또 다른 라이브 데이터로 정의 가능
+    // foodData의 알레르기 정보 중 유저 정보와의 교집합을 라이브 데이터로 정의한 예시.
+    val allergiesToAlert : LiveData<Set<String>?> = _foodData.map { food ->
+        food.allergy?.let{ AppUser.info?.findMatchingAllergy(it) }
+    }
+     */
+
     fun isCaptureSuccessful() : Boolean {
         return _capturedImageUri.value != null
     }
 
     fun isKcalValid() : Boolean {
         return _foodData.value?.kcal != null
+    }
+
+    fun hasAllergiesToAlert() : Boolean {
+        return !(_foodData.value?.allergy?.let{ AppUser.info?.findMatchingAllergy(it) }.isNullOrEmpty())
     }
 
     fun isNutritionDataValid() : Boolean {

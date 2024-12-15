@@ -89,16 +89,19 @@ class FoodResultFragment: Fragment() {
             fragment?.view?.findViewById<TextView>(R.id.failText)?.setText("영양성분 인식에 실패했어요.")
             Log.d("Result", "영양성분 인식 실패")
         }
+
         if (viewModel.isAllergyDataValid()) { // 알레르기 정보 있으면 해당 프래그먼트 추가
             resultFragments.add(ResultAllergyFragment())
             fragmentManager
                 .beginTransaction()
                 .replace(binding.AllergyFragment.id, ResultAllergyFragment())
                 .commit()
-            fragmentManager
-                .beginTransaction()
-                .replace(binding.AllergyCautionFragment.id, ResultAllergyCautionFragment())
-                .commit()
+            if(viewModel.hasAllergiesToAlert()){
+                fragmentManager
+                    .beginTransaction()
+                    .replace(binding.AllergyCautionFragment.id, ResultAllergyCautionFragment())
+                    .commit()
+            }
         }
         else {
             binding.AllergyFragment.isVisible = false
