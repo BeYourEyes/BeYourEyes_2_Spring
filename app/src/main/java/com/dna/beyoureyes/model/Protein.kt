@@ -1,16 +1,16 @@
 package com.dna.beyoureyes.model
 
 import com.dna.beyoureyes.AppUser
-import com.dna.beyoureyes.model.Gender
 import com.google.firebase.firestore.DocumentSnapshot
 import java.text.DecimalFormat
 
-class Protein(override var milligram: Int = 0) : Nutrition {
+class Protein(override var milligram: Int = 0) : CaloricNutrient {
 
     // 인스턴스 영역
     override val name: String = NAME
     override val massString: String
         get() = DecimalFormat("#.##g").format(milligram/1000.0)
+    override val kcal: Int get() = (milligram / 1000) * KCAL_PER_GRAM
 
     override fun getDailyValue(): Int
             = Companion.getDailyValue()
@@ -26,6 +26,8 @@ class Protein(override var milligram: Int = 0) : Nutrition {
     companion object {
         const val NAME = "단백질"
         const val DB_FIELD_NAME = "protein"
+        const val KCAL_PER_GRAM = 4
+
         fun getDailyValue() : Int {
             // 나이, 성별에 따른 권장섭취량 분류
             val age:Int = AppUser.info?.age ?:20

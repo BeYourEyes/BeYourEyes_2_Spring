@@ -3,12 +3,13 @@ package com.dna.beyoureyes.model
 import com.google.firebase.firestore.DocumentSnapshot
 import java.text.DecimalFormat
 
-class Carbs(override var milligram: Int = 0) : Nutrition {
+class Carbs(override var milligram: Int = 0) : CaloricNutrient {
 
     // 인스턴스 영역
     override val name: String = NAME
     override val massString: String
         get() = DecimalFormat("#.##g").format(milligram/1000.0)
+    override val kcal: Int get() = (milligram / 1000) * KCAL_PER_GRAM
 
     override fun getDailyValue(): Int
         = Companion.getDailyValue()
@@ -23,6 +24,8 @@ class Carbs(override var milligram: Int = 0) : Nutrition {
     companion object {
         const val NAME = "탄수화물"
         const val DB_FIELD_NAME = "carbs"
+        const val KCAL_PER_GRAM = 4
+
         fun getDailyValue() : Int {
             return 130 * 1000 // 성별, 나이 무관 권장 섭취량 130g
         }

@@ -2,7 +2,7 @@ package com.dna.beyoureyes.model
 
 import com.google.firebase.firestore.DocumentSnapshot
 
-interface Nutrition {
+interface Nutrition { // 나중에 Nutrient로 이름 변경 고려... 의미상
 
     val name : String       // 영양소명
     var milligram : Int     // 질량(mg 단위)
