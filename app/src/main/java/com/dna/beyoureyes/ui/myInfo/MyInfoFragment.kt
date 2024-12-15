@@ -129,12 +129,11 @@ class MyInfoFragment : Fragment() {
         binding.profileName.setText(AppUser.info?.name?:"")
 
         // 프로필 설정
-        AppUser.info?.profileImgUri?.let {
-            Glide.with(this)
-                .load(it)
-                .centerCrop() // 이미지를 크롭
-                .into(binding.profileImgView)
-        }
+        Glide.with(this)
+            .load(AppUser.info?.profileImgUri)
+            .centerCrop() // 이미지를 크롭
+            .placeholder(R.drawable.home_good)
+            .into(binding.profileImgView)
 
         // 질환 설정
         diseaseMap.forEach { diseaseName, diseaseButton ->
