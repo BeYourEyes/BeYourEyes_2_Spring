@@ -68,14 +68,17 @@ class FirebaseHelper {
                             val userBirth = document.data.get("userBirth") as Timestamp
                             val userDisease = document.data.get("userDisease") as ArrayList<String>
                             val userAllergy = document.data.get("userAllergy") as ArrayList<String>
-                            val profile = document.data.get("userProfile") as String
+                            val profile = document.data.get("userProfile") as String?
                             AppUser.setInfo(userName, userGender.toInt(), userBirth, userDisease, userAllergy, profile)
 
                             // 프로필 사진 uri 로드하여 저장
-                            val storageRef = com.google.firebase.Firebase.storage.reference.child(profile)
-                            storageRef.downloadUrl.await()?.let { // 비동기 작업을 동기적으로 기다림
-                                AppUser.setProfileImgUri(it)
+                            profile?.let{
+                                val storageRef = com.google.firebase.Firebase.storage.reference.child(profile)
+                                storageRef.downloadUrl.await()?.let { // 비동기 작업을 동기적으로 기다림
+                                    AppUser.setProfileImgUri(it)
+                                }
                             }
+
                         }
                         true
                     }
