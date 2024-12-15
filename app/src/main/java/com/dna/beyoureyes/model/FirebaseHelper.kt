@@ -17,9 +17,9 @@ class FirebaseHelper {
         private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
         // 데이터를 Firestore에 추가
-        fun sendData(userInfo: HashMap<String, Any?>, collectionName: String) {
+        fun sendData(data: HashMap<String, Any?>, collectionName: String) {
             firestore.collection(collectionName)
-                .add(userInfo)
+                .add(data)
                 .addOnSuccessListener { documentReference ->
                     Log.d("INFO", "SUCCESS added with ID: ${documentReference.id}")
                 }
@@ -82,7 +82,6 @@ class FirebaseHelper {
                                 } catch (exception : Exception) {
                                     Log.d("RECEIVE_USER_DATA", "Error getting documents: wrong image path", exception)
                                 }
-
                             }
 
                         }
