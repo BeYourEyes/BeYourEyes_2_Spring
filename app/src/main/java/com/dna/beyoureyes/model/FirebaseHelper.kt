@@ -17,9 +17,9 @@ class FirebaseHelper {
         private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
         // 데이터를 Firestore에 추가
-        fun sendData(userInfo: HashMap<String, Any?>, collectionName: String) {
+        fun sendData(data: HashMap<String, Any?>, collectionName: String) {
             firestore.collection(collectionName)
-                .add(userInfo)
+                .add(data)
                 .addOnSuccessListener { documentReference ->
                     Log.d("INFO", "SUCCESS added with ID: ${documentReference.id}")
                 }
@@ -73,9 +73,14 @@ class FirebaseHelper {
 
                             // 프로필 사진 uri 로드하여 저장
                             profile?.let{
-                                val storageRef = com.google.firebase.Firebase.storage.reference.child(profile)
-                                storageRef.downloadUrl.await()?.let { // 비동기 작업을 동기적으로 기다림
-                                    AppUser.setProfileImgUri(it)
+                                Log.d("RECEIVE_USER_DATA", "${profile}")
+                                try {
+                                    val storageRef = com.google.firebase.Firebase.storage.reference.child(profile)
+                                    storageRef.downloadUrl.await()?.let { // 비동기 작업을 동기적으로 기다림
+                                        AppUser.setProfileImgUri(it)
+                                    }
+                                } catch (exception : Exception) {
+                                    Log.d("RECEIVE_USER_DATA", "Error getting documents: wrong image path", exception)
                                 }
                             }
 
