@@ -44,6 +44,10 @@ class FoodViewModel : ViewModel() {
         return _foodData.value?.allergy != null
     }
 
+    fun isFoodDataAvaiable() : Boolean {
+        return _foodData.value != null
+    }
+
     fun setCapturedImageUri(uri: Uri) {
         _capturedImageUri.value = uri
     }
@@ -52,8 +56,16 @@ class FoodViewModel : ViewModel() {
         _processedImageUri.value = uri
     }
 
+    fun getCapturedImageUri() : Uri? {
+        return _capturedImageUri.value
+    }
+
     fun setFoodData(food:Food) {
         _foodData.value = food
+    }
+
+    fun getFoodData() : Food? {
+        return _foodData.value
     }
 
     fun getOcrInputUri():Uri? {

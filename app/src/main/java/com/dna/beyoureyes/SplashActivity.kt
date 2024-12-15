@@ -54,7 +54,7 @@ class SplashActivity : AppCompatActivity() {
                     //Toast.makeText(this@SplashActivity, "이미 가입한 유저", Toast.LENGTH_LONG).show()
                     userId = currentUser.uid
                     AppUser.id = userId
-                    Log.d("GOOGLE : ", AppUser.id.toString())
+                    Log.d("SPLASH : ", AppUser.id.toString())
                     //FirebaseHelper.receiveUserData()
                     //Toast.makeText(this@SplashActivity, userId, Toast.LENGTH_LONG).show()
                     delay(3000) // 3초 지연
@@ -66,6 +66,7 @@ class SplashActivity : AppCompatActivity() {
                     // 최초 접속 (데이터 없음) - 익명 로그인 후 온보딩으로 이동
                     signInAnonymously()
                     delay(3000) // 3초 지연
+                    Log.d("SPLASH : ", " 최초 접속 + 데이터 없음 ${AppUser.id.toString()}")
                     withContext(Dispatchers.Main) {
                         startActivity(Intent(this@SplashActivity, OnboardingActivity::class.java))
                         finish()

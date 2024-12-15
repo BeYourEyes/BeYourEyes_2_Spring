@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -84,6 +85,8 @@ class FoodResultFragment: Fragment() {
                 .beginTransaction()
                 .replace(binding.NutriFailFragment.id, ResultFailFragment())
                 .commit()
+            val fragment = fragmentManager.findFragmentById(binding.NutriFailFragment.id)
+            fragment?.view?.findViewById<TextView>(R.id.failText)?.setText("영양성분 인식에 실패했어요.")
             Log.d("Result", "영양성분 인식 실패")
         }
 
