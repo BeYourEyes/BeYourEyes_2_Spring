@@ -2,19 +2,15 @@ package com.dna.beyoureyes.ui.foodDetail
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
 import com.dna.beyoureyes.AppUser
-import com.dna.beyoureyes.R
-import com.dna.beyoureyes.databinding.FragmentResultAlgBinding
 import com.dna.beyoureyes.databinding.FragmentResultAlgCautionBinding
 import com.dna.beyoureyes.ui.foodAnalysis.FoodViewModel
-import com.google.android.material.chip.Chip
+import com.dna.extensions.addSubjectMarker
 
 class ResultAllergyCautionFragment : Fragment() {
     private var _binding: FragmentResultAlgCautionBinding? = null
@@ -56,7 +52,7 @@ class ResultAllergyCautionFragment : Fragment() {
             val commonAllergyInKorean = commonAllergies.mapNotNull { engToKor[it] }
             allergyCautionString = commonAllergyInKorean.joinToString(", ")
             Log.d("Allergy Caution", "${detectedAllergyData} ${userAllergyData} ${commonAllergies}")
-            binding.algCautionText2.setText("이 식품에 ${allergyCautionString}가 함유되어있어요")
+            binding.algCautionText2.setText("이 식품에 ${allergyCautionString.addSubjectMarker()} 함유되어있어요")
         }
 
         binding.algCautionText1.setText(AppUser.info?.name + binding.algCautionText1.text)
