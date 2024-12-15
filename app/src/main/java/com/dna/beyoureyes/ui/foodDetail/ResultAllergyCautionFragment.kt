@@ -52,7 +52,7 @@ class ResultAllergyCautionFragment : Fragment() {
             val commonAllergyInKorean = commonAllergies.mapNotNull { engToKor[it] }
             allergyCautionString = commonAllergyInKorean.joinToString(", ")
             Log.d("Allergy Caution", "${detectedAllergyData} ${userAllergyData} ${commonAllergies}")
-            binding.algCautionText2.setText("이 식품에 ${allergyCautionString}가 함유되어있어요")
+            binding.algCautionText2.setText("이 식품에 ${allergyCautionString.addSubjectMarker()} 함유되어있어요")
         }
 
         binding.algCautionText1.setText(AppUser.info?.name + binding.algCautionText1.text)
