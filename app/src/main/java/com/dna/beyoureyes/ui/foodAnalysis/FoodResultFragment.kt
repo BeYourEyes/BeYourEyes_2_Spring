@@ -82,6 +82,8 @@ class FoodResultFragment: Fragment() {
                 .beginTransaction()
                 .replace(binding.NutriFailFragment.id, ResultFailFragment())
                 .commit()
+            val fragment = fragmentManager.findFragmentById(binding.NutriFailFragment.id)
+            fragment?.view?.findViewById<TextView>(R.id.failText)?.setText("영양성분 인식에 실패했어요.")
             Log.d("Result", "영양성분 인식 실패")
         }
         if (viewModel.isAllergyDataValid()) { // 알레르기 정보 있으면 해당 프래그먼트 추가
@@ -104,10 +106,11 @@ class FoodResultFragment: Fragment() {
                 .commit()
             Log.d("Result", "알레르기 인식 실패")
         }
-
-        // 먹기 버튼
-        binding.resultButtonEat.setOnClickListener {
-            findNavController().navigate(R.id.food_navi_eat)
+        if(viewModel.isNutritionDataValid()) {
+            // 먹기 버튼
+            binding.resultButtonEat.setOnClickListener {
+                findNavController().navigate(R.id.food_navi_eat)
+            }
         }
 
         return root
