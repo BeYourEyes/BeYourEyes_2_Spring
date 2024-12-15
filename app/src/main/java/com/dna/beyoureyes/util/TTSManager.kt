@@ -154,6 +154,5 @@ class TTSManager(context: Context) :
         tts = null
         isSpeaking = false
         utteranceIdQueue.clear()
-        ttsStateListener?.onTTSDone()
     }
 }
