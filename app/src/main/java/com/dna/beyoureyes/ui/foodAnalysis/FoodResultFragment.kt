@@ -5,12 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentResultBinding
 import com.dna.beyoureyes.ui.CustomToolbar
@@ -20,6 +19,8 @@ import com.dna.beyoureyes.ui.foodDetail.ResultFailFragment
 import com.dna.beyoureyes.ui.foodDetail.ResultKcalFragment
 import com.dna.beyoureyes.ui.foodDetail.ResultNutriBarFragment
 import com.dna.beyoureyes.ui.foodDetail.ResultNutriPieFragment
+import com.dna.beyoureyes.util.TTSManager
+import java.util.concurrent.atomic.AtomicBoolean
 
 
 class FoodResultFragment: Fragment() {
@@ -27,6 +28,7 @@ class FoodResultFragment: Fragment() {
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
     private val resultFragments = mutableListOf<Fragment>()
+    private val ttsManager by lazy { TTSManager.getInstance(requireContext()) } // 싱글톤
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -105,8 +107,40 @@ class FoodResultFragment: Fragment() {
             Log.d("Result", "알레르기 인식 실패")
         }
 
+        // TTS 재생 상태 변경 리스너 설정 - UI 업뎃을 위한 콜백 정의
+        binding.resultButtonVoice // 버튼 초기화
+        ttsManager.setTTSStateListener(object: TTSManager.TTSStateListener {
+            override fun onTTSStarted() {
+                binding.resultButtonVoice.text = "재생 중 / ■"
+            }
+            override fun onTTSDone() {
+                binding.resultButtonVoice.text = "다시 듣기 / ▶"
+            }
+        })
+
+
+        // 읽어 주기 버튼 (이 뷰에선 데이터 갱신될 일 없으니 observe가 아닌 초기에 한 번만 값을 읽기
+        val ttsToastShowed = AtomicBoolean(false) // 일회용(최초 한번만 보여주기)
+        viewModel.foodData.value?.let { food ->
+            binding.resultButtonVoice.setOnClickListener {
+                if (ttsManager.isSpeaking()) {
+                    ttsManager.stop()
+                } else {
+                    ttsManager.speakNutritionalInfo(food)
+                    if (ttsToastShowed.compareAndSet(false, true)) {
+                        Toast.makeText(
+                            requireContext(),
+                            "재생을 멈추려면 버튼을 다시 눌러주세요.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+
         // 먹기 버튼
         binding.resultButtonEat.setOnClickListener {
+            ttsManager.stop()
             findNavController().navigate(R.id.food_navi_eat)
         }
 
@@ -116,6 +150,11 @@ class FoodResultFragment: Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ttsManager.shutdown() // 엔진 종료
     }
 
 }
