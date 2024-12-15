@@ -93,7 +93,18 @@ class UserInfo (
     }
 
     fun findMatchingAllergy(foodAllergy: Set<String>) : Set<String> {
-        return allergic.intersect(foodAllergy)
+        val engToKor = mutableMapOf(
+            "buckwheat" to "메밀",
+            "wheat" to "밀",
+            "bean" to "대두",
+            "peanut" to "땅콩",
+            "walnut" to "호두",
+            "pinenut" to "잣" ,
+            "acid" to "아황산",
+            "peach" to "복숭아",
+            "tomato" to "토마토"
+        )
+        return foodAllergy.intersect(allergic.mapNotNull { engToKor[it] }.toSet())
     }
 
     companion object {
