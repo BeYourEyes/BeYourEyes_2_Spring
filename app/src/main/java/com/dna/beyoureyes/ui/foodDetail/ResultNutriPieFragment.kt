@@ -10,13 +10,9 @@ import androidx.fragment.app.activityViewModels
 import com.dna.beyoureyes.model.EnergyChart
 import com.dna.beyoureyes.databinding.FragmentResultNutriPieChartBinding
 import com.dna.beyoureyes.model.Carbs
-import com.dna.beyoureyes.model.Cholesterol
 import com.dna.beyoureyes.model.Fat
-import com.dna.beyoureyes.model.Natrium
 import com.dna.beyoureyes.model.NutritionWrapper
 import com.dna.beyoureyes.model.Protein
-import com.dna.beyoureyes.model.SaturatedFat
-import com.dna.beyoureyes.model.Sugar
 import com.dna.beyoureyes.ui.foodAnalysis.FoodViewModel
 
 class ResultNutriPieFragment : Fragment() {
@@ -37,9 +33,9 @@ class ResultNutriPieFragment : Fragment() {
         viewModel.foodData.observe(viewLifecycleOwner) { food ->
             food.nutritions?.forEach { nutri ->
                 when(nutri) {
-                    is Carbs -> pieChart.setCarbs(nutri.milligram.toFloat())
-                    is Fat -> pieChart.setFat(nutri.milligram.toFloat())
-                    is Protein -> pieChart.setProtein(nutri.milligram.toFloat())
+                    is Carbs -> pieChart.setKcalOfCarbs(nutri.kcal.toFloat())
+                    is Fat -> pieChart.setKcalOfFat(nutri.kcal.toFloat())
+                    is Protein -> pieChart.setKcalOfProtein(nutri.kcal.toFloat())
                 }
             }
             pieChart.setChart(requireContext())
@@ -60,9 +56,9 @@ class ResultNutriPieFragment : Fragment() {
             Log.d("Nutri : ", "nutritionList exists.")
             for (nutri in it){
                 when(nutri) {
-                    is Carbs -> pieChart.setCarbs(nutri.milligram.toFloat())
-                    is Fat -> pieChart.setFat(nutri.milligram.toFloat())
-                    is Protein -> pieChart.setProtein(nutri.milligram.toFloat())
+                    is Carbs -> pieChart.setKcalOfCarbs(nutri.kcal.toFloat())
+                    is Fat -> pieChart.setKcalOfFat(nutri.kcal.toFloat())
+                    is Protein -> pieChart.setKcalOfProtein(nutri.kcal.toFloat())
                 }
             }
             pieChart.setChart(requireContext())
@@ -70,8 +66,6 @@ class ResultNutriPieFragment : Fragment() {
             Log.d("Nutri : ", "nutritionList doesn't exist.")
         }
         //pieChart.setChart(requireContext())
-
-
 
     }
     override fun onDestroyView() {

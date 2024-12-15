@@ -92,6 +92,10 @@ class UserInfo (
         }
     }
 
+    fun findMatchingAllergy(foodAllergy: Set<String>) : Set<String> {
+        return allergic.intersect(foodAllergy)
+    }
+
     companion object {
 
         fun getAge(birth: Timestamp) : Int {

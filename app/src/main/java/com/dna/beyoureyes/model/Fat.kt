@@ -4,12 +4,13 @@ import com.dna.beyoureyes.AppUser
 import com.google.firebase.firestore.DocumentSnapshot
 import java.text.DecimalFormat
 
-class Fat(override var milligram: Int = 0) : Nutrition {
+class Fat(override var milligram: Int = 0) : CaloricNutrient {
 
     // 인스턴스 영역
     override val name: String = NAME
     override val massString: String
         get() = DecimalFormat("#.##g").format(milligram.toDouble()/1000)
+    override val kcal: Int get() = (milligram / 1000) * KCAL_PER_GRAM
 
     override fun getDailyValue(): Int
             = Companion.getDailyValue()
@@ -24,6 +25,8 @@ class Fat(override var milligram: Int = 0) : Nutrition {
     companion object {
         const val NAME = "지방"
         const val DB_FIELD_NAME = "fat"
+        const val KCAL_PER_GRAM = 9
+
         fun getDailyValue() : Int {
             // 사용자 일일 권장 칼로리 구하기. 기본값은 2000kcal
             val dailyEnergy = AppUser.info?.getDailyEnergyRequirement() ?:2000
