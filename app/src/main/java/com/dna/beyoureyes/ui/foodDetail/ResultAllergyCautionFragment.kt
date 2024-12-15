@@ -2,19 +2,15 @@ package com.dna.beyoureyes.ui.foodDetail
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
 import com.dna.beyoureyes.AppUser
-import com.dna.beyoureyes.R
-import com.dna.beyoureyes.databinding.FragmentResultAlgBinding
 import com.dna.beyoureyes.databinding.FragmentResultAlgCautionBinding
 import com.dna.beyoureyes.ui.foodAnalysis.FoodViewModel
-import com.google.android.material.chip.Chip
+import com.dna.extensions.addSubjectMarker
 
 class ResultAllergyCautionFragment : Fragment() {
     private var _binding: FragmentResultAlgCautionBinding? = null
@@ -24,6 +20,7 @@ class ResultAllergyCautionFragment : Fragment() {
     private val detectedAllergyData = mutableSetOf<String>()
 
     private val maps = mutableMapOf<String, String>(Pair("메밀","buckewheat"), Pair("밀", "wheat"), Pair("우유", "milk"), Pair("대두", "bean"))
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

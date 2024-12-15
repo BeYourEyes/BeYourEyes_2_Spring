@@ -10,6 +10,7 @@ import com.dna.beyoureyes.model.CaloricNutrient
 import com.dna.beyoureyes.model.Food
 import java.util.LinkedList
 import java.util.Locale
+import com.dna.extensions.addSubjectMarker
 
 class TTSManager(context: Context) :
     TextToSpeech.OnInitListener,  UtteranceProgressListener() {
@@ -89,14 +90,14 @@ class TTSManager(context: Context) :
         val calorieMsg: String? = food.kcal?.let {"해당 식품의 칼로리는 $it kcal 입니다. "}
 
         val allergyMsg: String? = food.allergy?.let {
-            "해당 식품에는 ${it.joinToString(", ")} 성분이 함유되어 있습니다. "
+            "해당 식품에는 ${it.joinToString(", ").addSubjectMarker()} 함유되어 있습니다. "
         }
         val commonAllergyMsg: String? = food.allergy?.let { foodAllergy ->
             AppUser.info?.findMatchingAllergy(foodAllergy)?.let { commonAllergy -> // 인식 정보 O
                 if (commonAllergy.isEmpty()) { // 사용자 - 식품 알러지 교집합 X
                     "당신의 알러지 성분은 함유되어 있지 않네요. "
                 } else { // 사용자 - 식품 알러지 교집합 O
-                    "주의하세요. 해당 식품에는 당신이 유의해야 할 ${commonAllergy.joinToString()} 성분이 함유되어 있습니다. "
+                    "주의하세요. 해당 식품에는 당신이 유의해야 할 ${commonAllergy.joinToString().addSubjectMarker()} 함유되어 있습니다. "
                 }
             }
         } ?: run { null } // 인식 정보 X
