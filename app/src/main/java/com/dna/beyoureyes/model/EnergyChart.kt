@@ -150,15 +150,15 @@ class EnergyChart(private val chart: PieChart) {
         fatCal = fat
     }
 
-    fun setCarbs(carbs: Float) {
+    fun setKcalOfCarbs(carbs: Float) {
         carbsCal = carbs
     }
 
-    fun setProtein(protein: Float) {
+    fun setKcalOfProtein(protein: Float) {
         proteinCal = protein
     }
 
-    fun setFat(fat: Float) {
+    fun setKcalOfFat(fat: Float) {
         fatCal = fat
     }
 
@@ -197,14 +197,17 @@ class EnergyChart(private val chart: PieChart) {
             valueTextColor = Color.WHITE // 값(백분율) 표시 색상 설정
             valueTextSize = 14f // 값 크기
             valueTypeface = ResourcesCompat.getFont(context, R.font.wanted_sans_extra_bold) // 글꼴 수정
-
         }
 
         val pieData = PieData(pieDataSet)
         // 값에 사용자 정의 형식(백분율 값 + "%") 설정
         pieDataSet.valueFormatter = object : ValueFormatter() { // 값을 차트에 어떻게 표시할지
             override fun getFormattedValue(value: Float): String {
-                return "${value.toInt()}%" // 값을 정수 형식으로 표시
+                return if (value > 0f) "${value.toInt()}%" else "" // 값이 0보다 큰 경우에만 표시
+            }
+            override fun getPieLabel(value: Float, pieEntry: PieEntry?): String {
+                return if (value > 0f) super.getPieLabel(value, pieEntry)
+                else super.getPieLabel(value, pieEntry?.apply { label="" })
             }
         }
 
