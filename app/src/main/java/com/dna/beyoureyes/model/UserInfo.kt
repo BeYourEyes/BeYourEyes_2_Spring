@@ -21,7 +21,7 @@ class UserInfo (
     var disease : MutableSet<String>,   // 사용자 질병 정보(nullable - 해당사항 없을 수 있으므로)
     var allergic : MutableSet<String>,   // 사용자 알레르기 정보(nullable - 해당사항 없을 수 있으므로
     var age : Int,
-    var profileImgPath: String = "" // 프로필 사진 DB 저장 경로
+    var profileImgPath: String? = null // 프로필 사진 DB 저장 경로
 ) {
     val profileImgUri : Uri? get() = _profileImgUri
     private var _profileImgUri : Uri? = null // 프로필 사진 uri 값은 일단 private으로
