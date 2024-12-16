@@ -1,6 +1,7 @@
 package com.dna.beyoureyes.model
 
 import android.net.Uri
+import android.util.Log
 import com.dna.beyoureyes.NutrientDailyValues
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.QueryDocumentSnapshot
@@ -19,7 +20,7 @@ class UserInfo (
     var gender : Int,               // 사용자 성별
     var birth : Timestamp,     // 사용자 생일
     var disease : MutableSet<String>,   // 사용자 질병 정보(nullable - 해당사항 없을 수 있으므로)
-    var allergic : MutableSet<String>,   // 사용자 알레르기 정보(nullable - 해당사항 없을 수 있으므로
+    var allergens : MutableSet<Allergen>?,   // 사용자 알레르기 정보(nullable - 해당사항 없을 수 있으므로
     var age : Int,
     var profileImgPath: String? = null // 프로필 사진 DB 저장 경로
 ) {
@@ -30,43 +31,24 @@ class UserInfo (
         age = getAge(birth)
     }
 
-    constructor(name:String, gender:Int, birth: Timestamp, disease:ArrayList<String>, allergy:ArrayList<String>)
-            :this(name, gender, birth, disease.toMutableSet(), allergy.toMutableSet(), getAge(birth))
+    // assign에서 활용하는 생성자(프로필 이미지 등록x)
+    constructor(name:String, gender:Int, birth: Timestamp,
+                disease:ArrayList<String>, allergens: MutableSet<Allergen>?)
+            :this(name, gender, birth, disease.toMutableSet(), allergens, getAge(birth))
 
-    constructor(name:String, gender:Int, birth: Timestamp, disease:ArrayList<String>, allergy:ArrayList<String>, profile:String)
-            :this(name, gender, birth, disease.toMutableSet(), allergy.toMutableSet(), getAge(birth), profile)
+    // firebase에서 데이터 불러올 때 활용하는 생성자(프로필 이미지 O 유효성 상관X)
+    constructor(name:String, gender:Int, birth: Timestamp,
+                disease:ArrayList<String>, allergy:ArrayList<String>, profile:String)
+            :this(name, gender, birth, disease.toMutableSet(), allergy.toAllergenSet(), getAge(birth), profile)
 
+    /*
     constructor(name:String, gender:Int, birth: Timestamp, profile: String)
             :this(name, gender, birth, mutableSetOf(), mutableSetOf(), getAge(birth), profile)
 
+     */
+
     fun setProfileImgUri(uri:Uri) {
         _profileImgUri = uri
-    }
-
-    //  사용자 맞춤 권장량 정보를 제공하는 get 메소드
-    fun getDailyValues() : NutrientDailyValues {
-        return NutrientDailyValues(gender, age, disease.toTypedArray())
-    }
-
-    fun hasDisease() : Boolean {
-        return disease.isNotEmpty()
-    }
-
-    fun hasAllergy() : Boolean {
-        return allergic.isNotEmpty()
-    }
-
-    fun getNutrisToCare() : Array<String> {
-        val list = mutableListOf<String>()
-        disease.forEach {
-            when (it) {
-                "고지혈증" -> list.addAll(arrayOf("지방", "포화지방", "콜레스테롤"))
-                "고혈압" -> list.addAll(arrayOf("나트륨", "포화지방", "콜레스테롤"))
-                "당뇨" -> list.addAll(arrayOf("당류", "콜레스테롤"))
-            }
-        }
-        val set = list.toSet() // 중복 없애기
-        return set.toTypedArray()
     }
 
     fun getDailyEnergyRequirement(): Int {
@@ -92,22 +74,21 @@ class UserInfo (
         }
     }
 
-    fun findMatchingAllergy(foodAllergy: Set<String>) : Set<String> {
-        val engToKor = mutableMapOf(
-            "buckwheat" to "메밀",
-            "wheat" to "밀",
-            "bean" to "대두",
-            "peanut" to "땅콩",
-            "walnut" to "호두",
-            "pinenut" to "잣" ,
-            "acid" to "아황산",
-            "peach" to "복숭아",
-            "tomato" to "토마토"
-        )
-        return foodAllergy.intersect(allergic.mapNotNull { engToKor[it] }.toSet())
+    fun findMatchingAllergy(foodAllergens: Set<Allergen>) : Set<Allergen>? {
+        return allergens?.intersect(foodAllergens)
     }
 
     companion object {
+
+        private fun ArrayList<String>.toAllergenSet(): MutableSet<Allergen>? {
+            return this.mapNotNull { algName ->
+                try {
+                    Allergen.valueOf(algName)
+                } catch (e: IllegalArgumentException) {
+                    null
+                }
+            }.toMutableSet().ifEmpty { null }
+        }
 
         fun getAge(birth: Timestamp) : Int {
             val calendar = Calendar.getInstance()
@@ -127,6 +108,7 @@ class UserInfo (
             }
             return age
         }
+        /*
         fun parseFirebaseDoc(document: QueryDocumentSnapshot) : UserInfo? {
             val name = document.data.get("userName") as? String
             val birth = document.data.get("userBirth") as? Timestamp
@@ -148,5 +130,7 @@ class UserInfo (
             }
             return null
         }
+
+         */
     }
 }

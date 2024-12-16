@@ -67,9 +67,9 @@ class FirebaseHelper {
                             val userGender = document.data.get("userGender") as Long
                             val userBirth = document.data.get("userBirth") as Timestamp
                             val userDisease = document.data.get("userDisease") as ArrayList<String>
-                            val userAllergy = document.data.get("userAllergy") as ArrayList<String>
+                            val userAllergens = document.data.get("userAllergens") as? ArrayList<String>
                             val profile = document.data.get("userProfile") as String?
-                            AppUser.setInfo(userName, userGender.toInt(), userBirth, userDisease, userAllergy, profile)
+                            AppUser.setInfo(userName, userGender.toInt(), userBirth, userDisease, userAllergens, profile)
 
                             // 프로필 사진 uri 로드하여 저장
                             profile?.let{
