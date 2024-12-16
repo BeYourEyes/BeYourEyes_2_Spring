@@ -53,7 +53,8 @@ class MyInfoFragment : Fragment() {
 
         // 정의한 어댑터와 레이아웃 매니저를 식사 기록 리사이클러 뷰에 세팅
         binding.historyRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(requireContext(),
+                LinearLayoutManager.HORIZONTAL, false)
             adapter = foodHistoryAdapter
         }
 
@@ -108,22 +109,9 @@ class MyInfoFragment : Fragment() {
             "highblood" to binding.highblood,
             "hyperlipidemia" to binding.hyperlipidemia
         )
-        // 알레르기 성분 DB 필드명 -> 한글 성분명 맵
-        val allergyMap = mapOf(
-            "buckwheat" to "메밀",
-            "wheat" to "밀",
-            "bean" to "대두",
-            "peanut" to "땅콩",
-            "walnut" to "호두",
-            "pinenut" to "잣",
-            "acid" to "아황산",
-            "peach" to "복숭아",
-            "tomato" to "토마토"
-        )
 
-        // 사용자 질환, 알레르기 정보 가져오기
+        // 사용자 질환 정보 가져오기
         val userDiseases = AppUser.info?.disease?.toSet() ?: emptySet()
-        val userAllergy = AppUser.info?.allergic?.toSet() ?: emptySet()
 
         // 이름 설정
         binding.profileName.setText(AppUser.info?.name?:"")
@@ -149,33 +137,26 @@ class MyInfoFragment : Fragment() {
         binding.allergyChipGroup.layoutParams = layoutParams
         */
 
-        // 알레르기 설정
-        AppUser.info?.allergic?.forEach {
-            if (it != "none") {
-                val chip = Chip(requireContext())
-                chip.text = allergyMap[it]
-                if (chip.text.length == 1) {
-                    chip.text = " " + allergyMap[it] + " " // 한글자인 경우에는 width 설정이 안됐음ㅜㅜ...
-                }
-                val params = LinearLayout.LayoutParams(
-                    resources.getDimensionPixelSize(R.dimen.chip_width), // 85dp
-                    resources.getDimensionPixelSize(R.dimen.chip_height) // 40dp
-                )
-                params.gravity = Gravity.CENTER
-                chip.layoutParams = params
+        // 알레르기 칩 설정
+        AppUser.info?.allergens?.forEach { alg ->
+            // 칩 텍스트 및 사용자 조작 관련 설정
+            val chip = Chip(context)
+            chip.text =
+                if (alg.displayName.length == 1) " ${alg.displayName} " // 한 글자면 width 설정 불가
+                else alg.displayName
+            chip.isChecked = true  // 클릭된 상태로 설정
+            chip.isClickable = false  // 클릭 불가능
 
-                chip.setTextAppearanceResource(R.style.chipTextMyInfo)
-                chip.isChecked = true  // 클릭된 상태로 설정
-                chip.isClickable = false  // 클릭 불가능
-                //chip.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_50))
-                chip.setChipBackgroundColorResource(R.color.blue_50)
-                chip.setChipStrokeColorResource(R.color.blue_300)
-                binding.allergyChipGroup.addView(chip)
+            // 표시 관련 설정
+            chip.layoutParams = LinearLayout.LayoutParams(
+                resources.getDimensionPixelSize(R.dimen.chip_width), // 85dp
+                resources.getDimensionPixelSize(R.dimen.chip_height) // 40dp
+            ).also { params -> params.gravity = Gravity.CENTER }
+            chip.setTextAppearanceResource(R.style.chipTextMyInfo)
+            chip.setChipBackgroundColorResource(R.color.blue_50)
+            chip.setChipStrokeColorResource(R.color.blue_300)
 
-                chip.post {
-                    Log.d("ChipWidth", "Chip ${chip.text} width: ${chip.width} px")
-                }
-            }
+            binding.allergyChipGroup.addView(chip) // 칩 추가
         }
     }
 

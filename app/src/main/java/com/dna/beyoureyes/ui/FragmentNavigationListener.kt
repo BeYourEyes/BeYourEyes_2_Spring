@@ -1,6 +1,7 @@
 package com.dna.beyoureyes.ui
 
 import androidx.fragment.app.Fragment
+import com.dna.beyoureyes.model.Allergen
 
 interface FragmentNavigationListener {
     fun onNavigateToFragment(fragment: Fragment)
@@ -9,5 +10,5 @@ interface FragmentNavigationListener {
     fun onGenderInputRecieved(gender : Int)
     fun onBirthInputRecieved(birth : String)
     fun onDiseaseInputRecieved(userDiseaseList : ArrayList<String>)
-    fun onAllergyInputRecieved(userAllergyList : ArrayList<String>)
+    fun onAllergyInputRecieved(userAllergySet : MutableSet<Allergen>)
 }

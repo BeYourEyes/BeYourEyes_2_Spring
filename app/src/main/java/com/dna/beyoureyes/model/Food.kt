@@ -3,7 +3,7 @@ package com.dna.beyoureyes.model
 data class Food(
     private var _kcal:Int? = null,
     private var _nutritions: List<Nutrition>?= null,
-    private var _allergy:Set<String>?= null) {
+    private var _allergy:Set<Allergen>?= null) {
 
     val kcal get() = _kcal
     val nutritions get() = _nutritions
@@ -14,9 +14,8 @@ data class Food(
         _nutritions?.forEach{ it.scaleQuantityByFactor(factor) }
     }
 
-    fun setAllergyData(algSet:Set<String>?) {
+    fun setAllergyData(algSet:Set<Allergen>?) {
         _allergy = algSet
     }
-
 
 }

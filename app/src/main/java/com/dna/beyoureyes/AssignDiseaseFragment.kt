@@ -14,10 +14,6 @@ import com.dna.beyoureyes.ui.FragmentNavigationListener
 class AssignDiseaseFragment : Fragment() {
     private lateinit var binding : FragmentAssignDiseaseBinding
     private lateinit var diseaseArray: Array<diseaseInfo>
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

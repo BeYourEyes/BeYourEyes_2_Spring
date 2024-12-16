@@ -3,6 +3,7 @@ package com.dna.beyoureyes.util
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import com.dna.beyoureyes.model.Allergen
 import com.dna.beyoureyes.model.Carbs
 import com.dna.beyoureyes.model.Cholesterol
 import com.dna.beyoureyes.model.Fat
@@ -219,20 +220,21 @@ class FoodTextRecognizer(private val context: Context) {
     }
 
     // 알레르기 추출 함수
-    private fun extractAllergyData(lines: List<String>): Set<String>? {
-        val targetWordsRegex = Regex(ALLERGY_KEYWORDS.joinToString("|")) // 정규식 생성
-
+    private fun extractAllergyData(lines: List<String>): Set<Allergen>? {
         val targetEndIndex = lines.indexOfFirst { it.contains("함유") } // "함유" 위치 찾기
-        if (targetEndIndex != -1) {
-            val targetLines =
-                lines.subList(maxOf(0, targetEndIndex - 1), lines.size) // 대상 줄 추출(바로 직전과 현재 line)
-            val extractedData = targetLines.flatMap { line ->
-                Log.d("Allergy", "Line : ${line}")
-                targetWordsRegex.findAll(line).map { it.value }.distinct() // 단어 추출 및 중복 제거
-            }.toSet()
-            Log.d("Allergy", "${extractedData}")
-            return extractedData
-        }
-        return null
+
+        if (targetEndIndex == -1) return null
+        val targetLines =
+            lines.subList(maxOf(0, targetEndIndex - 1), lines.size)
+        // "함유" 키워드가 존재하는 라인과 바로 직전 라인을 targetLines로 추출
+
+        // 추출값 저장할 Mutable Set
+        val extractedAllergens = targetLines.flatMap { line ->
+            Allergen.entries.filter { allergen ->
+                // Allergen Enum에 등록된 ocr 키워드를 필터링 조건으로 활용
+                allergen.ocrKeywords.any { keyword -> line.contains(keyword) }
+            }
+        }.toSet()
+        return extractedAllergens
     }
 }
