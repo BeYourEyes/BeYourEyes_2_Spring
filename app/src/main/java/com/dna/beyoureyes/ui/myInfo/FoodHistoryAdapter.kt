@@ -9,17 +9,13 @@ class FoodHistoryAdapter(
     private val onItemClickListener: (FoodHistory) -> Unit)
     : RecyclerView.Adapter<FoodHistoryAdapter.FoodHistoryViewHolder>() {
 
-    init {
-        sortItems()
-    }
-
     // 뷰 홀더 생성
     inner class FoodHistoryViewHolder(val historyView: FoodHistoryView)
         : RecyclerView.ViewHolder(historyView)
     {
         fun bind(history: FoodHistory) {
             historyView.setData(history.timestamp, history.kcal, history.imgUri)
-            historyView.setOnClickListener{ onItemClickListener(history) }
+            historyView.cardView.setOnClickListener{ onItemClickListener(history) }
         }
     }
 
@@ -35,16 +31,5 @@ class FoodHistoryAdapter(
     }
 
     override fun getItemCount() = items.size
-
-    // 데이터 업데이트 시 정렬
-    fun updateItems(newItems: List<FoodHistory>) {
-        sortItems(newItems)
-        notifyDataSetChanged()
-    }
-
-    // 데이터 정렬
-    private fun sortItems(newItems: List<FoodHistory> = items) {
-
-    }
 
 }
