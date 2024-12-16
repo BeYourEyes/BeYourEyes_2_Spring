@@ -6,6 +6,7 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -21,19 +22,20 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class FoodHistoryView(context: Context, attrs: AttributeSet?) :
-    CardView(context, attrs) {
+    FrameLayout(context, attrs) {
 
     // 뷰 컴포넌트들을 클래스 속성으로 정의
     private val historyImg : ImageView
     private val historyLabel : TextView
     private val kcalTextView : TextView
+    val cardView: CardView
 
     init {
         // Bar View의 XML 레이아웃을 인플레이트
         LayoutInflater.from(context).inflate(R.layout.food_history_item, this, true)
         // 레이아웃 파라미터 설정
         layoutParams = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.MATCH_PARENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
             ConstraintLayout.LayoutParams.WRAP_CONTENT
         )
 
@@ -41,7 +43,7 @@ class FoodHistoryView(context: Context, attrs: AttributeSet?) :
         historyImg = findViewById(R.id.imageView)
         historyLabel = findViewById(R.id.label)
         kcalTextView = findViewById(R.id.kcal)
-
+        cardView = findViewById(R.id.cardView)
 
         // attrs 입력값 속성 처리
         attrs?.let{

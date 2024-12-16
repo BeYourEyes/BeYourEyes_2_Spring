@@ -83,6 +83,8 @@
                 android:layout_height="58dp"
                 android:layout_marginBottom="60dp"
                 android:text="@string/allergy_buckwheat"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:textAlignment="center"
                 android:textAppearance="@style/chipText"
                 app:chipMinTouchTargetSize="0dp" />
@@ -93,6 +95,8 @@
                 android:layout_height="58dp"
                 android:layout_marginBottom="60dp"
                 android:text="@string/allergy_wheat"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:textAlignment="center"
                 android:textAppearance="@style/chipText"
                 app:chipMinTouchTargetSize="0dp" />
@@ -103,69 +107,13 @@
                 android:layout_height="58dp"
                 android:layout_marginBottom="60dp"
                 android:text="@string/allergy_bean"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:textAlignment="center"
                 android:textAppearance="@style/chipText"
                 app:chipMinTouchTargetSize="0dp" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_peanut"
-                android:layout_width="98dp"
-                android:layout_height="58dp"
-                android:layout_marginBottom="60dp"
-                android:text="@string/allergy_peanut"
-                android:textAlignment="center"
-                android:textAppearance="@style/chipText"
-                app:chipMinTouchTargetSize="0dp" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_walnut"
-                android:layout_width="98dp"
-                android:layout_height="58dp"
-                android:layout_marginBottom="60dp"
-                android:text="@string/allergy_walnut"
-                android:textAlignment="center"
-                android:textAppearance="@style/chipText"
-                app:chipMinTouchTargetSize="0dp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_pinenut"
-                android:layout_width="98dp"
-                android:layout_height="58dp"
-                android:layout_marginBottom="60dp"
-                android:text="@string/allergy_pinenut"
-                android:textAlignment="center"
-                android:textAppearance="@style/chipText"
-                app:chipMinTouchTargetSize="0dp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_acid"
-                android:layout_width="98dp"
-                android:layout_height="58dp"
-                android:layout_marginBottom="60dp"
-                android:text="@string/allergy_acid"
-                android:textAlignment="center"
-                android:textAppearance="@style/chipText"
-                app:chipMinTouchTargetSize="0dp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_peach"
-                android:layout_width="98dp"
-                android:layout_height="58dp"
-                android:layout_marginBottom="60dp"
-                android:text="@string/allergy_peach"
-                android:textAlignment="center"
-                android:textAppearance="@style/chipText"
-                app:chipMinTouchTargetSize="0dp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_tomato"
-                android:layout_width="98dp"
-                android:layout_height="58dp"
-                android:layout_marginBottom="60dp"
-                android:text="@string/allergy_tomato"
-                android:textAlignment="center"
-                android:textAppearance="@style/chipText"
-                app:chipMinTouchTargetSize="0dp" />
         </com.google.android.material.chip.ChipGroup>
 
     </LinearLayout>
