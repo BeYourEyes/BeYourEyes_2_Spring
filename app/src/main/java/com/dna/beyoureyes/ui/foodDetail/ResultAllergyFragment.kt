@@ -29,27 +29,24 @@ class ResultAllergyFragment : Fragment() {
         _binding = FragmentResultAlgBinding.inflate(inflater, container, false)
 
         viewModel.foodData.observe(viewLifecycleOwner) { food ->
-            food.allergy?.forEach {
-                Log.d("Allergy",  "${it}")
-
-                val chip = Chip(requireContext())
-                chip.text = it
-                if (chip.text.length == 1) {
-                    chip.text = " " + it + " " // 한글자인 경우에는 width 설정이 안됐음ㅜㅜ...
-                }
-                val params = LinearLayout.LayoutParams(
-                    resources.getDimensionPixelSize(R.dimen.chip_width), // 85dp
-                    resources.getDimensionPixelSize(R.dimen.chip_height) // 40dp
-                )
-                params.gravity = Gravity.CENTER
-                chip.layoutParams = params
-
-                chip.setTextAppearanceResource(R.style.chipTextMyInfo)
+            food.allergy?.forEach { alg ->
+                // 칩 텍스트 및 사용자 조작 관련 설정
+                val chip = Chip(context)
+                chip.text =
+                    if (alg.displayName.length == 1) " ${alg.displayName} " // 한 글자면 width 설정 불가
+                    else alg.displayName
                 chip.isChecked = true  // 클릭된 상태로 설정
                 chip.isClickable = false  // 클릭 불가능
-                //chip.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_50))
+
+                // 표시 관련 설정
+                chip.layoutParams = LinearLayout.LayoutParams(
+                    resources.getDimensionPixelSize(R.dimen.chip_width), // 85dp
+                    resources.getDimensionPixelSize(R.dimen.chip_height) // 40dp
+                ).also { params -> params.gravity = Gravity.CENTER }
+                chip.setTextAppearanceResource(R.style.chipTextMyInfo)
                 chip.setChipBackgroundColorResource(R.color.blue_50)
                 chip.setChipStrokeColorResource(R.color.blue_300)
+
                 binding.resultAlgChipGroup.addView(chip)
             }
         }

@@ -17,22 +17,6 @@ object AppUser {
     var id : String? = null
     var info : UserInfo? = null
 
-    fun hasDisease() : Boolean {
-        info?.let {
-            return it.disease.isNotEmpty()
-        }?: run {
-            return false
-        }
-    }
-
-    fun hasAllergy() : Boolean {
-        info?.let {
-            return it.allergic.isNotEmpty()
-        }?: run {
-            return false
-        }
-    }
-
     fun setInfo(name : String, gender: Int, birth: Timestamp, disease : ArrayList<String>?, allergy : ArrayList<String>?, profile: String?) {
         val info = UserInfo(name, gender, birth, disease?: ArrayList(), allergy?:ArrayList(), profile?:"")
         this.info = info

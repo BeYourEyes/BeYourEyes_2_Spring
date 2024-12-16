@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.dna.beyoureyes.model.Allergen
 import com.dna.beyoureyes.model.FirebaseHelper
 import com.dna.beyoureyes.model.UserInfo
 import com.dna.beyoureyes.ui.FragmentNavigationListener
@@ -21,6 +22,7 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
     private var currentStep = 0
     private var disease : ArrayList<String> = ArrayList<String>()
     private var allergy : ArrayList<String> = ArrayList<String>()
+    private var allergens : MutableSet<Allergen> = mutableSetOf()
     private var profile : String = ""
 
     override fun onNavigateToFragment(fragment: Fragment) {
@@ -43,8 +45,8 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
         this.disease = userDiseaseList
     }
 
-    override fun onAllergyInputRecieved(userAllergyList: ArrayList<String>) {
-        this.allergy = userAllergyList
+    override fun onAllergyInputRecieved(userAllergySet: MutableSet<Allergen>) {
+        this.allergens = userAllergySet
     }
 
     override fun onBackPressed() {
@@ -97,7 +99,7 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
         val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
         val birthDate = dateFormat.parse(birth ?: "") ?: Date()
         val birthTimeStamp = Timestamp(birthDate)
-        AppUser.info = UserInfo(name?:"", gender?:0, birthTimeStamp, disease, allergy)
+        AppUser.info = UserInfo(name?:"", gender?:0, birthTimeStamp, disease, allergens.ifEmpty { null })
         val userInfo = hashMapOf(
             "userId" to Firebase.auth.currentUser?.uid,
             "userName" to name!!,
@@ -107,6 +109,9 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
             "userAllergy" to allergy,
             "userProfile" to profile
         )
+        if (allergens.isNotEmpty()) {
+            userInfo["userAllergens"] = allergens.map{ it.name }
+        }
         FirebaseHelper.sendData(userInfo, "userInfo")
     }
 
