@@ -2,4 +2,6 @@
 <resources>
     <dimen name="chip_width">85dp</dimen> <!-- 칩의 너비를 고정값으로 설정 -->
     <dimen name="chip_height">40dp</dimen> <!-- 칩의 높이를 고정값으로 설정 -->
+    <dimen name="checkable_chip_width">98dp</dimen> <!-- 수정 가능한 칩의 너비 -->
+    <dimen name="checkable_chip_height">58dp</dimen> <!-- 수정 가능한 칩의 높이 -->
 </resources>
