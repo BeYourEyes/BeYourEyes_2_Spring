@@ -26,6 +26,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/topMsgLayout"
+            android:focusable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -37,6 +38,7 @@
 
             <ImageView
                 android:id="@+id/topCharacter"
+                android:importantForAccessibility="no"
                 android:layout_width="84dp"
                 android:layout_height="115dp"
                 android:layout_marginTop="5dp"
@@ -51,6 +53,7 @@
 
             <TextView
                 android:id="@+id/topMsg1"
+                android:focusable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/wanted_sans_bold"
@@ -62,6 +65,7 @@
 
             <TextView
                 android:id="@+id/topMsg2"
+                android:focusable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -74,6 +78,7 @@
 
             <TextView
                 android:id="@+id/topMsgKcal"
+                android:focusable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/wanted_sans_extra_black"
@@ -85,6 +90,7 @@
 
             <TextView
                 android:id="@+id/topMsgKcalUnit"
+                android:focusable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/wanted_sans_extra_bold"
@@ -98,6 +104,7 @@
 
             <TextView
                 android:id="@+id/topMsgSmall"
+                android:focusable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -111,6 +118,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/todayKcalLayout"
+            android:focusable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -124,6 +132,7 @@
 
             <TextView
                 android:id="@+id/todayKcalLabel"
+                android:focusable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/wanted_sans_bold"
@@ -135,6 +144,7 @@
 
             <TextView
                 android:id="@+id/kcalToday"
+                android:focusable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/wanted_sans_bold"
@@ -146,6 +156,7 @@
 
             <TextView
                 android:id="@+id/kcalSlash"
+                android:focusable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
@@ -160,6 +171,7 @@
 
             <TextView
                 android:id="@+id/kcalGoal"
+                android:focusable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
@@ -170,7 +182,18 @@
                 app:layout_constraintBottom_toBottomOf="@+id/kcalSlash"
                 app:layout_constraintStart_toEndOf="@+id/kcalSlash"
                 app:layout_constraintTop_toTopOf="@+id/kcalSlash" />
-
+            <TextView
+                android:id="@+id/kcalUnit"
+                android:focusable="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/wanted_sans_extra_bold"
+                android:text="@string/home_kcal_unit"
+                android:textColor="@color/blue_300"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/kcalSlash"
+                app:layout_constraintStart_toEndOf="@+id/kcalGoal"
+                app:layout_constraintTop_toTopOf="@+id/kcalSlash" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

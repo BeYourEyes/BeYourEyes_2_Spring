@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/intakeBarBg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 >
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/intakeBar"
+        android:focusable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="7dp"
@@ -23,6 +23,7 @@
 
 
         <ImageView
+            android:importantForAccessibility="no"
             android:id="@+id/symbol"
             android:layout_width="34dp"
             android:layout_height="34dp"
@@ -33,6 +34,7 @@
 
         <TextView
             android:id="@+id/nutriLabel"
+            android:focusable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
@@ -45,6 +47,7 @@
 
         <TextView
             android:id="@+id/percentValue"
+            android:focusable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/wanted_sans_bold"
@@ -58,6 +61,7 @@
 
         <TextView
             android:id="@+id/massValue"
+            android:focusable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/wanted_sans_bold"
@@ -72,6 +76,7 @@
 
         <TextView
             android:id="@+id/dailyValue"
+            android:focusable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/wanted_sans_semi_bold"
