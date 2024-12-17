@@ -25,7 +25,8 @@
 
     <!-- app config -->
     <string name="app_name_eng">BeYourEyes</string>
-    <string name="app_name_kor">당신의 안(眼)식(食)</string>
+    <string name="app_name_splash">당신의 안(眼)식(食)</string>
+    <string name="app_name_kor">당신의 안식</string>
 
     <!-- navigation/mobile_navigation.xml -->
     <string name="title_home">HOME</string>
@@ -60,6 +61,7 @@
     <string name="home_advice_when_good">목표를 충족했네요! 잘 하셨어요🎉</string>
     <string name="home_advice_when_more">과다 섭취에 주의하세요!</string>
     <string name="home_today_kcal_label">님의 오늘 칼로리 섭취량</string>
+    <string name="home_kcal_unit">kcal</string>
     <string name="home_slash">/</string>
     <string name="home_today_nutri_label">오늘의 상세 영양소 섭취량</string>
 
@@ -163,7 +165,7 @@
 
     <string name="tmp_home_kcal_diff_value">477</string>
     <string name="tmp_home_kcal_value">1423</string>
-    <string name="tmp_home_kcal_daily_value">2000kcal</string>
+    <string name="tmp_home_kcal_daily_value">2000</string>
 
     <string name="tmp_my_info_nickname">SSO</string>
     <string name="tmp_my_info_history_cnt">0</string>

@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
             .fold(0) { acc, nutrition -> acc + nutrition.milligram }
 
         // 사용자의 칼로리 섭취량 합산
-        val total_kcal = activity.foodHistoryItems.sumOf { it.kcal ?: 0 }
+        val totalKcal = activity.foodHistoryItems.sumOf { it.kcal ?: 0 }
 
         // 사용자의 목표 칼로리 섭취량
         val energyRequirement = AppUser.info?.getDailyEnergyRequirement() ?: 2000
@@ -60,20 +60,17 @@ class HomeFragment : Fragment() {
             append(AppUser.info?.name ?: "")
             append(getString(R.string.home_today_kcal_label))
         }
-        binding.kcalGoal.text = buildString {
-            append(energyRequirement)
-            append("kcal")
-        }
-        binding.kcalToday.text = "$total_kcal"
+        binding.kcalGoal.text = "$energyRequirement"
+        binding.kcalToday.text = "$totalKcal"
 
         // 사용자의 칼로리 섭취량과 필요 에너지량 비교 및 평가
-        if (total_kcal < energyRequirement) { // 필요 에너지량보다 섭취량 적을 시
-            binding.topMsgKcal.text = "${energyRequirement - total_kcal}" // 두 값 차 설정
+        if (totalKcal < energyRequirement) { // 필요 에너지량보다 섭취량 적을 시
+            binding.topMsgKcal.text = "${energyRequirement - totalKcal}" // 두 값 차 설정
             binding.topMsg2.text = getText(R.string.home_overview_msg2_when_less) // 적습니다
             binding.topMsgSmall.text = getText(R.string.home_advice_when_less) // 조언 텍스트
             binding.topCharacter.setImageResource(R.drawable.home_sad) // 캐릭터 반응
         } else {
-            val diff = total_kcal - energyRequirement
+            val diff = totalKcal - energyRequirement
             binding.topMsgKcal.text = "$diff" // 두 값 차 설정
             binding.topMsg2.text = getText(R.string.home_overview_msg2_when_more) // 많습니다
             if (diff <= 200) { // 권장량 + 200kcal까지는 적정 범위로 임의 설정.
@@ -99,6 +96,25 @@ class HomeFragment : Fragment() {
 
         adapter = IntakeAdapter(nutriIntakeItems)
         recyclerView.adapter = adapter // 리사이클러 뷰 어댑터 설정
+
+
+        // 스크린 리더용 contentDescription 설정
+        binding.topMsgLayout.contentDescription = buildString { // 상단 식사량 평가
+            append("오늘 당신의 식사량은 필요 에너지량보다")
+            append("${binding.topMsgKcal.text} 칼로리 ")
+            append("${binding.topMsg2.text}. ") // 적습니다 or 많습니다
+            append(binding.topMsgSmall.text) // 조언
+        }
+
+        binding.todayKcalLayout.contentDescription = buildString { // 칼로리 총 섭취량
+            /*
+            append("${binding.todayKcalLabel.text}은 ") // ㅇㅇ님의 오늘 칼로리 섭취량은
+            append("${binding.kcalToday.text} 칼로리 입니다. ")
+            append("하루 필요 에너지량은 총 ${binding.kcalGoal.text} 칼로리예요.")
+             */
+            append("${AppUser.info?.name}님은, 오늘 필요 에너지량 $energyRequirement 칼로리 중 ")
+            append("$totalKcal 칼로리를 섭취했습니다.")
+        }
 
         return root
     }

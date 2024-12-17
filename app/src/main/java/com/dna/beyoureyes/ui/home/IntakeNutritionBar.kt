@@ -11,33 +11,23 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.dna.beyoureyes.R
+import com.dna.beyoureyes.databinding.CustomIntakeBarBinding
+import com.dna.beyoureyes.databinding.FoodHistoryItemBinding
 import com.dna.beyoureyes.model.Nutrition
 
 @SuppressLint("ResourceAsColor")
 class IntakeNutritionBar(context: Context, attrs: AttributeSet?) :
     ConstraintLayout(context, attrs) {
 
-    // Bar View 내 뷰 요소들 클래스 속성으로 정의
-    private val symbol: ImageView
-    private val nutriLabel : TextView
-    private val percentLabel : TextView
-    private val massLabel : TextView
-    private val dailyValueLabel : TextView
-    private val bar : ProgressBar
+    // Bar View의 XML 레이아웃을 인플레이트하여 뷰 바인딩
+    private val binding: CustomIntakeBarBinding =
+        CustomIntakeBarBinding.inflate(LayoutInflater.from(context), this, true)
+    private val bar = binding.progressBar
+    private var isInWarningRange = false
 
     init {
-        // Bar View의 XML 레이아웃을 인플레이트
-        LayoutInflater.from(context).inflate(R.layout.custom_intake_bar, this, true)
         // 레이아웃 파라미터 설정
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-
-        // 레이아웃 내 뷰 초기화
-        symbol = findViewById(R.id.symbol)
-        nutriLabel = findViewById(R.id.nutriLabel)
-        percentLabel = findViewById(R.id.percentValue)
-        massLabel = findViewById(R.id.massValue)
-        dailyValueLabel = findViewById(R.id.dailyValue)
-        bar = findViewById(R.id.progressBar)
 
         // attrs 입력값 속성 처리
         attrs?.let{
@@ -52,11 +42,11 @@ class IntakeNutritionBar(context: Context, attrs: AttributeSet?) :
 
             // textView 세팅
             if (nutritionName != null)
-                nutriLabel.text = nutritionName                 // 영양소명 text
+                binding.nutriLabel.text = nutritionName                 // 영양소명 text
             if (massText != null)
-                massLabel.text = massText                       // 섭취량(질량) text
+                binding.massValue.text = massText                       // 섭취량(질량) text
             if(dvText != null)
-                dailyValueLabel.text = "일일 권장량 $dvText"     // 일일 권장량 text
+                binding.dailyValue.text = "일일 권장량 $dvText"     // 일일 권장량 text
 
             // progressBar 설정에 유효한 값이 있는지 확인
             if (maxValue != -1 && curValue != -1) {
@@ -64,26 +54,23 @@ class IntakeNutritionBar(context: Context, attrs: AttributeSet?) :
                 // max값 대비 입력값의 퍼센테이지 구하기
                 val percentage = (curValue.toFloat() / maxValue.toFloat() * 100).toInt()
                 // textView 세팅
-                percentLabel.text = "${percentage}%"            // 권장량 대비 섭취량 비율(%) text
+                binding.percentValue.text = "${percentage}%"            // 권장량 대비 섭취량 비율(%) text
 
                 // progressBar의 값 설정
-                bar.max = maxValue
+                binding.progressBar.max = maxValue
                 setProgressBarValue(curValue) // 애니메이션 효과 없이 표시
                 //setProgressBarValueWithAnimation(curValue) // 바 표시에 애니메이션 효과 적용
 
+                // 경고 범위 설정에 필요한 값 있는지 확인
                 if (upperThresh == -1) upperThresh = null
                 if (lowerThresh == -1) lowerThresh = null
 
-                if ( ((upperThresh != null) && (curValue > upperThresh))
-                    || ((lowerThresh != null) && (curValue < lowerThresh)))
-                {
-                    // 경고 범위에 들어오면 경고 심볼 표시 & 바를 경고 색상으로 변경
-                    symbol.setImageResource(R.drawable.ic_intake_caution_34)
-                    bar.progressBackgroundTintList =
-                        ContextCompat.getColorStateList(bar.context, R.color.alert_50)
-                    bar.progressTintList =
-                        ContextCompat.getColorStateList(bar.context, R.color.alert_400)
-                }
+                // 경고 범위 검사
+                isInWarningRange =
+                    ((upperThresh != null) && (curValue > upperThresh))
+                            || ((lowerThresh != null) && (curValue < lowerThresh))
+                updateSymbolDrawable() // 심볼 업데이트
+                updateContentDescription() // 스크린 리더용 설명 업데이트
             }
 
             typedArray.recycle()
@@ -97,36 +84,58 @@ class IntakeNutritionBar(context: Context, attrs: AttributeSet?) :
         val percentage = (nutrition.milligram.toFloat() / dailyValue.toFloat() * 100).toInt()
 
         // textView 세팅
-        nutriLabel.text = nutrition.name
-        massLabel.text = nutrition.massString
-        percentLabel.text = "${percentage}%"
-        dailyValueLabel.text = "일일 권장량 ${nutrition.getDailyValueText()}"
+        binding.nutriLabel.text = nutrition.name
+        binding.massValue.text = nutrition.massString
+        binding.percentValue.text = "${percentage}%"
+        binding.dailyValue.text = "일일 권장량 ${nutrition.getDailyValueText()}"
 
         // progressBar의 값 설정
         bar.max = dailyValue
         setProgressBarValue(nutrition.milligram) // 애니메이션 효과 없이 표시
         //setProgressBarValueWithAnimation(nutrition.milligram) // 바 표시에 애니메이션 효과 적용
 
-        if ( nutrition.isInWarningRange() )
-        {
-            // 경고 범위에 들어오면 경고 심볼 표시 & 바를 경고 색상으로 변경
-            symbol.setImageResource(R.drawable.ic_intake_caution_34)
-            bar.progressBackgroundTintList =
-                ContextCompat.getColorStateList(bar.context, R.color.alert_50)
-            bar.progressTintList =
-                ContextCompat.getColorStateList(bar.context, R.color.alert_400)
+        // 경고 범위 검사 후 심볼 업데이트
+        isInWarningRange = nutrition.isInWarningRange()
+        updateSymbolDrawable()
+        updateContentDescription() // 스크린 리더용 설명 업데이트
+    }
+
+    // 스크린 리더용 contentDescription 설정
+    fun updateContentDescription() {
+        binding.intakeBar.contentDescription = buildString {
+            if (isInWarningRange) append("경고. ")
+            append("${binding.nutriLabel.text} 섭취량: ${binding.massValue.text}. ") // mg/g 섭취량
+            append("권장량 대비 ${binding.percentValue.text} 섭취. ") // % 섭취량
+            append("${binding.dailyValue.text}") // 일일 권장량 정보
         }
     }
 
     // 애니메이션을 통해 ProgressBar의 표시
-    fun setProgressBarValueWithAnimation(value: Int, duration: Long) {
+    private fun setProgressBarValueWithAnimation(value: Int, duration: Long) {
         val animator = ObjectAnimator.ofInt(bar, "progress", (value*0.5).toInt(), value)
         animator.duration = 300 // 애니메이션 시간 (밀리초)
         animator.start()
     }
 
     // 애니메이션 없이 ProgressBar의 표시
-    fun setProgressBarValue(value: Int) {
+    private fun setProgressBarValue(value: Int) {
         bar.progress = value
+    }
+
+    private fun updateSymbolDrawable() {
+        if (isInWarningRange) {
+            // 경고 범위에 들어오면 경고 심볼 표시 & 바를 경고 색상으로 변경
+            binding.symbol.setImageResource(R.drawable.ic_intake_caution_34)
+            bar.progressBackgroundTintList =
+                ContextCompat.getColorStateList(bar.context, R.color.alert_50)
+            bar.progressTintList =
+                ContextCompat.getColorStateList(bar.context, R.color.alert_400)
+        } else {
+            binding.symbol.setImageResource(R.drawable.ic_intake_normal_34)
+            bar.progressBackgroundTintList =
+                ContextCompat.getColorStateList(bar.context, R.color.blue_100)
+            bar.progressTintList =
+                ContextCompat.getColorStateList(bar.context, R.color.blue_700)
+        }
     }
 }
