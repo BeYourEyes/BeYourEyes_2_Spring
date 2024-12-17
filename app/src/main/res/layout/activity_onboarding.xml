@@ -12,7 +12,7 @@
         android:id="@+id/register_viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:contentDescription="프래그먼트 슬라이더"
+        android:contentDescription="튜토리얼"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.7"
         app:layout_constraintHorizontal_bias="0.0"
@@ -35,7 +35,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_viewpager"
-        app:progressMode="true" />
+        app:progressMode="true"
+        android:contentDescription="튜토리얼 페이지 이동"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"

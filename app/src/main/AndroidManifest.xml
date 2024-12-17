@@ -52,7 +52,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AssignActivity"
+            android:name=".ui.assign.AssignActivity"
             android:exported="false" />
         <activity
             android:name=".OnboardingActivity"
