@@ -77,53 +77,66 @@
                 android:textColor="@color/gray_700"
                 android:textSize="14sp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button25"
+            <RadioGroup
+                android:id="@+id/eat_result_radiogroup"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:paddingHorizontal="20dp"
                 android:layout_marginTop="28dp"
-                android:background="@drawable/shape_button_g300_24"
-                android:fontFamily="@font/wanted_sans_bold"
-                android:text="@string/result_eat_button_25"
-                android:textColor="@color/gray_950"
-                android:textSize="16sp" />
+                android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button50"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/shape_button_g300_24"
-                android:fontFamily="@font/wanted_sans_bold"
-                android:text="@string/result_eat_button_50"
-                android:textColor="@color/gray_950"
-                android:textSize="16sp" />
+                <RadioButton
+                    android:id="@+id/button25"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/eat_result_radio_selector"
+                    android:button="@android:color/transparent"
+                    android:text="@string/result_eat_button_25"
+                    android:fontFamily="@font/wanted_sans_bold"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:textColor="@drawable/eat_result_text_selector" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button75"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/shape_button_g300_24"
-                android:fontFamily="@font/wanted_sans_bold"
-                android:text="@string/result_eat_button_75"
-                android:textColor="@color/gray_950"
-                android:textSize="16sp" />
+                <RadioButton
+                    android:id="@+id/button50"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/eat_result_radio_selector"
+                    android:button="@android:color/transparent"
+                    android:text="@string/result_eat_button_50"
+                    android:fontFamily="@font/wanted_sans_bold"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:textColor="@drawable/eat_result_text_selector"
+                    android:layout_marginTop="12dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button100"
-                android:layout_width="match_parent"
-                android:layout_height="49dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/shape_button_g300_24"
-                android:fontFamily="@font/wanted_sans_bold"
-                android:text="@string/result_eat_button_100"
-                android:textColor="@color/gray_950"
-                android:textSize="16sp" />
+                <RadioButton
+                    android:id="@+id/button75"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/eat_result_radio_selector"
+                    android:button="@android:color/transparent"
+                    android:text="@string/result_eat_button_75"
+                    android:fontFamily="@font/wanted_sans_bold"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:textColor="@drawable/eat_result_text_selector"
+                    android:layout_marginTop="12dp" />
+
+                <RadioButton
+                    android:id="@+id/button100"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/eat_result_radio_selector"
+                    android:button="@android:color/transparent"
+                    android:text="@string/result_eat_button_100"
+                    android:fontFamily="@font/wanted_sans_bold"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:textColor="@drawable/eat_result_text_selector"
+                    android:layout_marginTop="12dp" />
+            </RadioGroup>
 
         </LinearLayout>
     </ScrollView>
