@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/gray_50"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AssignNameFragment">
+    tools:context=".ui.assign.AssignNameFragment">
 
     <com.dna.beyoureyes.ui.CustomToolbar
         android:id="@+id/toolbar"
@@ -69,7 +69,8 @@
             android:layout_weight="0"
             android:padding="12dp"
             android:src="@drawable/ic_navi_search_24"
-            app:tint="@color/gray_950" />
+            app:tint="@color/gray_950"
+            android:contentDescription="중복 검사"/>
 
         <EditText
             android:id="@+id/nameInput"
@@ -91,7 +92,8 @@
             android:background="@android:color/transparent"
             android:padding="12dp"
             android:src="@drawable/ic_assign_del_24"
-            app:tint="@color/gray_950" />
+            app:tint="@color/gray_950"
+            android:contentDescription="닉네임 초기화"/>
     </LinearLayout>
 
     <TextView

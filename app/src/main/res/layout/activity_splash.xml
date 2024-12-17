@@ -19,7 +19,8 @@
         app:layout_constraintVertical_bias="0.296"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
-        app:lottie_rawRes="@raw/confetti" />
+        app:lottie_rawRes="@raw/confetti"
+        android:contentDescription="콘페티"/>
 
     <TextView
         android:id="@+id/appName"
@@ -32,6 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="당신의 안식"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
