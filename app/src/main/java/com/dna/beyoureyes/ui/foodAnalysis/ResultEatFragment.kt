@@ -1,20 +1,26 @@
 package com.dna.beyoureyes.ui.foodAnalysis
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.dna.beyoureyes.AppUser
+import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentResultEatBinding
 import com.dna.beyoureyes.model.FirebaseHelper
 import com.dna.beyoureyes.model.Food
 import com.dna.beyoureyes.ui.CustomToolbar
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.io.File
+import java.io.FileOutputStream
 import java.sql.Timestamp
 import java.util.Calendar
 
@@ -22,6 +28,7 @@ class ResultEatFragment : Fragment() {
     private var _binding: FragmentResultEatBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
+    private var scale = 0f
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,60 +47,113 @@ class ResultEatFragment : Fragment() {
             }
         }
 
+        binding.eatResultRadiogroup.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId) {
+                R.id.button25 -> {
+                    scale = 0.25f
+                }
+                R.id.button50 -> {
+                    scale = 0.5f
+                }
+                R.id.button75 -> {
+                    scale = 0.75f
+                }
+                R.id.button100 -> {
+                    scale = 1f
+                }
+            }
+        }
+
         // ViewModel에서 사진 Uri를 가져와 ImageView에 표시
         viewModel.capturedImageUri.observe(viewLifecycleOwner) { uri ->
             binding.ImageCaptured.setImageURI(uri)
         }
 
         binding.resultButtonEat.setOnClickListener {
-            // 식품 기록 데이터 전송 후 종료해야 함. 전송 로직 작성 필요.
+            if (scale == 0f) {
+                Toast.makeText(requireContext(), "버튼을 클릭해주세요!", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                // 식품 기록 데이터 전송 후 종료해야 함. 전송 로직 작성 필요.
 
-            // 식품 기록 데이터 중 사진 데이터 전송
-            var imgUrl = ""
-            val imageUri: Uri = viewModel.getCapturedImageUri()!!
-            val storageReference: StorageReference = FirebaseStorage.getInstance().reference
+                // 식품 기록 데이터 중 사진 데이터 전송
+                var imgUrl = ""
+                val imageUri: Uri = viewModel.getCapturedImageUri()!!
 
-            // 업로드할 파일의 경로 설정 (예: "images/IMG_20241215_191155.jpg")
-            val imageRef: StorageReference = storageReference.child("foods/${imageUri.lastPathSegment}")
-            // Firebase Storage에 파일 업로드
-            val uploadTask = imageRef.putFile(imageUri)
+                val resizedImage = resizeImageByWidth(imageUri, 500) // 가로 500px로 조정
 
-            uploadTask.addOnSuccessListener {
-                imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                    // 다운로드 가능한 URL을 받아오는 부분
-                    imgUrl = downloadUri.toString()
+                val storageReference: StorageReference = FirebaseStorage.getInstance().reference
+
+                // 업로드할 파일의 경로 설정 (예: "images/UserId_20241215_191155.jpg")
+                val imageRef: StorageReference = storageReference.child("foods/${AppUser.id}_${imageUri.lastPathSegment}")
+                // Firebase Storage에 파일 업로드
+                val uploadTask = imageRef.putFile(resizedImage)
+
+                uploadTask.addOnSuccessListener {
+                    imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                        // 다운로드 가능한 URL을 받아오는 부분
+                        imgUrl = downloadUri.toString()
+                    }
+                }.addOnFailureListener { exception ->
+                    // 업로드 실패 시
+                    exception.printStackTrace()
                 }
-            }.addOnFailureListener { exception ->
-                // 업로드 실패 시
-                exception.printStackTrace()
-            }
 
-            // viewModel에 Food 형식의 데이터로 필요한 데이터 저장.
-            if (viewModel.isFoodDataAvaiable()) {
-                val eatFoodData : Food = viewModel.getFoodData()!!
-                val hashFoodData : HashMap<String, Any?> = hashMapOf(
-                    "calories" to eatFoodData.kcal,
-                    "protein" to eatFoodData.nutritions?.find { it.name == "단백질" }?.milligram,
-                    "carbs" to eatFoodData.nutritions?.find { it.name == "탄수화물" }?.milligram,
-                    "chol" to eatFoodData.nutritions?.find { it.name == "콜레스테롤" }?.milligram,
-                    "fat" to eatFoodData.nutritions?.find { it.name == "지방" }?.milligram,
-                    "natrium" to eatFoodData.nutritions?.find { it.name == "나트륨" }?.milligram,
-                    "satFat" to eatFoodData.nutritions?.find { it.name == "포화지방" }?.milligram,
-                    "sugar" to eatFoodData.nutritions?.find { it.name == "당류" }?.milligram,
-                    "date" to com.google.firebase.Timestamp.now(),
-                    "userId" to AppUser.id,
-                    "imgPath" to "foods/${imageUri.lastPathSegment}"
-                )
-                FirebaseHelper.sendData(hashFoodData, "userIntakeNutrition")
+                // viewModel에 Food 형식의 데이터로 필요한 데이터 저장.
+                // viewModel에 적절한 get 함수를 짜는 등...으로 칼로리, 영양정보 데이터 가져오기
+                if (viewModel.isFoodDataAvaiable()) {
+                    val eatFoodData : Food = viewModel.getFoodData()!!
+                    // 참고로 Food 객체에 양 조절 메소드 있음. (Food 변수).scaleQuantityByFactor(0.5)처럼 사용
+                    eatFoodData.scaleQuantityByFactor(scale.toDouble())
+                    val hashFoodData : HashMap<String, Any?> = hashMapOf(
+                        "calories" to eatFoodData.kcal,
+                        "protein" to eatFoodData.nutritions?.find { it.name == "단백질" }?.milligram,
+                        "carbs" to eatFoodData.nutritions?.find { it.name == "탄수화물" }?.milligram,
+                        "chol" to eatFoodData.nutritions?.find { it.name == "콜레스테롤" }?.milligram,
+                        "fat" to eatFoodData.nutritions?.find { it.name == "지방" }?.milligram,
+                        "natrium" to eatFoodData.nutritions?.find { it.name == "나트륨" }?.milligram,
+                        "satFat" to eatFoodData.nutritions?.find { it.name == "포화지방" }?.milligram,
+                        "sugar" to eatFoodData.nutritions?.find { it.name == "당류" }?.milligram,
+                        "date" to com.google.firebase.Timestamp.now(),
+                        "userId" to AppUser.id,
+                        "imgPath" to "foods/${AppUser.id}_${imageUri.lastPathSegment}"
+                    )
+                    FirebaseHelper.sendData(hashFoodData, "userIntakeNutrition")
 
+                }
+                requireActivity().finish()
             }
-            // viewModel에 적절한 get 함수를 짜는 등...으로 칼로리, 영양정보 데이터 가져오기
-            // 참고로 Food 객체에 양 조절 메소드 있음. (Food 변수).scaleQuantityByFactor(0.5)처럼 사용
-            requireActivity().finish()
         }
 
         return root
     }
+
+    fun resizeImageByWidth(uri: Uri, targetWidth: Int): Uri {
+        val inputStream = requireContext().contentResolver.openInputStream(uri)
+        val originalBitmap = BitmapFactory.decodeStream(inputStream)
+
+        // 원본 가로, 세로 크기
+        val originalWidth = originalBitmap.width
+        val originalHeight = originalBitmap.height
+
+        // 비율 계산
+        val scaleFactor = targetWidth / originalWidth.toFloat()
+        val targetHeight = (originalHeight * scaleFactor).toInt()
+        val bitMap = Bitmap.createScaledBitmap(originalBitmap, targetWidth, targetHeight, true)
+
+        // 크기 조정
+        val resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, targetWidth, targetHeight, true)
+
+        // Bitmap을 파일로 저장
+        val resizedFile = File(requireContext().cacheDir, "resized_image.jpg")
+        val outputStream = FileOutputStream(resizedFile)
+        resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        outputStream.close()
+
+        // 저장된 파일을 Uri로 변환하여 반환
+        return Uri.fromFile(resizedFile)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
