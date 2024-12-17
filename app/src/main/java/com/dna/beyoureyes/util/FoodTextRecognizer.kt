@@ -29,10 +29,6 @@ class FoodTextRecognizer(private val context: Context) {
 
     companion object {
         // 키워드들 HashSet으로 변경. 검색 효율 위해.
-        val ALLERGY_KEYWORDS = hashSetOf(
-            "메밀", "밀", "대두", "땅콩", "호두", "잣", "계란", "아황산류", "복숭아", "토마토",
-            "난류", "우유", "새우", "고등어", "오징어", "게", "조개류", "돼지고기", "쇠고기", "닭고기"
-        )
         val NUTRI_PREFIX_KEYWORDS = hashSetOf(
             "나트", "탄수", "지방", "당류", "트랜스", "포화", "콜레", "단백"
         )
