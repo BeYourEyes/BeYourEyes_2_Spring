@@ -94,6 +94,8 @@ class CustomToolbar(context: Context, attrs: AttributeSet?) :
         closeButton.setOnClickListener {
             closeButtonClickListener?.onClicked()  // 리스너 연결
         }
-
+    }
+    fun setSkipButtonButtonVisibility(isVisible: Boolean) {
+        skipButton.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 }
