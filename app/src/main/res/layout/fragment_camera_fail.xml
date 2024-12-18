@@ -18,6 +18,7 @@ android:background="@color/gray_50">
 
 <ImageView
     android:id="@+id/imageView5"
+    android:importantForAccessibility="no"
     android:layout_width="80dp"
     android:layout_height="80dp"
     android:layout_gravity="center"

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.dna.beyoureyes.AppUser
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentResultAlgBinding
 import com.dna.beyoureyes.ui.foodAnalysis.FoodViewModel
@@ -37,6 +38,7 @@ class ResultAllergyFragment : Fragment() {
                     else alg.displayName
                 chip.isChecked = true  // 클릭된 상태로 설정
                 chip.isClickable = false  // 클릭 불가능
+                chip.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
 
                 // 표시 관련 설정
                 chip.layoutParams = LinearLayout.LayoutParams(
@@ -48,6 +50,16 @@ class ResultAllergyFragment : Fragment() {
                 chip.setChipStrokeColorResource(R.color.blue_300)
 
                 binding.resultAlgChipGroup.addView(chip)
+            }
+
+            binding.algLayout.contentDescription = buildString {
+                append(binding.algTitle.text) // 식품 알레르기 정보
+                append(": ")
+                append(
+                    food.allergy?.joinToString(", ") { it.displayName }
+                    ?.plus(" 함유")
+                    ?: "없음"
+                )
             }
         }
 
