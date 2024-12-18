@@ -4,6 +4,8 @@ import android.util.Log
 import com.dna.beyoureyes.AppUser
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -83,7 +85,15 @@ class FirebaseHelper {
                                     Log.d("RECEIVE_USER_DATA", "Error getting documents: wrong image path", exception)
                                 }
                             }
-
+                            // 현재 서버 시간을 사용자의 최신 접속 기록으로 남김.
+                            val docRef = db.collection("userInfo").document(document.id)
+                            docRef.update("lastActivationDate", FieldValue.serverTimestamp())
+                                .addOnSuccessListener {
+                                    Log.d("FirebaseHelper", "DocumentSnapshot successfully updated!")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.w("FirebaseHelper", "Error updating document", e)
+                                }
                         }
                         true
                     }
