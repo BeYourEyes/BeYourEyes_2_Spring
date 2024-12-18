@@ -10,12 +10,12 @@ class FoodHistoryAdapter(
     : RecyclerView.Adapter<FoodHistoryAdapter.FoodHistoryViewHolder>() {
 
     // 뷰 홀더 생성
-    inner class FoodHistoryViewHolder(val historyView: FoodHistoryView)
+    inner class FoodHistoryViewHolder(private val historyView: FoodHistoryView)
         : RecyclerView.ViewHolder(historyView)
     {
         fun bind(history: FoodHistory) {
             historyView.setData(history.timestamp, history.kcal, history.imgUri)
-            historyView.cardView.setOnClickListener{ onItemClickListener(history) }
+            historyView.setOnItemClickListener(history, onItemClickListener)
         }
     }
 
