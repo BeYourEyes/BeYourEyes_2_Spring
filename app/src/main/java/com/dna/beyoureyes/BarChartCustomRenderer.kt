@@ -3,6 +3,7 @@ package com.dna.beyoureyes
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.RectF
+import androidx.core.content.ContextCompat
 import androidx.core.text.color
 import com.github.mikephil.charting.animation.ChartAnimator
 import com.github.mikephil.charting.buffer.BarBuffer
@@ -74,8 +75,9 @@ class BarChartCustomRenderer (
         if (isSingleDataSetAndEntry) {
             val yValue = mChart.barData.dataSets[0].getEntryForIndex(0).y
             val barValueColor = mChart.barData.dataSets[0].color
+            val zeroValueColor = Color.parseColor("#8EC1FF")
             if (yValue < Y_VALUE_THRESHOLD) {
-                val textColor = if (yValue == 0f) barValueColor else color
+                val textColor = if (yValue == 0f) zeroValueColor else color
                 super.drawValue(
                     c, valueText,
                     Y_MINIMUM_RATIO * mViewPortHandler.contentRight() * TEXT_POS_ADJUSTMENT,

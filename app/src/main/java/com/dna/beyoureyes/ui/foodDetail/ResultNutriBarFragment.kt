@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.dna.beyoureyes.model.NutriIntakeBarDisplay
 import com.dna.beyoureyes.databinding.FragmentResultNutriBarChartBinding
 import com.dna.beyoureyes.model.Carbs
 import com.dna.beyoureyes.model.Cholesterol
@@ -18,7 +17,6 @@ import com.dna.beyoureyes.model.Protein
 import com.dna.beyoureyes.model.SaturatedFat
 import com.dna.beyoureyes.model.Sugar
 import com.dna.beyoureyes.ui.foodAnalysis.FoodViewModel
-
 
 class ResultNutriBarFragment : Fragment() {
 
@@ -34,32 +32,17 @@ class ResultNutriBarFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentResultNutriBarChartBinding.inflate(inflater, container, false)
 
-        // 영양소 바 그래프들 바인딩
-        val natriumBar = NutriIntakeBarDisplay(
-            binding.naBarchart, binding.naName, binding.naQuant, binding.naDV)
-        val carbsBar = NutriIntakeBarDisplay(
-            binding.carbBarchart, binding.carbName, binding.carbQuant, binding.carbDV)
-        val sugarBar = NutriIntakeBarDisplay(
-            binding.sugarBarchart, binding.sugarName, binding.sugarQuant, binding.sugarDV)
-        val fatBar = NutriIntakeBarDisplay(
-            binding.fatBarchart, binding.fatName, binding.fatQuant, binding.fatDV)
-        val satFatBar = NutriIntakeBarDisplay(
-            binding.satFatBarchart, binding.satFatName, binding.satFatQuant, binding.satFatDV)
-        val cholBar = NutriIntakeBarDisplay(
-            binding.choleBarchart, binding.choleName, binding.choleQuant, binding.choleDV)
-        val proteinBar = NutriIntakeBarDisplay(
-            binding.proteinBarchart, binding.proteinName, binding.proteinQuant, binding.proteinDV)
-
+        // 영양소 바 그래프 갱신
         viewModel.foodData.observe(viewLifecycleOwner) { food ->
-            food.nutritions?.forEach { nutri ->
-                when(nutri) {
-                    is Natrium -> natriumBar.set(requireContext(), nutri)
-                    is Carbs -> carbsBar.set(requireContext(), nutri)
-                    is Sugar -> sugarBar.set(requireContext(), nutri)
-                    is Fat -> fatBar.set(requireContext(), nutri)
-                    is SaturatedFat -> satFatBar.set(requireContext(), nutri)
-                    is Cholesterol -> cholBar.set(requireContext(), nutri)
-                    is Protein -> proteinBar.set(requireContext(), nutri)
+            food.nutritions?.forEach { nutrient ->
+                when(nutrient) {
+                    is Natrium -> binding.natriumBar.setData(nutrient)
+                    is Carbs -> binding.carbsBar.setData(nutrient)
+                    is Sugar -> binding.sugarBar.setData(nutrient)
+                    is Fat -> binding.fatBar.setData(nutrient)
+                    is SaturatedFat -> binding.satFatBar.setData(nutrient)
+                    is Cholesterol -> binding.cholesterolBar.setData(nutrient)
+                    is Protein -> binding.proteinBar.setData(nutrient)
                 }
             }
         }
@@ -75,33 +58,18 @@ class ResultNutriBarFragment : Fragment() {
             arguments?.getParcelableArrayList("nutritionList")
         val nutritionList = nutritionWrapperList?.map { it.nutrition }
 
-        // 영양소 바 그래프들 바인딩
-        val natriumBar = NutriIntakeBarDisplay(
-            binding.naBarchart, binding.naName, binding.naQuant, binding.naDV)
-        val carbsBar = NutriIntakeBarDisplay(
-            binding.carbBarchart, binding.carbName, binding.carbQuant, binding.carbDV)
-        val sugarBar = NutriIntakeBarDisplay(
-            binding.sugarBarchart, binding.sugarName, binding.sugarQuant, binding.sugarDV)
-        val fatBar = NutriIntakeBarDisplay(
-            binding.fatBarchart, binding.fatName, binding.fatQuant, binding.fatDV)
-        val satFatBar = NutriIntakeBarDisplay(
-            binding.satFatBarchart, binding.satFatName, binding.satFatQuant, binding.satFatDV)
-        val cholBar = NutriIntakeBarDisplay(
-            binding.choleBarchart, binding.choleName, binding.choleQuant, binding.choleDV)
-        val proteinBar = NutriIntakeBarDisplay(
-            binding.proteinBarchart, binding.proteinName, binding.proteinQuant, binding.proteinDV)
-
+        // 영양소 바 그래프 갱신
         nutritionList?.let {
             Log.d("NUTRI BAR", "nutritionList exists.")
-            for (nutri in it){
-                when(nutri) {
-                    is Natrium -> natriumBar.set(requireContext(), nutri)
-                    is Carbs -> carbsBar.set(requireContext(), nutri)
-                    is Sugar -> sugarBar.set(requireContext(), nutri)
-                    is Fat -> fatBar.set(requireContext(), nutri)
-                    is SaturatedFat -> satFatBar.set(requireContext(), nutri)
-                    is Cholesterol -> cholBar.set(requireContext(), nutri)
-                    is Protein -> proteinBar.set(requireContext(), nutri)
+            for (nutrient in it){
+                when(nutrient) {
+                    is Natrium -> binding.natriumBar.setData(nutrient)
+                    is Carbs -> binding.carbsBar.setData(nutrient)
+                    is Sugar -> binding.sugarBar.setData(nutrient)
+                    is Fat -> binding.fatBar.setData(nutrient)
+                    is SaturatedFat -> binding.satFatBar.setData(nutrient)
+                    is Cholesterol -> binding.cholesterolBar.setData(nutrient)
+                    is Protein -> binding.proteinBar.setData(nutrient)
                 }
             }
         } ?: run {
