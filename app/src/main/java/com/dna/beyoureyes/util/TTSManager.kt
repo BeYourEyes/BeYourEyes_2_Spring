@@ -1,10 +1,13 @@
 package com.dna.beyoureyes.util
 
 import android.content.Context
+import android.media.AudioManager
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.util.Log
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityManager
 import com.dna.beyoureyes.AppUser
 import com.dna.beyoureyes.model.CaloricNutrient
 import com.dna.beyoureyes.model.Food
@@ -30,6 +33,7 @@ class TTSManager(context: Context) :
     private var isSpeaking: Boolean = false // 재생과 일시 정지 전환을 위한 Boolean
     private val utteranceIdQueue = LinkedList<String>() // 음성 출력 큐 관리
     private var ttsStateListener: TTSStateListener? = null // TTS 상태 변경 콜백 인터페이스
+    private val accessibilityManager = context.getSystemService(AccessibilityManager::class.java)
 
     // TTS 상태 변경 콜백 인터페이스 -> UI 실시간 업뎃을 위해
     interface TTSStateListener {
@@ -64,6 +68,17 @@ class TTSManager(context: Context) :
         if (tts?.isSpeaking == true) {
             return // 이전 음성 출력이 완료될 때까지 대기
         }
+        // TalkBack 활성화 여부 확인
+        if (accessibilityManager.isEnabled && accessibilityManager.isTouchExplorationEnabled) {
+            // TalkBack이 활성화되어 있는 경우 내부 TTS 엔진 사용 불가
+            val event = AccessibilityEvent.obtain(AccessibilityEvent.TYPE_ANNOUNCEMENT)
+            event.text.add(text)
+            accessibilityManager.sendAccessibilityEvent(event) // talkback에서 대신 읽게 이벤트 처리
+            // Log.d("TTSManager", "TalkBack is enabled, TTS skipped.")
+            ttsStateListener?.onTTSDone() // TTS 종료 상태로 변경
+            return
+        }
+
         isSpeaking = true
         ttsStateListener?.onTTSStarted() // 상태 변경 - 음성 출력 시작
 
@@ -111,7 +126,7 @@ class TTSManager(context: Context) :
                 val total = caloricNutris.sumOf { it.kcal }
                 val percentTexts = caloricNutris.joinToString(", ")
                     { "${it.name}이 ${(it.kcal.toDouble() / total.toDouble() * 100).toInt()}%" }
-                "해당 식품의 에너지 성분 비율은 $percentTexts 입니다. "
+                "해당 식품의 에너지 성분 구성은 $percentTexts 입니다. "
             }?: run { null }
 
         val nutrientMsg: String? =

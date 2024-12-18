@@ -1,6 +1,5 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="@color/gray_50">
@@ -11,128 +10,168 @@ android:background="@color/gray_50">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/food_caution_title"
-        app:skipEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.5"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         app:layout_constraintBottom_toTopOf="@+id/nextBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/guideLayout1"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/food_caution_image1"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintHeight_percent="0.295"
+            android:importantForAccessibility="yes"
+            android:contentDescription="@string/food_caution_text_1_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/guideImage1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/food_caution_image1"
+                android:importantForAccessibility="no"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:fontFamily="@font/wanted_sans_extra_bold"
-            android:text="@string/food_caution_number_text_1"
-            android:textColor="@color/blue_500"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/textView8"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/numberText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:fontFamily="@font/wanted_sans_extra_bold"
+                android:importantForAccessibility="no"
+                android:text="@string/food_caution_number_text_1"
+                android:textColor="@color/blue_500"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/guideImage1"
+                app:layout_constraintTop_toTopOf="@+id/guideImage1" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:fontFamily="@font/wanted_sans_medium"
-            android:text="@string/food_caution_text_1"
-            android:textColor="@color/gray_950"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            <TextView
+                android:id="@+id/guideText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="21dp"
+                android:fontFamily="@font/wanted_sans_medium"
+                android:importantForAccessibility="no"
+                android:text="@string/food_caution_text_1"
+                android:textColor="@color/gray_950"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/guideImage1"
+                app:layout_constraintTop_toBottomOf="@+id/numberText1" />
 
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="21dp"
-            android:background="@drawable/food_caution_image2"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintHeight_percent="0.295"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:fontFamily="@font/wanted_sans_extra_bold"
-            android:text="@string/food_caution_number_text_2"
-            android:textColor="@color/blue_500"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/textView9"
-            app:layout_constraintTop_toTopOf="@+id/imageView8" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/wanted_sans_medium"
-            android:text="@string/food_caution_text_2"
-            android:textColor="@color/gray_950"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/textView8"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-        <ImageView
-            android:id="@+id/imageView10"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/guideLayout2"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="21dp"
-            android:background="@drawable/food_caution_image3"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintHeight_percent="0.295"
+            android:importantForAccessibility="yes"
+            android:contentDescription="@string/food_caution_text_2_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView8"
-            tools:ignore="DuplicateIds" />
+            app:layout_constraintTop_toBottomOf="@id/guideLayout1">
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:fontFamily="@font/wanted_sans_extra_bold"
-            android:text="@string/food_caution_number_text_3"
-            android:textColor="@color/blue_500"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/textView12"
-            app:layout_constraintTop_toTopOf="@+id/imageView10" />
+            <ImageView
+                android:id="@+id/guideImage2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/food_caution_image2"
+                android:importantForAccessibility="no"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/wanted_sans_medium"
-            android:text="@string/food_caution_text_3"
-            android:textColor="@color/gray_950"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/textView8"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            <TextView
+                android:id="@+id/numberText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:fontFamily="@font/wanted_sans_extra_bold"
+                android:importantForAccessibility="no"
+                android:text="@string/food_caution_number_text_2"
+                android:textColor="@color/blue_500"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/guideImage2"
+                app:layout_constraintTop_toTopOf="@+id/guideImage2" />
+
+            <TextView
+                android:id="@+id/guideText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="21dp"
+                android:fontFamily="@font/wanted_sans_medium"
+                android:importantForAccessibility="no"
+                android:text="@string/food_caution_text_2"
+                android:textColor="@color/gray_950"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/guideImage2"
+                app:layout_constraintTop_toBottomOf="@+id/numberText2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/guideLayout3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="21dp"
+            android:importantForAccessibility="yes"
+            android:contentDescription="@string/food_caution_text_3_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideLayout2">
+
+            <ImageView
+                android:id="@+id/guideImage3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/food_caution_image3"
+                android:importantForAccessibility="no"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/numberText3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:fontFamily="@font/wanted_sans_extra_bold"
+                android:importantForAccessibility="no"
+                android:text="@string/food_caution_number_text_3"
+                android:textColor="@color/blue_500"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/guideImage3"
+                app:layout_constraintTop_toTopOf="@+id/guideImage3" />
+
+            <TextView
+                android:id="@+id/guideText3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="21dp"
+                android:fontFamily="@font/wanted_sans_medium"
+                android:importantForAccessibility="no"
+                android:text="@string/food_caution_text_3"
+                android:textColor="@color/gray_950"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/guideImage3"
+                app:layout_constraintTop_toBottomOf="@+id/numberText3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton

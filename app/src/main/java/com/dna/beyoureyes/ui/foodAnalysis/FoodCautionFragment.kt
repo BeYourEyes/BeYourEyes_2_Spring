@@ -32,14 +32,7 @@ class FoodCautionFragment : Fragment() {
             }
         }
         binding.toolbar.setSkipButtonButtonVisibility(false)
-        /*
-        // 건너 뛰기 버튼 기능 연결
-        binding.toolbar.skipButtonClickListener = object : CustomToolbar.ButtonClickListener {
-            override fun onClicked() {
-                Toast.makeText(requireActivity(), "test", Toast.LENGTH_SHORT).show()
-            }
-        }
-        */
+
         // 확인하기 버튼 기능 연결
         binding.nextBtn.setOnClickListener {
             (requireActivity() as FoodActivity).startCamera()

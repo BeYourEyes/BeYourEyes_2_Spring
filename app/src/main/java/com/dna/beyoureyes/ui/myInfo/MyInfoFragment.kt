@@ -93,6 +93,41 @@ class MyInfoFragment : Fragment() {
         }
 
         updateProfile()
+
+        // 스크린 리더용 contentDescription 설정
+        binding.profileImgView.contentDescription = buildString { // 프로필 사진 표시
+            val hasProfileImg = AppUser.info?.profileImgUri != null
+            append(binding.profileImgView.contentDescription) // 내 프로필 사진
+            append(". 설정된 이미지: ${if (hasProfileImg) "있음" else "없음"}")
+        }
+        if (AppUser.info?.disease?.isNotEmpty() == false) { // 내 질환 정보
+            binding.diseaseChipLayout.contentDescription = "없음"
+        }
+        binding.diseaseLayout.contentDescription = buildString { // 내 질환 정보
+            append(binding.diseaseLabel.text) // 내 질환
+            append(". ")
+            val diseaseMap = mapOf( // 질환 DB 필드명 -> 레이아웃 바인드 맵
+                "diabete" to binding.diabetes,
+                "highblood" to binding.highblood,
+                "hyperlipidemia" to binding.hyperlipidemia
+            )
+            append(
+                AppUser.info?.disease?.map { diseaseMap[it]?.text }
+                    ?.joinToString(", ") ?: "없음"
+            )
+        }
+
+        binding.allergyLayout.contentDescription = buildString { // 내 알레르기 정보
+            append(binding.allergyLabel.text) // 내가 가진 알레르기 정보
+            append(": ")
+            append(AppUser.info?.allergens?.joinToString(", ") { it.displayName } ?: "없음")
+        }
+
+        binding.historyLabelLayout.contentDescription = buildString { // 영양 기록 제목
+            append(binding.historyLabel.text)
+            append(", ${foodHistoryAdapter.itemCount}개")
+        }
+
         return root
     }
 
@@ -101,11 +136,11 @@ class MyInfoFragment : Fragment() {
         _binding = null
     }
 
-    fun updateProfile() {
+    private fun updateProfile() {
 
         // 질환 DB 필드명 -> 레이아웃 바인드 맵
         val diseaseMap = mapOf(
-            "diabete" to binding.diabete,
+            "diabete" to binding.diabetes,
             "highblood" to binding.highblood,
             "hyperlipidemia" to binding.hyperlipidemia
         )
@@ -146,6 +181,7 @@ class MyInfoFragment : Fragment() {
                 else alg.displayName
             chip.isChecked = true  // 클릭된 상태로 설정
             chip.isClickable = false  // 클릭 불가능
+            chip.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
 
             // 표시 관련 설정
             chip.layoutParams = LinearLayout.LayoutParams(
