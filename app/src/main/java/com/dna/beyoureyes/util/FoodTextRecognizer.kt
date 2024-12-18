@@ -103,7 +103,8 @@ class FoodTextRecognizer(private val context: Context) {
 
     // 정보가 하나라도 있는지 최종 검증. 없으면 null 있으면 그대로 Food 데이터 반환
     fun validateFoodData(food: Food): Food? {
-        return if (food.kcal != null || food.nutritions != null || food.allergy != null) food else null
+        return if ((food.kcal != null && food.nutritions != null) || food.allergy != null) food
+        else null
     }
 
     // OCR API 호출 함수

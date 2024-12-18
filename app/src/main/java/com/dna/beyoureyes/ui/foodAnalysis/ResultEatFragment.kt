@@ -71,7 +71,7 @@ class ResultEatFragment : Fragment() {
 
         binding.resultButtonEat.setOnClickListener {
             if (scale == 0f) {
-                Toast.makeText(requireContext(), "버튼을 클릭해주세요!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "섭취하신 양을 선택해주세요!", Toast.LENGTH_SHORT).show()
             }
             else {
                 // 식품 기록 데이터 전송 후 종료해야 함. 전송 로직 작성 필요.

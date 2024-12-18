@@ -96,6 +96,7 @@
     <string name="result_eat_button_50">1/2 섭취</string>
     <string name="result_eat_button_75">3/4 섭취</string>
     <string name="result_eat_button_100">1 섭취</string>
+    <string name="result_eat_button_100_description">전체 섭취</string>
     <string name="result_eat_dialog_text">섭취량 입력이 완료되었습니다.</string>
     <string name="result_eat_dialog_button">확인하기</string>
     <string name="result_nutri_bar_chart_text1">이 식품의 상세 영양성분 정보</string>
@@ -140,7 +141,10 @@
     <string name="food_caution_number_text_3">03</string>
     <string name="food_caution_text_1">물체를 사물과 잘 구별되는 배경에 \n놓고 촬영해주세요.</string>
     <string name="food_caution_text_2">초점을 잘 맞춰서 촬영해주세요.</string>
-    <string name="food_caution_text_3">글씨가 잘 보이도록 가까기 찍되,\n전체 내용을 다 담을 수 있도록\n촬영해주세요.</string>
+    <string name="food_caution_text_3">글씨가 잘 보이도록 가까이 찍되,\n전체 내용을 다 담을 수 있도록\n촬영해주세요.</string>
+    <string name="food_caution_text_1_description">물체를 사물과 잘 구별되는 배경에 놓고 촬영해주세요.</string>
+    <string name="food_caution_text_2_description">초점을 잘 맞춰서 촬영해주세요.</string>
+    <string name="food_caution_text_3_description">글씨가 잘 보이도록 가까이 찍되, 전체 내용을 다아 담을 수 있도록 촬영해주세요.</string>
 
     <!--  loading  -->
     <string name="loading_maintext">사진을 분석 중입니다.</string>
