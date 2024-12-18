@@ -4,21 +4,17 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageButton
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import com.dna.beyoureyes.R
+import com.dna.beyoureyes.databinding.ToolbarBinding
 
 
 class CustomToolbar(context: Context, attrs: AttributeSet?) :
     Toolbar(context, attrs) {
 
-    // 뷰 컴포넌트들을 클래스 속성으로 정의
-    private val backButton : ImageButton
-    private val closeButton : ImageButton
-    private val skipButton : AppCompatButton
-    private val titleView : TextView
+    // 커스텀 툴바 View의 XML 레이아웃을 인플레이트하여 뷰 바인딩
+    private val binding: ToolbarBinding =
+        ToolbarBinding.inflate(LayoutInflater.from(context), this, true)
 
     interface ButtonClickListener {
         fun onClicked()
@@ -29,17 +25,8 @@ class CustomToolbar(context: Context, attrs: AttributeSet?) :
     var closeButtonClickListener: ButtonClickListener? = null
 
     init {
-        // 커스텀 툴바 View의 XML 레이아웃을 인플레이트
-        LayoutInflater.from(context).inflate(R.layout.toolbar, this, true)
-
         // start와 end 인셋을 0으로 설정. 레이아웃에서 직접 설정한 margin 외 추가 여백이 생기지 않도록 하기 위함.
         setContentInsetsRelative(0, 0)
-
-        // 레이아웃 내 뷰 초기화
-        titleView = findViewById(R.id.title)
-        backButton = findViewById(R.id.back)
-        skipButton = findViewById(R.id.skip)
-        closeButton = findViewById(R.id.close)
 
         // attrs 입력값 속성 처리
         attrs?.let{
@@ -54,48 +41,50 @@ class CustomToolbar(context: Context, attrs: AttributeSet?) :
 
             // textView 세팅
             if (title != null)
-                titleView.text = title
+                binding.title.text = title
 
             // 뒤로가기 버튼 세팅
             if (!backEnabled){
-                backButton.visibility = View.GONE
+                binding.back.visibility = View.GONE
             }else{
-                backButton.visibility = View.VISIBLE
+                binding.back.visibility = View.VISIBLE
             }
 
             // 건너뛰기 버튼 세팅
             if (!skipEnabled){
-                skipButton.visibility = View.GONE
+                binding.skip.visibility = View.GONE
             }else{
-                skipButton.visibility = View.VISIBLE
+                binding.skip.visibility = View.VISIBLE
             }
 
             // 닫기 버튼 세팅
             if (!closeEnabled){
-                closeButton.visibility = View.GONE
+                binding.close.visibility = View.GONE
             }else{
-                closeButton.visibility =View.VISIBLE
+                binding.close.visibility =View.VISIBLE
             }
+            binding.toolbar.contentDescription = "${binding.title.text} 화면 상단바"
 
             typedArray.recycle()
         }
 
         // 뒤로 가기 버튼 터치 시 동작
-        backButton.setOnClickListener {
+        binding.back.setOnClickListener {
             backButtonClickListener?.onClicked() // 리스너 연결
         }
 
         // 건너뛰기 버튼 터치 시 동작
-        skipButton.setOnClickListener {
+        binding.skip.setOnClickListener {
             skipButtonClickListener?.onClicked()  // 리스너 연결
         }
 
         // 닫기 버튼 터치 시 동작
-        closeButton.setOnClickListener {
-            closeButtonClickListener?.onClicked()  // 리스너 연결
+        binding.close.setOnClickListener {
+            closeButtonClickListener?.onClicked() // 리스너 연결
         }
     }
+
     fun setSkipButtonButtonVisibility(isVisible: Boolean) {
-        skipButton.visibility = if (isVisible) View.VISIBLE else View.GONE
+        binding.skip.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 }

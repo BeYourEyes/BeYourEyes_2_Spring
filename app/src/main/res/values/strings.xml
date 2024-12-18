@@ -1,6 +1,8 @@
 <resources>
     <!-- layout/toolbar.xml -->
     <string name="toolbar_skip">건너뛰기</string>
+    <string name="toolbar_back_description">뒤로가기</string>
+    <string name="toolbar_close_description">현재 창 닫기</string>
 
     <!-- f_result_cal -->
     <string name="result_cal_prefix">총 칼로리는</string>
@@ -82,6 +84,11 @@
     <string name="my_info_cs_privacy_policy">개인정보 처리 방침</string>
     <string name="my_info_app_version_label">앱 버전</string>
 
+    <string name="my_info_profile_image_description">내 프로필 사진</string>
+    <string name="my_info_disease_edit_description">내 질환 수정</string>
+    <string name="my_info_allergy_edit_description">알레르기 정보 수정</string>
+    <string name="my_info_history_edit_description">영양 기록 수정</string>
+
     <!--eat page-->
     <string name="result_eat_text_1">얼마나 드셨나요?</string>
     <string name="result_eat_text_2">섭취하신 식품의 양을 선택해주세요.</string>
@@ -144,6 +151,7 @@
     <string name="my_past_detail_title">과거 기록</string>
     <string name="my_past_detail_date">2024.06.24 (수)</string>
     <string name="my_past_detail_time">14:45 PM</string>
+    <string name="my_past_detail_image_description">분석 당시 촬영한 식품 표시</string>
 
     <!--  assign_disease  -->
     <string name="assign_disease_title">맞춤 설계</string>
