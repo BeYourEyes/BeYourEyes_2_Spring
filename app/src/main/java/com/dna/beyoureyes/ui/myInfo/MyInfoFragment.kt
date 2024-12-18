@@ -111,9 +111,10 @@ class MyInfoFragment : Fragment() {
                 "highblood" to binding.highblood,
                 "hyperlipidemia" to binding.hyperlipidemia
             )
+            val diseaseKorTexts = AppUser.info?.disease?.mapNotNull { diseaseMap[it]?.text }
             append(
-                AppUser.info?.disease?.map { diseaseMap[it]?.text }
-                    ?.joinToString(", ") ?: "없음"
+                if (diseaseKorTexts.isNullOrEmpty()) "없음"
+                else diseaseKorTexts.joinToString(", ")
             )
         }
 
