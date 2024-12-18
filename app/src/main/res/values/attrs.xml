@@ -2,8 +2,8 @@
 <resources>
 
     <!-- 오늘 섭취한 상세 영양소 바 Custom View 속성 -->
+    <!-- (식품의 상세 영양소 바 Custom View 속성에도 쓰임) -->
     <declare-styleable name="IntakeBar">
-
         <!-- String 속성 : 영양소명, 영양소량, 일일 권장량 -->
         <attr name="nutritionName" format="string"/>
         <attr name="massText" format="string"/>
@@ -14,24 +14,20 @@
         <attr name="lowerThresh" format="integer"/>
         <attr name="maxValue" format="integer"/>
         <attr name="curValue" format="integer"/>
-
     </declare-styleable>
 
     <!-- 과거 분석한 영양 기록 Custom View 속성 -->
     <declare-styleable name="FoodHistoryView">
-
         <!-- String 속성 : 기록명, 기록 칼로리 -->
         <attr name="historyLabel" format="string"/>
         <attr name="kcalText" format="string"/>
 
         <!-- Reference 속성 : 기록 이미지 -->
         <attr name="historyImg" format="reference"/>
-
     </declare-styleable>
 
     <!-- 툴바 Custom View 속성 -->
     <declare-styleable name="CustomToolbar">
-
         <!-- String 속성 : 화면 제목 -->
         <attr name="title" format="string"/>
 
@@ -39,7 +35,6 @@
         <attr name="skipEnabled" format="boolean"/>
         <attr name="backEnabled" format="boolean"/>
         <attr name="closeEnabled" format="boolean"/>
-
     </declare-styleable>
 
 
