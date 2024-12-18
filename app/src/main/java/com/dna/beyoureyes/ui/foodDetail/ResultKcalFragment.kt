@@ -24,7 +24,10 @@ class ResultKcalFragment : Fragment() {
         _binding = FragmentResultCalBinding.inflate(inflater, container, false)
 
         viewModel.foodData.observe(viewLifecycleOwner) { food ->
-            food.kcal?.let{ binding.kcalTextView.text = "${it}kcal" }
+            food.kcal?.let{
+                binding.kcalTextView.text = "${it}kcal"
+                updateContentDescription()
+            }
         }
 
         return binding.root
@@ -35,10 +38,19 @@ class ResultKcalFragment : Fragment() {
         // 외부에서 Bundle로 전달받은 칼로리 데이터
         val kcal : Int? = arguments?.getInt("kcal")
         kcal?.let { binding.kcalTextView.text = "${it}kcal" }
+        updateContentDescription()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun updateContentDescription() {
+        // 스크린 리더 대응용 contentDescription 설정
+        binding.kcalLayout.contentDescription = // 식품의 총 칼로리는 ㅇㅇㅇkcal 입니다
+            "식품의 ${binding.kcalPreTextView.text} " +
+                    "${binding.kcalTextView.text} ${binding.kcalSufTextView.text}"
+    }
+
 }
