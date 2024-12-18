@@ -20,7 +20,7 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
         app:lottie_rawRes="@raw/confetti"
-        android:contentDescription="콘페티"/>
+        android:importantForAccessibility="no"/>
 
     <TextView
         android:id="@+id/appName"
@@ -34,6 +34,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="당신의 안식"/>
+        android:contentDescription="당신의 안식 앱을 시작합니다"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
