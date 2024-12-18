@@ -111,7 +111,6 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
             "userGender" to gender,
             "userBirth" to birthTimeStamp,
             "userDisease" to disease,
-            "userAllergy" to allergy,
             "userProfile" to profile,
             "lastActivationDate" to FieldValue.serverTimestamp()
         )
