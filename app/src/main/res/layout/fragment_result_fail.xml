@@ -7,9 +7,6 @@
     android:background="@color/gray_50"
     tools:context=".ui.foodDetail.ResultFailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/groupLayout"
         android:layout_width="wrap_content"
@@ -21,6 +18,7 @@
 
         <ImageView
             android:id="@+id/result_fail_image"
+            android:importantForAccessibility="no"
             android:layout_width="48dp"
             android:layout_height="48dp"
             app:layout_constraintEnd_toEndOf="@+id/groupLayout"
