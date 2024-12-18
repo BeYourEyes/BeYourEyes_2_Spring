@@ -3,6 +3,9 @@ package com.dna.beyoureyes
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.viewpager.widget.ViewPager
 import com.dna.beyoureyes.ui.assign.AssignActivity
@@ -20,6 +23,11 @@ class OnboardingActivity : AppCompatActivity() {
         val adapter = RegisterPagerAdapter(supportFragmentManager)
         viewPager.adapter = adapter
 
+        // 초기 페이지 contentDescription 설정
+        val initialPageDescription = "나만을 위한 더 쉬운 식품 정보\n당신의 안식은 시력이 좋지 않은 노인 및 식품 알레르기가 있는 사용자를 위한 어플입니다"
+        viewPager.contentDescription = "튜토리얼: $initialPageDescription"
+        updateDotsContentDescription(dotsIndicator, 0)
+
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 // 스크롤 중일 때 동작
@@ -33,6 +41,18 @@ class OnboardingActivity : AppCompatActivity() {
                     else -> ""
                 }
                 viewPager.contentDescription = "튜토리얼, 현재 페이지: $pageDescription"
+
+                val dotsContainer = dotsIndicator.getChildAt(0) as? ViewGroup
+                dotsContainer?.let {
+                    for (i in 0 until it.childCount) {
+                        val dot = it.getChildAt(i)
+                        dot.contentDescription = if (i == position) {
+                            "현재 페이지: ${i + 1}"
+                        } else {
+                            "${i + 1}페이지로 이동"
+                        }
+                    }
+                }
 
             }
 
@@ -48,6 +68,20 @@ class OnboardingActivity : AppCompatActivity() {
             val intent = Intent(this, AssignActivity::class.java)
             startActivity(intent)
             finish()
+        }
+    }
+
+    private fun updateDotsContentDescription(dotsIndicator: WormDotsIndicator, selectedPosition: Int) {
+        val dotsContainer = dotsIndicator.getChildAt(0) as? View
+        dotsContainer?.let {
+            for (i in 0 until (it as ViewGroup).childCount) {
+                val dot = it.getChildAt(i) as? ImageView
+                dot?.contentDescription = if (i == selectedPosition) {
+                    "현재 페이지: ${i + 1}"
+                } else {
+                    "페이지 ${i + 1}로 이동"
+                }
+            }
         }
     }
 
