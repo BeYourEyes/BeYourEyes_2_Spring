@@ -38,12 +38,10 @@ class MyPastDetailFragment : Fragment() {
         val foodHistory = MyPastDetailFragmentArgs.fromBundle(requireArguments()).foodHistory
 
         // 식품 사진
-        foodHistory.imgUri?.let {
-            Glide.with(this)
-                .load(it)
-                .centerCrop() // 이미지를 크롭
-                .into(binding.imageView)
-        }
+        Glide.with(this)
+            .load(foodHistory.imgUri)
+            .centerCrop() // 이미지를 크롭
+            .into(binding.imageView)
 
         // 기록 날짜
         foodHistory.timestamp?.let {
@@ -73,6 +71,11 @@ class MyPastDetailFragment : Fragment() {
                 requireActivity().supportFragmentManager.popBackStack()
             }
         }
+
+        // 스크린 리더 대응용 contentDescription 설정
+        binding.dateTimeLayout.contentDescription =
+            "${binding.dateTextView.text}, ${binding.timeTextView.text} 기록."
+
     }
 
     override fun onDestroyView() {
