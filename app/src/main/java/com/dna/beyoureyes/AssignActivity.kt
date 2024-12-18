@@ -11,6 +11,7 @@ import com.dna.beyoureyes.ui.FragmentNavigationListener
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -107,7 +108,8 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
             "userBirth" to birthTimeStamp,
             "userDisease" to disease,
             "userAllergy" to allergy,
-            "userProfile" to profile
+            "userProfile" to profile,
+            "lastActivationDate" to FieldValue.serverTimestamp()
         )
         if (allergens.isNotEmpty()) {
             userInfo["userAllergens"] = allergens.map{ it.name }
