@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_viewpager"
         app:progressMode="true"
-        android:contentDescription="튜토리얼 페이지 이동"/>
+        android:contentDescription="페이지 이동"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"

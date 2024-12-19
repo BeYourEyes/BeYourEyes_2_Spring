@@ -75,7 +75,8 @@
                 android:layout_margin="5dp"
                 android:layout_width="98dp"
                 android:layout_height="98dp"
-                android:background="@drawable/assign_disease_no" />
+                android:background="@drawable/assign_disease_no"
+                android:contentDescription="@string/assign_disease_no"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -97,7 +98,8 @@
                 android:layout_margin="5dp"
                 android:layout_width="98dp"
                 android:layout_height="98dp"
-                android:background="@drawable/assign_disease_diabetes" />
+                android:background="@drawable/assign_disease_diabetes"
+                android:contentDescription="@string/assign_disease_diabetes"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -119,7 +121,8 @@
                 android:layout_margin="5dp"
                 android:layout_width="98dp"
                 android:layout_height="98dp"
-                android:background="@drawable/assign_disease_highblood" />
+                android:background="@drawable/assign_disease_highblood"
+                android:contentDescription="@string/assign_disease_HighBloodPressure"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -141,7 +144,8 @@
                 android:layout_margin="5dp"
                 android:layout_width="98dp"
                 android:layout_height="98dp"
-                android:background="@drawable/assign_disease_hyperlipidemia" />
+                android:background="@drawable/assign_disease_hyperlipidemia"
+                android:contentDescription="@string/assign_disease_hyperlipidemia"/>
 
             <TextView
                 android:layout_width="wrap_content"
