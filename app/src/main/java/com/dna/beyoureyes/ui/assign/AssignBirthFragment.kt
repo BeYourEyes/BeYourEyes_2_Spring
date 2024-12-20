@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
 import com.dna.beyoureyes.R
@@ -86,6 +87,14 @@ class AssignBirthFragment : Fragment() {
             override fun onClicked() {
                 listener?.onBtnClick(this@AssignBirthFragment, false)
             }
+        }
+
+        // 스크린 리더 대응 - numberPicker 조작에 대한 추가 설명
+        binding.stepGuideLayout.contentDescription = buildString {
+            append("${binding.stepText.text}: ${binding.questionText.text} ")
+            append("하단에서 태어난 년도와 날짜를 입력해주세요. ")
+            append("날짜 입력은 수정창을 두번 탭하여 키보드로도 직접 입력 가능하지만, " +
+                    "드래그로도 조작할 수 있어요.")
         }
         return binding.root
     }

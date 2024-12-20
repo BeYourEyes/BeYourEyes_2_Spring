@@ -68,7 +68,7 @@ class FirebaseHelper {
                             val userName = document.data.get("userName") as String
                             val userGender = document.data.get("userGender") as Long
                             val userBirth = document.data.get("userBirth") as Timestamp
-                            val userDisease = document.data.get("userDisease") as ArrayList<String>
+                            val userDisease = document.data.get("userDisease") as? ArrayList<String>
                             val userAllergens = document.data.get("userAllergens") as? ArrayList<String>
                             val profile = document.data.get("userProfile") as String?
                             AppUser.setInfo(userName, userGender.toInt(), userBirth, userDisease, userAllergens, profile)

@@ -44,6 +44,7 @@
         <!-- 액티비티 -->
         <activity
             android:name=".SplashActivity"
+            android:label=""
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,12 +54,15 @@
         </activity>
         <activity
             android:name=".ui.assign.AssignActivity"
+            android:label="@string/assign_toolbar"
             android:exported="false" />
         <activity
             android:name=".OnboardingActivity"
+            android:label="@string/onboarding_title"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:label="@string/main_title"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />

@@ -1,29 +1,68 @@
 package com.dna.beyoureyes.ui.assign
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentAssignDiseaseBinding
-import com.dna.beyoureyes.model.diseaseInfo
+import com.dna.beyoureyes.model.Disease
 import com.dna.beyoureyes.ui.CustomToolbar
 import com.dna.beyoureyes.ui.FragmentNavigationListener
+import com.dna.beyoureyes.ui.IconChip
+
 
 class AssignDiseaseFragment : Fragment() {
     private lateinit var binding : FragmentAssignDiseaseBinding
-    private lateinit var diseaseArray: Array<diseaseInfo>
+    private var diseaseSet : MutableSet<Disease> = mutableSetOf()
+    private val diseaseToChipIdMap = HashMap<Disease, Int>() // 칩 ID와 Disease Enum 값을 매핑하는 HashMap
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAssignDiseaseBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         val listener = activity as? FragmentNavigationListener
+        val chipGroup = binding.assignDiseaseChipGroup
+        Log.d("TEST", "disease set: ${diseaseSet.toString()}")
+        Disease.entries.forEach { disease ->
+            // 칩 스타일 및 표시 관련 설정
+            val iconChip = IconChip(requireContext()) // 커스텀 아이콘 칩
+            iconChip.setCheckableDiseaseChip(disease) // 수정 가능한 질환 칩 세팅
+
+            // 칩 ID 할당
+            iconChip.id = View.generateViewId()
+            diseaseToChipIdMap[disease] = iconChip.id // [질병] - [칩 ID] hashMap 등록
+            Log.d("TEST", "Create Icon Chip id:${iconChip.id}")
+
+            // 그룹에 칩 추가
+            binding.assignDiseaseChipGroup.addView(iconChip)
+
+            // 질환 칩 check 상태 변경 리스너
+            iconChip.setOnCheckedChangeListener { _, isChecked ->
+                if(isChecked) {
+                    diseaseSet.add(disease)
+                    binding.none.isChecked = false // "없음" 칩 해제
+                } else {
+                    diseaseSet.remove(disease)
+                }
+            }
+        }
+
+        // 없음 칩 check 상태 변경 리스너
+        binding.none.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                for (id in diseaseSet.mapNotNull{ diseaseToChipIdMap[it] }){
+                    chipGroup.findViewById<IconChip>(id).isChecked = false // 선택된 질환 칩 해제
+                }
+                diseaseSet.clear() // 저장된 거 비우기
+            }
+        }
+
         binding.nextBtn.setOnClickListener {
-            listener?.onDiseaseInputRecieved(getClickedDiseaseList())
+            listener?.onDiseaseInputRecieved(diseaseSet)
             listener?.onBtnClick(this, true)
         }
         binding.toolbar.backButtonClickListener = object : CustomToolbar.ButtonClickListener {
@@ -32,84 +71,5 @@ class AssignDiseaseFragment : Fragment() {
             }
         }
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        // 초기화
-        diseaseArray = arrayOf(
-            diseaseInfo(
-                name = "no",
-                button = binding.imageView1,
-                isClicked = false,
-                normalImage = R.drawable.assign_disease_no,
-                clickedImage = R.drawable.assign_disease_no_click
-            ),
-            diseaseInfo(
-                name = "diabete",
-                button = binding.imageView2,
-                isClicked = false,
-                normalImage = R.drawable.assign_disease_diabetes,
-                clickedImage = R.drawable.assign_disease_diabetes_click
-            ),
-            diseaseInfo(
-                name = "highblood",
-                button = binding.imageView3,
-                isClicked = false,
-                normalImage = R.drawable.assign_disease_highblood,
-                clickedImage = R.drawable.assign_disease_highblood_click
-            ),
-            diseaseInfo(
-                name = "hyperlipidemia",
-                button = binding.imageView4,
-                isClicked = false,
-                normalImage = R.drawable.assign_disease_hyperlipidemia,
-                clickedImage = R.drawable.assign_disease_hyperlipidemia_click
-            )
-        )
-        for (i in 0 until 4) {
-            imageButtonClick(diseaseArray, i)
-        }
-
-    }
-
-    fun getClickedDiseaseList() : ArrayList<String>{
-        val clickedList = ArrayList<String>()
-        diseaseArray.forEach {
-            if (it.isClicked) {
-                clickedList.add(it.name)
-            }
-        }
-        return clickedList
-    }
-
-    fun imageButtonClick(diseaseArray: Array<diseaseInfo>, idx: Int) {
-        diseaseArray[idx].button.setOnClickListener {
-            val clickedDisease = diseaseArray[idx]
-
-            // 클릭 상태 전환
-            clickedDisease.isClicked = !clickedDisease.isClicked
-
-            if (clickedDisease.isClicked) {
-                // 선택된 버튼 이미지를 변경
-                clickedDisease.button.setBackgroundResource(clickedDisease.clickedImage)
-
-                if (idx == 0) { // "None" 버튼이 선택되었을 때
-                    diseaseArray.forEachIndexed { i, disease ->
-                        if (i != 0) { // "None" 버튼 제외
-                            disease.isClicked = false
-                            disease.button.setBackgroundResource(disease.normalImage)
-                        }
-                    }
-                } else { // 다른 질병 버튼이 선택되었을 때
-                    val noneDisease = diseaseArray[0]
-                    noneDisease.isClicked = false
-                    noneDisease.button.setBackgroundResource(noneDisease.normalImage)
-                }
-            } else {
-                // 클릭 해제 시 기본 이미지로 변경
-                clickedDisease.button.setBackgroundResource(clickedDisease.normalImage)
-            }
-        }
     }
 }

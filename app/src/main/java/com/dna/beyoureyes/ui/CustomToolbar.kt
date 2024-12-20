@@ -63,7 +63,6 @@ class CustomToolbar(context: Context, attrs: AttributeSet?) :
             }else{
                 binding.close.visibility =View.VISIBLE
             }
-            binding.toolbar.contentDescription = "${binding.title.text} 화면 상단바"
 
             typedArray.recycle()
         }

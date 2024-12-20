@@ -16,148 +16,81 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/stepText"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/stepGuideLayout"
+        android:focusable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
-        android:fontFamily="@font/wanted_sans_semi_bold"
-        android:text="@string/assign_disease_step4"
-        android:textColor="@color/blue_500"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-    <TextView
-        android:id="@+id/questionText"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/stepText"
+            android:focusable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/wanted_sans_semi_bold"
+            android:text="@string/assign_step4"
+            android:textColor="@color/blue_500"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/questionText"
+            android:focusable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/wanted_sans_semi_bold"
+            android:text="@string/assign_step4_question"
+            android:textColor="@color/gray_950"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stepText" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/wanted_sans_semi_bold"
-        android:text="@string/assign_disease_maintext"
-        android:textColor="@color/gray_950"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stepText" />
-
-
-    <com.google.android.material.chip.ChipGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:chipSpacing="8dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintBottom_toTopOf="@+id/nextBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionText"
-        app:layout_constraintVertical_bias="0.106"
-        app:singleSelection="false"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toBottomOf="@+id/stepGuideLayout"
+        app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/assignDiseaseChipGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            app:chipSpacing="13dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:singleSelection="false">
 
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_margin="5dp"
-                android:layout_width="98dp"
-                android:layout_height="98dp"
-                android:background="@drawable/assign_disease_no"
-                android:contentDescription="@string/assign_disease_no"/>
-
-            <TextView
+            <com.dna.beyoureyes.ui.IconChip
+                android:id="@+id/none"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checkable="true"
+                android:checked="false"
                 android:text="@string/assign_disease_no"
-                android:fontFamily="@font/wanted_sans_semi_bold"
                 android:textSize="16sp"
-                android:textAlignment="center" />
-        </LinearLayout>
+                app:chipIcon="@drawable/ic_disease_none_55"
+                app:chipIconSize="55dp"
+                app:chipSize="98dp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_margin="5dp"
-                android:layout_width="98dp"
-                android:layout_height="98dp"
-                android:background="@drawable/assign_disease_diabetes"
-                android:contentDescription="@string/assign_disease_diabetes"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/assign_disease_diabetes"
-                android:fontFamily="@font/wanted_sans_semi_bold"
-                android:textSize="16sp"
-                android:textAlignment="center" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_margin="5dp"
-                android:layout_width="98dp"
-                android:layout_height="98dp"
-                android:background="@drawable/assign_disease_highblood"
-                android:contentDescription="@string/assign_disease_HighBloodPressure"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/assign_disease_HighBloodPressure"
-                android:fontFamily="@font/wanted_sans_semi_bold"
-                android:textSize="16sp"
-                android:textAlignment="center" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_margin="5dp"
-                android:layout_width="98dp"
-                android:layout_height="98dp"
-                android:background="@drawable/assign_disease_hyperlipidemia"
-                android:contentDescription="@string/assign_disease_hyperlipidemia"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/assign_disease_hyperlipidemia"
-                android:fontFamily="@font/wanted_sans_semi_bold"
-                android:textSize="16sp"
-                android:textAlignment="center" />
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
 
 
-    </com.google.android.material.chip.ChipGroup>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/nextBtn"

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/innerChip"
+        style="@style/IconChipStyle"
+        android:layout_width="98dp"
+        android:layout_height="98dp"
+        app:chipStartPadding="21dp"
+        app:chipEndPadding="21dp"
+        app:chipIconSize="55dp"
+        app:chipIcon="@drawable/ic_disease_none_55"
+        android:checkable="true"
+        />
+
+    <TextView
+        android:id="@+id/innerTextView"
+        android:importantForAccessibility="no"
+        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/assign_disease_no"
+        android:fontFamily="@font/wanted_sans_semi_bold"
+        android:textSize="16sp"
+        android:textColor="@color/gray_400"
+        android:textAlignment="center" />
+</LinearLayout>
