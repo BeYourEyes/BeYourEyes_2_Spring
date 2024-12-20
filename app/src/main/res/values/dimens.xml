@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 텍스트 칩 크기(알레르기) -->
     <dimen name="chip_width">85dp</dimen> <!-- 칩의 너비를 고정값으로 설정 -->
     <dimen name="chip_height">40dp</dimen> <!-- 칩의 높이를 고정값으로 설정 -->
     <dimen name="checkable_chip_width">98dp</dimen> <!-- 수정 가능한 칩의 너비 -->
     <dimen name="checkable_chip_height">58dp</dimen> <!-- 수정 가능한 칩의 높이 -->
+    <!-- 아이콘 칩 크기(질환) -->
+    <dimen name="icon_chip_size">84dp</dimen> <!-- 아이콘 칩의 크기 -->
+    <dimen name="icon_chip_drawable_size">47dp</dimen> <!-- 아이콘 칩에 들어갈 아이콘의 크기 -->
+    <dimen name="icon_chip_text_size">14sp</dimen> <!-- 아이콘 칩 텍스트 크기 -->
+    <dimen name="checkable_icon_chip_size">98dp</dimen> <!-- 수정 가능한 아이콘 칩의 크기 -->
+    <dimen name="checkable_icon_chip_drawable_size">55dp</dimen> <!-- 수정 가능한 아이콘 칩에 들어갈 아이콘의 크기 -->
+    <dimen name="checkable_icon_chip_text_size">16sp</dimen> <!-- 수정 가능한 아이콘 칩 텍스트 크기 -->
 </resources>

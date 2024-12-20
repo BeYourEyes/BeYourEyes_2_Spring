@@ -11,9 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import com.airbnb.lottie.Lottie
 import com.airbnb.lottie.LottieAnimationView
 
 
@@ -29,7 +27,7 @@ class OnboardingFragment : Fragment() {
         }
     }
 
-    fun setPartialTextSizeSp(textView: TextView, fullText: String, targetText: String, sizeInSp: Int) {
+    private fun setPartialTextSizeSp(textView: TextView, fullText: String, targetText: String, sizeInSp: Int) {
         val spannableString = SpannableString(fullText)
 
         val startIndex = fullText.indexOf(targetText)

@@ -19,7 +19,7 @@ class UserInfo (
     var name : String,                  // 사용자 나이
     var gender : Int,               // 사용자 성별
     var birth : Timestamp,     // 사용자 생일
-    var disease : MutableSet<String>,   // 사용자 질병 정보(nullable - 해당사항 없을 수 있으므로)
+    var disease : MutableSet<Disease>?,   // 사용자 질병 정보(nullable - 해당사항 없을 수 있으므로)
     var allergens : MutableSet<Allergen>?,   // 사용자 알레르기 정보(nullable - 해당사항 없을 수 있으므로
     var age : Int,
     var profileImgPath: String? = null // 프로필 사진 DB 저장 경로
@@ -33,13 +33,13 @@ class UserInfo (
 
     // assign에서 활용하는 생성자(프로필 이미지 등록x)
     constructor(name:String, gender:Int, birth: Timestamp,
-                disease:ArrayList<String>, allergens: MutableSet<Allergen>?)
-            :this(name, gender, birth, disease.toMutableSet(), allergens, getAge(birth))
+                disease:MutableSet<Disease>?, allergens: MutableSet<Allergen>?)
+            :this(name, gender, birth, disease, allergens, getAge(birth))
 
     // firebase에서 데이터 불러올 때 활용하는 생성자(프로필 이미지 O 유효성 상관X)
     constructor(name:String, gender:Int, birth: Timestamp,
                 disease:ArrayList<String>, allergy:ArrayList<String>, profile:String)
-            :this(name, gender, birth, disease.toMutableSet(), allergy.toAllergenSet(), getAge(birth), profile)
+            :this(name, gender, birth, disease.toDiseaseSet(), allergy.toAllergenSet(), getAge(birth), profile)
 
     /*
     constructor(name:String, gender:Int, birth: Timestamp, profile: String)
@@ -84,6 +84,16 @@ class UserInfo (
             return this.mapNotNull { algName ->
                 try {
                     Allergen.valueOf(algName)
+                } catch (e: IllegalArgumentException) {
+                    null
+                }
+            }.toMutableSet().ifEmpty { null }
+        }
+
+        private fun ArrayList<String>.toDiseaseSet(): MutableSet<Disease>? {
+            return this.mapNotNull { diseaseName ->
+                try {
+                    Disease.valueOf(diseaseName)
                 } catch (e: IllegalArgumentException) {
                     null
                 }

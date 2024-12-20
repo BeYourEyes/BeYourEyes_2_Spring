@@ -8,6 +8,7 @@ import com.dna.beyoureyes.AppUser
 import com.dna.beyoureyes.MainActivity
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.model.Allergen
+import com.dna.beyoureyes.model.Disease
 import com.dna.beyoureyes.model.FirebaseHelper
 import com.dna.beyoureyes.model.UserInfo
 import com.dna.beyoureyes.ui.FragmentNavigationListener
@@ -24,8 +25,8 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
     private var gender : Int? = null
     private var birth : String? = null
     private var currentStep = 0
-    private var disease : ArrayList<String> = ArrayList<String>()
-    private var allergy : ArrayList<String> = ArrayList<String>()
+    private var disease : MutableSet<Disease> = mutableSetOf()
+    // private var allergy : ArrayList<String> = ArrayList<String>()
     private var allergens : MutableSet<Allergen> = mutableSetOf()
     private var profile : String = ""
 
@@ -45,8 +46,8 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
         this.birth = birth
     }
 
-    override fun onDiseaseInputRecieved(userDiseaseList: ArrayList<String>) {
-        this.disease = userDiseaseList
+    override fun onDiseaseInputRecieved(userDiseaseSet: MutableSet<Disease>) {
+        this.disease = userDiseaseSet
     }
 
     override fun onAllergyInputRecieved(userAllergySet: MutableSet<Allergen>) {
@@ -104,21 +105,21 @@ class AssignActivity : AppCompatActivity(), FragmentNavigationListener {
         val birthDate = dateFormat.parse(birth ?: "") ?: Date()
         val birthTimeStamp = Timestamp(birthDate)
         AppUser.info =
-            UserInfo(name ?: "", gender ?: 0, birthTimeStamp, disease, allergens.ifEmpty { null })
+            UserInfo(name ?: "", gender ?: 0, birthTimeStamp, disease.ifEmpty { null }, allergens.ifEmpty { null })
         val userInfo = hashMapOf(
             "userId" to Firebase.auth.currentUser?.uid,
             "userName" to name!!,
             "userGender" to gender,
             "userBirth" to birthTimeStamp,
-            "userDisease" to disease,
-            "userAllergy" to allergy,
             "userProfile" to profile,
             "lastActivationDate" to FieldValue.serverTimestamp()
         )
-        if (allergens.isNotEmpty()) {
+        if (disease.isNotEmpty()) { // 질환 정보 전달 - enum명으로 DB 저장
+            userInfo["userDisease"] = disease.map{ it.name }
+        }
+        if (allergens.isNotEmpty()) { // 알레르기 정보 전달 - enum명으로 DB 저장
             userInfo["userAllergens"] = allergens.map{ it.name }
         }
         FirebaseHelper.sendData(userInfo, "userInfo")
     }
-
 }

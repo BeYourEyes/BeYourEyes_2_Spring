@@ -20,6 +20,7 @@ import com.dna.beyoureyes.databinding.FragmentMyInfoBinding
 import com.dna.beyoureyes.ui.CustomToolbar
 import com.google.android.material.chip.Chip
 import com.dna.beyoureyes.BuildConfig
+import com.dna.beyoureyes.ui.IconChip
 
 class MyInfoFragment : Fragment() {
     private var _binding: FragmentMyInfoBinding? = null
@@ -84,7 +85,7 @@ class MyInfoFragment : Fragment() {
             startActivity(intent)
         }
         // 버전 이름
-        binding.appVersionText.setText("version ${BuildConfig.VERSION_NAME}")
+        binding.appVersionText.text = "version ${BuildConfig.VERSION_NAME}"
         // 뒤로 가기 버튼 기능 연결
         binding.toolbar.backButtonClickListener = object : CustomToolbar.ButtonClickListener {
             override fun onClicked() {
@@ -100,21 +101,10 @@ class MyInfoFragment : Fragment() {
             append(binding.profileImgView.contentDescription) // 내 프로필 사진
             append(". 설정된 이미지: ${if (hasProfileImg) "있음" else "없음"}")
         }
-        if (AppUser.info?.disease?.isNotEmpty() == false) { // 내 질환 정보
-            binding.diseaseChipLayout.contentDescription = "없음"
-        }
         binding.diseaseLayout.contentDescription = buildString { // 내 질환 정보
             append(binding.diseaseLabel.text) // 내 질환
-            append(". ")
-            val diseaseMap = mapOf( // 질환 DB 필드명 -> 레이아웃 바인드 맵
-                "diabete" to binding.diabetes,
-                "highblood" to binding.highblood,
-                "hyperlipidemia" to binding.hyperlipidemia
-            )
-            append(
-                AppUser.info?.disease?.map { diseaseMap[it]?.text }
-                    ?.joinToString(", ") ?: "없음"
-            )
+            append(": ")
+            append(AppUser.info?.disease?.joinToString(", ") { it.displayName } ?: "없음")
         }
 
         binding.allergyLayout.contentDescription = buildString { // 내 알레르기 정보
@@ -122,7 +112,6 @@ class MyInfoFragment : Fragment() {
             append(": ")
             append(AppUser.info?.allergens?.joinToString(", ") { it.displayName } ?: "없음")
         }
-
         binding.historyLabelLayout.contentDescription = buildString { // 영양 기록 제목
             append(binding.historyLabel.text)
             append(", ${foodHistoryAdapter.itemCount}개")
@@ -138,18 +127,8 @@ class MyInfoFragment : Fragment() {
 
     private fun updateProfile() {
 
-        // 질환 DB 필드명 -> 레이아웃 바인드 맵
-        val diseaseMap = mapOf(
-            "diabete" to binding.diabetes,
-            "highblood" to binding.highblood,
-            "hyperlipidemia" to binding.hyperlipidemia
-        )
-
-        // 사용자 질환 정보 가져오기
-        val userDiseases = AppUser.info?.disease?.toSet() ?: emptySet()
-
         // 이름 설정
-        binding.profileName.setText(AppUser.info?.name?:"")
+        binding.profileName.text = AppUser.info?.name?:""
 
         // 프로필 설정
         Glide.with(this)
@@ -158,19 +137,13 @@ class MyInfoFragment : Fragment() {
             .placeholder(R.drawable.home_good)
             .into(binding.profileImgView)
 
-        // 질환 설정
-        diseaseMap.forEach { diseaseName, diseaseButton ->
-            if (userDiseases.contains(diseaseName)) {
-                diseaseButton.visibility = View.VISIBLE
-            } else {
-                diseaseButton.visibility = View.GONE
-            }
+        // 질환 칩 설정
+        AppUser.info?.disease?.forEach { disease ->
+            // 칩 스타일 및 표시 관련 설정
+            val diseaseChip = IconChip(requireContext()) // 커스텀 아이콘 칩
+            diseaseChip.setNotCheckableDiseaseChip(disease) // 수정 불가능 질환 칩 세팅
+            binding.diseaseChipGroup.addView(diseaseChip) // 칩 그룹에 추가
         }
-        /*
-        val layoutParams = binding.allergyChipGroup.layoutParams as ViewGroup.MarginLayoutParams
-        layoutParams.topMargin = 200
-        binding.allergyChipGroup.layoutParams = layoutParams
-        */
 
         // 알레르기 칩 설정
         AppUser.info?.allergens?.forEach { alg ->
@@ -179,7 +152,7 @@ class MyInfoFragment : Fragment() {
             chip.text =
                 if (alg.displayName.length == 1) " ${alg.displayName} " // 한 글자면 width 설정 불가
                 else alg.displayName
-            chip.isChecked = true  // 클릭된 상태로 설정
+            // chip.isChecked = true  // 클릭된 상태로 설정
             chip.isClickable = false  // 클릭 불가능
             chip.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
 
