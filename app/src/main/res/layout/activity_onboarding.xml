@@ -9,10 +9,10 @@
 
 
     <androidx.viewpager.widget.ViewPager
+        android:importantForAccessibility="no"
         android:id="@+id/register_viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:contentDescription="튜토리얼"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.7"
         app:layout_constraintHorizontal_bias="0.0"

@@ -104,7 +104,7 @@ class IntakeNutritionBar(context: Context, attrs: AttributeSet?) :
     fun updateContentDescription() {
         binding.intakeBar.contentDescription = buildString {
             if (isInWarningRange) append("경고. ")
-            append("${binding.nutriLabel.text} 섭취량: ${binding.massValue.text}. ") // mg/g 섭취량
+            append("오늘의 ${binding.nutriLabel.text} 섭취량: ${binding.massValue.text}. ") // mg/g 섭취량
             append("권장량 대비 ${binding.percentValue.text} 섭취. ") // % 섭취량
             append("${binding.dailyValue.text}") // 일일 권장량 정보
         }
