@@ -195,47 +195,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/diseaseLabel">
 
-                    <TextView
-                        android:id="@+id/diabetes"
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/diseaseChipGroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="14dp"
-                        android:drawablePadding="3dp"
-                        android:focusable="false"
-                        android:fontFamily="@font/wanted_sans_semi_bold"
-                        android:text="@string/assign_disease_diabetes"
-                        android:textAlignment="center"
-                        android:textColor="@color/gray_950"
-                        android:textSize="16sp"
-                        app:drawableTopCompat="@drawable/myinfo_disease_diabetes" />
-
-                    <TextView
-                        android:id="@+id/highblood"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="14dp"
-                        android:drawablePadding="3dp"
-                        android:focusable="false"
-                        android:fontFamily="@font/wanted_sans_semi_bold"
-                        android:text="@string/assign_disease_HighBloodPressure"
-                        android:textAlignment="center"
-                        android:textColor="@color/gray_950"
-                        android:textSize="16sp"
-                        app:drawableTopCompat="@drawable/myinfo_disease_highblood" />
-
-                    <TextView
-                        android:id="@+id/hyperlipidemia"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="14dp"
-                        android:drawablePadding="3dp"
-                        android:focusable="false"
-                        android:fontFamily="@font/wanted_sans_semi_bold"
-                        android:text="@string/assign_disease_hyperlipidemia"
-                        android:textAlignment="center"
-                        android:textColor="@color/gray_950"
-                        android:textSize="16sp"
-                        app:drawableTopCompat="@drawable/myinfo_disease_hyperlipidemia" />
+                        app:chipSpacing="14dp" />
 
                 </LinearLayout>
 
