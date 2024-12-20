@@ -16,37 +16,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/stepText"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/stepGuideLayout"
+        android:focusable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
-        android:fontFamily="@font/wanted_sans_semi_bold"
-        android:text="@string/assign_step3"
-        android:textColor="@color/blue_500"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-    <TextView
-        android:id="@+id/questionText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/wanted_sans_semi_bold"
-        android:text="@string/assign_step3_question"
-        android:textColor="@color/gray_950"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stepText" />
+        <TextView
+            android:id="@+id/stepText"
+            android:focusable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/wanted_sans_semi_bold"
+            android:text="@string/assign_step3"
+            android:textColor="@color/blue_500"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/questionText"
+            android:focusable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/wanted_sans_semi_bold"
+            android:text="@string/assign_step3_question"
+            android:textColor="@color/gray_950"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stepText" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
@@ -56,7 +62,7 @@
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionText">
+        app:layout_constraintTop_toBottomOf="@+id/stepGuideLayout">
 
         <TextView
             android:id="@+id/yearText"
@@ -74,6 +80,7 @@
 
         <TextView
             android:id="@+id/monthText"
+            android:accessibilityTraversalAfter="@id/yearPicker"
             android:layout_width="63dp"
             android:layout_height="28dp"
             android:background="@drawable/shape_background_g300_20"
@@ -88,6 +95,7 @@
 
         <TextView
             android:id="@+id/dayText"
+            android:accessibilityTraversalAfter="@id/monthPicker"
             android:layout_width="63dp"
             android:layout_height="28dp"
             android:background="@drawable/shape_background_g300_20"
@@ -102,6 +110,7 @@
 
         <NumberPicker
             android:id="@+id/yearPicker"
+            android:accessibilityTraversalAfter="@id/yearText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -114,6 +123,7 @@
 
         <NumberPicker
             android:id="@+id/monthPicker"
+            android:accessibilityTraversalAfter="@id/monthText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:theme="@style/DatePickerStyle"
@@ -124,6 +134,7 @@
 
         <NumberPicker
             android:id="@+id/dayPicker"
+            android:accessibilityTraversalAfter="@id/dayText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:theme="@style/DatePickerStyle"
