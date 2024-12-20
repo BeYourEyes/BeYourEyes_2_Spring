@@ -18,9 +18,8 @@ import com.google.android.material.chip.Chip
 class AssignAllergyFragment : Fragment() {
 
     private lateinit var binding : FragmentAssignAllergyBinding
-    private var allergyArray : ArrayList<String> = ArrayList()
     private var allergenSet : MutableSet<Allergen> = mutableSetOf()
-    private val chipIdToAllergenMap = HashMap<Int, Allergen>() // 칩 ID와 Allergen Enum 값을 매핑하는 HashMap
+    private val allergenToChipIdMap = HashMap<Allergen, Int>() // 칩 ID와 Allergen Enum 값을 매핑하는 HashMap
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +39,7 @@ class AssignAllergyFragment : Fragment() {
 
             // 칩 ID 할당
             chip.id = View.generateViewId()
-            chipIdToAllergenMap[chip.id] = alg // [칩 ID] - [알러지 정보] hashMap 등록
+            allergenToChipIdMap[alg] = chip.id // [알러지 정보] - [칩 ID] hashMap 등록
 
             // 알레르기 칩 check 상태 변경 리스너
             chip.setOnCheckedChangeListener { _, isChecked ->
@@ -63,7 +62,7 @@ class AssignAllergyFragment : Fragment() {
         val chipGroup = binding.assignAllergyChipGroup
         binding.chipNone.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                for (id in chipGroup.checkedChipIds.intersect(chipIdToAllergenMap.keys)){
+                for (id in allergenSet.mapNotNull{ allergenToChipIdMap[it] }){
                     chipGroup.findViewById<Chip>(id).isChecked = false // 선택된 알레르기 칩 해제
                 }
                 allergenSet.clear() // 저장된 거 비우기
