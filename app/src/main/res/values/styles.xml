@@ -34,6 +34,34 @@
         <item name="android:paddingBottom">14dp</item>
     </style>
 
+    <!-- 아이콘 표시 칩 스타일 -->
+    <style name="IconChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipCornerRadius">15dp</item>
+        <item name="chipMinHeight">58dp</item>
+        <item name="chipBackgroundColor">@color/icon_chip_bg_color</item>
+        <item name="chipStrokeColor">@color/icon_chip_stroke_color</item>
+        <item name="chipIconTint">@color/icon_chip_icon_color</item>
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="chipStartPadding">0dp</item>
+        <item name="chipEndPadding">0dp</item>
+        <item name="chipIconEnabled">true</item>
+        <item name="chipIconVisible">true</item>
+        <item name="closeIconEnabled">false</item>
+    </style>
+
+    <style name="IconChipText">
+        <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
+        <item name="android:textColor">@color/gray_950</item>
+    </style>
+    <style name="IconChipText.Unchecked">
+        <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
+        <item name="android:textColor">@color/gray_400</item>
+    </style>
+    <style name="IconChipText.Checked">
+        <item name="android:fontFamily">@font/wanted_sans_bold</item>
+        <item name="android:textColor">@color/blue_500</item>
+    </style>
+
     <!-- 숫자 피커 스타일 -->
     <style name="DatePickerStyle" parent="">
         <item name="android:background">@color/white</item>
@@ -64,6 +92,8 @@
         <item name="android:textColor">@color/blue_500</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+
 
 
 </resources>

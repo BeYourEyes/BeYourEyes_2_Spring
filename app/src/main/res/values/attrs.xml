@@ -37,5 +37,16 @@
         <attr name="closeEnabled" format="boolean"/>
     </declare-styleable>
 
+    <!-- 커스텀 질병 칩 속성 -->
+    <declare-styleable name="DiseaseChip">
+        <attr name="chipIcon" format="reference" />
+        <attr name="chipSize" format="dimension"/>
+        <attr name="chipIconSize" format="dimension"/>
+        <attr name="android:text" format="string" />
+        <attr name="android:textColor" format="color" />
+        <attr name="android:textSize" format="dimension" />
+        <attr name="android:checkable" format="boolean" />
+        <attr name="android:checked" format="boolean" />
+    </declare-styleable>
 
 </resources>
