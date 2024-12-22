@@ -71,8 +71,8 @@ class OnboardingFragment : Fragment() {
             lottieView.playAnimation()
             setPartialTextSizeSp(textView, fullText, targetText, 24)
         } else if (number == 2) {
-            val fullText = "카메라로 읽어주는\n식품 정보 음성 인식 기능\n\n\n카메라로 촬영한 식품 정보의 작은 글씨를 터치하면, \n인공지능이 해당 정보를 음성으로 읽어줍니다."
-            val targetText = "카메라로 읽어주는\n식품 정보 음성 인식 기능"
+            val fullText = "카메라로 인식하는\n영양 정보와 음성 안내 기능\n\n\n카메라로 촬영한 영양 정보의 작은 글씨를\n인공지능이 분석하여 음성으로 읽어줍니다. "
+            val targetText = "카메라로 인식하는\n영양 정보와 음성 안내 기능"
             //imageView.setImageResource(R.drawable.onboarding_image2)
             lottieView.setAnimation(R.raw.onboard_2)
             lottieView.playAnimation()
