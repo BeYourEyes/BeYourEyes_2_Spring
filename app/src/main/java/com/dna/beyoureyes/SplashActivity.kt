@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
@@ -30,20 +32,27 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        window.statusBarColor = ContextCompat.getColor(this, R.color.blue_500)
+
         auth = Firebase.auth
+
+        YoYo.with(Techniques.FadeIn)
+            .duration(1500)
+            .delay(0)
+            .playOn(binding.splashText1)
+
+        YoYo.with(Techniques.FadeIn)
+            .duration(1500)
+            .delay(0)
+            .playOn(binding.splashText2)
+
+
     }
 
     public override fun onStart() {
 
         //Toast.makeText( this@SplashActivity, "Authentication onStart", Toast.LENGTH_SHORT).show()
         super.onStart()
-
-        YoYo.with(Techniques.Tada)
-            .duration(1000)
-            .delay(0)
-            .pivotX(binding.appName.width/2.toFloat())
-            .playOn(binding.appName)
-
         // Check if user is signed in (non-null) and update UI accordingly.
         lifecycleScope.launch {
             val currentUser = auth.currentUser
@@ -57,7 +66,7 @@ class SplashActivity : AppCompatActivity() {
                     Log.d("SPLASH : ", AppUser.id.toString())
                     //FirebaseHelper.receiveUserData()
                     //Toast.makeText(this@SplashActivity, userId, Toast.LENGTH_LONG).show()
-                    delay(3000) // 3초 지연
+                    delay(4000) // 3초 지연
                     withContext(Dispatchers.Main) {
                         startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                         finish()
@@ -65,7 +74,7 @@ class SplashActivity : AppCompatActivity() {
                 } else {
                     // 최초 접속 (데이터 없음) - 익명 로그인 후 온보딩으로 이동
                     signInAnonymously()
-                    delay(3000) // 3초 지연
+                    delay(4000) // 3초 지연
                     Log.d("SPLASH : ", " 최초 접속 + 데이터 없음 ${AppUser.id.toString()}")
                     withContext(Dispatchers.Main) {
                         startActivity(Intent(this@SplashActivity, OnboardingActivity::class.java))
