@@ -2,6 +2,7 @@ package com.dna.beyoureyes.model
 
 import android.util.Log
 import com.dna.beyoureyes.AppUser
+import com.dna.beyoureyes.userId
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -10,9 +11,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.storage
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.Serializable
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class FirebaseHelper {
     companion object {
@@ -42,16 +45,52 @@ class FirebaseHelper {
                             .document(document.id)
                             .delete()
                             .addOnCompleteListener {
-                                Log.d("REGISTERFIRESTORE : ", "DELETE SUCCESS")
+                                Log.d("REGISTER_FIRESTORE : ", "DELETE SUCCESS")
                                 // 삭제 완료 시 onSuccess 호출
                                 onSuccess()
                             }
                     }
                 }
                 .addOnFailureListener { exception ->
-                    Log.d("REGISTERFIRESTORE : ", "Error deleting documents.", exception)
+                    Log.d("REGISTER_FIRESTORE : ", "Error deleting documents.", exception)
                 }
         }
+
+        suspend fun updateUserData(uid: String, data: HashMap<String, Any?>): Boolean {
+            return withContext(Dispatchers.IO) {
+                val db = Firebase.firestore
+                try {
+                    val info = db.collection("userInfo")
+                        .whereEqualTo("userId", uid)
+                        .get()
+                        .await()
+                    if (info.isEmpty) {
+                        Log.d("UPDATE_USER_DATA", "USER NOT FOUND")
+                        false
+                    } else {
+                        Log.d("UPDATE_USER_DATA", "USER FOUND")
+                        for (document in info) {
+                            // 현재 사용자 문서 수정(uid 일치)
+                            val docRef = db.collection("userInfo").document(document.id)
+                            docRef.update(data)
+                                .addOnSuccessListener {
+                                    Log.d("UPDATE_USER_DATA",
+                                        "DocumentSnapshot successfully updated!")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.w("UPDATE_USER_DATA",
+                                        "Error updating document", e)
+                                }
+                        }
+                        true
+                    }
+                } catch (exception: Exception) {
+                    Log.d("RECEIVE_USER_DATA", "Error getting documents: ", exception)
+                    false
+                }
+            }
+        }
+
         suspend fun receiveUserData(currentUser: FirebaseUser): Boolean {
             val db = Firebase.firestore
             return try {
@@ -89,10 +128,12 @@ class FirebaseHelper {
                             val docRef = db.collection("userInfo").document(document.id)
                             docRef.update("lastActivationDate", FieldValue.serverTimestamp())
                                 .addOnSuccessListener {
-                                    Log.d("FirebaseHelper", "DocumentSnapshot successfully updated!")
+                                    Log.d("RECEIVE_USER_DATA",
+                                        "DocumentSnapshot successfully updated!")
                                 }
                                 .addOnFailureListener { e ->
-                                    Log.w("FirebaseHelper", "Error updating document", e)
+                                    Log.w("RECEIVE_USER_DATA",
+                                        "Error updating document", e)
                                 }
                         }
                         true

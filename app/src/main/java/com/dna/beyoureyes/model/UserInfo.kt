@@ -6,6 +6,8 @@ import com.dna.beyoureyes.NutrientDailyValues
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.Period
 import java.util.Calendar
 import java.util.Locale
 
@@ -14,38 +16,49 @@ enum class Gender {
     WOMAN, MAN
 }
 
-// 기본 생성자 - 각 속성 값을 직접 전달받음. diseas, allergic은 디폴트값으로 null 세팅.
+// 기본 생성자 (assign에서 활용, 프로필 이미지 등록x)
 class UserInfo (
     var name : String,                  // 사용자 나이
     var gender : Int,               // 사용자 성별
-    var birth : Timestamp,     // 사용자 생일
+    birthTimeStamp : Timestamp,     // 사용자 생일
     var disease : MutableSet<Disease>?,   // 사용자 질병 정보(nullable - 해당사항 없을 수 있으므로)
     var allergens : MutableSet<Allergen>?,   // 사용자 알레르기 정보(nullable - 해당사항 없을 수 있으므로
-    var age : Int,
     var profileImgPath: String? = null // 프로필 사진 DB 저장 경로
 ) {
     val profileImgUri : Uri? get() = _profileImgUri
     private var _profileImgUri : Uri? = null // 프로필 사진 uri 값은 일단 private으로
 
-    init {
-        age = getAge(birth)
-    }
+    var birth: Timestamp = birthTimeStamp // 사용자 생일
+        set(value) {
+            field = value
+            age = calculateAge() // 사용자 생일 갱신 시 age 자동 갱신하도록 설정
+        }
+    var age: Int = calculateAge() // age 값은 직접 입력받지 않고 birth 값에 따라 자동 관리
+        private set
 
-    // assign에서 활용하는 생성자(프로필 이미지 등록x)
-    constructor(name:String, gender:Int, birth: Timestamp,
-                disease:MutableSet<Disease>?, allergens: MutableSet<Allergen>?)
-            :this(name, gender, birth, disease, allergens, getAge(birth))
+    private fun calculateAge(): Int {
+        val calendar = Calendar.getInstance()
+        val currentYear = calendar.get(Calendar.YEAR)
+        val currentMonth = calendar.get(Calendar.MONTH) + 1
+        val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+        calendar.time = birth.toDate()
+        val birthYear = calendar.get(Calendar.YEAR)
+        val birthMonth = calendar.get(Calendar.MONTH) + 1
+        val birthDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+        // 나이 계산
+        var age = currentYear - birthYear
+        if (currentMonth < birthMonth || (currentMonth == birthMonth && currentDay < birthDay)) {
+            age--
+        }
+        return age
+    }
 
     // firebase에서 데이터 불러올 때 활용하는 생성자(프로필 이미지 O 유효성 상관X)
     constructor(name:String, gender:Int, birth: Timestamp,
                 disease:ArrayList<String>, allergy:ArrayList<String>, profile:String)
-            :this(name, gender, birth, disease.toDiseaseSet(), allergy.toAllergenSet(), getAge(birth), profile)
-
-    /*
-    constructor(name:String, gender:Int, birth: Timestamp, profile: String)
-            :this(name, gender, birth, mutableSetOf(), mutableSetOf(), getAge(birth), profile)
-
-     */
+            :this(name, gender, birth, disease.toDiseaseSet(), allergy.toAllergenSet(), profile)
 
     fun setProfileImgUri(uri:Uri) {
         _profileImgUri = uri
@@ -100,24 +113,6 @@ class UserInfo (
             }.toMutableSet().ifEmpty { null }
         }
 
-        fun getAge(birth: Timestamp) : Int {
-            val calendar = Calendar.getInstance()
-            val currentYear = calendar.get(Calendar.YEAR)
-            val currentMonth = calendar.get(Calendar.MONTH) + 1
-            val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
-
-            calendar.time = birth.toDate()
-            val birthYear = calendar.get(Calendar.YEAR)
-            val birthMonth = calendar.get(Calendar.MONTH) + 1
-            val birthDay = calendar.get(Calendar.DAY_OF_MONTH)
-
-            // 나이 계산
-            var age = currentYear - birthYear
-            if (currentMonth < birthMonth || (currentMonth == birthMonth && currentDay < birthDay)) {
-                age--
-            }
-            return age
-        }
         /*
         fun parseFirebaseDoc(document: QueryDocumentSnapshot) : UserInfo? {
             val name = document.data.get("userName") as? String
