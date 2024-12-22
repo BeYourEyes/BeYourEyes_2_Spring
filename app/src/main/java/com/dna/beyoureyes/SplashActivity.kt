@@ -36,16 +36,6 @@ class SplashActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        YoYo.with(Techniques.FadeIn)
-            .duration(1500)
-            .delay(0)
-            .playOn(binding.splashText1)
-
-        YoYo.with(Techniques.FadeIn)
-            .duration(1500)
-            .delay(0)
-            .playOn(binding.splashText2)
-
 
     }
 
