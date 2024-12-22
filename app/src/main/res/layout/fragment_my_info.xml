@@ -177,8 +177,7 @@
                     android:textSize="14sp"
                     app:layout_constraintBottom_toTopOf="@+id/diseaseChipLayout"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:id="@+id/diseaseChipLayout"
