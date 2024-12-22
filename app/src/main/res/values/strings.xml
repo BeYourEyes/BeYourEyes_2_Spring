@@ -194,5 +194,6 @@
     <string name="tmp_food_history_title">2024.11.11</string>
     <string name="tmp_food_history_kcal">170kcal</string>
     <string name="assign_dismiss">취소하기</string>
+    <string name="my_info_edit_toolbar">정보수정</string>
 
 </resources>
