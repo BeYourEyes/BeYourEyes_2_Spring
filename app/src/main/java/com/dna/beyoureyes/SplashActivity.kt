@@ -33,6 +33,9 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.blue_500)
+        window.navigationBarColor = ContextCompat.getColor(this, android.R.color.transparent)
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
         auth = Firebase.auth
 
