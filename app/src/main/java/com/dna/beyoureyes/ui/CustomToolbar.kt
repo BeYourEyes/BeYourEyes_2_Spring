@@ -83,6 +83,10 @@ class CustomToolbar(context: Context, attrs: AttributeSet?) :
         }
     }
 
+    fun setTitle(title:String) {
+        binding.title.text = title
+    }
+
     fun setSkipButtonButtonVisibility(isVisible: Boolean) {
         binding.skip.visibility = if (isVisible) View.VISIBLE else View.GONE
     }

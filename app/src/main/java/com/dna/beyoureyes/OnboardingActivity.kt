@@ -1,16 +1,14 @@
 package com.dna.beyoureyes
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
-import android.view.accessibility.AccessibilityEvent
-import android.view.accessibility.AccessibilityManager
 import androidx.appcompat.widget.AppCompatButton
 import androidx.viewpager.widget.ViewPager
 import com.dna.beyoureyes.databinding.ActivityOnboardingBinding
 import com.dna.beyoureyes.ui.assign.AssignActivity
+import com.dna.beyoureyes.ui.assign.AssignMode
 
 class OnboardingActivity : AppCompatActivity() {
 
@@ -72,6 +70,7 @@ class OnboardingActivity : AppCompatActivity() {
         startButton.setOnClickListener {
             //viewPager.currentItem = 0
             val intent = Intent(this, AssignActivity::class.java)
+            intent.putExtra("EDIT_MODE", AssignMode.REGISTER)
             startActivity(intent)
             finish()
         }

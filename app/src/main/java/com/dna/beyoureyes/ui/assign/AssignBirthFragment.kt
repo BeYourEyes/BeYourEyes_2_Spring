@@ -1,39 +1,52 @@
 package com.dna.beyoureyes.ui.assign
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentAssignBirthBinding
 import com.dna.beyoureyes.ui.CustomToolbar
-import com.dna.beyoureyes.ui.FragmentNavigationListener
+import com.google.firebase.Timestamp
 import java.util.Calendar
 
-class AssignBirthFragment : Fragment() {
+class AssignBirthFragment : AssignFragment() {
 
     private lateinit var binding : FragmentAssignBirthBinding
-    private var birth = ""
+
+    private val yearsDesc : Array<String> // 년도 역순(최신순) 리스트
+    private val currentYear : Int // 현재 연도
+    private val currentMonth : Int // 현재 월
+
+    init {
+        val currentDate = Calendar.getInstance() // 현재 날짜 가져오기
+        currentYear = currentDate.get(Calendar.YEAR)
+        currentMonth = currentDate.get(Calendar.MONTH) + 1
+        yearsDesc = ((currentYear-100)..currentYear)
+            .map { it.toString() }.reversed().toTypedArray() // 년도를 역순으로 가져오기
+    }
+
+    // lazy init
+    override val questionMsg: String by lazy { getString(R.string.assign_step3_question) }
+    override val announceForAccessibilityMsg: String by lazy {
+        // 스크린 리더 대응 - numberPicker 조작에 대한 추가 설명
+        questionMsg + "하단에서 태어난 년도와 날짜를 입력할 시, " +
+                "수정창을 두번 탭하여 직접 입력하는 것도 가능하지만, " +
+                "드래그로도 조작할 수 있어요."
+    }
+    // number picker 바인딩
+    private val year : NumberPicker by lazy { binding.yearPicker }
+    private val month : NumberPicker by lazy { binding.monthPicker }
+    private val day : NumberPicker by lazy { binding.dayPicker }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAssignBirthBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
-
-        // number picker 바인딩
-        val year : NumberPicker = binding.yearPicker
-        val month : NumberPicker = binding.monthPicker
-        val day : NumberPicker = binding.dayPicker
-
-        // 현재 날짜 가져오기
-        val currentDate = Calendar.getInstance()
-        val currentYear = currentDate.get(Calendar.YEAR)
-        val currentMonth = currentDate.get(Calendar.MONTH) + 1
 
         // 스크롤로 순환할 수 있는 기능 막기
         year.wrapSelectorWheel = false
@@ -48,8 +61,6 @@ class AssignBirthFragment : Fragment() {
         month.minValue = 1
         month.maxValue = 12
 
-        // 년도를 역순으로 표시
-        val yearsDesc = ((currentYear-100)..currentYear).map { it.toString() }.reversed().toTypedArray()
         year.displayedValues = yearsDesc
 
         // number picker에 생월을 표시할 때 'x월'이라는 형식으로 표시
@@ -58,6 +69,7 @@ class AssignBirthFragment : Fragment() {
         // 일 범위 설정: 1일 부터 시작하며, 년도와 월마다 최대 일수가 다름
         day.minValue = 1
         day.maxValue = getDaysInMonth(currentYear, currentMonth)
+
         // 입력 년도가 넘어가며 월이 바뀔 때 최대 일수 변경되어야 함
         year.setOnValueChangedListener { _, _, input ->
             val maxDayValue = getDaysInMonth(input, month.value)
@@ -74,29 +86,16 @@ class AssignBirthFragment : Fragment() {
         month.value = 1
         day.value = 1
 
-        val listener = activity as? FragmentNavigationListener
-        binding.nextBtn.setOnClickListener {
-            val selectedYear = yearsDesc[year.value] // 역순으로 설정된 displayedValues 사용
-            val selectedMonth = month.value.toString().padStart(2, '0') // 1 -> "01"로 변환
-            val selectedDay = day.value.toString().padStart(2, '0')     // 1 -> "01"로 변환
-            birth = selectedYear + selectedMonth + selectedDay
-            listener?.onBirthInputRecieved(birth)
-            listener?.onBtnClick(this, true)
-        }
-        binding.toolbar.backButtonClickListener = object : CustomToolbar.ButtonClickListener {
-            override fun onClicked() {
-                listener?.onBtnClick(this@AssignBirthFragment, false)
-            }
-        }
-
-        // 스크린 리더 대응 - numberPicker 조작에 대한 추가 설명
-        binding.stepGuideLayout.contentDescription = buildString {
-            append("${binding.stepText.text}: ${binding.questionText.text} ")
-            append("하단에서 태어난 년도와 날짜를 입력해주세요. ")
-            append("날짜 입력은 수정창을 두번 탭하여 키보드로도 직접 입력 가능하지만, " +
-                    "드래그로도 조작할 수 있어요.")
-        }
         return binding.root
+    }
+
+    // 유효성 검사 & 입력값 getter
+    override fun getValidInput(): String {
+        val selectedYear = yearsDesc[year.value] // 역순으로 설정된 displayedValues 사용
+        val selectedMonth = month.value.toString().padStart(2, '0') // 1 -> "01"로 변환
+        val selectedDay = day.value.toString().padStart(2, '0')     // 1 -> "01"로 변환
+        val birth = selectedYear + selectedMonth + selectedDay
+        return birth
     }
 
     override fun onDestroyView() {

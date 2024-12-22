@@ -3,111 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/gray_50"
+    android:paddingVertical="24dp"
     tools:context=".ui.assign.AssignDiseaseFragment">
 
-    <com.dna.beyoureyes.ui.CustomToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="@string/assign_toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/stepGuideLayout"
-        android:focusable="true"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/assignDiseaseChipGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
-        <TextView
-            android:id="@+id/stepText"
-            android:focusable="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/wanted_sans_semi_bold"
-            android:text="@string/assign_step4"
-            android:textColor="@color/blue_500"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/questionText"
-            android:focusable="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/wanted_sans_semi_bold"
-            android:text="@string/assign_step4_question"
-            android:textColor="@color/gray_950"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stepText" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/nextBtn"
+        app:chipSpacing="13dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stepGuideLayout"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent"
+        app:singleSelection="false">
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/assignDiseaseChipGroup"
+        <com.dna.beyoureyes.ui.IconChip
+            android:id="@+id/none"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:chipSpacing="13dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:singleSelection="false">
+            android:checkable="true"
+            android:checked="false"
+            android:text="@string/assign_disease_no"
+            android:textSize="16sp"
+            app:chipIcon="@drawable/ic_disease_none_55"
+            app:chipIconSize="55dp"
+            app:chipSize="98dp" />
 
-            <com.dna.beyoureyes.ui.IconChip
-                android:id="@+id/none"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checkable="true"
-                android:checked="false"
-                android:text="@string/assign_disease_no"
-                android:textSize="16sp"
-                app:chipIcon="@drawable/ic_disease_none_55"
-                app:chipIconSize="55dp"
-                app:chipSize="98dp" />
-
-        </com.google.android.material.chip.ChipGroup>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/nextBtn"
-        android:layout_width="0dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="14dp"
-        android:background="@drawable/shape_button_b500_24"
-        android:text="@string/assign_button_next"
-        android:fontFamily="@font/wanted_sans_bold"
-        android:textSize="14sp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
+    </com.google.android.material.chip.ChipGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

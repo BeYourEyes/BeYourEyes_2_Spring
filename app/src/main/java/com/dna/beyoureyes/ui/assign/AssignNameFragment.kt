@@ -1,5 +1,6 @@
 package com.dna.beyoureyes.ui.assign
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,66 +9,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentAssignNameBinding
 import com.dna.beyoureyes.model.FirebaseHelper
-import com.dna.beyoureyes.ui.CustomToolbar
-import com.dna.beyoureyes.ui.FragmentNavigationListener
 import kotlinx.coroutines.launch
 
-class AssignNameFragment : Fragment() {
+class AssignNameFragment : AssignFragment() {
 
     private var isDuplicateNickname = 0
-
-
     private lateinit var binding: FragmentAssignNameBinding
+
+    override val questionMsg: String by lazy { getString(R.string.assign_step1_question) }
+    override val announceForAccessibilityMsg: String by lazy { questionMsg }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAssignNameBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
-        val listener = activity as? FragmentNavigationListener
-        binding.nextBtn.setOnClickListener {
-            val name = binding.nameInput.text.toString().trim()
-            if (name.isEmpty()) {
-                Toast.makeText(requireContext(), "이름을 입력해주세요.", Toast.LENGTH_LONG).show()
-            }
-            else {
-                when(isDuplicateNickname) {
-                    -1 -> {
-                        Toast.makeText(requireContext(), "중복 검사를 해주세요.", Toast.LENGTH_LONG).show()
-                    }
-                    0 -> {
-                        Toast.makeText(
-                            requireContext(),
-                            "중복된 이름입니다. 다른 이름을 사용해주세요.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                    1 -> {
-                        listener?.onNameInputRecieved(binding.nameInput.text.toString())
-                        listener?.onBtnClick(this, true)
-                    }
-                    else -> {
-                        Toast.makeText(requireContext(), "error", Toast.LENGTH_LONG).show()
-                    }
-                }
-
-            }
-        }
-
-
-        binding.toolbar.backButtonClickListener = object : CustomToolbar.ButtonClickListener {
-            override fun onClicked() {
-                listener?.onBtnClick(this@AssignNameFragment, false)
-            }
-        }
 
         binding.delBtn.setOnClickListener {
             binding.nameInput.text = null
@@ -174,12 +136,49 @@ class AssignNameFragment : Fragment() {
                             )
                         }
                     }
+                } else {
+                    binding.validationText.text ="닉네임을 입력해주세요."
+                    binding.validationText.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.alert_500
+                        )
+                    )
                 }
             }
         })
 
-
         return binding.root
     }
 
+    // 입력 내용 유효성 검증 & 입력 내용 getter
+    override fun getValidInput(): String? {
+        val name = binding.nameInput.text.toString().trim()
+        if (name.isEmpty()) {
+            Toast.makeText(requireContext(), "이름을 입력해주세요.", Toast.LENGTH_LONG).show()
+            return null
+        } else {
+            when(isDuplicateNickname) {
+                -1 -> {
+                    Toast.makeText(requireContext(), "중복 검사를 진행해주세요.", Toast.LENGTH_LONG).show()
+                    return null
+                }
+                0 -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "중복된 이름입니다. 다른 이름을 사용해주세요.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return null
+                }
+                1 -> {
+                    return name
+                }
+                else -> {
+                    Toast.makeText(requireContext(), "error", Toast.LENGTH_LONG).show()
+                    return null
+                }
+            }
+        }
+    }
 }
