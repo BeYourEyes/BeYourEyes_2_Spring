@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <!-- MainActivity 하단 네비게이션바 스타일 -->
     <style name="BottomNavigationTextStyle">
         <item name="android:fontFamily">@font/wanted_sans_semi_bold</item>
