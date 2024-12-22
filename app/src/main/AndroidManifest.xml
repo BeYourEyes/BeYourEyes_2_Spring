@@ -72,12 +72,6 @@
             android:label="식품 분석"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ui.myInfo.EditUserInfoActivity"
-            android:exported="false"
-            android:label="내 정보 수정"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="ocr_korean" />

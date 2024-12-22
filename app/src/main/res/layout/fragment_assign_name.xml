@@ -2,71 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/gray_50"
+    android:paddingVertical="24dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.assign.AssignNameFragment">
-
-    <com.dna.beyoureyes.ui.CustomToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="@string/assign_toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/stepGuideLayout"
-        android:focusable="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
-        <TextView
-            android:id="@+id/stepText"
-            android:focusable="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/wanted_sans_semi_bold"
-            android:text="@string/assign_step1"
-            android:textColor="@color/blue_500"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/questionText"
-            android:focusable="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/wanted_sans_semi_bold"
-            android:text="@string/assign_step1_question"
-            android:textColor="@color/gray_950"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stepText" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="20dp"
         android:background="@drawable/shape_background_g100_8"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stepGuideLayout">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/searchIcon"
@@ -107,32 +58,14 @@
         android:id="@+id/validationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="36dp"
+        android:fontFamily="@font/wanted_sans_regular"
         android:text="@string/assign_name_check_ok"
         android:textColor="@color/gray_900"
-        android:fontFamily="@font/wanted_sans_regular"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/nextBtn"
-        android:layout_width="0dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="14dp"
-        android:background="@drawable/shape_button_b500_24"
-        android:text="@string/assign_button_next"
-        android:fontFamily="@font/wanted_sans_bold"
-        android:textSize="14sp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
