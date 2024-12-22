@@ -3,11 +3,13 @@ package com.dna.beyoureyes.ui.myInfo
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +24,10 @@ import com.dna.beyoureyes.BuildConfig
 import com.dna.beyoureyes.ui.assign.AssignMode
 import com.dna.beyoureyes.ui.IconChip
 import com.dna.beyoureyes.ui.assign.AssignActivity
+import com.google.android.gms.tasks.Task
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
 
 class MyInfoFragment : Fragment() {
     private var _binding: FragmentMyInfoBinding? = null
@@ -94,7 +100,20 @@ class MyInfoFragment : Fragment() {
         }
         // 앱 스토어 리뷰 남기기
         binding.reviewBtn.setOnClickListener {
+            val reviewManager: ReviewManager = ReviewManagerFactory.create(requireContext())
+            val request: Task<ReviewInfo> = reviewManager.requestReviewFlow()
 
+            request.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val reviewInfo = task.result
+                    reviewManager.launchReviewFlow(requireActivity(), reviewInfo)
+                        .addOnCompleteListener {
+                        }
+                } else {
+                    Log.e("ReviewError", "Error requesting review flow", task.exception)
+                    Toast.makeText(requireContext(), "오류가 발생했습니다. 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
         // 고객센터 문의하기
         binding.contactBtn.setOnClickListener {
