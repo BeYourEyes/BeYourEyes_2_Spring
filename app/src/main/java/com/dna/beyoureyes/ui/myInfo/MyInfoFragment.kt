@@ -3,7 +3,6 @@ package com.dna.beyoureyes.ui.myInfo
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +19,9 @@ import com.dna.beyoureyes.databinding.FragmentMyInfoBinding
 import com.dna.beyoureyes.ui.CustomToolbar
 import com.google.android.material.chip.Chip
 import com.dna.beyoureyes.BuildConfig
+import com.dna.beyoureyes.ui.assign.AssignMode
 import com.dna.beyoureyes.ui.IconChip
+import com.dna.beyoureyes.ui.assign.AssignActivity
 
 class MyInfoFragment : Fragment() {
     private var _binding: FragmentMyInfoBinding? = null
@@ -61,6 +62,27 @@ class MyInfoFragment : Fragment() {
 
         // 식사 기록 개수 세팅
         binding.historyCnt.text = "${foodHistoryAdapter.itemCount}"
+
+        // 프로필 수정 버튼
+        binding.editProfile.setOnClickListener {
+            val intent = Intent(requireContext(), AssignActivity::class.java)
+            intent.putExtra("EDIT_MODE", AssignMode.PROFILE)
+            startActivity(intent)
+        }
+
+        // 질환 수정 버튼
+        binding.editDisease.setOnClickListener {
+            val intent = Intent(requireContext(), AssignActivity::class.java)
+            intent.putExtra("EDIT_MODE", AssignMode.DISEASE)
+            startActivity(intent)
+        }
+
+        // 알레르기 수정 버튼
+        binding.editAllergy.setOnClickListener {
+            val intent = Intent(requireContext(), AssignActivity::class.java)
+            intent.putExtra("EDIT_MODE", AssignMode.ALLERGY)
+            startActivity(intent)
+        }
 
         // 앱 공유하기 버튼
         binding.shareBtn.setOnClickListener {

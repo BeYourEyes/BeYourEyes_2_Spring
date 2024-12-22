@@ -1,41 +1,24 @@
 package com.dna.beyoureyes.ui.assign
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentAssignGenderBinding
-import com.dna.beyoureyes.ui.CustomToolbar
-import com.dna.beyoureyes.ui.FragmentNavigationListener
 
-class AssignGenderFragment : Fragment() {
+class AssignGenderFragment : AssignFragment() {
     private lateinit var binding : FragmentAssignGenderBinding
+    override val questionMsg: String by lazy { getString(R.string.assign_step2_question) }
+    override val announceForAccessibilityMsg: String by lazy { questionMsg }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAssignGenderBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
-        val listener = activity as? FragmentNavigationListener
-        binding.nextBtn.setOnClickListener {
-            val gender = getUserGender()
-            if (gender != -1) {
-                listener?.onGenderInputRecieved(gender)
-                listener?.onBtnClick(this, true)
-            }
-            else {
-                Toast.makeText(requireContext(), "성별을 입력해주세요.", Toast.LENGTH_LONG).show()
-            }
-        }
-
-        binding.toolbar.backButtonClickListener = object : CustomToolbar.ButtonClickListener {
-            override fun onClicked() {
-                listener?.onBtnClick(this@AssignGenderFragment, false)
-            }
-        }
 
         binding.chipFemale.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -46,9 +29,7 @@ class AssignGenderFragment : Fragment() {
             if (isChecked) {
                 binding.chipFemale.isChecked = false
             }
-
         }
-
         return binding.root
     }
 
@@ -56,5 +37,16 @@ class AssignGenderFragment : Fragment() {
         if (binding.chipFemale.isChecked) return 0
         else if(binding.chipMale.isChecked) return 1
         else return -1
+    }
+
+    // 유효성 검사 & 입력 내용 getter
+    override fun getValidInput(): Int? {
+        val gender = getUserGender()
+        if (gender != -1) {
+            return gender
+        } else {
+            Toast.makeText(requireContext(), "성별을 입력해주세요.", Toast.LENGTH_LONG).show()
+            return null
+        }
     }
 }
