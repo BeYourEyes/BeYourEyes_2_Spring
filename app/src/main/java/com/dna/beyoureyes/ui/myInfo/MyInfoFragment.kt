@@ -20,7 +20,6 @@ import com.dna.beyoureyes.databinding.FragmentMyInfoBinding
 import com.dna.beyoureyes.ui.CustomToolbar
 import com.google.android.material.chip.Chip
 import com.dna.beyoureyes.BuildConfig
-import com.dna.beyoureyes.MyInfoEditActivity
 import com.dna.beyoureyes.ui.IconChip
 
 class MyInfoFragment : Fragment() {
@@ -62,23 +61,6 @@ class MyInfoFragment : Fragment() {
 
         // 식사 기록 개수 세팅
         binding.historyCnt.text = "${foodHistoryAdapter.itemCount}"
-
-        binding.editProfile.setOnClickListener {
-            //val intent = Intent(requireContext(), MyInfoEditActivity::class.java)
-            //startActivity(intent)
-        }
-
-        binding.editDisease.setOnClickListener {
-            val intent = Intent(requireContext(), MyInfoEditActivity::class.java)
-            intent.putExtra("type", "disease")
-            startActivity(intent)
-        }
-
-        binding.editAllergy.setOnClickListener {
-            //val intent = Intent(requireContext(), MyInfoEditActivity::class.java)
-            //intent.putExtra("type", "allergy")
-            //startActivity(intent)
-        }
 
         // 앱 공유하기 버튼
         binding.shareBtn.setOnClickListener {
