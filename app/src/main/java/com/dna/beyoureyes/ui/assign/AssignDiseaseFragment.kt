@@ -1,30 +1,31 @@
 package com.dna.beyoureyes.ui.assign
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentAssignDiseaseBinding
 import com.dna.beyoureyes.model.Disease
-import com.dna.beyoureyes.ui.CustomToolbar
-import com.dna.beyoureyes.ui.FragmentNavigationListener
 import com.dna.beyoureyes.ui.IconChip
 
 
-class AssignDiseaseFragment : Fragment() {
+class AssignDiseaseFragment : AssignFragment() {
     private lateinit var binding : FragmentAssignDiseaseBinding
     private var diseaseSet : MutableSet<Disease> = mutableSetOf()
     private val diseaseToChipIdMap = HashMap<Disease, Int>() // 칩 ID와 Disease Enum 값을 매핑하는 HashMap
+
+    override val questionMsg: String by lazy { getString(R.string.assign_step4_question) }
+    override val announceForAccessibilityMsg: String by lazy { questionMsg }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAssignDiseaseBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
-        val listener = activity as? FragmentNavigationListener
+
         val chipGroup = binding.assignDiseaseChipGroup
         Log.d("TEST", "disease set: ${diseaseSet.toString()}")
         Disease.entries.forEach { disease ->
@@ -61,15 +62,11 @@ class AssignDiseaseFragment : Fragment() {
             }
         }
 
-        binding.nextBtn.setOnClickListener {
-            listener?.onDiseaseInputRecieved(diseaseSet)
-            listener?.onBtnClick(this, true)
-        }
-        binding.toolbar.backButtonClickListener = object : CustomToolbar.ButtonClickListener {
-            override fun onClicked() {
-                listener?.onBtnClick(this@AssignDiseaseFragment, false)
-            }
-        }
         return binding.root
+    }
+
+    // 유효성 검사 & 입력 내용 getter
+    override fun getValidInput(): MutableSet<Disease> {
+        return diseaseSet
     }
 }

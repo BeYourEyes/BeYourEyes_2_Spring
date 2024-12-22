@@ -1,5 +1,6 @@
 package com.dna.beyoureyes.ui.assign
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -7,19 +8,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentAssignAllergyBinding
 import com.dna.beyoureyes.model.Allergen
+import com.dna.beyoureyes.model.Disease
 import com.dna.beyoureyes.ui.CustomToolbar
-import com.dna.beyoureyes.ui.FragmentNavigationListener
 import com.google.android.material.chip.Chip
 
-class AssignAllergyFragment : Fragment() {
+class AssignAllergyFragment : AssignFragment() {
 
     private lateinit var binding : FragmentAssignAllergyBinding
     private var allergenSet : MutableSet<Allergen> = mutableSetOf()
     private val allergenToChipIdMap = HashMap<Allergen, Int>() // 칩 ID와 Allergen Enum 값을 매핑하는 HashMap
+
+    override val questionMsg: String by lazy { getString(R.string.assign_step5_question) }
+    override val announceForAccessibilityMsg: String by lazy { questionMsg }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,19 +76,12 @@ class AssignAllergyFragment : Fragment() {
                 )
             }
         }
-
-        // Inflate the layout for this fragment
-        val listener = activity as? FragmentNavigationListener
-        binding.nextBtn.setOnClickListener {
-            listener?.onAllergyInputRecieved(allergenSet)
-            listener?.onBtnClick(this, true)
-        }
-        binding.toolbar.backButtonClickListener = object : CustomToolbar.ButtonClickListener {
-            override fun onClicked() {
-                listener?.onBtnClick(this@AssignAllergyFragment, false)
-            }
-        }
         return binding.root
+    }
+
+    // 유효성 검사 & 입력 내용 getter
+    override fun getValidInput(): MutableSet<Allergen> {
+        return allergenSet
     }
 
 }
