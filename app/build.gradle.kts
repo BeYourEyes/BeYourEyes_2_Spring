@@ -103,6 +103,9 @@ dependencies {
     //LocalDate 사용을 위한 백포팅
     implementation("com.jakewharton.threetenabp:threetenabp:1.3.0")
 
+    //Review
+    implementation("com.google.android.play:review:2.0.2")
+
 
     //openCV
     implementation(project(":opencv2"))
