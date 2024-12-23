@@ -22,6 +22,9 @@ class ResultFailFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentResultFailBinding.inflate(inflater, container, false)
+        if (viewModel.hasNoNutritionInfo()) { // 영양정보 없으면
+            binding.failText.text = "영양성분 인식에 실패했어요."
+        }
 
         return binding.root
     }

@@ -12,6 +12,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.storage
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.Serializable
 import kotlinx.coroutines.tasks.await
@@ -22,15 +23,20 @@ class FirebaseHelper {
         private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
         // 데이터를 Firestore에 추가
-        fun sendData(data: HashMap<String, Any?>, collectionName: String) {
-            firestore.collection(collectionName)
-                .add(data)
-                .addOnSuccessListener { documentReference ->
-                    Log.d("INFO", "SUCCESS added with ID: ${documentReference.id}")
-                }
-                .addOnFailureListener { e ->
+        fun sendData(data: HashMap<String, Any?>, collectionName: String): Boolean {
+            val firestore = FirebaseFirestore.getInstance()
+            return runBlocking { // runBlocking을 사용하여 코루틴을 동기적으로 실행
+                try {
+                    firestore.collection(collectionName)
+                        .add(data)
+                        .await() // 작업이 완료될 때까지 기다림
+                    Log.d("INFO", "SUCCESS added")
+                    true // 성공 시 true 반환
+                } catch (e: Exception) {
                     Log.w("INFO", "Error adding document", e)
+                    false // 실패 시 false 반환
                 }
+            }
         }
 
         // 데이터를 Firestore에서 삭제

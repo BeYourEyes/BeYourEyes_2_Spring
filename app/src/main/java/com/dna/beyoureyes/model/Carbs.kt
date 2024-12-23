@@ -7,6 +7,7 @@ class Carbs(override var milligram: Int = 0) : CaloricNutrient {
 
     // 인스턴스 영역
     override val name: String = NAME
+    override val dbFiledName: String = DB_FIELD_NAME
     override val massString: String
         get() = DecimalFormat("#.##g").format(milligram/1000.0)
     override val kcal: Int get() = (milligram / 1000) * KCAL_PER_GRAM
