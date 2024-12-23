@@ -24,6 +24,10 @@ class FoodViewModel : ViewModel() {
         return _foodData.value?.kcal != null
     }
 
+    fun hasNoNutritionInfo() : Boolean {
+        return !isKcalValid() && !isNutritionDataValid()
+    }
+
     fun hasAllergiesToAlert() : Boolean {
         return !(_foodData.value?.allergy?.let{ AppUser.info?.findMatchingAllergy(it) }.isNullOrEmpty())
     }

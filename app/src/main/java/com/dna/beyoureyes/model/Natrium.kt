@@ -7,6 +7,7 @@ class Natrium(override var milligram: Int = 0) : Nutrition {
 
     // 인스턴스 영역
     override val name: String = NAME
+    override val dbFiledName: String = DB_FIELD_NAME
     override val massString: String
         get() = milligram.toString() + "mg"
 
