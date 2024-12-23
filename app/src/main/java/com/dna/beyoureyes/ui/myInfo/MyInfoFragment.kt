@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.android.play.core.review.testing.FakeReviewManager
 
 class MyInfoFragment : Fragment() {
     private var _binding: FragmentMyInfoBinding? = null
@@ -100,20 +101,8 @@ class MyInfoFragment : Fragment() {
         }
         // 앱 스토어 리뷰 남기기
         binding.reviewBtn.setOnClickListener {
-            val reviewManager: ReviewManager = ReviewManagerFactory.create(requireContext())
-            val request: Task<ReviewInfo> = reviewManager.requestReviewFlow()
+            requestReviewInfo()
 
-            request.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val reviewInfo = task.result
-                    reviewManager.launchReviewFlow(requireActivity(), reviewInfo)
-                        .addOnCompleteListener {
-                        }
-                } else {
-                    Log.e("ReviewError", "Error requesting review flow", task.exception)
-                    Toast.makeText(requireContext(), "오류가 발생했습니다. 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
         }
         // 고객센터 문의하기
         binding.contactBtn.setOnClickListener {
@@ -207,6 +196,31 @@ class MyInfoFragment : Fragment() {
             chip.setChipStrokeColorResource(R.color.blue_300)
 
             binding.allergyChipGroup.addView(chip) // 칩 추가
+        }
+    }
+
+    private fun requestReviewInfo() {
+        //Testing
+        //val reviewManager: ReviewManager = FakeReviewManager(requireContext())
+        val reviewManager: ReviewManager = ReviewManagerFactory.create(requireContext())
+        val request: Task<ReviewInfo> = reviewManager.requestReviewFlow()
+
+        request.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val reviewInfo = task.result
+                reviewManager.launchReviewFlow(requireActivity(), reviewInfo)
+                    .addOnCompleteListener { launchTask ->
+                        if (launchTask.isSuccessful) {
+                            Log.d("ReviewFlow", "Review flow launched successfully.")
+                        } else {
+                            Log.e("ReviewFlowError", "Error launching review flow", launchTask.exception)
+                        }
+                    }
+
+            } else {
+                Log.e("ReviewError", "Error requesting review flow", task.exception)
+                Toast.makeText(requireContext(), "오류가 발생했습니다. 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
