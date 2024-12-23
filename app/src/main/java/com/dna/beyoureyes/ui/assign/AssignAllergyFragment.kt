@@ -10,33 +10,37 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentAssignAllergyBinding
 import com.dna.beyoureyes.model.Allergen
 import com.dna.beyoureyes.model.Disease
 import com.dna.beyoureyes.ui.CustomToolbar
+import com.dna.beyoureyes.ui.IconChip
 import com.google.android.material.chip.Chip
 
 class AssignAllergyFragment : AssignFragment() {
 
     private lateinit var binding : FragmentAssignAllergyBinding
-    private var allergenSet : MutableSet<Allergen> = mutableSetOf()
+    private val viewModel : AssignViewModel by activityViewModels()
     private val allergenToChipIdMap = HashMap<Allergen, Int>() // 칩 ID와 Allergen Enum 값을 매핑하는 HashMap
 
-    override val questionMsg: String by lazy { getString(R.string.assign_step5_question) }
-    override val announceForAccessibilityMsg: String by lazy { questionMsg }
+    override val questionMsg: String get() = getString(R.string.assign_step5_question)
+    override val announceForAccessibilityMsg: String get() = questionMsg
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAssignAllergyBinding.inflate(inflater, container, false)
+        viewModel.allergenSet?: run { binding.chipNone.isChecked = true }
 
         Allergen.entries.forEach { alg ->
             // 칩 스타일 및 표시 관련 설정
             val chip = Chip(context)
             chip.text =if (alg.displayName.length == 1) " ${alg.displayName} " else alg.displayName
             chip.isCheckable = true
+            if (viewModel.contains(alg)) chip.isChecked = true
             chip.layoutParams = LinearLayout.LayoutParams(
                 resources.getDimensionPixelSize(R.dimen.checkable_chip_width),
                 resources.getDimensionPixelSize(R.dimen.checkable_chip_height)
@@ -49,14 +53,11 @@ class AssignAllergyFragment : AssignFragment() {
             // 알레르기 칩 check 상태 변경 리스너
             chip.setOnCheckedChangeListener { _, isChecked ->
                 if(isChecked) {
-                    allergenSet.add(alg)
+                    viewModel.addToAllergenSet(alg)
                     binding.chipNone.isChecked = false // "없음" 칩 해제
                 } else {
-                    allergenSet.remove(alg)
+                    viewModel.removeFromAllergenSet(alg)
                 }
-                Log.d("ASSIGN_ALLERGY",
-                    "selected chips: ${allergenSet.joinToString(", ") { it.displayName }}"
-                )
             }
 
             // 그룹에 칩 추가
@@ -67,21 +68,34 @@ class AssignAllergyFragment : AssignFragment() {
         val chipGroup = binding.assignAllergyChipGroup
         binding.chipNone.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                for (id in allergenSet.mapNotNull{ allergenToChipIdMap[it] }){
-                    chipGroup.findViewById<Chip>(id).isChecked = false // 선택된 알레르기 칩 해제
+                viewModel.allergenSet?.let { selectedAllergens ->
+                    for (id in selectedAllergens.mapNotNull{ allergenToChipIdMap[it] }){
+                        chipGroup.findViewById<Chip>(id).isChecked = false // 선택된 알레르기 칩 해제
+                    }
+                    viewModel.clearAllergenSet() // 저장된 거 비우기
                 }
-                allergenSet.clear() // 저장된 거 비우기
-                Log.d("ASSIGN_ALLERGY",
-                    "selected chips: ${allergenSet.joinToString(", ") { it.displayName }}"
-                )
             }
         }
         return binding.root
     }
 
-    // 유효성 검사 & 입력 내용 getter
-    override fun getValidInput(): MutableSet<Allergen> {
-        return allergenSet
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.post {
+            viewModel.allergenSet?.let { selectedAllergens ->
+                for (id in selectedAllergens.mapNotNull{ allergenToChipIdMap[it] }){
+                    binding.assignAllergyChipGroup
+                        .findViewById<Chip>(id).isChecked = true
+                }
+            } ?: run {
+                binding.chipNone.isChecked = true
+            }
+        }
+    }
+
+    // 유효성 검사
+    override fun isInputValid(): Boolean {
+        return true
     }
 
 }
