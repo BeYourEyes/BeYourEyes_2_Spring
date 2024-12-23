@@ -2,14 +2,8 @@ package com.dna.beyoureyes.model
 
 import android.net.Uri
 import android.util.Log
-import com.dna.beyoureyes.NutrientDailyValues
 import com.google.firebase.Timestamp
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.Period
 import java.util.Calendar
-import java.util.Locale
 
 // 유저 정보 관리에 필요한 성별 enum 상수
 enum class Gender {
