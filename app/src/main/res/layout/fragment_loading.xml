@@ -68,7 +68,8 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/loading_percent"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:fontFamily="@font/wanted_sans_bold"
             android:textSize="16sp" />
     </FrameLayout>
 
