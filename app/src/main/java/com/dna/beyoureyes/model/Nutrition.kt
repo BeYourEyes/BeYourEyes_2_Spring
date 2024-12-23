@@ -5,6 +5,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 interface Nutrition { // 나중에 Nutrient로 이름 변경 고려... 의미상
 
     val name : String       // 영양소명
+    val dbFiledName: String // db 저장 시 필드명
     var milligram : Int     // 질량(mg 단위)
     val massString: String  // 단위를 포함한 질량 문자열 (ex. "10g")
     val percentageOfDailyValue:Int // 질량이 사용자 권장량 대비 몇 %인지 정수로 반환
