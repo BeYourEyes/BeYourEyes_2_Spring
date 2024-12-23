@@ -64,7 +64,7 @@ class OnboardingFragment : Fragment() {
         //val imageView = view.findViewById<ImageView>(R.id.imageView)
         val lottieView = view.findViewById<LottieAnimationView>(R.id.lottieView)
         if (number == 1) {
-            val fullText = "나만을 위한\n더 쉬운 식품 정보\n\n\n당신의 안식은 시력이 좋지 않은 노인 및\n식품 알레르기가 있는 사용자를 위한 어플입니다"
+            val fullText = "나만을 위한\n더 쉬운 식품 정보\n\n\n당신의 안식은 시력이 좋지 않은 노인 및\n식품 알레르기가 있는 사용자를 위한 어플입니다."
             val targetText = "나만을 위한\n더 쉬운 식품 정보"
             //imageView.setImageResource(R.drawable.onboarding_image1)
             lottieView.setAnimation(R.raw.onboard_1)
