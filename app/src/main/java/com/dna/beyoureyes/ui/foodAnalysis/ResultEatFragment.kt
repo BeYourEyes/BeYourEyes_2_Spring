@@ -7,13 +7,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.dna.beyoureyes.AppUser
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentResultEatBinding
+import com.dna.beyoureyes.databinding.ResultEatDialogBinding
 import com.dna.beyoureyes.model.FirebaseHelper
 import com.dna.beyoureyes.model.Food
 import com.dna.beyoureyes.ui.CustomToolbar
@@ -101,34 +104,59 @@ class ResultEatFragment : Fragment() {
 
                 // viewModel에 Food 형식의 데이터로 필요한 데이터 저장.
                 // viewModel에 적절한 get 함수를 짜는 등...으로 칼로리, 영양정보 데이터 가져오기
-                if (viewModel.isFoodDataAvaiable()) {
+                val isSuccess = if (viewModel.isFoodDataAvaiable()) {
                     val eatFoodData : Food = viewModel.getFoodData()!!
                     // 참고로 Food 객체에 양 조절 메소드 있음. (Food 변수).scaleQuantityByFactor(0.5)처럼 사용
                     eatFoodData.scaleQuantityByFactor(scale.toDouble())
                     val hashFoodData : HashMap<String, Any?> = hashMapOf(
                         "calories" to eatFoodData.kcal,
-                        "protein" to eatFoodData.nutritions?.find { it.name == "단백질" }?.milligram,
-                        "carbs" to eatFoodData.nutritions?.find { it.name == "탄수화물" }?.milligram,
-                        "chol" to eatFoodData.nutritions?.find { it.name == "콜레스테롤" }?.milligram,
-                        "fat" to eatFoodData.nutritions?.find { it.name == "지방" }?.milligram,
-                        "natrium" to eatFoodData.nutritions?.find { it.name == "나트륨" }?.milligram,
-                        "satFat" to eatFoodData.nutritions?.find { it.name == "포화지방" }?.milligram,
-                        "sugar" to eatFoodData.nutritions?.find { it.name == "당류" }?.milligram,
                         "date" to com.google.firebase.Timestamp.now(),
                         "userId" to AppUser.id,
                         "imgPath" to "foods/${AppUser.id}_${imageUri.lastPathSegment}"
                     )
+                    val hashNutritionData : HashMap<String, Int>? =  // 영양소 함유량 해시맵 한번에 변환
+                        eatFoodData.nutritions?.associateBy { it.dbFiledName }
+                            ?.mapValues { it.value.milligram } as HashMap<String, Int>?
+                    hashNutritionData?.let {
+                        hashFoodData.putAll(it) // 영양소 함유량 해시맵 변환 성공하면 데이터에 추가
+                    }
+                    // 성공 실패 여부 반환하게 수정
                     FirebaseHelper.sendData(hashFoodData, "userIntakeNutrition")
-
-                }
-                requireActivity().finish()
+                } else { false }
+                showDialog(isSuccess)
             }
         }
 
         return root
     }
 
-    fun resizeImageByWidth(uri: Uri, targetWidth: Int): Uri {
+    private fun showDialog(isSuccess:Boolean) { // 추후 성공/실패 여부 확인 가능하도록
+        // 1. AlertDialog.Builder 생성
+        val builder = AlertDialog.Builder(requireContext(), R.style.DialogTheme)
+
+        // 2. LayoutInflater를 사용하여 레이아웃 인플레이트
+        val dialogBinding = ResultEatDialogBinding.inflate(LayoutInflater.from(requireContext()))
+
+        // 3. setView()로 사용자 정의 레이아웃 설정
+        builder.setView(dialogBinding.root)
+
+        if (!isSuccess) {
+            dialogBinding.resultEatDialog.text = "오류로 인해 섭취량 입력에 실패했습니다."
+        }
+
+        // 다이얼로그 내부 버튼에 대한 리스너 설정
+        dialogBinding.button.setOnClickListener {
+            requireActivity().finish()
+        }
+
+        // 5. create()로 AlertDialog 생성
+        val dialog = builder.create()
+
+        // 6. show()로 다이얼로그 표시
+        dialog.show()
+    }
+
+    private fun resizeImageByWidth(uri: Uri, targetWidth: Int): Uri {
         val inputStream = requireContext().contentResolver.openInputStream(uri)
         val originalBitmap = BitmapFactory.decodeStream(inputStream)
 
