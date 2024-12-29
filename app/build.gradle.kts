@@ -30,8 +30,8 @@ android {
         applicationId = "com.dna.beyoureyes"
         minSdk = 24
         targetSdk = 34
-        versionCode = 21
-        versionName = "2.2.1"
+        versionCode = 22
+        versionName = "2.2.2"
         println ("Current defaultConfig versionName: ${versionName}")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "OPEN_API_KEY", getApiKey("OPEN_API_KEY"))
