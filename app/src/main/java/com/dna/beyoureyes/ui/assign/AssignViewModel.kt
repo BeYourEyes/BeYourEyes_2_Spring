@@ -65,7 +65,7 @@ class AssignViewModel : ViewModel() {
     }
 
     fun clearAllergenSet() {
-        _allergenSet = null
+        _allergenSet?.clear()
     }
 
     fun addToDiseaseSet(disease: Disease) {
@@ -77,7 +77,7 @@ class AssignViewModel : ViewModel() {
     }
 
     fun clearDiseaseSet() {
-        _diseaseSet = null
+        _diseaseSet?.clear()
     }
 
     fun setBirth(year: Int, month:Int, day:Int) {
@@ -136,12 +136,18 @@ class AssignViewModel : ViewModel() {
             if (diseaseSet.isNotEmpty()) { // 질환 정보 전달 - enum명으로 DB 저장
                 AppUser.info?.disease = diseaseSet
                 updatedInfo["userDisease"] = diseaseSet.map{ it.name }
+            }else{
+                AppUser.info?.disease = null
+                updatedInfo["userDisease"] = null
             }
         }
         _allergenSet?.let { allergenSet ->
             if (allergenSet.isNotEmpty()) { // 알레르기 정보 전달 - enum명으로 DB 저장
                 AppUser.info?.allergens = allergenSet
                 updatedInfo["userAllergens"] = allergenSet.map{ it.name }
+            }else{
+                AppUser.info?.allergens = null
+                updatedInfo["userAllergens"] = null
             }
         }
         AppUser.id?.let { uid ->
@@ -164,8 +170,8 @@ class AssignViewModel : ViewModel() {
             "userGender" to _gender,
             "userBirth" to birthTimeStamp,
             "userProfile" to null,
-            "userDisease" to diseaseSet?.map{ it.name }, // 질환 정보 전달 - enum명으로 DB 저장
-            "userAllergens" to allergenSet?.map {it.name }, // 알레르기 정보 전달 - enum명으로 DB 저장
+            "userDisease" to diseaseSet?.map{ it.name }?.ifEmpty { null }, // 질환 정보 전달 - enum명으로 DB 저장
+            "userAllergens" to allergenSet?.map {it.name }?.ifEmpty { null }, // 알레르기 정보 전달 - enum명으로 DB 저장
             "lastActivationDate" to FieldValue.serverTimestamp()
         )
 

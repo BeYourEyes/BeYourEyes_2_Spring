@@ -1,5 +1,6 @@
 package com.dna.beyoureyes.ui.myInfo
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -101,7 +102,7 @@ class MyInfoFragment : Fragment() {
         }
         // 앱 스토어 리뷰 남기기
         binding.reviewBtn.setOnClickListener {
-            requestReviewInfo()
+            openPlayStoreReviewPage()
 
         }
         // 고객센터 문의하기
@@ -199,28 +200,18 @@ class MyInfoFragment : Fragment() {
         }
     }
 
-    private fun requestReviewInfo() {
-        //Testing
-        //val reviewManager: ReviewManager = FakeReviewManager(requireContext())
-        val reviewManager: ReviewManager = ReviewManagerFactory.create(requireContext())
-        val request: Task<ReviewInfo> = reviewManager.requestReviewFlow()
-
-        request.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val reviewInfo = task.result
-                reviewManager.launchReviewFlow(requireActivity(), reviewInfo)
-                    .addOnCompleteListener { launchTask ->
-                        if (launchTask.isSuccessful) {
-                            Log.d("ReviewFlow", "Review flow launched successfully.")
-                        } else {
-                            Log.e("ReviewFlowError", "Error launching review flow", launchTask.exception)
-                        }
-                    }
-
-            } else {
-                Log.e("ReviewError", "Error requesting review flow", task.exception)
-                Toast.makeText(requireContext(), "오류가 발생했습니다. 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-            }
+    private fun openPlayStoreReviewPage() {
+        val packageName = requireContext().packageName // 앱의 패키지 이름 가져오기
+        try {
+            // Google Play Store 앱의 리뷰 페이지 URL 생성 (market:// 방식)
+            val intent = Intent(Intent.ACTION_VIEW,
+                Uri.parse("market://details?id=$packageName"))
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            // Google Play Store 앱이 설치되어 있지 않은 경우, 웹 브라우저로 연결 (https:// 방식)
+            val intent = Intent(Intent.ACTION_VIEW,
+                Uri.parse("https://play.google.com/store/apps/details?id=$packageName"))
+            startActivity(intent)
         }
     }
 
