@@ -1,6 +1,6 @@
 # 📱 당신의 안식 BeYourEyes 어플리케이션 - v2.0
 노인을 위한 영양정보 제공 앱 버전 2 어플리케이션 Android 입니다.
-<br><br><br>
+<br><br>
 ![그래픽 이미지(좌측 정렬)](https://github.com/user-attachments/assets/4d825943-db4f-4674-8d5a-4c9cb50b030f)
 ## 당신의 안식
 ### 👀나만의 영양 맞춤 정보를 한눈에!
@@ -22,7 +22,7 @@
 * 영양 정보 추출 로직 개선
   * OCR API + OPEN API를 통해 추출 정확도 개선   
 * CI/CD
-* 서버 구축 (진행 중)
+* 서버 구축 (✔ 진행 중)
   * firebase를 node.js로 전환 진행 중   
 
 ## 🎨 UI/UX Figma
@@ -30,7 +30,6 @@
 [UI/UX 화면설계 보러가기 링크](https://www.figma.com/design/qLpKu5KxPhngqKwVxJr9bW/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84-(Copy)?node-id=782-34&p=f&t=AJ3gP5wJvolLnT7G-0)
 
 ## 🧑‍🍳 Contributers
-
 
 <table>
   <tr>
