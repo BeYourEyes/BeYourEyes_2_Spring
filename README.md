@@ -27,7 +27,7 @@
 
 ## 🎨 UI/UX Figma
 
-[UI/UX 화면설계 보러가기 링크](https://www.figma.com/design/qLpKu5KxPhngqKwVxJr9bW/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84-(Copy))
+[UI/UX 화면설계 보러가기 링크](https://www.figma.com/design/qLpKu5KxPhngqKwVxJr9bW/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84-(Copy)?node-id=782-34&p=f&t=AJ3gP5wJvolLnT7G-0)
 
 ## 🧑‍🍳 Contributers
 
