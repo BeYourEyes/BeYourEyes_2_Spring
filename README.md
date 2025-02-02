@@ -29,6 +29,15 @@
 
 [UI/UX 화면설계 보러가기 링크](https://www.figma.com/design/qLpKu5KxPhngqKwVxJr9bW/%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84-(Copy)?node-id=782-34&p=f&t=AJ3gP5wJvolLnT7G-0)
 
+## 🔥 영양소 추출 로직 개선
+### 개선 전
+![개선 전](https://github.com/user-attachments/assets/010c6977-060b-4fa4-b830-6caadadc7a75)
+
+----
+### 개선 후
+![개선 후](https://github.com/user-attachments/assets/e93c9e75-ca94-49e9-9de9-e7d40266a802)
+
+
 ## 🧑‍🍳 Contributers
 
 <table>
