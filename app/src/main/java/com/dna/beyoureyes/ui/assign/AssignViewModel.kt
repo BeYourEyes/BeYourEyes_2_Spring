@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dna.beyoureyes.data.local.AppUser
+import com.dna.beyoureyes.data.model.AppUser
 import com.dna.beyoureyes.data.model.Allergen
 import com.dna.beyoureyes.data.model.Disease
 import com.dna.beyoureyes.util.FirebaseHelper

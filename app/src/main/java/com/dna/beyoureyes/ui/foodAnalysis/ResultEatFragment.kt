@@ -12,7 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.dna.beyoureyes.data.local.AppUser
+import com.dna.beyoureyes.data.model.AppUser
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentResultEatBinding
 import com.dna.beyoureyes.databinding.ResultEatDialogBinding

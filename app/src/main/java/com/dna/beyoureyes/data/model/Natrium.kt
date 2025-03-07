@@ -1,6 +1,5 @@
 package com.dna.beyoureyes.data.model
 
-import com.dna.beyoureyes.data.local.AppUser
 import com.google.firebase.firestore.DocumentSnapshot
 
 class Natrium(override var milligram: Int = 0) : Nutrition {

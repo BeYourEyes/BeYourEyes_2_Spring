@@ -10,7 +10,7 @@ import com.dna.beyoureyes.databinding.ActivitySplashBinding
 import com.dna.beyoureyes.data.api.request.DeviceIdRequest
 import com.dna.beyoureyes.di.SpringClient
 import com.dna.beyoureyes.data.api.interceptor.AuthInterceptor
-import com.dna.beyoureyes.data.local.AppUser
+import com.dna.beyoureyes.data.model.AppUser
 import com.dna.beyoureyes.data.repository.AuthRepositoryImpl
 import com.dna.beyoureyes.ui.onboarding.OnboardingActivity
 import com.dna.beyoureyes.data.local.TokenManager

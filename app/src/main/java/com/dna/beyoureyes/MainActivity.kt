@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.dna.beyoureyes.data.local.AppUser
+import com.dna.beyoureyes.data.model.AppUser
 import com.dna.beyoureyes.databinding.ActivityMainBinding
 import com.dna.beyoureyes.data.model.FoodHistory
 import com.google.android.material.bottomnavigation.BottomNavigationView

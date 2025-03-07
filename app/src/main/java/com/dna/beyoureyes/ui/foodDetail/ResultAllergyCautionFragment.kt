@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.dna.beyoureyes.data.local.AppUser
+import com.dna.beyoureyes.data.model.AppUser
 import com.dna.beyoureyes.databinding.FragmentResultAlgCautionBinding
 import com.dna.beyoureyes.ui.foodAnalysis.FoodViewModel
 import com.dna.extensions.addSubjectMarker

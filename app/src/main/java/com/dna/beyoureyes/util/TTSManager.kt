@@ -7,7 +7,7 @@ import android.speech.tts.UtteranceProgressListener
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
-import com.dna.beyoureyes.data.local.AppUser
+import com.dna.beyoureyes.data.model.AppUser
 import com.dna.beyoureyes.data.model.CaloricNutrient
 import com.dna.beyoureyes.data.model.Food
 import java.util.LinkedList

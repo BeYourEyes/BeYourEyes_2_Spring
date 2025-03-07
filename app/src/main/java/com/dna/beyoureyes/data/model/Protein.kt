@@ -1,6 +1,5 @@
 package com.dna.beyoureyes.data.model
 
-import com.dna.beyoureyes.data.local.AppUser
 import com.google.firebase.firestore.DocumentSnapshot
 import java.text.DecimalFormat
 
