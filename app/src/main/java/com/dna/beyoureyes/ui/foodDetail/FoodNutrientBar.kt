@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import com.dna.beyoureyes.BarChartCustomRenderer
+import com.dna.beyoureyes.ui.common.BarChartCustomRenderer
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FoodNutrientBarBinding
-import com.dna.beyoureyes.model.Nutrition
+import com.dna.beyoureyes.data.model.Nutrition
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet

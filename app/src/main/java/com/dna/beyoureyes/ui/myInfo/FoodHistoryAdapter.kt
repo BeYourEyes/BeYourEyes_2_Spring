@@ -2,7 +2,7 @@ package com.dna.beyoureyes.ui.myInfo
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.dna.beyoureyes.model.FoodHistory
+import com.dna.beyoureyes.data.model.FoodHistory
 
 class FoodHistoryAdapter(
     private val items: MutableList<FoodHistory>,

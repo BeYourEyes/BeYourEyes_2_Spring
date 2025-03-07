@@ -1,29 +1,29 @@
 package com.dna.beyoureyes.ui.assign
 
-import android.icu.util.Calendar
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dna.beyoureyes.AppUser
-import com.dna.beyoureyes.model.Allergen
-import com.dna.beyoureyes.model.Disease
-import com.dna.beyoureyes.model.FirebaseHelper
-import com.dna.beyoureyes.model.UserInfo
-import com.google.firebase.Timestamp
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.ktx.Firebase
+import com.dna.beyoureyes.data.local.AppUser
+import com.dna.beyoureyes.data.model.Allergen
+import com.dna.beyoureyes.data.model.Disease
+import com.dna.beyoureyes.util.FirebaseHelper
+import com.dna.beyoureyes.data.api.request.JoinRequest
+import com.dna.beyoureyes.di.SpringClient
+import com.dna.beyoureyes.data.model.UserInfo
 import kotlinx.coroutines.launch
-import java.util.Date
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
+
+
 
 class AssignViewModel : ViewModel() {
 
     // 기존 정보 있으면 가져오기(참조 가져오는 게 아닌 값 복사!!)
     private var _name : String? = AppUser.info?.name // 이름
     private var _gender : Int? = AppUser.info?.gender // 성별
-    private var _birth : Calendar? // 생년월일
-        = AppUser.info?.birth?.toDate()?.let { Calendar.getInstance().apply { time = it } }
+    private var _birth : LocalDate? = AppUser.info?.birth // 생년월일
     private var _diseaseSet : MutableSet<Disease>? =
         AppUser.info?.disease?.toMutableSet() // 보유 질환 set
     private var _allergenSet : MutableSet<Allergen>? =
@@ -32,7 +32,7 @@ class AssignViewModel : ViewModel() {
     // 읽기 전용 변수
     val name : String? get() = _name
     val gender : Int? get() = _gender
-    val birth : Calendar? get() = _birth
+    val birth : LocalDate? get() = _birth
     val diseaseSet : MutableSet<Disease>? get() = _diseaseSet
     val allergenSet : MutableSet<Allergen>? get() = _allergenSet
 
@@ -81,11 +81,7 @@ class AssignViewModel : ViewModel() {
     }
 
     fun setBirth(year: Int, month:Int, day:Int) {
-        _birth = Calendar.getInstance().apply {
-            set(Calendar.YEAR, year)
-            set(Calendar.MONTH, month - 1) // Calendar의 month는 0부터 시작
-            set(Calendar.DAY_OF_MONTH, day)
-        }
+        _birth = LocalDate.of(year, month, day)
     }
 
     fun setGender(gender: Int) {
@@ -128,9 +124,9 @@ class AssignViewModel : ViewModel() {
             updatedInfo["userGender"] = gender
         }
         _birth?.let { birth ->
-            val birthTimeStamp = Timestamp(birth.time)
-            AppUser.info?.birth = birthTimeStamp
-            updatedInfo["userBirth"] = birthTimeStamp
+            //val birthTimeStamp = Timestamp(birth.time)
+            AppUser.info?.birth = birth
+            //updatedInfo["userBirth"] = birthTimeStamp
         }
         _diseaseSet?.let { diseaseSet ->
             if (diseaseSet.isNotEmpty()) { // 질환 정보 전달 - enum명으로 DB 저장
@@ -157,12 +153,47 @@ class AssignViewModel : ViewModel() {
         }
     }
 
-    fun registerUserInfo() {
-        val birthTimeStamp = Timestamp(birth?.time ?: Calendar.getInstance().time)
+    suspend fun registerUserInfo(): String? {
+
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val birthString = _birth?.format(formatter) ?: LocalDate.now().format(formatter)
 
         AppUser.info =
-            UserInfo(_name ?: "", _gender ?: 0, birthTimeStamp,
+            UserInfo(_name ?: "", _gender ?: 0, birthString,
                 diseaseSet?.ifEmpty { null }, allergenSet?.ifEmpty { null })
+        try {
+            val joinRequest = JoinRequest(
+                device_id = AppUser.id!!,
+                user_birth = birthString,
+                user_gender = _gender ?: 0,
+                user_nickname = _name ?:"",
+                allergy = AppUser.info?.allergySetToMap() ?: emptyMap(),
+                disease = AppUser.info?.diseaseSetToMap() ?: emptyMap(),
+            )
+            val response = SpringClient.joinApi.join(joinRequest)
+            if (response.isSuccessful) {
+                val registrationResponse = response.body()
+                Log.d("API_SUCCESS", "Registration Response: $registrationResponse")
+                // 응답 처리 (예: user_id, registration_date 사용)
+                if (registrationResponse != null) {
+                    if (registrationResponse.status == "SUCCESS") {
+                        val status = registrationResponse.status
+                        val msg = registrationResponse.message
+                        val access_token = registrationResponse.data
+                        Log.d("API_JOIN_SUCCESS", "status: $status, msg: $msg data: $access_token")
+                        return access_token
+                    }else {
+                        Log.e("API_JOIN_ERROR", "Error: ${registrationResponse.message}")
+                    }
+                }
+            } else {
+                Log.e("API_ERROR", "Error: ${response.errorBody()?.string()}")
+            }
+        } catch (e: Exception) {
+            Log.e("API_EXCEPTION", "Exception: ${e.message}")
+        }
+        return null
+        /*
 
         val userInfo = hashMapOf(
             "userId" to Firebase.auth.currentUser?.uid,
@@ -176,5 +207,7 @@ class AssignViewModel : ViewModel() {
         )
 
         FirebaseHelper.sendData(userInfo, "userInfo")
+
+         */
     }
 }

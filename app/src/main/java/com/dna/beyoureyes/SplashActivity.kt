@@ -6,18 +6,25 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
-import com.daimajia.androidanimations.library.Techniques
-import com.daimajia.androidanimations.library.YoYo
 import com.dna.beyoureyes.databinding.ActivitySplashBinding
-import com.dna.beyoureyes.model.FirebaseHelper
+import com.dna.beyoureyes.data.api.request.DeviceIdRequest
+import com.dna.beyoureyes.di.SpringClient
+import com.dna.beyoureyes.data.api.interceptor.AuthInterceptor
+import com.dna.beyoureyes.data.local.AppUser
+import com.dna.beyoureyes.data.repository.AuthRepositoryImpl
+import com.dna.beyoureyes.ui.onboarding.OnboardingActivity
+import com.dna.beyoureyes.data.local.TokenManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.ktx.Firebase
+import com.jakewharton.threetenabp.AndroidThreeTen
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 class SplashActivity : AppCompatActivity() {
@@ -29,6 +36,8 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidThreeTen.init(this)
+
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -46,6 +55,85 @@ class SplashActivity : AppCompatActivity() {
 
         //Toast.makeText( this@SplashActivity, "Authentication onStart", Toast.LENGTH_SHORT).show()
         super.onStart()
+
+        val tokenManager = TokenManager(this)
+        val authRepository = AuthRepositoryImpl(tokenManager)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val fid = getFirebaseInstallationId()
+            if (fid != null) {
+                // FID를 사용하여 작업 수행
+                Log.d("FirebaseInstallationId", "Received FID: $fid")
+                val request = DeviceIdRequest(fid)
+                try {
+                    val response = SpringClient.loginApi.login(request)
+                    if (response.isSuccessful) {
+                        val registrationResponse = response.body()
+                        Log.d("API_SUCCESS", "Registration Response: $registrationResponse")
+                        // 응답 처리 (예: user_id, registration_date 사용)
+                        if (registrationResponse != null) {
+                            if (registrationResponse.status == "SUCCESS") {
+                                val status = registrationResponse.status
+                                val msg = registrationResponse.message
+                                val access_token = registrationResponse.data
+                                if (access_token != null){
+                                    Log.d("API_SUCCESS", "status: $status, msg: $msg data: $access_token")
+                                    authRepository.saveToken(access_token)
+                                    val authInterceptor = AuthInterceptor(authRepository)
+                                    Log.d("API_TEST", "1")
+                                    val response = SpringClient.getUserInfoApi(authInterceptor).getUserInfo().body()
+                                    Log.d("API_TEST", "2")
+
+                                    response?.let{ userInfoResponse ->
+                                        val status = userInfoResponse.status
+                                        val msg = userInfoResponse.message
+                                        val userData = userInfoResponse.data
+                                        Log.d("API_USER_SUCCESS", "status: $status, msg: $msg data: $userData")
+                                        AppUser.setInfo(userData)
+
+                                    }?:run{
+                                        Log.e("API_ERROR", "Server Can't Response Now")
+                                    }
+                                }
+                                // 가입된 회원
+                                delay(4000) // 3초 지연
+                                AppUser.id = fid
+                                withContext(Dispatchers.Main) {
+                                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                                    finish()
+                                }
+
+
+                            } else if(registrationResponse.status == "ERROR") { // 미가입 시
+                                Log.e("API_ERROR", "Error: ${registrationResponse.message}")
+
+                                // 최초 접속 (데이터 없음) - 온보딩으로 이동
+                                delay(4000) // 3초 지연
+                                AppUser.id = fid
+                                Log.d("SPLASH : ", " 최초 접속 + 데이터 없음 ${AppUser.id.toString()}")
+                                withContext(Dispatchers.Main) {
+                                    startActivity(Intent(this@SplashActivity, OnboardingActivity::class.java))
+                                    finish()
+                                }
+
+
+                            }else {
+                                Log.e("API_ERROR", "Error: ${registrationResponse.message}")
+                            }
+                        }
+                    } else {
+                        Log.e("API_ERROR", "Error: ${response.errorBody()?.string()}")
+                    }
+                } catch (e: Exception) {
+                    Log.e("API_EXCEPTION", "Exception: ${e.message}")
+                }
+            } else {
+                // FID를 얻는 데 실패한 경우 처리
+                Log.e("FirebaseInstallationId", "Failed to get FID")
+            }
+        }
+
+        /*
         // Check if user is signed in (non-null) and update UI accordingly.
         lifecycleScope.launch {
             val currentUser = auth.currentUser
@@ -86,8 +174,21 @@ class SplashActivity : AppCompatActivity() {
             }
             updateUI(currentUser) // UI 업데이트
         }
+
+         */
     }
     // [END on_start_check_user]
+
+    private suspend fun getFirebaseInstallationId(): String? {
+        return try{
+            val fid = FirebaseInstallations.getInstance().id.await()
+            Log.d("FirebaseInstallationId", "FID: $fid")
+            fid
+        } catch (e: Exception) {
+            Log.e("FirebaseInstallationId", "Error getting FID", e)
+            null
+        }
+    }
 
     private fun signInAnonymously() {
         // [START signin_anonymously]

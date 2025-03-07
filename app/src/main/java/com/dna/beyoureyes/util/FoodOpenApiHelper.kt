@@ -1,18 +1,18 @@
 package com.dna.beyoureyes.util
 
 import android.util.Log
-import com.dna.beyoureyes.model.ApiResponse
-import com.dna.beyoureyes.model.Carbs
-import com.dna.beyoureyes.model.Cholesterol
-import com.dna.beyoureyes.model.Fat
-import com.dna.beyoureyes.model.Food
-import com.dna.beyoureyes.model.Natrium
-import com.dna.beyoureyes.model.NutrientResult
-import com.dna.beyoureyes.model.Nutrition
-import com.dna.beyoureyes.model.Protein
-import com.dna.beyoureyes.model.RetrofitClient
-import com.dna.beyoureyes.model.SaturatedFat
-import com.dna.beyoureyes.model.Sugar
+import com.dna.beyoureyes.data.api.response.FoodOpenApiResponse
+import com.dna.beyoureyes.data.model.Carbs
+import com.dna.beyoureyes.data.model.Cholesterol
+import com.dna.beyoureyes.data.model.Fat
+import com.dna.beyoureyes.data.model.Food
+import com.dna.beyoureyes.data.model.Natrium
+import com.dna.beyoureyes.data.api.response.NutrientResult
+import com.dna.beyoureyes.data.model.Nutrition
+import com.dna.beyoureyes.data.model.Protein
+import com.dna.beyoureyes.di.RetrofitClient
+import com.dna.beyoureyes.data.model.SaturatedFat
+import com.dna.beyoureyes.data.model.Sugar
 
 
 // local.properties의 OPEN_API_KEY 설정 필요 !!!
@@ -85,7 +85,7 @@ class FoodOpenApiHelper {
 
     // OPEN API로 가져온 데이터 foodSize 기준으로 mg 계산
     // : 100g 기준으로 제공된 영양정보 -> foodSize(g?) 기준으로 mg 단위 함유량 계산
-    private fun calculateNutrient(items: List<ApiResponse.Item>): Pair<Int, List<NutrientResult>> {
+    private fun calculateNutrient(items: List<FoodOpenApiResponse.Item>): Pair<Int, List<NutrientResult>> {
         val result = mutableListOf<NutrientResult>() // 리턴할 결과 데이터 객체
         var kcal = 0
         for (item in items) {
@@ -110,7 +110,15 @@ class FoodOpenApiHelper {
             // Log.d("kcal_s", item.enerc)
             kcal = ((item.enerc.toDoubleOrNull() ?: 0.0)/ 100.0 * foodSize).toInt()
 
-            val nutrientResult = NutrientResult(prot, fatce, chocdf, sugar, nat, chole, fasat)
+            val nutrientResult = NutrientResult(
+                prot,
+                fatce,
+                chocdf,
+                sugar,
+                nat,
+                chole,
+                fasat
+            )
             // Log.d("Debug_NutrientResult", nutrientResult.toString())
             result.add(nutrientResult)
             // Log.d("Nutri", result.toString())

@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.dna.beyoureyes.FoodActivity
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentCameraFailBinding
-import com.dna.beyoureyes.ui.CustomToolbar
+import com.dna.beyoureyes.ui.common.CustomToolbar
 
 class CameraFailFragment : Fragment() {
     private var _binding: FragmentCameraFailBinding? = null

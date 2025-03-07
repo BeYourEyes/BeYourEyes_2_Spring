@@ -1,17 +1,13 @@
 package com.dna.beyoureyes.ui.assign
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentAssignBirthBinding
-import com.dna.beyoureyes.ui.CustomToolbar
-import com.google.firebase.Timestamp
 import java.util.Calendar
 
 class AssignBirthFragment : AssignFragment() {
@@ -96,10 +92,10 @@ class AssignBirthFragment : AssignFragment() {
         super.onViewCreated(view, savedInstanceState)
         view.post {
             // 초기값 설정 또는 복원된 값 설정
-            viewModel.birth?.let { cal ->
-                year.value = yearsDesc.indexOf(cal.get(Calendar.YEAR).toString())
-                month.value = cal.get(Calendar.MONTH) + 1 // Calendar의 month는 0부터 시작
-                day.value = cal.get(Calendar.DAY_OF_MONTH)
+            viewModel.birth?.let { localDate ->
+                year.value = yearsDesc.indexOf(localDate.year.toString())
+                month.value = localDate.monthValue // LocalDate의 month는 1부터 시작
+                day.value = localDate.dayOfMonth
             }?: run {
                 year.value = 0
                 month.value = 1

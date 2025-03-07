@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.CustomIntakeBarBinding
 import com.dna.beyoureyes.databinding.FoodHistoryItemBinding
-import com.dna.beyoureyes.model.Nutrition
+import com.dna.beyoureyes.data.model.Nutrition
 
 @SuppressLint("ResourceAsColor")
 class IntakeNutritionBar(context: Context, attrs: AttributeSet?) :

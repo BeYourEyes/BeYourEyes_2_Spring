@@ -1,7 +1,6 @@
 package com.dna.beyoureyes.ui.foodAnalysis
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentLoadingBinding
-import com.dna.beyoureyes.ui.CustomToolbar
+import com.dna.beyoureyes.ui.common.CustomToolbar
 import com.dna.beyoureyes.util.FoodTextRecognizer
 import kotlinx.coroutines.launch
 

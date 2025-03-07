@@ -23,7 +23,7 @@
             app:destination="@id/navigation_past_detail">
             <argument
                 android:name="foodHistory"
-                app:argType="com.dna.beyoureyes.model.FoodHistory" />
+                app:argType="com.dna.beyoureyes.data.model.FoodHistory" />
         </action>
     </fragment>
 
@@ -42,7 +42,7 @@
         tools:layout="@layout/fragment_my_past_detail">
         <argument
             android:name="foodHistory"
-            app:argType="com.dna.beyoureyes.model.FoodHistory" />
+            app:argType="com.dna.beyoureyes.data.model.FoodHistory" />
     </fragment>
 
     <!-- 상세 영양성분 정보 Fragment -->

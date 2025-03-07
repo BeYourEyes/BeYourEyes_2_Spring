@@ -57,7 +57,7 @@
             android:label="@string/assign_toolbar"
             android:exported="false" />
         <activity
-            android:name=".OnboardingActivity"
+            android:name=".ui.onboarding.OnboardingActivity"
             android:label="@string/onboarding_title"
             android:exported="false" />
         <activity

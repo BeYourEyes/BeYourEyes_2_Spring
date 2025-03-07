@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.dna.beyoureyes.AppUser
+import com.dna.beyoureyes.data.local.AppUser
 import com.dna.beyoureyes.MainActivity
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentHomeBinding
-import com.dna.beyoureyes.model.Carbs
-import com.dna.beyoureyes.model.Cholesterol
-import com.dna.beyoureyes.model.Fat
-import com.dna.beyoureyes.model.Natrium
-import com.dna.beyoureyes.model.Nutrition
-import com.dna.beyoureyes.model.Protein
-import com.dna.beyoureyes.model.SaturatedFat
-import com.dna.beyoureyes.model.Sugar
+import com.dna.beyoureyes.data.model.Carbs
+import com.dna.beyoureyes.data.model.Cholesterol
+import com.dna.beyoureyes.data.model.Fat
+import com.dna.beyoureyes.data.model.Natrium
+import com.dna.beyoureyes.data.model.Nutrition
+import com.dna.beyoureyes.data.model.Protein
+import com.dna.beyoureyes.data.model.SaturatedFat
+import com.dna.beyoureyes.data.model.Sugar
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null

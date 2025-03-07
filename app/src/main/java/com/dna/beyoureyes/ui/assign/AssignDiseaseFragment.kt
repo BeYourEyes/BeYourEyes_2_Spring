@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentAssignDiseaseBinding
-import com.dna.beyoureyes.model.Disease
-import com.dna.beyoureyes.ui.IconChip
+import com.dna.beyoureyes.data.model.Disease
+import com.dna.beyoureyes.ui.common.IconChip
 
 
 class AssignDiseaseFragment : AssignFragment() {
