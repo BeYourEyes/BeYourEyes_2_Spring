@@ -1,11 +1,8 @@
-package com.dna.beyoureyes.data.local
+package com.dna.beyoureyes.data.model
 
-import com.dna.beyoureyes.data.model.UserInfo
 import android.app.Application
 import android.net.Uri
 import android.util.Log
-import com.dna.beyoureyes.data.model.Allergen
-import com.dna.beyoureyes.data.model.Disease
 import com.dna.beyoureyes.data.api.response.UserData
 
 // 무시
