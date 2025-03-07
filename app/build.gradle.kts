@@ -84,6 +84,7 @@ dependencies {
     // 익명 계정을 위한 dependency 추가
     // BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation("com.google.firebase:firebase-installations:17.1.4") // FID 사용
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
@@ -144,5 +145,14 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0") // Retrofit
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0") // Converter ( JSON -> 객체 매핑 )
 
+    // OkHttp (HTTP 클라이언트)
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    // 코루틴
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    // Data Store(액세스 토큰 저장용)
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
 }

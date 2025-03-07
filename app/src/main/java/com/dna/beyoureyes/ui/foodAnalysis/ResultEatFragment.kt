@@ -7,25 +7,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.dna.beyoureyes.AppUser
+import com.dna.beyoureyes.data.local.AppUser
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentResultEatBinding
 import com.dna.beyoureyes.databinding.ResultEatDialogBinding
-import com.dna.beyoureyes.model.FirebaseHelper
-import com.dna.beyoureyes.model.Food
-import com.dna.beyoureyes.ui.CustomToolbar
+import com.dna.beyoureyes.util.FirebaseHelper
+import com.dna.beyoureyes.data.model.Food
+import com.dna.beyoureyes.ui.common.CustomToolbar
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.FileOutputStream
-import java.sql.Timestamp
-import java.util.Calendar
 
 class ResultEatFragment : Fragment() {
     private var _binding: FragmentResultEatBinding? = null

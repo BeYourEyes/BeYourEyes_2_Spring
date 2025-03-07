@@ -4,32 +4,25 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.dna.beyoureyes.MainActivity
-import com.dna.beyoureyes.AppUser
+import com.dna.beyoureyes.data.local.AppUser
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentMyInfoBinding
-import com.dna.beyoureyes.ui.CustomToolbar
+import com.dna.beyoureyes.ui.common.CustomToolbar
 import com.google.android.material.chip.Chip
 import com.dna.beyoureyes.BuildConfig
 import com.dna.beyoureyes.ui.assign.AssignMode
-import com.dna.beyoureyes.ui.IconChip
+import com.dna.beyoureyes.ui.common.IconChip
 import com.dna.beyoureyes.ui.assign.AssignActivity
-import com.google.android.gms.tasks.Task
-import com.google.android.play.core.review.ReviewInfo
-import com.google.android.play.core.review.ReviewManager
-import com.google.android.play.core.review.ReviewManagerFactory
-import com.google.android.play.core.review.testing.FakeReviewManager
 
 class MyInfoFragment : Fragment() {
     private var _binding: FragmentMyInfoBinding? = null

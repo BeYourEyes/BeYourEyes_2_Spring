@@ -9,8 +9,8 @@ import com.bumptech.glide.Glide
 import com.dna.beyoureyes.ui.foodDetail.ResultKcalFragment
 import com.dna.beyoureyes.ui.foodDetail.ResultNutriBarFragment
 import com.dna.beyoureyes.databinding.FragmentMyPastDetailBinding
-import com.dna.beyoureyes.model.NutritionWrapper
-import com.dna.beyoureyes.ui.CustomToolbar
+import com.dna.beyoureyes.data.model.NutritionWrapper
+import com.dna.beyoureyes.ui.common.CustomToolbar
 import java.text.SimpleDateFormat
 import java.util.Locale
 

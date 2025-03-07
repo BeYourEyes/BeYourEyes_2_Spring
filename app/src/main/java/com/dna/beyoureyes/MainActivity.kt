@@ -1,7 +1,6 @@
 package com.dna.beyoureyes
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -11,8 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.dna.beyoureyes.data.local.AppUser
 import com.dna.beyoureyes.databinding.ActivityMainBinding
-import com.dna.beyoureyes.model.FoodHistory
+import com.dna.beyoureyes.data.model.FoodHistory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
@@ -79,8 +79,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 파이어베이스에서 데이터 불러와 홈 화면에 반영
-        loadUserDataFromFirebase()
+        // loadUserDataFromFirebase()
+
+        loadUserDataFromSpringServer()
     }
+
+    private fun loadUserDataFromSpringServer() {
+
+    }
+
 
     private fun loadUserDataFromFirebase() {
         // 오늘의 시작 시간 (자정)

@@ -12,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentResultBinding
-import com.dna.beyoureyes.ui.CustomToolbar
+import com.dna.beyoureyes.ui.common.CustomToolbar
 import com.dna.beyoureyes.ui.foodDetail.ResultAllergyCautionFragment
 import com.dna.beyoureyes.ui.foodDetail.ResultAllergyFragment
 import com.dna.beyoureyes.ui.foodDetail.ResultFailFragment

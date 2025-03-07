@@ -13,7 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FoodHistoryItemBinding
-import com.dna.beyoureyes.model.FoodHistory
+import com.dna.beyoureyes.data.model.FoodHistory
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -51,7 +51,7 @@ class FoodHistoryView(context: Context, attrs: AttributeSet?) :
         }
     }
 
-    fun setOnItemClickListener(history:FoodHistory, listener: (FoodHistory) -> Unit) {
+    fun setOnItemClickListener(history: FoodHistory, listener: (FoodHistory) -> Unit) {
         binding.cardView.setOnClickListener { listener(history) }
     }
 

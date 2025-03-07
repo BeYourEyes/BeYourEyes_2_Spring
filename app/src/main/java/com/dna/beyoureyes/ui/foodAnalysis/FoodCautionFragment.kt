@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.dna.beyoureyes.FoodActivity
 import com.dna.beyoureyes.databinding.FragmentFoodCautionBinding
-import com.dna.beyoureyes.ui.CustomToolbar
+import com.dna.beyoureyes.ui.common.CustomToolbar
 
 
 class FoodCautionFragment : Fragment() {

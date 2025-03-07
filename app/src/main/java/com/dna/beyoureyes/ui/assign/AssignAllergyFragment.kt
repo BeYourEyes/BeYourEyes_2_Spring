@@ -1,22 +1,15 @@
 package com.dna.beyoureyes.ui.assign
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentAssignAllergyBinding
-import com.dna.beyoureyes.model.Allergen
-import com.dna.beyoureyes.model.Disease
-import com.dna.beyoureyes.ui.CustomToolbar
-import com.dna.beyoureyes.ui.IconChip
+import com.dna.beyoureyes.data.model.Allergen
 import com.google.android.material.chip.Chip
 
 class AssignAllergyFragment : AssignFragment() {

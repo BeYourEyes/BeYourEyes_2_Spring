@@ -8,14 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.dna.beyoureyes.databinding.FragmentResultNutriBarChartBinding
-import com.dna.beyoureyes.model.Carbs
-import com.dna.beyoureyes.model.Cholesterol
-import com.dna.beyoureyes.model.Fat
-import com.dna.beyoureyes.model.Natrium
-import com.dna.beyoureyes.model.NutritionWrapper
-import com.dna.beyoureyes.model.Protein
-import com.dna.beyoureyes.model.SaturatedFat
-import com.dna.beyoureyes.model.Sugar
+import com.dna.beyoureyes.data.model.Carbs
+import com.dna.beyoureyes.data.model.Cholesterol
+import com.dna.beyoureyes.data.model.Fat
+import com.dna.beyoureyes.data.model.Natrium
+import com.dna.beyoureyes.data.model.NutritionWrapper
+import com.dna.beyoureyes.data.model.Protein
+import com.dna.beyoureyes.data.model.SaturatedFat
+import com.dna.beyoureyes.data.model.Sugar
 import com.dna.beyoureyes.ui.foodAnalysis.FoodViewModel
 
 class ResultNutriBarFragment : Fragment() {

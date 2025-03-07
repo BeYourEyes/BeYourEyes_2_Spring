@@ -2,13 +2,17 @@ package com.dna.beyoureyes.ui.assign
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.dna.beyoureyes.MainActivity
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.ActivityAssignBinding
-import com.dna.beyoureyes.ui.CustomToolbar
+import com.dna.beyoureyes.ui.common.CustomToolbar
+import com.dna.beyoureyes.data.repository.AuthRepositoryImpl
+import com.dna.beyoureyes.data.local.TokenManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class AssignActivity : AppCompatActivity() {
@@ -103,7 +107,15 @@ class AssignActivity : AppCompatActivity() {
             // 마지막 단계일 시
             when (editMode) {
                 AssignMode.REGISTER -> {
-                    viewModel.registerUserInfo()
+                    val tokenManager = TokenManager(this)
+                    val authRepository = AuthRepositoryImpl(tokenManager)
+                    // val authInterceptor = AuthInterceptor(authRepository)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val access_token = viewModel.registerUserInfo()
+                        if (access_token != null){
+                            authRepository.saveToken(access_token)
+                        }
+                    }
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 } else -> {

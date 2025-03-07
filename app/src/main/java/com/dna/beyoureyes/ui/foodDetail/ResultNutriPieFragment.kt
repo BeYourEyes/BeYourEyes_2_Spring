@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.dna.beyoureyes.model.EnergyChart
+import com.dna.beyoureyes.ui.common.EnergyChart
 import com.dna.beyoureyes.databinding.FragmentResultNutriPieChartBinding
-import com.dna.beyoureyes.model.CaloricNutrient
-import com.dna.beyoureyes.model.Carbs
-import com.dna.beyoureyes.model.Fat
-import com.dna.beyoureyes.model.NutritionWrapper
-import com.dna.beyoureyes.model.Protein
+import com.dna.beyoureyes.data.model.CaloricNutrient
+import com.dna.beyoureyes.data.model.Carbs
+import com.dna.beyoureyes.data.model.Fat
+import com.dna.beyoureyes.data.model.NutritionWrapper
+import com.dna.beyoureyes.data.model.Protein
 import com.dna.beyoureyes.ui.foodAnalysis.FoodViewModel
 
 class ResultNutriPieFragment : Fragment() {
