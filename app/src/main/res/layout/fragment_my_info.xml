@@ -7,7 +7,7 @@
     android:background="@color/gray_50"
     tools:context=".ui.myInfo.MyInfoFragment">
 
-    <com.dna.beyoureyes.ui.CustomToolbar
+    <com.dna.beyoureyes.ui.common.CustomToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
