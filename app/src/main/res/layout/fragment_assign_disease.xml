@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:singleSelection="false">
 
-        <com.dna.beyoureyes.ui.IconChip
+        <com.dna.beyoureyes.ui.common.IconChip
             android:id="@+id/none"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

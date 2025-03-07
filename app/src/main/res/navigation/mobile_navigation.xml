@@ -51,7 +51,7 @@
         android:name="com.dna.beyoureyes.ui.foodDetail.ResultNutriBarFragment">
         <argument
             android:name="nutritionList"
-            app:argType="com.dna.beyoureyes.model.NutritionWrapper[]" />
+            app:argType="com.dna.beyoureyes.data.model.NutritionWrapper[]" />
     </fragment>
 
     <!-- 식품 칼로리 정보 Fragment -->
