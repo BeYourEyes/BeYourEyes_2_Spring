@@ -1,13 +1,12 @@
 package com.dna.beyoureyes.data.model
 
-import com.google.firebase.firestore.DocumentSnapshot
+import com.dna.beyoureyes.AppUser
 import java.text.DecimalFormat
 
 class Fat(override var milligram: Int = 0) : CaloricNutrient {
 
     // 인스턴스 영역
     override val name: String = NAME
-    override val dbFiledName: String = DB_FIELD_NAME
     override val massString: String
         get() = DecimalFormat("#.##g").format(milligram.toDouble()/1000)
     override val kcal: Int get() = (milligram / 1000) * KCAL_PER_GRAM
@@ -18,13 +17,11 @@ class Fat(override var milligram: Int = 0) : CaloricNutrient {
             = Companion.getDailyValueText()
     override fun isInWarningRange(): Boolean
             = isInWarningRange(milligram)
-    override fun fromFirestore(document: DocumentSnapshot): Nutrition?
-            = Companion.fromFirestore(document)
+
 
     // static 영역
     companion object {
         const val NAME = "지방"
-        const val DB_FIELD_NAME = "fat"
         const val KCAL_PER_GRAM = 9
 
         fun getDailyValue() : Int {
@@ -46,9 +43,6 @@ class Fat(override var milligram: Int = 0) : CaloricNutrient {
         }
         fun isInWarningRange(milligram: Int): Boolean {
             return milligram > getDailyValue() // 권장 범위를 초과하는지 검사
-        }
-        fun fromFirestore(document: DocumentSnapshot): Fat? {
-            return document.getLong(DB_FIELD_NAME)?.toInt()?.let { Fat(it) }
         }
     }
 }

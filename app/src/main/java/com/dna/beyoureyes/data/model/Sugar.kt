@@ -1,13 +1,12 @@
 package com.dna.beyoureyes.data.model
 
-import com.google.firebase.firestore.DocumentSnapshot
+import com.dna.beyoureyes.AppUser
 import java.text.DecimalFormat
 
 class Sugar(override var milligram: Int = 0) : Nutrition {
 
     // 인스턴스 영역
     override val name: String = NAME
-    override val dbFiledName: String = DB_FIELD_NAME
     override val massString: String
         get() = DecimalFormat("#.##g").format(milligram/1000.0)
 
@@ -17,8 +16,6 @@ class Sugar(override var milligram: Int = 0) : Nutrition {
             = Companion.getDailyValueText()
     override fun isInWarningRange(): Boolean
             = isInWarningRange(milligram)
-    override fun fromFirestore(document: DocumentSnapshot): Nutrition?
-            = Companion.fromFirestore(document)
 
 
     // static 영역
@@ -35,9 +32,6 @@ class Sugar(override var milligram: Int = 0) : Nutrition {
         }
         fun isInWarningRange(milligram: Int): Boolean {
             return milligram > getDailyValue() *2  // 일일 권장 칼로리의 20% 이내인지 검사
-        }
-        fun fromFirestore(document: DocumentSnapshot): Sugar? {
-            return document.getLong(DB_FIELD_NAME)?.toInt()?.let { Sugar(it) }
         }
     }
 }
