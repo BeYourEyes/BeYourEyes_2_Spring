@@ -22,5 +22,14 @@ enum class Allergen(val displayName: String, val ocrKeywords: List<String>) {
     SHELLFISH("조개류", listOf("조개류", "굴", "전복", "홍합")), // 굴, 전복, 홍합 포함
     PORK("돼지고기", listOf("돼지고기")),
     BEEF("쇠고기", listOf("쇠고기")),
-    CHICKEN("닭고기", listOf("닭고기"))
+    CHICKEN("닭고기", listOf("닭고기"));
+
+    // Allergen Set을 DB 요청 형식에 맞춰 Map으로 변환하는 메소드 정의
+    companion object {
+        fun MutableSet<Allergen>?.toMap(): Map<String, Boolean>? {
+            return this?.associate { allergen ->
+                allergen.name.lowercase() to true
+            }
+        }
+    }
 }

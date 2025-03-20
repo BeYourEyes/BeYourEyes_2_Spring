@@ -6,31 +6,27 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import com.dna.beyoureyes.data.api.SpringApiResponseHandler
 import com.dna.beyoureyes.databinding.ActivitySplashBinding
 import com.dna.beyoureyes.data.api.request.DeviceIdRequest
 import com.dna.beyoureyes.di.SpringClient
 import com.dna.beyoureyes.data.api.interceptor.AuthInterceptor
+import com.dna.beyoureyes.data.api.model.ApiStatus
 import com.dna.beyoureyes.data.repository.AuthRepositoryImpl
 import com.dna.beyoureyes.ui.onboarding.OnboardingActivity
 import com.dna.beyoureyes.data.local.TokenManager
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
+import com.dna.beyoureyes.ui.common.CustomDialog
 import com.google.firebase.installations.FirebaseInstallations
-import com.google.firebase.ktx.Firebase
 import com.jakewharton.threetenabp.AndroidThreeTen
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
+import kotlin.coroutines.resume
+
 
 class SplashActivity : AppCompatActivity() {
-
-    // [START declare_auth]
-    private lateinit var auth: FirebaseAuth
-    private lateinit var userId : String
 
     private lateinit var binding : ActivitySplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,139 +40,100 @@ class SplashActivity : AppCompatActivity() {
         window.navigationBarColor = ContextCompat.getColor(this, android.R.color.transparent)
         window.decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-
-        auth = Firebase.auth
-
-
     }
 
     public override fun onStart() {
-
-        //Toast.makeText( this@SplashActivity, "Authentication onStart", Toast.LENGTH_SHORT).show()
         super.onStart()
-
-        val tokenManager = TokenManager(applicationContext)
-        val authRepository = AuthRepositoryImpl(tokenManager)
-
-        CoroutineScope(Dispatchers.Main).launch {
-            val fid = getFirebaseInstallationId()
-            if (fid != null) {
-                // FID를 사용하여 작업 수행
-                Log.d("FirebaseInstallationId", "Received FID: $fid")
-                val request = DeviceIdRequest(fid)
-                try {
-                    val response = SpringClient.loginApi.login(request)
-                    if (response.isSuccessful) {
-                        val registrationResponse = response.body()
-                        Log.d("API_SUCCESS", "Registration Response: $registrationResponse")
-                        // 응답 처리 (예: user_id, registration_date 사용)
-                        if (registrationResponse != null) {
-                            if (registrationResponse.status == "SUCCESS") {
-                                val status = registrationResponse.status
-                                val msg = registrationResponse.message
-                                val access_token = registrationResponse.data
-                                if (access_token != null){
-                                    Log.d("API_SUCCESS", "status: $status, msg: $msg data: $access_token")
-                                    authRepository.saveToken(access_token)
-                                    val authInterceptor = AuthInterceptor(authRepository)
-                                    Log.d("API_TEST", "1")
-                                    val response = SpringClient.getUserInfoApi(authInterceptor).getUserInfo().body()
-                                    Log.d("API_TEST", "2")
-
-                                    response?.let{ userInfoResponse ->
-                                        val status = userInfoResponse.status
-                                        val msg = userInfoResponse.message
-                                        val userData = userInfoResponse.data
-                                        Log.d("API_USER_SUCCESS", "status: $status, msg: $msg data: $userData")
-                                        AppUser.setInfo(userData)
-
-                                    }?:run{
-                                        Log.e("API_ERROR", "Server Can't Response Now")
-                                    }
-                                }
-                                // 가입된 회원
-                                delay(4000) // 3초 지연
-                                AppUser.id = fid
-                                withContext(Dispatchers.Main) {
-                                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-                                    finish()
-                                }
-
-
-                            } else if(registrationResponse.status == "ERROR") { // 미가입 시
-                                Log.e("API_ERROR", "Error: ${registrationResponse.message}")
-
-                                // 최초 접속 (데이터 없음) - 온보딩으로 이동
-                                delay(4000) // 3초 지연
-                                AppUser.id = fid
-                                Log.d("SPLASH : ", " 최초 접속 + 데이터 없음 ${AppUser.id.toString()}")
-                                withContext(Dispatchers.Main) {
-                                    startActivity(Intent(this@SplashActivity, OnboardingActivity::class.java))
-                                    finish()
-                                }
-
-
-                            }else {
-                                Log.e("API_ERROR", "Error: ${registrationResponse.message}")
-                            }
-                        }
-                    } else {
-                        Log.e("API_ERROR", "Error: ${response.errorBody()?.string()}")
-                    }
-                } catch (e: Exception) {
-                    Log.e("API_EXCEPTION", "Exception: ${e.message}")
-                }
-            } else {
-                // FID를 얻는 데 실패한 경우 처리
-                Log.e("FirebaseInstallationId", "Failed to get FID")
-            }
-        }
-
-        /*
-        // Check if user is signed in (non-null) and update UI accordingly.
         lifecycleScope.launch {
-            val currentUser = auth.currentUser
-            if (currentUser != null) {
-                val hasData = FirebaseHelper.receiveUserData(currentUser) // suspend 함수로 변경
-                Log.d("SPLASH", hasData.toString())
-                if (hasData) {
-                    //Toast.makeText(this@SplashActivity, "이미 가입한 유저", Toast.LENGTH_LONG).show()
-                    userId = currentUser.uid
-                    AppUser.id = userId
-                    Log.d("SPLASH : ", AppUser.id.toString())
-                    //FirebaseHelper.receiveUserData()
-                    //Toast.makeText(this@SplashActivity, userId, Toast.LENGTH_LONG).show()
-                    delay(4000) // 3초 지연
-                    withContext(Dispatchers.Main) {
-                        startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-                        finish()
-                    }
-                } else {
-                    // 최초 접속 (데이터 없음) - 익명 로그인 후 온보딩으로 이동
-                    signInAnonymously()
-                    delay(4000) // 3초 지연
-                    Log.d("SPLASH : ", " 최초 접속 + 데이터 없음 ${AppUser.id.toString()}")
-                    withContext(Dispatchers.Main) {
-                        startActivity(Intent(this@SplashActivity, OnboardingActivity::class.java))
-                        finish()
-                    }
-                }
-            } else {
-                // 최초 접속 (로그인 안됨) - 익명 로그인 후 온보딩으로 이동
-                //Toast.makeText(this@SplashActivity, "가입안한 유저", Toast.LENGTH_LONG).show()
-                signInAnonymously()
-                delay(3000) // 3초 지연
-                withContext(Dispatchers.Main) {
+            val loginStatus = tryToLogin() // FID 얻고 Spring 서버에 로그인 시도
+            when(loginStatus) {
+                ApiStatus.SUCCESS -> { // 기존 사용자 (로그인 성공)
+                    // 메인 화면으로 이동
+                    delay(4000) // 4초 지연
+                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                    finish()
+                } ApiStatus.FAIL -> { // 신규 사용자 (FID와 일치하는 유저 없음)
+                    // 온보딩 화면으로 이동
+                    delay(4000) // 4초 지연
                     startActivity(Intent(this@SplashActivity, OnboardingActivity::class.java))
                     finish()
+                } ApiStatus.SERVER_ERROR, ApiStatus.NETWORK_ERROR -> { // 서버 응답 에러 & 기타 오류(아마 네트워크 오류)
+                    CustomDialog(
+                        msg = "서버와의 연결에 실패했습니다.\n네트워크 설정을 확인한 후\n다시 접속 해 주세요.",
+                        buttonCallback = { finish() }
+                    ).show(supportFragmentManager, "Dialog")
+
+                } ApiStatus.UNKNOWN -> { // 알 수 없는 오류(null response body?)
+                    CustomDialog(
+                        msg = "알 수 없는 오류가 발생했습니다.\n앱을 다시 시작해 주세요.",
+                        buttonCallback = { finish() }
+                    ).show(supportFragmentManager, "Dialog")
                 }
             }
-            updateUI(currentUser) // UI 업데이트
         }
-
-         */
     }
-    // [END on_start_check_user]
+
+    private suspend fun tryToLogin(): ApiStatus = suspendCancellableCoroutine { continuation ->
+        // 액세스 토큰 저장소 세팅
+        val tokenManager = TokenManager(applicationContext)  // 싱글톤 패턴 유지를 위해 applicationContext 활용
+        val authRepository = AuthRepositoryImpl(tokenManager)
+
+        lifecycleScope.launch {
+            val fid = getFirebaseInstallationId()  // FID(Firebase 설치 ID) 확인
+            if (fid != null) { // FID 얻는 데 성공
+                AppUser.setId(fid)
+                // FID(Firebase 설치 ID)를 사용해 로그인 API 호출 시 필요한 DeviceID Request 객체 생성
+                val deviceIdRequest = DeviceIdRequest(fid)
+                // 로그인 API 호출
+                SpringApiResponseHandler {
+                    SpringClient.noAuthSpringApi.login(deviceIdRequest)
+                }.onSuccess { data, status ->  // 응답 성공시 인증 토큰이 반환됨
+                    when(status) {
+                        ApiStatus.SUCCESS -> { // 기존 사용자
+                            // 로그인 성공 (액세스 토큰 수신 성공)
+                            val accessToken = data!!
+                            authRepository.saveToken(accessToken)  // 토큰을 전용 Repository에 저장
+
+                            // 액세스 토큰 인증을 위해 AuthInterceptor 설정
+                            SpringClient.initAuthClient(AuthInterceptor(authRepository))
+
+                            val loadUserInfoStatus = loadUserInfoFromServer() // 사용자 정보 조회
+                            continuation.resume(loadUserInfoStatus) // 사용자 정보 조회 상태 반환
+
+                        } ApiStatus.FAIL -> { // 신규 사용자
+                            continuation.resume(ApiStatus.FAIL)
+                        } else -> { } // 그 외 case 없음
+                    }
+                }.onError { status ->
+                    continuation.resume(status)
+                }.execute()
+            } else { // FID를 얻는 데 실패
+                continuation.resume(ApiStatus.NETWORK_ERROR)
+            }
+        }
+    }
+
+    private suspend fun loadUserInfoFromServer(): ApiStatus = suspendCancellableCoroutine { continuation ->
+        lifecycleScope.launch {
+            SpringApiResponseHandler {
+                SpringClient.authSpringApi.getUserInfo()
+            }.onSuccess { data, status ->
+                when(status) {
+                    ApiStatus.SUCCESS -> { // 응답 성공 시 유저 데이터 반환
+                        try {
+                            AppUser.setInfo(data!!) // 응답 데이터 파싱해 사용자 싱글톤 객체 업데이트
+                            continuation.resume(ApiStatus.SUCCESS)
+                        } catch (e: IllegalArgumentException){ // 파싱 실패 시
+                            Log.e("SPRING_API_ERROR", "사용자 정보 변환 실패: ${e.message}")
+                        }
+                    } else -> { }
+                }
+                continuation.resume(ApiStatus.UNKNOWN)
+            }.onError { status ->
+                continuation.resume(status)
+            }.execute()
+        }
+    }
 
     private suspend fun getFirebaseInstallationId(): String? {
         return try{
@@ -187,37 +144,5 @@ class SplashActivity : AppCompatActivity() {
             Log.e("FirebaseInstallationId", "Error getting FID", e)
             null
         }
-    }
-
-    private fun signInAnonymously() {
-        // [START signin_anonymously]
-        auth.signInAnonymously()
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    //Toast.makeText(this@SplashActivity, "Authentication successed.", Toast.LENGTH_SHORT).show()
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("SIGN", "signInAnonymously:success")
-                    val user = auth.currentUser
-                    // 과연 절대로 null이 아닐까?
-                    userId = user!!.uid
-                    AppUser.id = userId
-                    Log.d("SPLASH : ", AppUser.id.toString()+"  INIT")
-                    //Toast.makeText(this@SplashActivity, userId, Toast.LENGTH_LONG).show()
-                    updateUI(user)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w("SIGN", "signInAnonymously:failure", task.exception)
-                    //Toast.makeText( this@SplashActivity, "Authentication failed.", Toast.LENGTH_SHORT).show()
-                    updateUI(null)
-                }
-            }
-        // [END signin_anonymously]
-    }
-
-    private fun updateUI(user: FirebaseUser?) {
-    }
-
-    companion object {
-        private const val TAG = "AnonymousAuth"
     }
 }

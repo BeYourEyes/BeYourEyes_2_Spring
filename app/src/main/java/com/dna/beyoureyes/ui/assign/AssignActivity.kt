@@ -1,17 +1,20 @@
 package com.dna.beyoureyes.ui.assign
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.dna.beyoureyes.MainActivity
 import com.dna.beyoureyes.R
+import com.dna.beyoureyes.data.api.model.ApiStatus
 import com.dna.beyoureyes.databinding.ActivityAssignBinding
 import com.dna.beyoureyes.ui.common.CustomToolbar
 import com.dna.beyoureyes.data.repository.AuthRepositoryImpl
 import com.dna.beyoureyes.data.local.TokenManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.dna.beyoureyes.ui.common.CustomDialog
 import kotlinx.coroutines.launch
 
 
@@ -110,21 +113,70 @@ class AssignActivity : AppCompatActivity() {
                     // 액세스 토큰 저장소 세팅
                     val tokenManager = TokenManager(applicationContext) // 싱글톤 패턴 유지를 위해 applicationContext 활용
                     val authRepository = AuthRepositoryImpl(tokenManager)
-                    // val authInterceptor = AuthInterceptor(authRepository)
-                    CoroutineScope(Dispatchers.Main).launch {
-                        val access_token = viewModel.registerUserInfo()
-                        if (access_token != null){
-                            authRepository.saveToken(access_token)
+
+                    try {
+                        val intent = Intent(this, MainActivity::class.java)
+                        lifecycleScope.launch { // 가입 시도 후 결과 상태 받기
+                            val status = viewModel.registerUserInfo(authRepository)
+                            exceptionHandlingAfterApiCall(
+                                status = status,
+                                onSuccess = { startActivity(intent) }
+                            )
                         }
+                    }catch(e: IllegalArgumentException){ // 가입 중 argument 처리 오류 발생 시
+                        Log.e("REGISTER_ERROR", "$e")
+                        // -> 오류 처리
                     }
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                } else -> {
-                    viewModel.updateUserInfo()
-                }
+                } AssignMode.PROFILE -> {
+                    lifecycleScope.launch {
+                        val status = viewModel.updateProfile()
+                        exceptionHandlingAfterApiCall(
+                            status = status,
+                            onSuccess = { setResult(Activity.RESULT_OK) }
+                        )
+                    }
+                } AssignMode.ALLERGY -> {
+                    lifecycleScope.launch {
+                        val status = viewModel.updateAllergens()
+                        exceptionHandlingAfterApiCall(
+                            status = status,
+                            onSuccess = { setResult(Activity.RESULT_OK) }
+                        )
+                    }
+                } AssignMode.DISEASE -> {
+                    lifecycleScope.launch {
+                        setResult(Activity.RESULT_OK)
+                        val status = viewModel.updateDisease()
+                        exceptionHandlingAfterApiCall(
+                            status = status,
+                            onSuccess = { setResult(Activity.RESULT_OK) }
+                        )
+                    }
+                } else -> { }
             }
             finish()
         }
+    }
+
+    private fun exceptionHandlingAfterApiCall(status:ApiStatus, onSuccess: () -> Unit) {
+        when(status) {
+            ApiStatus.SUCCESS -> onSuccess.invoke()
+            ApiStatus.SERVER_ERROR, ApiStatus.NETWORK_ERROR -> { // 서버 응답 에러 & 기타 오류(아마 네트워크 오류)
+                showDialogForServerError()
+            } ApiStatus.UNKNOWN -> { // 알 수 없는 오류(null response body?)
+                showDialogForUnknownError()
+            } else -> {} // 존재 X
+        }
+    }
+
+    private fun showDialogForServerError() {
+        CustomDialog("서버와의 연결에 실패했습니다.\n다시 시도해 봐도 오류가 반복되면\n앱을 다시 시작해 주세요.")
+            .show(supportFragmentManager, "Dialog")
+    }
+
+    private fun showDialogForUnknownError() {
+        CustomDialog("알 수 없는 오류가 발생했습니다.\n다시 시도해 봐도 오류가 반복되면\n앱을 다시 시작해 주세요.")
+            .show(supportFragmentManager, "Dialog")
     }
 
     fun updateTextForEachStep(questionMsg:String) {
