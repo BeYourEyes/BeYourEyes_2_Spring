@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.dna.beyoureyes.data.api.SpringApiResponseHandler
 import com.dna.beyoureyes.data.api.model.ApiStatus
 import com.dna.beyoureyes.data.api.response.FoodHistoryResponse.Companion.toFoodHistory
+import com.dna.beyoureyes.data.model.FoodHistory.Companion.sumNutritions
 import com.dna.beyoureyes.databinding.ActivityMainBinding
 import com.dna.beyoureyes.di.SpringClient
 import com.dna.beyoureyes.ui.common.CustomDialog
@@ -72,7 +73,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        // TODO: 다시 시작할 때(FoodActivity 종료 후) HomeViewModel 데이터 업데이트 (총 섭취량 업데이트)
+        // 다시 시작할 때(FoodActivity 종료 후) HomeViewModel 데이터 업데이트 (총 섭취량 업데이트)
+        myInfoViewModel.foodHistoryItems.value?.let{ foodHistories ->
+            val kcal = foodHistories.sumOf { it.kcal }
+            val nutritions = foodHistories.sumNutritions()
+            homeViewModel.setUserIntakeData(kcal, nutritions)
+        }
     }
 
     private suspend fun loadUserDataWithExceptionHandling() {

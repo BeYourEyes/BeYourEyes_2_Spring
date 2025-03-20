@@ -4,30 +4,44 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.dna.beyoureyes.data.model.AppUser
+import com.dna.beyoureyes.AppUser
 import com.dna.beyoureyes.R
+import com.dna.beyoureyes.data.api.SpringApiResponseHandler
+import com.dna.beyoureyes.data.api.model.ApiStatus
+import com.dna.beyoureyes.data.api.request.FoodRecordRequest
 import com.dna.beyoureyes.databinding.FragmentResultEatBinding
-import com.dna.beyoureyes.databinding.ResultEatDialogBinding
-import com.dna.beyoureyes.util.FirebaseHelper
 import com.dna.beyoureyes.data.model.Food
+import com.dna.beyoureyes.data.model.Food.Companion.toNutritionInfo
+import com.dna.beyoureyes.data.model.FoodHistory
+import com.dna.beyoureyes.di.SpringClient
+import com.dna.beyoureyes.ui.common.CustomDialog
 import com.dna.beyoureyes.ui.common.CustomToolbar
+import com.dna.beyoureyes.ui.myInfo.MyInfoViewModel
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
 import java.io.File
 import java.io.FileOutputStream
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class ResultEatFragment : Fragment() {
     private var _binding: FragmentResultEatBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
+    private val myInfoViewModel: MyInfoViewModel by activityViewModels()
     private var scale = 0f
 
     override fun onCreateView(
@@ -74,83 +88,93 @@ class ResultEatFragment : Fragment() {
                 Toast.makeText(requireContext(), "섭취하신 양을 선택해주세요!", Toast.LENGTH_SHORT).show()
             }
             else {
-                // 식품 기록 데이터 전송 후 종료해야 함. 전송 로직 작성 필요.
-
                 // 식품 기록 데이터 중 사진 데이터 전송
-                var imgUrl = ""
-                val imageUri: Uri = viewModel.getCapturedImageUri()!!
+                val capturedImgUri: Uri = viewModel.getCapturedImageUri()!!
+                val foodData: Food = viewModel.getFoodData()!!
+                foodData.scaleQuantityByFactor(scale.toDouble()) // 입력한 양 조절 반영
 
-                val resizedImage = resizeImageByWidth(imageUri, 500) // 가로 500px로 조정
+                lifecycleScope.launch {
+                    val imgRefPath: String? = uploadImageToFirebase(capturedImgUri)
+                    val timestamp = LocalDateTime.now()
+                    val status =
+                        imgRefPath?.let{
+                            recordFoodDataToServer(timestamp, foodData, imgRefPath)
+                        }?:run{ // 이미지 저장에 실패
+                            Log.e("RESULT_EAT", "Failed to Upload Image To Firebase")
+                            ApiStatus.SERVER_ERROR
+                        }
+                    when(status){
+                        ApiStatus.SUCCESS -> {
+                            val newHistory = FoodHistory(imgRefPath!!, timestamp, foodData.kcal!!, foodData.nutritions!!)
+                            myInfoViewModel.addFoodHistory(newHistory)
+                            CustomDialog(
+                                msg = "섭취량 입력이 완료되었습니다.",
+                                buttonCallback = { requireActivity().finish() }
+                            ).show(childFragmentManager, "Dialog")
 
-                val storageReference: StorageReference = FirebaseStorage.getInstance().reference
+                        } ApiStatus.NETWORK_ERROR, ApiStatus.SERVER_ERROR -> {
 
-                // 업로드할 파일의 경로 설정 (예: "images/UserId_20241215_191155.jpg")
-                val imageRef: StorageReference = storageReference.child("foods/${AppUser.id}_${imageUri.lastPathSegment}")
-                // Firebase Storage에 파일 업로드
-                val uploadTask = imageRef.putFile(resizedImage)
+                            CustomDialog("서버와의 연결에 실패했습니다.\n" +
+                                    "다시 시도해 봐도 오류가 반복되면\n" +
+                                    "앱을 다시 시작해 주세요.")
+                                .show(childFragmentManager, "Dialog")
 
-                uploadTask.addOnSuccessListener {
-                    imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                        // 다운로드 가능한 URL을 받아오는 부분
-                        imgUrl = downloadUri.toString()
+                        } ApiStatus.UNKNOWN -> {
+
+                            CustomDialog("알 수 없는 오류가 발생했습니다.\n" +
+                                    "다시 시도해 봐도 오류가 반복되면\n" +
+                                    "앱을 다시 시작해 주세요.")
+                                .show(childFragmentManager, "Dialog")
+
+                        } else -> { }
                     }
-                }.addOnFailureListener { exception ->
-                    // 업로드 실패 시
-                    exception.printStackTrace()
                 }
-
-                // viewModel에 Food 형식의 데이터로 필요한 데이터 저장.
-                // viewModel에 적절한 get 함수를 짜는 등...으로 칼로리, 영양정보 데이터 가져오기
-                val isSuccess = if (viewModel.isFoodDataAvaiable()) {
-                    val eatFoodData : Food = viewModel.getFoodData()!!
-                    // 참고로 Food 객체에 양 조절 메소드 있음. (Food 변수).scaleQuantityByFactor(0.5)처럼 사용
-                    eatFoodData.scaleQuantityByFactor(scale.toDouble())
-                    val hashFoodData : HashMap<String, Any?> = hashMapOf(
-                        "calories" to eatFoodData.kcal,
-                        "date" to com.google.firebase.Timestamp.now(),
-                        "userId" to AppUser.id,
-                        "imgPath" to "foods/${AppUser.id}_${imageUri.lastPathSegment}"
-                    )
-                    val hashNutritionData : HashMap<String, Int>? =  // 영양소 함유량 해시맵 한번에 변환
-                        eatFoodData.nutritions?.associateBy { it.dbFiledName }
-                            ?.mapValues { it.value.milligram } as HashMap<String, Int>?
-                    hashNutritionData?.let {
-                        hashFoodData.putAll(it) // 영양소 함유량 해시맵 변환 성공하면 데이터에 추가
-                    }
-                    // 성공 실패 여부 반환하게 수정
-                    FirebaseHelper.sendData(hashFoodData, "userIntakeNutrition")
-                } else { false }
-                showDialog(isSuccess)
             }
         }
-
         return root
     }
 
-    private fun showDialog(isSuccess:Boolean) { // 추후 성공/실패 여부 확인 가능하도록
-        // 1. AlertDialog.Builder 생성
-        val builder = AlertDialog.Builder(requireContext(), R.style.DialogTheme)
+    private suspend fun uploadImageToFirebase(imageUri:Uri): String? = suspendCoroutine { continuation ->
+        val resizedImage = resizeImageByWidth(imageUri, 500) // 가로 500px로 조정
+        val storageReference: StorageReference = FirebaseStorage.getInstance().reference
 
-        // 2. LayoutInflater를 사용하여 레이아웃 인플레이트
-        val dialogBinding = ResultEatDialogBinding.inflate(LayoutInflater.from(requireContext()))
+        // 업로드할 파일의 경로 설정 (예: "images/UserId_20241215_191155.jpg")
+        val imageRef: StorageReference =
+            storageReference.child("foods/${AppUser.id}_${imageUri.lastPathSegment}")
 
-        // 3. setView()로 사용자 정의 레이아웃 설정
-        builder.setView(dialogBinding.root)
+        val uploadTask = imageRef.putFile(resizedImage) // Firebase Storage에 파일 업로드
 
-        if (!isSuccess) {
-            dialogBinding.resultEatDialog.text = "오류로 인해 섭취량 입력에 실패했습니다."
+        uploadTask.addOnSuccessListener {
+            val imgRefPath = imageRef.path
+            continuation.resume(imgRefPath)
+        }.addOnFailureListener { exception ->
+            exception.printStackTrace()
+            continuation.resume(null) // 실패 시 null 반환
         }
+    }
 
-        // 다이얼로그 내부 버튼에 대한 리스너 설정
-        dialogBinding.button.setOnClickListener {
-            requireActivity().finish()
+    private suspend fun recordFoodDataToServer(timestamp:LocalDateTime, foodData: Food, imgRefPath: String): ApiStatus {
+        return try {
+            val request = FoodRecordRequest(
+                image = imgRefPath,
+                timestamp = timestamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                foodData = foodData.toNutritionInfo()
+            )
+            return suspendCancellableCoroutine { continuation ->
+                lifecycleScope.launch {
+                    SpringApiResponseHandler {
+                        SpringClient.authSpringApi.recordFood(request)
+                    }.onSuccess { _, status ->
+                        continuation.resume(status) // 성공 시 true 반환
+                    }.onError { status ->
+                        continuation.resume(status) // 실패 시 false 반환
+                    }.execute()
+                }
+            }
+        } catch (e: IllegalArgumentException) {
+            Log.e("Failed to Record Food History", "$e")
+            ApiStatus.UNKNOWN
         }
-
-        // 5. create()로 AlertDialog 생성
-        val dialog = builder.create()
-
-        // 6. show()로 다이얼로그 표시
-        dialog.show()
     }
 
     private fun resizeImageByWidth(uri: Uri, targetWidth: Int): Uri {
@@ -178,7 +202,6 @@ class ResultEatFragment : Fragment() {
         // 저장된 파일을 Uri로 변환하여 반환
         return Uri.fromFile(resizedFile)
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

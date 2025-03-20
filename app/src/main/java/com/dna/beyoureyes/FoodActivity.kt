@@ -4,28 +4,25 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import com.dna.beyoureyes.databinding.ActivityFoodBinding
 import com.dna.beyoureyes.ui.foodAnalysis.FoodViewModel
-import com.dna.beyoureyes.util.FoodTextRecognizer
+import com.dna.beyoureyes.ui.myInfo.MyInfoViewModel
 import com.dna.beyoureyes.util.ImageProcessor
-import kotlinx.coroutines.launch
 
 class FoodActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFoodBinding
     private lateinit var navController: NavController
 
+    private lateinit var myInfoViewModel: MyInfoViewModel
     private val viewModel: FoodViewModel by viewModels()
     private val imageProcessor: ImageProcessor = ImageProcessor(this) // 구 Camera 객체
 
@@ -46,6 +43,7 @@ class FoodActivity : AppCompatActivity() {
         // 레이아웃 바인딩
         binding = ActivityFoodBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        myInfoViewModel = ViewModelProvider(this.applicationContext as App)[MyInfoViewModel::class.java]
         navController = findNavController(R.id.nav_host_fragment_activity_food)
 
     }
@@ -108,8 +106,4 @@ class FoodActivity : AppCompatActivity() {
         super.onDestroy()
         imageProcessor.deleteImagesFromInternalStorage() // 내부 저장소 임시 이미지 파일 정리
     }
-
-    private fun testCamera() {
-
-
-    }}
+}

@@ -1,6 +1,7 @@
 package com.dna.beyoureyes.data.api
 
 import com.dna.beyoureyes.data.api.model.NutritionInfo
+import com.dna.beyoureyes.data.api.request.FoodRecordRequest
 import com.dna.beyoureyes.data.api.request.ProfileRequest
 import com.dna.beyoureyes.data.api.response.FoodHistoryResponse
 import com.dna.beyoureyes.data.api.response.SpringApiResponse
@@ -9,6 +10,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
+import retrofit2.http.POST
 
 /**
  * 토큰 인증이 필요한 Spring API 서비스 Interface
@@ -33,6 +35,9 @@ interface AuthSpringApiService {
 
     @PATCH(UPDATE_ALLERGY) // 사용자 알레르기 정보 업데이트
     suspend fun updateAllergens(@Body allergyMap: Map<String, Boolean>): Response<SpringApiResponse<Boolean>>
+
+    @POST(RECORD_FOOD) // 섭취 기록 저장
+    suspend fun recordFood(@Body request: FoodRecordRequest): Response<SpringApiResponse<Boolean>>
 
     companion object {
         //  API 변경 시 유지보수 목적으로 경로를 companion object로 따로 관리
