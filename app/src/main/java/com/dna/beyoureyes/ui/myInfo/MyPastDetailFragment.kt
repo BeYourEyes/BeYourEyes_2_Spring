@@ -39,18 +39,15 @@ class MyPastDetailFragment : Fragment() {
 
         // 식품 사진
         Glide.with(this)
-            .load(foodHistory.imgUri)
+            .load(foodHistory.imgUrl)
             .centerCrop() // 이미지를 크롭
             .into(binding.imageView)
 
         // 기록 날짜
-        foodHistory.timestamp?.let {
-            val datetime = it.toDate()
-            val dateFormat = SimpleDateFormat("yyyy.MM.dd (E)", Locale.KOREA) // 날짜 형식
-            val timeFormat = SimpleDateFormat("HH:mm a", Locale.US) // 시간 형식
-            binding.dateTextView.text = dateFormat.format(datetime)
-            binding.timeTextView.text = timeFormat.format(datetime)
-        }
+        val dateFormat = SimpleDateFormat("yyyy.MM.dd (E)", Locale.KOREA) // 날짜 형식
+        val timeFormat = SimpleDateFormat("HH:mm a", Locale.US) // 시간 형식
+        binding.dateTextView.text = dateFormat.format(foodHistory.timestamp)
+        binding.timeTextView.text = timeFormat.format(foodHistory.timestamp)
 
         // 칼로리 정보를 칼로리 프래그먼트에 Bundle로 전달
         foodHistory.kcal?.let {
