@@ -6,6 +6,7 @@ import com.dna.beyoureyes.data.api.response.SpringApiResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -23,6 +24,9 @@ interface NoAuthSpringApiService {
 
     @GET(CHECK_NICKNAME) // 사용자 별명 중복 조회
     suspend fun checkNickname(@Query("nickname") nickname: String): Response<SpringApiResponse<Boolean>>
+
+    @POST(REFRESH_TOKEN) // 액세스 토큰 재발급
+    suspend fun refreshToken(@Header("Authorization") expiredToken: String): Response<SpringApiResponse<String>>
 
     companion object {
         //  API 변경 시 유지보수 목적으로 경로를 companion object로 따로 관리
