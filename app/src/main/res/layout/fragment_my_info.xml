@@ -518,6 +518,26 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/contactBtn" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/signOutBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:drawableStart="@drawable/ic_myinfo_prohibit_24"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/gray_300"
+                    android:fontFamily="@font/wanted_sans_semi_bold"
+                    android:gravity="start|center_vertical"
+                    android:letterSpacing="0"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="0dp"
+                    android:text="@string/my_info_cs_sign_out"
+                    android:textColor="@color/gray_800"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/privacyPolicyBtn" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

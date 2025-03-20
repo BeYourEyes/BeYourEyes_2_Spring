@@ -95,6 +95,7 @@
     <string name="my_info_cs_review">앱 스토어 리뷰 남기기</string>
     <string name="my_info_cs_contact">고객센터 문의하기</string>
     <string name="my_info_cs_privacy_policy">개인정보 처리 방침</string>
+    <string name="my_info_cs_sign_out">서비스 탈퇴하기</string>
     <string name="my_info_app_version_label">앱 버전</string>
 
     <string name="my_info_profile_image_description">내 프로필 사진</string>
