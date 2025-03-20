@@ -106,8 +106,9 @@ class AssignActivity : AppCompatActivity() {
         } else {
             // 마지막 단계일 시
             when (editMode) {
-                AssignMode.REGISTER -> {
-                    val tokenManager = TokenManager(this)
+                AssignMode.REGISTER -> { // 정보 최초 등록 시
+                    // 액세스 토큰 저장소 세팅
+                    val tokenManager = TokenManager(applicationContext) // 싱글톤 패턴 유지를 위해 applicationContext 활용
                     val authRepository = AuthRepositoryImpl(tokenManager)
                     // val authInterceptor = AuthInterceptor(authRepository)
                     CoroutineScope(Dispatchers.Main).launch {

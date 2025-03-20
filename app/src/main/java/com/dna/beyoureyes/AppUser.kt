@@ -1,17 +1,13 @@
-package com.dna.beyoureyes.data.model
+package com.dna.beyoureyes
 
-import android.app.Application
 import android.net.Uri
 import android.util.Log
 import com.dna.beyoureyes.data.api.response.UserData
-
-// 무시
-class userId : Application() {
-    var userId: String? = null
-}
+import com.dna.beyoureyes.data.model.Allergen
+import com.dna.beyoureyes.data.model.Disease
+import com.dna.beyoureyes.data.model.UserInfo
 
 
-// id만 저장하는 게 아니므로 객체명을 AppUser로 변경(이름 중복을 피하기 위해 앞에 App 붙임)
 object AppUser {
     // 객체를 id, userInfo(기존 클래스) 속성을 갖도록 정의
     var id : String? = null

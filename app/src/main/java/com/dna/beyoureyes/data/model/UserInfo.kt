@@ -5,12 +5,6 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.Period
 import org.threeten.bp.format.DateTimeFormatter
 
-
-// 유저 정보 관리에 필요한 성별 enum 상수
-enum class Gender {
-    WOMAN, MAN
-}
-
 // 기본 생성자 (assign에서 활용, 프로필 이미지 등록x)
 class UserInfo(
     var name: String,                  // 사용자 나이
@@ -25,9 +19,9 @@ class UserInfo(
 
     var birth: LocalDate? = try {
         LocalDate.parse(birthString, DateTimeFormatter.ISO_DATE)
-        } catch (e: Exception) {
-            null
-        }
+    } catch (e: Exception) {
+        null
+    }
         set(value) {
             field = value
             age = calculateAge() // 사용자 생일 갱신 시 age 자동 갱신하도록 설정
