@@ -48,7 +48,7 @@ class FoodTextRecognizer(private val context: Context) {
     private val textRecognizer = TextRecognition.getClient(
         KoreanTextRecognizerOptions.Builder().build() // 한글 텍스트 인식 인스턴스 생성
     )
-    private val apiHelper = FoodOpenApiHelper() // open API 통신 헬퍼 객체
+    private val apiHelper = OpenApiHelper() // open API 통신 헬퍼 객체
 
     suspend fun detectTextFromUri(uri: Uri): Food? {
         return withContext(Dispatchers.Default) { // IO 스레드에서 실행(네트워크 작업, 파일 I/O 최적화)

@@ -1,6 +1,6 @@
 package com.dna.beyoureyes.data.api.response
 
-data class FoodOpenApiResponse (
+data class OpenApiFoodResponse (
     val response: Response
 ) {
 

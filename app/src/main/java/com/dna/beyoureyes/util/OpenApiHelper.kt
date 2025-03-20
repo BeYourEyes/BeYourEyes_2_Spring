@@ -1,7 +1,7 @@
 package com.dna.beyoureyes.util
 
 import android.util.Log
-import com.dna.beyoureyes.data.api.response.FoodOpenApiResponse
+import com.dna.beyoureyes.data.api.response.OpenApiFoodResponse
 import com.dna.beyoureyes.data.model.Carbs
 import com.dna.beyoureyes.data.model.Cholesterol
 import com.dna.beyoureyes.data.model.Fat
@@ -10,13 +10,13 @@ import com.dna.beyoureyes.data.model.Natrium
 import com.dna.beyoureyes.data.api.response.NutrientResult
 import com.dna.beyoureyes.data.model.Nutrition
 import com.dna.beyoureyes.data.model.Protein
-import com.dna.beyoureyes.di.RetrofitClient
+import com.dna.beyoureyes.di.OpenApiClient
 import com.dna.beyoureyes.data.model.SaturatedFat
 import com.dna.beyoureyes.data.model.Sugar
 
 
 // local.properties의 OPEN_API_KEY 설정 필요 !!!
-class FoodOpenApiHelper {
+class OpenApiHelper {
 
     // String List(ex.OCR 결과)에서 [품목보고번호] 문자 추출
     // : "품목보고번호 102941237987923" 이런 문자열을 찾고 뒤 숫자만 추출하는 메소드로 추정.
@@ -66,7 +66,7 @@ class FoodOpenApiHelper {
     ): Pair<Int, List<NutrientResult>>? {
         return try {
             Log.d("OpenApiHelper", "API Call Start")
-            val response = RetrofitClient.apiService.getFood(
+            val response = OpenApiClient.apiService.getFood(
                 pageNo = pageNo,
                 numOfRows = numOfRows,
                 type = type,
@@ -85,7 +85,7 @@ class FoodOpenApiHelper {
 
     // OPEN API로 가져온 데이터 foodSize 기준으로 mg 계산
     // : 100g 기준으로 제공된 영양정보 -> foodSize(g?) 기준으로 mg 단위 함유량 계산
-    private fun calculateNutrient(items: List<FoodOpenApiResponse.Item>): Pair<Int, List<NutrientResult>> {
+    private fun calculateNutrient(items: List<OpenApiFoodResponse.Item>): Pair<Int, List<NutrientResult>> {
         val result = mutableListOf<NutrientResult>() // 리턴할 결과 데이터 객체
         var kcal = 0
         for (item in items) {
