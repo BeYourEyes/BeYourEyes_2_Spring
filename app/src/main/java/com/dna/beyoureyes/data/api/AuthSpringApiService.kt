@@ -8,6 +8,7 @@ import com.dna.beyoureyes.data.api.response.SpringApiResponse
 import com.dna.beyoureyes.data.api.response.UserInfoResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -38,6 +39,9 @@ interface AuthSpringApiService {
 
     @POST(RECORD_FOOD) // 섭취 기록 저장
     suspend fun recordFood(@Body request: FoodRecordRequest): Response<SpringApiResponse<Boolean>>
+
+    @DELETE(DELETE_USER)
+    suspend fun deleteUser(): Response<SpringApiResponse<Boolean>>
 
     companion object {
         //  API 변경 시 유지보수 목적으로 경로를 companion object로 따로 관리

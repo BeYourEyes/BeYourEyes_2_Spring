@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -23,11 +24,19 @@ import com.dna.beyoureyes.databinding.FragmentMyInfoBinding
 import com.dna.beyoureyes.ui.common.CustomToolbar
 import com.google.android.material.chip.Chip
 import com.dna.beyoureyes.BuildConfig
+import com.dna.beyoureyes.data.api.SpringApiResponseHandler
+import com.dna.beyoureyes.data.api.model.ApiStatus
 import com.dna.beyoureyes.data.model.Allergen
 import com.dna.beyoureyes.data.model.Disease
+import com.dna.beyoureyes.di.SpringClient
 import com.dna.beyoureyes.ui.assign.AssignMode
 import com.dna.beyoureyes.ui.common.IconChip
 import com.dna.beyoureyes.ui.assign.AssignActivity
+import com.dna.beyoureyes.ui.common.CustomDialog
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
+
 
 class MyInfoFragment : Fragment() {
     private var _binding: FragmentMyInfoBinding? = null
@@ -152,7 +161,13 @@ class MyInfoFragment : Fragment() {
         }
         // 탈퇴하기
         binding.signOutBtn.setOnClickListener {
-            // TODO: 탈퇴하기 기능 구현
+            val userName = AppUser.info?.name ?: "사용자"
+            CustomDialog(
+                msg = "정말로 탈퇴하시겠습니까?\n${userName}님의 정보와 기록이\n영구적으로 삭제될 거에요.",
+                buttonText = "취소하기",
+                secondaryButtonText = "그래도 탈퇴하기",
+                secondaryButtonCallback = { signOutWithExceptionHandling() } // 예외 처리가 포함된 탈퇴 로직
+            ).show(childFragmentManager, "Dialog")
         }
 
         // 뒤로 가기 버튼 기능 연결
@@ -167,6 +182,45 @@ class MyInfoFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun signOutWithExceptionHandling() {
+        lifecycleScope.launch {
+            val status = signOut()
+            when(status) {
+                ApiStatus.SUCCESS -> { // 탈퇴 성공
+                    CustomDialog(
+                        msg = "탈퇴 처리를 마쳤습니다.\n다음에 또 이용해주세요!",
+                        buttonCallback = { requireActivity().finishAffinity() }
+                    ).show(childFragmentManager, "Dialog")
+
+                } ApiStatus.SERVER_ERROR -> {
+                    CustomDialog("서버 응답이 원활하지 못해\n탈퇴 처리에 실패했습니다.\n다시 시도해주세요!")
+                        .show(childFragmentManager, "Dialog")
+
+                } ApiStatus.NETWORK_ERROR -> {
+                    CustomDialog("요청에 실패했습니다.\n네트워크 연결 상태를 확인 후\n다시 시도해주세요!")
+                        .show(childFragmentManager, "Dialog")
+
+                } ApiStatus.UNKNOWN -> {
+                    CustomDialog("알 수 없는 오류로 인해\n요청에 실패했습니다.\n다시 시도해주세요!")
+                        .show(childFragmentManager, "Dialog")
+
+                } else -> { }
+            }
+        }
+    }
+
+    private suspend fun signOut(): ApiStatus = suspendCancellableCoroutine { continuation ->
+        lifecycleScope.launch {
+            SpringApiResponseHandler {
+                SpringClient.authSpringApi.deleteUser()
+            }.onSuccess{ _, status ->
+                continuation.resume(status)
+            }.onError { status ->
+                continuation.resume(status)
+            }.execute()
+        }
     }
 
     private fun updateHistoryUIdescription(historyCount: Int) {
