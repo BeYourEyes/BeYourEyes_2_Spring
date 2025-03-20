@@ -1,6 +1,8 @@
 package com.dna.beyoureyes.data.api
 
+import com.dna.beyoureyes.data.api.model.NutritionInfo
 import com.dna.beyoureyes.data.api.request.ProfileRequest
+import com.dna.beyoureyes.data.api.response.FoodHistoryResponse
 import com.dna.beyoureyes.data.api.response.SpringApiResponse
 import com.dna.beyoureyes.data.api.response.UserInfoResponse
 import retrofit2.Response
@@ -16,6 +18,12 @@ interface AuthSpringApiService {
 
     @GET(USER_INFO) // 사용자 정보 조회
     suspend fun getUserInfo(): Response<SpringApiResponse<UserInfoResponse>>
+
+    @GET(FOOD_TODAY) // 오늘 섭취한 모든 기록
+    suspend fun getTodayFoodHistories(): Response<SpringApiResponse<List<FoodHistoryResponse>>>
+
+    @GET(FOOD_TODAY_SUM) // 오늘 섭취한 영양소, 칼로리 값 합계
+    suspend fun getTodayIntakeSum(): Response<SpringApiResponse<NutritionInfo>>
 
     @PATCH(UPDATE_PROFILE) // 사용자 기본 정보(이름, 성별, 생년월일) 업데이트
     suspend fun updateProfile(@Body request: ProfileRequest): Response<SpringApiResponse<Boolean>>

@@ -5,113 +5,92 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.dna.beyoureyes.data.model.AppUser
-import com.dna.beyoureyes.MainActivity
+import com.dna.beyoureyes.AppUser
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FragmentHomeBinding
-import com.dna.beyoureyes.data.model.Carbs
-import com.dna.beyoureyes.data.model.Cholesterol
-import com.dna.beyoureyes.data.model.Fat
-import com.dna.beyoureyes.data.model.Natrium
-import com.dna.beyoureyes.data.model.Nutrition
-import com.dna.beyoureyes.data.model.Protein
-import com.dna.beyoureyes.data.model.SaturatedFat
-import com.dna.beyoureyes.data.model.Sugar
+
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: IntakeAdapter
-    private lateinit var layoutManager: RecyclerView.LayoutManager
+
+    private val homeViewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // val viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
         // 뷰 바인딩
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         // 리사이클러 뷰 (오늘의 상세 영양소 섭취량) 바인딩
-        recyclerView = binding.todayNutriRecyclerView
-        layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.layoutManager = layoutManager // 리사이클러 뷰 레이아웃 매니저 설정
+        binding.todayNutriRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // 영양소별 섭취량 합산
-        val activity = requireActivity() as MainActivity
-        val nutritionTotals = activity.foodHistoryItems.flatMap { it.nutritions }
-            .groupingBy { it::class }
-            .fold(0) { acc, nutrition -> acc + nutrition.milligram }
-
-        // 사용자의 칼로리 섭취량 합산
-        val totalKcal = activity.foodHistoryItems.sumOf { it.kcal ?: 0 }
-
-        // 사용자의 목표 칼로리 섭취량
-        val energyRequirement = AppUser.info?.getDailyEnergyRequirement() ?: 2000
-
-        // 칼로리 섭취 정보 설정
+        // 사용자 이름 표시
         binding.todayKcalLabel.text = buildString {
             append(AppUser.info?.name ?: "")
             append(getString(R.string.home_today_kcal_label))
         }
-        binding.kcalGoal.text = "$energyRequirement"
-        binding.kcalToday.text = "$totalKcal"
 
-        // 사용자의 칼로리 섭취량과 필요 에너지량 비교 및 평가
-        if (totalKcal < energyRequirement) { // 필요 에너지량보다 섭취량 적을 시
-            binding.topMsgKcal.text = "${energyRequirement - totalKcal}" // 두 값 차 설정
-            binding.topMsg2.text = getText(R.string.home_overview_msg2_when_less) // 적습니다
-            binding.topMsgSmall.text = getText(R.string.home_advice_when_less) // 조언 텍스트
-            binding.topCharacter.setImageResource(R.drawable.home_sad) // 캐릭터 반응
-        } else {
-            val diff = totalKcal - energyRequirement
-            binding.topMsgKcal.text = "$diff" // 두 값 차 설정
-            binding.topMsg2.text = getText(R.string.home_overview_msg2_when_more) // 많습니다
-            if (diff <= 200) { // 권장량 + 200kcal까지는 적정 범위로 임의 설정.
-                binding.topMsgSmall.text = getText(R.string.home_advice_when_good)
-                binding.topCharacter.setImageResource(R.drawable.home_good)
-            }else{ // 과다 섭취 경고 범위
-                binding.topMsgSmall.text = getText(R.string.home_advice_when_more)
-                binding.topCharacter.setImageResource(R.drawable.home_sad)
-            }
+        // LiveData 옵저빙 및 UI 업데이트
+        // 사용자 섭취량 표시
+        homeViewModel.totalKcal.observe(viewLifecycleOwner) { kcal ->
+            binding.kcalToday.text = "$kcal"
+            updateContentDescriptions()  // 값 변경 시 contentDescription 업데이트
+        }
+        // 사용자 권장 섭취량 표시
+        homeViewModel.energyRequirement.observe(viewLifecycleOwner) { requirement ->
+            binding.kcalGoal.text = "$requirement"
+            updateContentDescriptions()
+        }
+        // 사용자 섭취량 평가(실제 섭취량과 권장섭취량의 차)
+        homeViewModel.topMsgKcal.observe(viewLifecycleOwner) { topMsgKcal ->
+            binding.topMsgKcal.text = topMsgKcal
+            updateContentDescriptions()
+        }
+        // 사용자 섭취량 평가(권장섭취 대비 실제 섭취량이 적은지/많은지)
+        homeViewModel.topMsg2.observe(viewLifecycleOwner) { topMsg2 ->
+            binding.topMsg2.text = topMsg2
+            updateContentDescriptions()
+        }
+        // 사용자 섭취량 평가(조언)
+        homeViewModel.topMsgSmall.observe(viewLifecycleOwner) { topMsgSmall ->
+            binding.topMsgSmall.text = topMsgSmall
+            updateContentDescriptions()
+        }
+        // 사용자 섭취량 캐릭터 이미지
+        homeViewModel.topCharacterResId.observe(viewLifecycleOwner) { resId ->
+            binding.topCharacter.setImageResource(resId)
+        }
+        // 리사이클러뷰 어댑터 데이터 설정
+        homeViewModel.nutriIntakeItems.observe(viewLifecycleOwner) { nutritionList ->
+            binding.todayNutriRecyclerView.adapter = IntakeAdapter(nutritionList.toMutableList())
         }
 
-        // 영양소별 섭취량 리스트(오늘의 상세 영양소 리사이클러 뷰 어댑터에 넣기 위함)
-        val nutriIntakeItems = mutableListOf<Nutrition>()
+        return root
+    }
 
-        // 리사이클러 뷰용 데이터 형식으로 변경.
-        nutriIntakeItems.add(Carbs(nutritionTotals[Carbs::class] ?: 0))
-        nutriIntakeItems.add(Sugar(nutritionTotals[Sugar::class] ?: 0))
-        nutriIntakeItems.add(Protein(nutritionTotals[Protein::class] ?: 0))
-        nutriIntakeItems.add(Natrium(nutritionTotals[Natrium::class] ?: 0))
-        nutriIntakeItems.add(Cholesterol(nutritionTotals[Cholesterol::class] ?: 0))
-        nutriIntakeItems.add(Fat(nutritionTotals[Fat::class] ?: 0))
-        nutriIntakeItems.add(SaturatedFat(nutritionTotals[SaturatedFat::class] ?: 0))
-
-        adapter = IntakeAdapter(nutriIntakeItems)
-        recyclerView.adapter = adapter // 리사이클러 뷰 어댑터 설정
-
-
-        // 스크린 리더용 contentDescription 설정
-        binding.topMsgLayout.contentDescription = buildString { // 상단 식사량 평가
-            append("오늘 당신의 식사량은 필요 에너지량보다")
+    // contentDescription을 업데이트하는 함수
+    private fun updateContentDescriptions() {
+        // 상단 메시지 레이아웃(식사량 평가)의 contentDescription 업데이트
+        binding.topMsgLayout.contentDescription = buildString {
+            append("오늘 당신의 식사량은 필요 에너지량보다 ")
             append("${binding.topMsgKcal.text} kcal ")
             append("${binding.topMsg2.text}. ") // 적습니다 or 많습니다
             append(binding.topMsgSmall.text) // 조언
         }
-
-        binding.todayKcalLayout.contentDescription = buildString { // 칼로리 총 섭취량
-            append("${AppUser.info?.name}님은, 오늘 필요 에너지량 $energyRequirement kcal 중, ")
-            append("$totalKcal kcal를 섭취했습니다.")
+        // 오늘 칼로리 레이아웃의 contentDescription 업데이트
+        binding.todayKcalLayout.contentDescription = buildString {
+            val userName = AppUser.info?.name ?: "사용자"
+            append("$userName 님은, 오늘 필요 에너지량 ")
+            append("${binding.kcalGoal.text} kcal 중, ")
+            append("${binding.kcalToday.text} kcal를 섭취했습니다.")
         }
-
-        return root
     }
 
     override fun onDestroyView() {
