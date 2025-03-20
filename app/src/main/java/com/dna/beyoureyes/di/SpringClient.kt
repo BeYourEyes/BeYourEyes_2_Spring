@@ -1,8 +1,5 @@
 package com.dna.beyoureyes.di
 
-import com.dna.beyoureyes.data.api.JoinApi
-import com.dna.beyoureyes.data.api.LoginApi
-import com.dna.beyoureyes.data.api.UserInfoApi
 import com.dna.beyoureyes.data.api.interceptor.AuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -45,20 +42,5 @@ object SpringClient {
             .addConverterFactory(GsonConverterFactory.create())
             .client(getAuthClient(authInterceptor))
             .build()
-    }
-
-    // LoginApi (AuthInterceptor 없음)
-    val loginApi: LoginApi by lazy {
-        noAuthRetrofit.create(LoginApi::class.java)
-    }
-
-    // JoinApi (AuthInterceptor 없음)
-    val joinApi: JoinApi by lazy {
-        noAuthRetrofit.create(JoinApi::class.java)
-    }
-
-    // 다른 API (AuthInterceptor 있음)
-    fun getUserInfoApi(authInterceptor: AuthInterceptor): UserInfoApi {
-        return getAuthRetrofit(authInterceptor).create(UserInfoApi::class.java)
     }
 }

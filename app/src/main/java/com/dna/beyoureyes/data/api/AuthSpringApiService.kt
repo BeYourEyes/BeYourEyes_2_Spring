@@ -1,0 +1,32 @@
+package com.dna.beyoureyes.data.api
+
+import com.dna.beyoureyes.data.api.response.SpringApiResponse
+import com.dna.beyoureyes.data.api.response.UserInfoResponse
+import retrofit2.Response
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+
+/**
+ * 토큰 인증이 필요한 Spring API 서비스 Interface
+ */
+
+interface AuthSpringApiService {
+
+    @GET(USER_INFO) // 사용자 정보 조회
+    suspend fun getUserInfo(): Response<SpringApiResponse<UserInfoResponse>>
+
+    @DELETE(DELETE_USER)
+    suspend fun deleteUser(): Response<SpringApiResponse<Boolean>>
+
+    companion object {
+        //  API 변경 시 유지보수 목적으로 경로를 companion object로 따로 관리
+        private const val USER_INFO = "/user/user-info"
+        private const val FOOD_TODAY = "/food/today"
+        private const val FOOD_TODAY_SUM = "/food/today/summary"
+        private const val UPDATE_PROFILE = "/user/update"
+        private const val UPDATE_DISEASE = "/update/disease"
+        private const val UPDATE_ALLERGY = "/update/allergy"
+        private const val RECORD_FOOD = "/food/record"
+        private const val DELETE_USER = "/user/delete"
+    }
+}
