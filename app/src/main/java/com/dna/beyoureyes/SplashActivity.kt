@@ -52,7 +52,7 @@ class SplashActivity : AppCompatActivity() {
                     delay(4000) // 4초 지연
                     startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                     finish()
-                } ApiStatus.FAIL -> { // 신규 사용자 (FID와 일치하는 유저 없음)
+                } ApiStatus.NO_DATA -> { // 신규 사용자 (FID와 일치하는 유저 없음)
                     // 온보딩 화면으로 이동
                     delay(4000) // 4초 지연
                     startActivity(Intent(this@SplashActivity, OnboardingActivity::class.java))
@@ -100,8 +100,8 @@ class SplashActivity : AppCompatActivity() {
                             val loadUserInfoStatus = loadUserInfoFromServer() // 사용자 정보 조회
                             continuation.resume(loadUserInfoStatus) // 사용자 정보 조회 상태 반환
 
-                        } ApiStatus.FAIL -> { // 신규 사용자
-                            continuation.resume(ApiStatus.FAIL)
+                        } ApiStatus.NO_DATA -> { // 신규 사용자
+                            continuation.resume(ApiStatus.NO_DATA)
                         } else -> { } // 그 외 case 없음
                     }
                 }.onError { status ->

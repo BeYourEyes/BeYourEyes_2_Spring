@@ -37,22 +37,29 @@ class SpringApiResponseHandler<T>(private val call: suspend () -> Response<Sprin
     suspend fun execute() {
         try {
             val response = call()  // API 요청
-            if (response.isSuccessful) { // http code 200 ~ 299일 경우(204나 205는 제외)
-                response.body()?.let { apiResponse ->
-                    // 정상 응답을 받은 경우
+            response.body()?.let { apiResponse ->
+                val status = apiResponse.getApiStatus() // status 값 파싱
+
+                // 정상 응답을 받은 경우
+                if (response.isSuccessful) { // http code 200 ~ 299일 경우(204나 205는 제외)
                     Log.d("SPRING_API_SUCCESS", apiResponse.message)
-                    val status = apiResponse.getApiStatus() // status 값 파싱
                     onSuccess?.invoke(apiResponse.data, status)  // status별 처리는 콜백에 맡기기
-                } ?: run {
-                    // 응답 body가 null인 경우
-                    Log.e("SPRING_API_ERROR", "Null Response Body")
-                    onError?.invoke(ApiStatus.UNKNOWN)
+
+                } else {
+                    Log.d("SPRING_API_FAIL", apiResponse.message)
+                    when(response.code()) {
+                        404 -> onSuccess?.invoke(apiResponse.data, status)
+                        500 -> onError?.invoke(ApiStatus.SERVER_ERROR)
+                        else -> onError?.invoke(ApiStatus.UNKNOWN)
+                    }
+                    val errorMessage = response.errorBody()?.string() ?: "Server Error"
+                    Log.e("SPRING_API_ERROR", errorMessage)
+                    onError?.invoke(ApiStatus.SERVER_ERROR)
                 }
-            } else {
-                // API 요청이 실패한 경우
-                val errorMessage = response.errorBody()?.string() ?: "Server Error"
-                Log.e("SPRING_API_ERROR", errorMessage)
-                onError?.invoke(ApiStatus.SERVER_ERROR)
+            } ?: run {
+                // 응답 body가 null인 경우
+                Log.e("SPRING_API_ERROR", "Null Response Body")
+                onError?.invoke(ApiStatus.UNKNOWN)
             }
         } catch (e: AuthException) { // 액세스 토큰 만료 되었는데, 갱신 실패한 경우
             Log.e("SPRING_API_ERROR", "Auth Exception: ${e.message}")

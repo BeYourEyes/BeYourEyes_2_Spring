@@ -113,14 +113,16 @@ class AssignViewModel : ViewModel() {
             } else {
                 SpringApiResponseHandler {
                     SpringClient.noAuthSpringApi.checkNickname(name)
-                }.onSuccess { _, status ->
+                }.onSuccess { isValidate, status ->
                     when(status) {
                         ApiStatus.SUCCESS -> { // 사용 가능
-                            _nameValidationResult.value = NameValidation.Valid
-                            _nameValidationMessage.value = "사용 가능한 닉네임입니다."
-                        } ApiStatus.FAIL -> { // 닉네임 중복
-                            _nameValidationResult.value = NameValidation.Duplicate
-                            _nameValidationMessage.value = "중복된 이름입니다. 다시 설정해주세요!"
+                            if(isValidate == true){
+                                _nameValidationResult.value = NameValidation.Valid
+                                _nameValidationMessage.value = "사용 가능한 닉네임입니다."
+                            }else{
+                                _nameValidationResult.value = NameValidation.Duplicate
+                                _nameValidationMessage.value = "중복된 이름입니다. 다시 설정해주세요!"
+                            }
                         } else -> { }
                     }
                 }.onError { _ -> // 닉네임 중복 검사 중 오류 발생 시
