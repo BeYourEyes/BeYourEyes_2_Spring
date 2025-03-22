@@ -45,13 +45,13 @@ interface AuthSpringApiService {
 
     companion object {
         //  API 변경 시 유지보수 목적으로 경로를 companion object로 따로 관리
-        private const val USER_INFO = "/user/user-info"
-        private const val FOOD_TODAY = "/food/today"
-        private const val FOOD_TODAY_SUM = "/food/today/summary"
-        private const val UPDATE_PROFILE = "/user/update"
-        private const val UPDATE_DISEASE = "/update/disease"
-        private const val UPDATE_ALLERGY = "/update/allergy"
-        private const val RECORD_FOOD = "/food/record"
-        private const val DELETE_USER = "/user/delete"
+        private const val USER_INFO = "/v2/user/user-info"
+        private const val FOOD_TODAY = "/v2/food/today"
+        private const val FOOD_TODAY_SUM = "/v2/food/today/summary"
+        private const val UPDATE_PROFILE = "/v2/user/update"
+        private const val UPDATE_DISEASE = "/v2/update/disease"
+        private const val UPDATE_ALLERGY = "/v2/update/allergy"
+        private const val RECORD_FOOD = "/v2/food/record"
+        private const val DELETE_USER = "/v2/user/delete"
     }
 }

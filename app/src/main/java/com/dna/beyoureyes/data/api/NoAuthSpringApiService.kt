@@ -30,9 +30,9 @@ interface NoAuthSpringApiService {
 
     companion object {
         //  API 변경 시 유지보수 목적으로 경로를 companion object로 따로 관리
-        private const val USER_LOGIN = "/user/login"
-        private const val USER_JOIN = "/user/save-user"
-        private const val CHECK_NICKNAME = "/user/check-nickname"
-        private const val REFRESH_TOKEN = "/user/refresh-token"
+        private const val USER_LOGIN = "/v2/user/login"
+        private const val USER_JOIN = "/v2/user/save-user"
+        private const val CHECK_NICKNAME = "/v2/user/check-nickname"
+        private const val REFRESH_TOKEN = "/v2/user/refresh-token"
     }
 }
