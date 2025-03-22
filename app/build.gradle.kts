@@ -95,7 +95,6 @@ dependencies {
     // BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:33.6.0")) // Firebase 버전 관리
     implementation("com.google.firebase:firebase-installations:17.1.4") // FID 사용
-    implementation("com.google.firebase:firebase-storage-ktx") // 이미지 저장용 Storage 사용
 
     // Glide (이미지 로드 라이브러리)
     implementation("com.github.bumptech.glide:glide:4.16.0")

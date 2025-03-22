@@ -1,17 +1,21 @@
 package com.dna.beyoureyes.data.api
 
 import com.dna.beyoureyes.data.api.model.NutritionInfo
-import com.dna.beyoureyes.data.api.request.FoodRecordRequest
 import com.dna.beyoureyes.data.api.request.ProfileRequest
 import com.dna.beyoureyes.data.api.response.FoodHistoryResponse
+import com.dna.beyoureyes.data.api.response.FoodImageResponse
 import com.dna.beyoureyes.data.api.response.SpringApiResponse
 import com.dna.beyoureyes.data.api.response.UserInfoResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Part
 
 /**
  * 토큰 인증이 필요한 Spring API 서비스 Interface
@@ -37,8 +41,12 @@ interface AuthSpringApiService {
     @PATCH(UPDATE_ALLERGY) // 사용자 알레르기 정보 업데이트
     suspend fun updateAllergens(@Body allergyMap: Map<String, Boolean>): Response<SpringApiResponse<Boolean>>
 
+    @Multipart
     @POST(RECORD_FOOD) // 섭취 기록 저장
-    suspend fun recordFood(@Body request: FoodRecordRequest): Response<SpringApiResponse<Boolean>>
+    suspend fun recordFood(
+        @Part image: MultipartBody.Part,
+        @Part("foodData") foodData: RequestBody  // 바로 NutritionInfo를 JSON으로 넘겨주는 부분
+    ): Response<SpringApiResponse<FoodImageResponse>>
 
     @DELETE(DELETE_USER)
     suspend fun deleteUser(): Response<SpringApiResponse<Boolean>>

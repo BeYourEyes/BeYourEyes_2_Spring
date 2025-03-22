@@ -13,11 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.dna.beyoureyes.AppUser
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.data.api.SpringApiResponseHandler
 import com.dna.beyoureyes.data.api.model.ApiStatus
-import com.dna.beyoureyes.data.api.request.FoodRecordRequest
 import com.dna.beyoureyes.databinding.FragmentResultEatBinding
 import com.dna.beyoureyes.data.model.Food
 import com.dna.beyoureyes.data.model.Food.Companion.toNutritionInfo
@@ -26,16 +24,18 @@ import com.dna.beyoureyes.di.SpringClient
 import com.dna.beyoureyes.ui.common.CustomDialog
 import com.dna.beyoureyes.ui.common.CustomToolbar
 import com.dna.beyoureyes.ui.myInfo.MyInfoViewModel
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import java.io.File
 import java.io.FileOutputStream
 import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class ResultEatFragment : Fragment() {
     private var _binding: FragmentResultEatBinding? = null
@@ -92,21 +92,12 @@ class ResultEatFragment : Fragment() {
                 val capturedImgUri: Uri = viewModel.getCapturedImageUri()!!
                 val foodData: Food = viewModel.getFoodData()!!
                 foodData.scaleQuantityByFactor(scale.toDouble()) // 입력한 양 조절 반영
+                val resizedImage = resizeImageByWidth(capturedImgUri, 500) // 가로 500px로 조정
 
                 lifecycleScope.launch {
-                    val imgRefPath: String? = uploadImageToFirebase(capturedImgUri)
-                    val timestamp = LocalDateTime.now()
-                    val status =
-                        imgRefPath?.let{
-                            recordFoodDataToServer(timestamp, foodData, imgRefPath)
-                        }?:run{ // 이미지 저장에 실패
-                            Log.e("RESULT_EAT", "Failed to Upload Image To Firebase")
-                            ApiStatus.SERVER_ERROR
-                        }
+                    val status = recordFoodDataToServer(foodData, resizedImage)
                     when(status){
                         ApiStatus.SUCCESS -> {
-                            val newHistory = FoodHistory(imgRefPath!!, timestamp, foodData.kcal!!, foodData.nutritions!!)
-                            myInfoViewModel.addFoodHistory(newHistory)
                             CustomDialog(
                                 msg = "섭취량 입력이 완료되었습니다.",
                                 buttonCallback = { requireActivity().finish() }
@@ -134,37 +125,51 @@ class ResultEatFragment : Fragment() {
         return root
     }
 
-    private suspend fun uploadImageToFirebase(imageUri:Uri): String? = suspendCoroutine { continuation ->
-        val resizedImage = resizeImageByWidth(imageUri, 500) // 가로 500px로 조정
-        val storageReference: StorageReference = FirebaseStorage.getInstance().reference
+    private fun createImagePart(uri: Uri): MultipartBody.Part? {
+        val inputStream = requireContext().contentResolver.openInputStream(uri) ?: return null
+        val tempFile = File.createTempFile("upload", ".jpg", requireContext().cacheDir)
+        tempFile.outputStream().use { inputStream.copyTo(it) }
 
-        // 업로드할 파일의 경로 설정 (예: "images/UserId_20241215_191155.jpg")
-        val imageRef: StorageReference =
-            storageReference.child("foods/${AppUser.id}_${imageUri.lastPathSegment}")
-
-        val uploadTask = imageRef.putFile(resizedImage) // Firebase Storage에 파일 업로드
-
-        uploadTask.addOnSuccessListener {
-            val imgRefPath = imageRef.path
-            continuation.resume(imgRefPath)
-        }.addOnFailureListener { exception ->
-            exception.printStackTrace()
-            continuation.resume(null) // 실패 시 null 반환
-        }
+        val requestFile = tempFile.asRequestBody("image/*".toMediaTypeOrNull())
+        return MultipartBody.Part.createFormData("image", tempFile.name, requestFile)
     }
 
-    private suspend fun recordFoodDataToServer(timestamp:LocalDateTime, foodData: Food, imgRefPath: String): ApiStatus {
+    private suspend fun recordFoodDataToServer(foodData: Food, resizedImgUri: Uri): ApiStatus {
+
+        val nutritionInfo = foodData.toNutritionInfo()
+        val nutritionRequestBody = Gson()
+            .toJson(nutritionInfo)
+            .toRequestBody("application/json".toMediaTypeOrNull())
+        val imgPart = createImagePart(resizedImgUri)
+
         return try {
-            val request = FoodRecordRequest(
-                image = imgRefPath,
-                timestamp = timestamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-                foodData = foodData.toNutritionInfo()
-            )
             return suspendCancellableCoroutine { continuation ->
                 lifecycleScope.launch {
                     SpringApiResponseHandler {
-                        SpringClient.authSpringApi.recordFood(request)
-                    }.onSuccess { _, status ->
+                        SpringClient.authSpringApi.recordFood(
+                            image = imgPart
+                                ?: throw IllegalArgumentException("Image Part is NULL"),
+                            foodData = nutritionRequestBody
+                        )
+                    }.onSuccess { foodImgResponse, status ->
+                        when(status) {
+                            ApiStatus.SUCCESS -> {
+                                val newHistory = FoodHistory(
+                                    imgUrl = foodImgResponse?.imgUrl
+                                        ?: throw IllegalArgumentException("Received Null Food Image Response"),
+                                    timestamp = try {
+                                        LocalDateTime.parse(
+                                            foodImgResponse.dateTime,
+                                            DateTimeFormatter.ISO_LOCAL_DATE_TIME
+                                        )
+                                    } catch (e: Exception) {
+                                        throw IllegalArgumentException("Can't parse ${foodImgResponse.dateTime} to LocalDateTime")
+                                    },
+                                    foodData.kcal!!,
+                                    foodData.nutritions!!)
+                                myInfoViewModel.addFoodHistory(newHistory)
+                            } else -> { }
+                        }
                         continuation.resume(status) // 성공 시 true 반환
                     }.onError { status ->
                         continuation.resume(status) // 실패 시 false 반환
