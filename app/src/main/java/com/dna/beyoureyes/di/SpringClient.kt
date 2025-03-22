@@ -1,12 +1,13 @@
 package com.dna.beyoureyes.di
 
+import com.dna.beyoureyes.BuildConfig
 import com.dna.beyoureyes.data.api.AuthSpringApiService
 import com.dna.beyoureyes.data.api.NoAuthSpringApiService
 import com.dna.beyoureyes.data.api.interceptor.AuthInterceptor
 import retrofit2.Retrofit
 
 object SpringClient {
-    private const val BASE_URL = "http://3.39.223.116:8080" // BuildConfig로 관리할까?
+    private const val BASE_URL = BuildConfig.SPRING_BASE_URL
 
     //////////////////////////////////////////////////////////////////////////////////////////
     // 인증이 필요 없는 Retrofit 인스턴스

@@ -9,7 +9,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
-fun getApiKey(propertyKey: String): String {
+fun getLocalProperty(propertyKey: String): String {
     return gradleLocalProperties(rootDir).getProperty(propertyKey)
         ?: "\"No Key\"".also { println("in build.gradle: Can't Find $propertyKey") }
 }
@@ -34,8 +34,10 @@ android {
         versionName = "2.2.2"
         println ("Current defaultConfig versionName: ${versionName}")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "OPEN_API_KEY", getApiKey("OPEN_API_KEY"))
-        println(getApiKey("OPEN_API_KEY"))
+        buildConfigField("String",
+            "OPEN_API_KEY", getLocalProperty("OPEN_API_KEY"))
+        buildConfigField("String",
+            "SPRING_BASE_URL", getLocalProperty("SPRING_BASE_URL"))
     }
 
     buildFeatures {
