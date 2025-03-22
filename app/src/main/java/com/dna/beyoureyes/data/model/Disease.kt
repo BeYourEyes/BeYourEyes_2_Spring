@@ -9,9 +9,9 @@ enum class Disease(val displayName: String, val drawableId: Int) {
 
     // Disease Set을 DB 요청 형식에 맞춰 Map으로 변환하는 메소드 정의
     companion object {
-        fun MutableSet<Disease>?.toMap(): Map<String, Boolean>? {
-            return this?.associate { disease ->
-                disease.name.lowercase() to true
+        fun MutableSet<Disease>?.toMap(): Map<String, Boolean> {
+            return Disease.values().associate { disease ->
+                disease.name.lowercase() to (this?.contains(disease) == true)
             }
         }
     }

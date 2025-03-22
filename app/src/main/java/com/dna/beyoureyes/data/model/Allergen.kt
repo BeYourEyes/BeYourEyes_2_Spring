@@ -26,9 +26,9 @@ enum class Allergen(val displayName: String, val ocrKeywords: List<String>) {
 
     // Allergen Set을 DB 요청 형식에 맞춰 Map으로 변환하는 메소드 정의
     companion object {
-        fun MutableSet<Allergen>?.toMap(): Map<String, Boolean>? {
-            return this?.associate { allergen ->
-                allergen.name.lowercase() to true
+        fun MutableSet<Allergen>?.toMap(): Map<String, Boolean> {
+            return Allergen.values().associate { allergen ->
+                allergen.name.lowercase() to (this?.contains(allergen) == true)
             }
         }
     }
