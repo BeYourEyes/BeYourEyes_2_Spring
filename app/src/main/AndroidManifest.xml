@@ -49,6 +49,7 @@
             android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
+                <action android:name="FLUTTER_NOTIFICATION_CLICK" /> <!-- FCM이 클릭 시 사용하는 action -->
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

@@ -249,22 +249,29 @@ class AssignViewModel : ViewModel() {
                 disease = diseaseSet?.ifEmpty { null },
                 allergens = allergenSet?.ifEmpty { null }
             )
-            // 신규 가입 요청 객체 만들기
-            val joinRequest = JoinRequest(
-                deviceId = AppUser.id
-                    ?: throw IllegalArgumentException("Failed to create JoinRequest: AppUser ID is NULL"),
-                userBirth = try { _birth!!.format(birthDateFormatter) } catch (e: Exception) {
-                    throw IllegalArgumentException("Failed to create JoinRequest: can't convert LocalDate(${_birth}) to String")
-                },
-                userGender = _gender
-                    ?: throw IllegalArgumentException("Failed to create JoinRequest: GENDER value is NULL"),
-                userNickname = _name
-                    ?: throw IllegalArgumentException("Failed to create JoinRequest: NAME value is NULL"),
-                allergy = allergenSet?.toMap() ?: emptyMap(),
-                disease = diseaseSet?.toMap() ?: emptyMap()
-            )
-            // 가입(사용자 정보 저장) 요청 후 액세스 토큰 반환 받기
+
             viewModelScope.launch {
+                // FCM 토큰 발급
+                val fcmToken: String? = FirebaseMessaging.getInstance().token.await()
+
+                // 신규 가입 요청 객체 만들기
+                val joinRequest = JoinRequest(
+                    //fcmToken = fcmToken
+                    //    ?: throw IllegalArgumentException("Failed to create JoinRequest: FCM Token is NULL"),
+                    deviceId = AppUser.id
+                        ?: throw IllegalArgumentException("Failed to create JoinRequest: AppUser ID is NULL"),
+                    userBirth = try { _birth!!.format(birthDateFormatter) } catch (e: Exception) {
+                        throw IllegalArgumentException("Failed to create JoinRequest: can't convert LocalDate(${_birth}) to String")
+                    },
+                    userGender = _gender
+                        ?: throw IllegalArgumentException("Failed to create JoinRequest: GENDER value is NULL"),
+                    userNickname = _name
+                        ?: throw IllegalArgumentException("Failed to create JoinRequest: NAME value is NULL"),
+                    allergy = allergenSet?.toMap() ?: emptyMap(),
+                    disease = diseaseSet?.toMap() ?: emptyMap()
+                )
+
+                // 가입(사용자 정보 저장) 요청 후 액세스 토큰 반환 받기
                 SpringApiResponseHandler {
                     SpringClient.noAuthSpringApi.join(joinRequest)
                 }.onSuccess { data, status ->  // 응답 수신 성공
