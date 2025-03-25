@@ -52,23 +52,37 @@ class SplashActivity : AppCompatActivity() {
                     delay(4000) // 4초 지연
                     startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                     finish()
-                } ApiStatus.NO_DATA -> { // 신규 사용자 (FID와 일치하는 유저 없음)
+                }
+
+                ApiStatus.NO_DATA -> { // 신규 사용자 (FID와 일치하는 유저 없음)
                     // 온보딩 화면으로 이동
                     delay(4000) // 4초 지연
                     startActivity(Intent(this@SplashActivity, OnboardingActivity::class.java))
                     finish()
-                } ApiStatus.SERVER_ERROR, ApiStatus.NETWORK_ERROR -> { // 서버 응답 에러 & 기타 오류(아마 네트워크 오류)
+                }
+
+                ApiStatus.SERVER_ERROR -> { // 서버 응답 에러
+                    CustomDialog(
+                        msg = "서버 응답에 문제가 발생했습니다.\n나중에 다시 시도해 주세요.",
+                        buttonCallback = { finish() }
+                    ).show(supportFragmentManager, "Dialog")
+                }
+
+                ApiStatus.NETWORK_ERROR -> {  // 기타 오류(아마 네트워크 오류)
                     CustomDialog(
                         msg = "서버와의 연결에 실패했습니다.\n네트워크 설정을 확인한 후\n다시 접속 해 주세요.",
                         buttonCallback = { finish() }
                     ).show(supportFragmentManager, "Dialog")
+                }
 
-                } ApiStatus.UNKNOWN -> { // 알 수 없는 오류(null response body?)
+                ApiStatus.UNKNOWN -> { // 알 수 없는 오류(null response body?)
                     CustomDialog(
                         msg = "알 수 없는 오류가 발생했습니다.\n앱을 다시 시작해 주세요.",
                         buttonCallback = { finish() }
                     ).show(supportFragmentManager, "Dialog")
                 }
+
+                else -> {}
             }
         }
     }

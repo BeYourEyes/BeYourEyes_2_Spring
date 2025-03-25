@@ -2,6 +2,7 @@ package com.dna.beyoureyes.data.api.model
 
 enum class ApiStatus(val value: String) {
     SUCCESS("SUCCESS"),
+    FAILURE("FAILURE"),
     NO_DATA("NO_DATA"),
     SERVER_ERROR("ERROR"),
     NETWORK_ERROR("NETWORK_ERROR"),

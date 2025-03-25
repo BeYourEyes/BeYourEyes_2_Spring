@@ -120,7 +120,10 @@ class AssignActivity : AppCompatActivity() {
                             val status = viewModel.registerUserInfo(authRepository)
                             exceptionHandlingAfterApiCall(
                                 status = status,
-                                onSuccess = { startActivity(intent) }
+                                onSuccess = {
+                                    startActivity(intent)
+                                    finish()
+                                }
                             )
                         }
                     }catch(e: IllegalArgumentException){ // 가입 중 argument 처리 오류 발생 시
@@ -132,7 +135,10 @@ class AssignActivity : AppCompatActivity() {
                         val status = viewModel.updateProfile(authRepository)
                         exceptionHandlingAfterApiCall(
                             status = status,
-                            onSuccess = { setResult(Activity.RESULT_OK) }
+                            onSuccess = {
+                                setResult(Activity.RESULT_OK)
+                                finish()
+                            }
                         )
                     }
                 } AssignMode.ALLERGY -> {
@@ -140,7 +146,10 @@ class AssignActivity : AppCompatActivity() {
                         val status = viewModel.updateAllergens(authRepository)
                         exceptionHandlingAfterApiCall(
                             status = status,
-                            onSuccess = { setResult(Activity.RESULT_OK) }
+                            onSuccess = {
+                                setResult(Activity.RESULT_OK)
+                                finish()
+                            }
                         )
                     }
                 } AssignMode.DISEASE -> {
@@ -149,7 +158,10 @@ class AssignActivity : AppCompatActivity() {
                         val status = viewModel.updateDisease(authRepository)
                         exceptionHandlingAfterApiCall(
                             status = status,
-                            onSuccess = { setResult(Activity.RESULT_OK) }
+                            onSuccess = {
+                                setResult(Activity.RESULT_OK)
+                                finish()
+                            }
                         )
                     }
                 } else -> { }
@@ -161,22 +173,21 @@ class AssignActivity : AppCompatActivity() {
     private fun exceptionHandlingAfterApiCall(status:ApiStatus, onSuccess: () -> Unit) {
         when(status) {
             ApiStatus.SUCCESS -> onSuccess.invoke()
-            ApiStatus.SERVER_ERROR, ApiStatus.NETWORK_ERROR -> { // 서버 응답 에러 & 기타 오류(아마 네트워크 오류)
-                showDialogForServerError()
-            } ApiStatus.UNKNOWN -> { // 알 수 없는 오류(null response body?)
-                showDialogForUnknownError()
-            } else -> {} // 존재 X
+            ApiStatus.FAILURE -> { // 기기 설치 ID 중복으로 가입 실패
+                CustomDialog("해당 기기 ID로 가입한 기록이\n이미 존재합니다.\n앱을 삭제 후 재설치해 주세요.")
+                    .show(supportFragmentManager, "Dialog")
+            }
+            ApiStatus.SERVER_ERROR-> { // 서버 응답 에러
+                CustomDialog("서버에서 정상 처리에 실패했습니다.\n다시 시도해 주세요.")
+                    .show(supportFragmentManager, "Dialog")
+            } ApiStatus.NETWORK_ERROR -> { // 기타 오류(아마 네트워크 오류)
+            CustomDialog("네트워크 연결에 실패했습니다.\n설정을 다시 확인한 후\n다시 시도해주세요.")
+                .show(supportFragmentManager, "Dialog")
+        } ApiStatus.UNKNOWN -> { // 알 수 없는 오류(null response body?)
+            CustomDialog("알 수 없는 오류가 발생했습니다.\n다시 시도해 봐도 오류가 반복되면\n앱을 다시 시작해 주세요.")
+                .show(supportFragmentManager, "Dialog")
+        } else -> {} // 존재 X
         }
-    }
-
-    private fun showDialogForServerError() {
-        CustomDialog("서버와의 연결에 실패했습니다.\n다시 시도해 봐도 오류가 반복되면\n앱을 다시 시작해 주세요.")
-            .show(supportFragmentManager, "Dialog")
-    }
-
-    private fun showDialogForUnknownError() {
-        CustomDialog("알 수 없는 오류가 발생했습니다.\n다시 시도해 봐도 오류가 반복되면\n앱을 다시 시작해 주세요.")
-            .show(supportFragmentManager, "Dialog")
     }
 
     fun updateTextForEachStep(questionMsg:String) {

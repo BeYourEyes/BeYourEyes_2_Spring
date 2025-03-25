@@ -46,6 +46,7 @@ class SpringApiResponseHandler<T>(private val call: suspend () -> Response<Sprin
                 // 정상 응답을 받은 경우
                 if (response.isSuccessful) { // http code 200 ~ 299일 경우(204나 205는 제외)
                     Log.d("SPRING_API_SUCCESS", apiResponse.message)
+                    Log.d("SPRING_API_SUCCESS", apiResponse.toString())
                     onSuccess?.invoke(apiResponse.data, status)  // status별 처리는 콜백에 맡기기
                     return
                 } else {
@@ -56,16 +57,22 @@ class SpringApiResponseHandler<T>(private val call: suspend () -> Response<Sprin
                     return
                 }
             } ?: run {
+                val errorJson = response.errorBody()?.string()
+                val errorResponse = Gson().fromJson(errorJson, SpringApiResponse::class.java)
                 when(response.code()) {
                     404 -> {
-                        val errorJson = response.errorBody()?.string()
-                        val errorResponse = Gson().fromJson(errorJson, SpringApiResponse::class.java)
                         val status = ApiStatus.fromString(errorResponse.status) // status 값 파싱
-                        Log.d("SPRING_API_DEBUG", "${status}")
+                        Log.e("SPRING_API_ERROR", "${errorResponse}")
                         onSuccess?.invoke(null, status)
                         return
                     }
+                    409 -> { // Conflict
+                        val status = ApiStatus.fromString(errorResponse.status) // status 값 파싱
+                        Log.e("SPRING_API_ERROR", "${errorResponse}")
+                        onSuccess?.invoke(null, status)
+                    }
                     500 -> {
+                        Log.d("SPRING_API_DEBUG", "${errorResponse}")
                         onError?.invoke(ApiStatus.SERVER_ERROR)
                         return
                     }

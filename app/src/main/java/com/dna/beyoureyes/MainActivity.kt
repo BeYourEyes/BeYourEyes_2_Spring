@@ -92,17 +92,22 @@ class MainActivity : AppCompatActivity() {
     private suspend fun loadUserDataWithExceptionHandling() {
         val status = loadUserDataFromServer()
         when (status) {
-            ApiStatus.SERVER_ERROR, ApiStatus.NETWORK_ERROR -> { // 서버 응답 에러 & 기타 오류(아마 네트워크 오류)
+            ApiStatus.SERVER_ERROR -> { // 서버 응답 에러
                 CustomDialog(
-                    msg = "서버와의 연결에 실패했습니다.\n네트워크 설정을 확인한 후\n다시 접속 해 주세요.",
+                    msg = "서버 응답에 문제가 발생했습니다.\n나중에 다시 시도해 주세요.",
                     buttonCallback = { finishAffinity() } // 현재 Task 내 모든 Activity 종료
                 ).show(supportFragmentManager, "Dialog")
-            } ApiStatus.UNKNOWN -> { // 알 수 없는 오류(null response body?)
-                CustomDialog(
-                    msg = "알 수 없는 오류가 발생했습니다.\n앱을 다시 시작해 주세요.",
-                    buttonCallback = { finishAffinity() }
-                ).show(supportFragmentManager, "Dialog")
-            } else -> {} // 그 외 case 없음
+            } ApiStatus.NETWORK_ERROR -> { // 기타 오류(아마 네트워크 오류)
+            CustomDialog(
+                msg = "서버와의 연결에 실패했습니다.\n네트워크 설정을 확인한 후\n다시 접속 해 주세요.",
+                buttonCallback = { finishAffinity() } // 현재 Task 내 모든 Activity 종료
+            ).show(supportFragmentManager, "Dialog")
+        } ApiStatus.UNKNOWN -> { // 알 수 없는 오류(null response body?)
+            CustomDialog(
+                msg = "알 수 없는 오류가 발생했습니다.\n앱을 다시 시작해 주세요.",
+                buttonCallback = { finishAffinity() }
+            ).show(supportFragmentManager, "Dialog")
+        } else -> {} // 그 외 case 없음
         }
     }
 
