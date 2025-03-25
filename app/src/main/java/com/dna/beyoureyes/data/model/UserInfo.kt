@@ -1,6 +1,7 @@
 package com.dna.beyoureyes.data.model
 
 import android.net.Uri
+import android.util.Log
 import com.dna.beyoureyes.data.api.response.UserInfoResponse
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Period
@@ -33,7 +34,7 @@ class UserInfo(
         name = response.profile.nickname,
         gender = response.profile.gender,
         birth = try {
-            LocalDate.parse(response.profile.birth, DateTimeFormatter.ISO_DATE)
+            LocalDate.parse(response.profile.birth, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         } catch (e: Exception) {
             throw IllegalArgumentException("Invalid birth date format(UserInfoResponse): ${response.profile.birth}")
         }, // 생년월일 Stirng -> LocalDate 파싱 실패 시 예외를 던짐
