@@ -4,6 +4,7 @@ import android.util.Log
 import com.dna.beyoureyes.data.api.model.ApiStatus
 import com.dna.beyoureyes.data.api.model.AuthException
 import com.dna.beyoureyes.data.api.response.SpringApiResponse
+import com.google.gson.Gson
 import retrofit2.Response
 
 /**
@@ -37,6 +38,8 @@ class SpringApiResponseHandler<T>(private val call: suspend () -> Response<Sprin
     suspend fun execute() {
         try {
             val response = call()  // API 요청
+            Log.d("SPRING_API_DEBUG", response.code().toString())
+
             response.body()?.let { apiResponse ->
                 val status = apiResponse.getApiStatus() // status 값 파싱
 
@@ -44,29 +47,42 @@ class SpringApiResponseHandler<T>(private val call: suspend () -> Response<Sprin
                 if (response.isSuccessful) { // http code 200 ~ 299일 경우(204나 205는 제외)
                     Log.d("SPRING_API_SUCCESS", apiResponse.message)
                     onSuccess?.invoke(apiResponse.data, status)  // status별 처리는 콜백에 맡기기
-
+                    return
                 } else {
                     Log.d("SPRING_API_FAIL", apiResponse.message)
-                    when(response.code()) {
-                        404 -> onSuccess?.invoke(apiResponse.data, status)
-                        500 -> onError?.invoke(ApiStatus.SERVER_ERROR)
-                        else -> onError?.invoke(ApiStatus.UNKNOWN)
-                    }
                     val errorMessage = response.errorBody()?.string() ?: "Server Error"
                     Log.e("SPRING_API_ERROR", errorMessage)
                     onError?.invoke(ApiStatus.SERVER_ERROR)
+                    return
                 }
             } ?: run {
-                // 응답 body가 null인 경우
-                Log.e("SPRING_API_ERROR", "Null Response Body")
-                onError?.invoke(ApiStatus.UNKNOWN)
+                when(response.code()) {
+                    404 -> {
+                        val errorJson = response.errorBody()?.string()
+                        val errorResponse = Gson().fromJson(errorJson, SpringApiResponse::class.java)
+                        val status = ApiStatus.fromString(errorResponse.status) // status 값 파싱
+                        Log.d("SPRING_API_DEBUG", "${status}")
+                        onSuccess?.invoke(null, status)
+                        return
+                    }
+                    500 -> {
+                        onError?.invoke(ApiStatus.SERVER_ERROR)
+                        return
+                    }
+                    else -> {
+                        onError?.invoke(ApiStatus.UNKNOWN)
+                        return
+                    }
+                }
             }
         } catch (e: AuthException) { // 액세스 토큰 만료 되었는데, 갱신 실패한 경우
             Log.e("SPRING_API_ERROR", "Auth Exception: ${e.message}")
             onError?.invoke(ApiStatus.SERVER_ERROR)
+            return
         } catch (e: Exception) { // 기타 오류
             Log.e("SPRING_API_ERROR", "Exception: ${e.message}")
             onError?.invoke(ApiStatus.NETWORK_ERROR)
+            return
         }
     }
 }
