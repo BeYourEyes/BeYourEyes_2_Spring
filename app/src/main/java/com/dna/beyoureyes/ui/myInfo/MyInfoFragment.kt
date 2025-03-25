@@ -24,6 +24,7 @@ import com.dna.beyoureyes.databinding.FragmentMyInfoBinding
 import com.dna.beyoureyes.ui.common.CustomToolbar
 import com.google.android.material.chip.Chip
 import com.dna.beyoureyes.BuildConfig
+import com.dna.beyoureyes.MainActivity
 import com.dna.beyoureyes.data.api.SpringApiResponseHandler
 import com.dna.beyoureyes.data.api.model.ApiStatus
 import com.dna.beyoureyes.data.model.Allergen
@@ -42,7 +43,9 @@ class MyInfoFragment : Fragment() {
     private var _binding: FragmentMyInfoBinding? = null
     private val binding get() = _binding!!
 
-    private val myInfoViewModel: MyInfoViewModel by activityViewModels() // ViewModel 공유
+    private val myInfoViewModel: MyInfoViewModel by lazy {
+        (requireActivity() as MainActivity).myInfoViewModel
+    }
 
     private val playStoreBaseLink = "https://play.google.com/store/apps/details?id="
     private var lastAssignMode: AssignMode? = null // 마지막으로 실행한 AssignMode 저장

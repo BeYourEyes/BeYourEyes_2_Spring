@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private val homeViewModel: HomeViewModel by viewModels()
-    private lateinit var myInfoViewModel: MyInfoViewModel
+    lateinit var myInfoViewModel: MyInfoViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

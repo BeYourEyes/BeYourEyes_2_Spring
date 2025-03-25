@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
+import com.dna.beyoureyes.MainActivity
 import com.dna.beyoureyes.ui.foodDetail.ResultKcalFragment
 import com.dna.beyoureyes.ui.foodDetail.ResultNutriBarFragment
 import com.dna.beyoureyes.databinding.FragmentMyPastDetailBinding
@@ -20,7 +21,9 @@ class MyPastDetailFragment : Fragment() {
     private var _binding: FragmentMyPastDetailBinding? = null
     private val binding get() = _binding!!
 
-    private val myInfoViewModel: MyInfoViewModel by activityViewModels() // ViewModel 공유
+    private val myInfoViewModel: MyInfoViewModel by lazy {
+        (requireActivity() as MainActivity).myInfoViewModel
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
