@@ -136,24 +136,38 @@ class AssignViewModel : ViewModel() {
     // 기존 유저 정보 수정사항 업데이트
     suspend fun updateProfile(authRepository: AuthRepositoryImpl): ApiStatus = suspendCancellableCoroutine { continuation ->
         try {
-            // 사용자 싱글톤 객체 업데이트
-            AppUser.info?.name = _name
-                ?: throw IllegalArgumentException("Failed to set AppUser info: NAME value is NULL")
-            AppUser.info?.gender = _gender
-                ?: throw IllegalArgumentException("Failed to set AppUser info: GENDER value is NULL")
-            AppUser.info?.birth = _birth
-                ?: throw IllegalArgumentException("Failed to set AppUser info: BIRTH value is NULL")
+            // 액세스 토큰 인증을 위해 AuthInterceptor 설정
+            SpringClient.initAuthClient(AuthInterceptor(authRepository))
+
+            // 사용자 싱글톤 객체 업데이트 및 변경값 감지
+            val changedName : String? = _name?.let {
+                if (it != AppUser.info?.name) {
+                    AppUser.info?.name = it
+                    it
+                } else { null }
+            }
+            val changedGender : Int? = _gender?.let {
+                if (it != AppUser.info?.gender) {
+                    AppUser.info?.gender = it
+                    it
+                } else { null }
+            }
+            val changedBirth : String? = _birth?.let {
+                if (it != AppUser.info?.birth) {
+                    AppUser.info?.birth = it
+                    try {
+                        _birth!!.format(birthDateFormatter)
+                    } catch (e: Exception) {
+                        throw IllegalArgumentException("Failed to convert BIRTH(${_birth}) to String")
+                    }
+                } else { null }
+            }
+
             // 수정된 정보 요청 객체 만들기
             val request = ProfileRequest(
-                userBirth = try {
-                    _birth!!.format(birthDateFormatter)
-                } catch (e: Exception) {
-                    throw IllegalArgumentException("Failed to create ApiRequest: can't convert BIRTH(${_birth}) to String")
-                },
-                userGender = _gender
-                    ?: throw IllegalArgumentException("Failed to create ApiRequest: GENDER value is NULL"),
-                userNickname = _name
-                    ?: throw IllegalArgumentException("Failed to create ApiRequest: NAME value is NULL")
+                userBirth = changedBirth,
+                userGender = changedGender,
+                userNickname = changedName
             )
             // 프로필 수정 API 호출
             viewModelScope.launch {

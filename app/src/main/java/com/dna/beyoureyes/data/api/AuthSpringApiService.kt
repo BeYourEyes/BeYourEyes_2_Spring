@@ -45,7 +45,7 @@ interface AuthSpringApiService {
     @POST(RECORD_FOOD) // 섭취 기록 저장
     suspend fun recordFood(
         @Part image: MultipartBody.Part,
-        @Part("foodData") foodData: RequestBody  // 바로 NutritionInfo를 JSON으로 넘겨주는 부분
+        @Part("food_data") foodData: RequestBody  // 바로 NutritionInfo를 JSON으로 넘겨주는 부분
     ): Response<SpringApiResponse<FoodImageResponse>>
 
     @DELETE(DELETE_USER)
