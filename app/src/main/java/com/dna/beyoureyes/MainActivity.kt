@@ -106,9 +106,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun loadUserDataFromServer(): ApiStatus = suspendCancellableCoroutine { continuation ->
+    private suspend fun loadIntakeSumFromServer(): ApiStatus = suspendCancellableCoroutine { continuation ->
         lifecycleScope.launch {
-
             // 오늘 총 섭취량 합 읽기
             SpringApiResponseHandler {
                 SpringClient.authSpringApi.getTodayIntakeSum()
@@ -117,12 +116,19 @@ class MainActivity : AppCompatActivity() {
                     ApiStatus.SUCCESS -> { // 응답 성공 시
                         // 응답 데이터를 HomeFragment용 뷰 모델에 저장
                         homeViewModel.setUserIntakeData(data!!.kcal, data.nutritionList)
-                    } else -> { continuation.resume(status) } // 그 외 case 없음
+                        continuation.resume(status)
+                    } else -> {
+                    continuation.resume(status)
+                } // 그 외 case 없음
                 }
             }.onError { status ->
                 continuation.resume(status)
             }.execute()
+        }
+    }
 
+    private suspend fun loadHistoriesFromServer(): ApiStatus = suspendCancellableCoroutine { continuation ->
+        lifecycleScope.launch {
             // 오늘 섭취 기록 모두 불러오기
             SpringApiResponseHandler {
                 SpringClient.authSpringApi.getTodayFoodHistories()
@@ -131,20 +137,34 @@ class MainActivity : AppCompatActivity() {
                     ApiStatus.SUCCESS -> { // 응답 성공 시
                         try {
                             val foodHistories = data!!.map { it.toFoodHistory() }.toMutableList() // 데이터 파싱
+                            for (history in foodHistories) {
+                                Log.d("SPRING_DEBUG", history.toString())
+                            }
                             myInfoViewModel.setFoodHistory(foodHistories) // MyInfoFragment용 뷰 모델에 저장
-
                             continuation.resume(ApiStatus.SUCCESS)
                         } catch (e: IllegalArgumentException) {
                             // 응답을 FoodHistory 형식으로 변환 중 에러 발생
                             // 기록 저장 시간 -> LocalDateTime 변환 확인
                             Log.e("Today's FoodHistory Parsing Error", "$e")
                         }
-                    } else -> {} // 그 외 case 없음
+                    } else -> { continuation.resume(status) } // 그 외 case 없음
                 }
-                continuation.resume(status)
             }.onError { status ->
                 continuation.resume(status)
             }.execute()
+        }
+    }
+
+    private suspend fun loadUserDataFromServer(): ApiStatus = suspendCancellableCoroutine { continuation ->
+        lifecycleScope.launch {
+            when(val intakeSumStatus = loadIntakeSumFromServer()) {
+                ApiStatus.SUCCESS -> {
+                    val historyStatus = loadHistoriesFromServer()
+                    continuation.resume(historyStatus)
+                } else -> {
+                    continuation.resume(intakeSumStatus)
+                }
+            }
         }
     }
 }

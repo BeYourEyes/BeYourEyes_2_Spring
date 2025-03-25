@@ -126,9 +126,8 @@ class SplashActivity : AppCompatActivity() {
                         } catch (e: IllegalArgumentException){ // 파싱 실패 시
                             Log.e("SPRING_API_ERROR", "사용자 정보 변환 실패: ${e.message}")
                         }
-                    } else -> { }
+                    } else -> { continuation.resume(ApiStatus.UNKNOWN) }
                 }
-                continuation.resume(ApiStatus.UNKNOWN)
             }.onError { status ->
                 continuation.resume(status)
             }.execute()
