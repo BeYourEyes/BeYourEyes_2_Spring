@@ -22,6 +22,10 @@ class AssignActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAssignBinding
     private val viewModel : AssignViewModel by viewModels()
 
+    // 액세스 토큰 저장소 세팅
+    private val tokenManager = TokenManager(this)
+    private val authRepository = AuthRepositoryImpl(tokenManager)
+
     private var editMode: AssignMode? = null // 정보 수정 모드 관리를 위한 속성
     private var currentStep = 0
     private lateinit var fragmentList : List<AssignFragment>
@@ -110,10 +114,6 @@ class AssignActivity : AppCompatActivity() {
             // 마지막 단계일 시
             when (editMode) {
                 AssignMode.REGISTER -> { // 정보 최초 등록 시
-                    // 액세스 토큰 저장소 세팅
-                    val tokenManager = TokenManager(applicationContext) // 싱글톤 패턴 유지를 위해 applicationContext 활용
-                    val authRepository = AuthRepositoryImpl(tokenManager)
-
                     try {
                         val intent = Intent(this, MainActivity::class.java)
                         lifecycleScope.launch { // 가입 시도 후 결과 상태 받기
@@ -129,7 +129,7 @@ class AssignActivity : AppCompatActivity() {
                     }
                 } AssignMode.PROFILE -> {
                     lifecycleScope.launch {
-                        val status = viewModel.updateProfile()
+                        val status = viewModel.updateProfile(authRepository)
                         exceptionHandlingAfterApiCall(
                             status = status,
                             onSuccess = { setResult(Activity.RESULT_OK) }
@@ -137,7 +137,7 @@ class AssignActivity : AppCompatActivity() {
                     }
                 } AssignMode.ALLERGY -> {
                     lifecycleScope.launch {
-                        val status = viewModel.updateAllergens()
+                        val status = viewModel.updateAllergens(authRepository)
                         exceptionHandlingAfterApiCall(
                             status = status,
                             onSuccess = { setResult(Activity.RESULT_OK) }
@@ -146,7 +146,7 @@ class AssignActivity : AppCompatActivity() {
                 } AssignMode.DISEASE -> {
                     lifecycleScope.launch {
                         setResult(Activity.RESULT_OK)
-                        val status = viewModel.updateDisease()
+                        val status = viewModel.updateDisease(authRepository)
                         exceptionHandlingAfterApiCall(
                             status = status,
                             onSuccess = { setResult(Activity.RESULT_OK) }

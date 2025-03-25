@@ -13,8 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.dna.beyoureyes.FoodActivity
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.data.api.SpringApiResponseHandler
+import com.dna.beyoureyes.data.api.interceptor.AuthInterceptor
 import com.dna.beyoureyes.data.api.model.ApiStatus
 import com.dna.beyoureyes.databinding.FragmentResultEatBinding
 import com.dna.beyoureyes.data.model.Food
@@ -53,6 +55,9 @@ class ResultEatFragment : Fragment() {
         // 레이아웃 바인딩
         _binding = FragmentResultEatBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        // 액세스 토큰 인증을 위해 AuthInterceptor 설정
+        SpringClient.initAuthClient(AuthInterceptor((requireActivity() as FoodActivity).authRepository))
 
         // 뒤로 가기 버튼 기능 연결
         binding.toolbar.backButtonClickListener = object : CustomToolbar.ButtonClickListener {

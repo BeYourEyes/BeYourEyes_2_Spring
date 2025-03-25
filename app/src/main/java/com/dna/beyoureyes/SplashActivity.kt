@@ -75,7 +75,7 @@ class SplashActivity : AppCompatActivity() {
 
     private suspend fun tryToLogin(): ApiStatus = suspendCancellableCoroutine { continuation ->
         // 액세스 토큰 저장소 세팅
-        val tokenManager = TokenManager(applicationContext)  // 싱글톤 패턴 유지를 위해 applicationContext 활용
+        val tokenManager = TokenManager(this)
         val authRepository = AuthRepositoryImpl(tokenManager)
 
         lifecycleScope.launch {

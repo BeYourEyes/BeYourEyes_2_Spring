@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.dna.beyoureyes.data.local.TokenManager
+import com.dna.beyoureyes.data.repository.AuthRepositoryImpl
 import com.dna.beyoureyes.databinding.ActivityFoodBinding
 import com.dna.beyoureyes.ui.foodAnalysis.FoodViewModel
 import com.dna.beyoureyes.ui.myInfo.MyInfoViewModel
@@ -25,6 +27,10 @@ class FoodActivity : AppCompatActivity() {
     private lateinit var myInfoViewModel: MyInfoViewModel
     private val viewModel: FoodViewModel by viewModels()
     private val imageProcessor: ImageProcessor = ImageProcessor(this) // 구 Camera 객체
+
+    // 액세스 토큰 저장소 세팅
+    private val tokenManager = TokenManager(this)
+    val authRepository = AuthRepositoryImpl(tokenManager)
 
     // 카메라 권한 요청 결과 처리 - Activity Result API 활용 (간결성, 타입 안전성, 수명 주기 관리 장점)
     private val requestPermissionLauncher =

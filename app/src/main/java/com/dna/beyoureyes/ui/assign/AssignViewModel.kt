@@ -17,10 +17,10 @@ import com.dna.beyoureyes.data.model.Allergen.Companion.toMap
 import com.dna.beyoureyes.data.model.Disease.Companion.toMap
 import com.dna.beyoureyes.data.repository.AuthRepositoryImpl
 import com.dna.beyoureyes.di.SpringClient
-import kotlinx.coroutines.Dispatchers
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.tasks.await
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import kotlin.coroutines.resume
@@ -134,7 +134,7 @@ class AssignViewModel : ViewModel() {
     }
 
     // 기존 유저 정보 수정사항 업데이트
-    suspend fun updateProfile(): ApiStatus = suspendCancellableCoroutine { continuation ->
+    suspend fun updateProfile(authRepository: AuthRepositoryImpl): ApiStatus = suspendCancellableCoroutine { continuation ->
         try {
             // 사용자 싱글톤 객체 업데이트
             AppUser.info?.name = _name
@@ -171,8 +171,11 @@ class AssignViewModel : ViewModel() {
         }
     }
 
-    suspend fun updateAllergens(): ApiStatus = suspendCancellableCoroutine { continuation ->
+    suspend fun updateAllergens(authRepository: AuthRepositoryImpl): ApiStatus = suspendCancellableCoroutine { continuation ->
         viewModelScope.launch {
+            // 액세스 토큰 인증을 위해 AuthInterceptor 설정
+            SpringClient.initAuthClient(AuthInterceptor(authRepository))
+
             // 사용자 싱글톤 객체 업데이트
             _allergenSet?.let { allergenSet ->
                 AppUser.info?.allergens = allergenSet.ifEmpty { null }
@@ -193,8 +196,11 @@ class AssignViewModel : ViewModel() {
         }
     }
 
-    suspend fun updateDisease(): ApiStatus = suspendCancellableCoroutine { continuation ->
+    suspend fun updateDisease(authRepository: AuthRepositoryImpl): ApiStatus = suspendCancellableCoroutine { continuation ->
         viewModelScope.launch {
+            // 액세스 토큰 인증을 위해 AuthInterceptor 설정
+            SpringClient.initAuthClient(AuthInterceptor(authRepository))
+
             // 사용자 싱글톤 객체 업데이트
             _diseaseSet?.let { diseaseSet ->
                 AppUser.info?.disease = diseaseSet.ifEmpty { null }
