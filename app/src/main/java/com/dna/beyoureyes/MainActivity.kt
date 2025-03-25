@@ -37,8 +37,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("SPRING_API_DEBUG", "check4")
+        val app = applicationContext as App
+        myInfoViewModel =
+            ViewModelProvider(
+                app,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(app)
+            )[MyInfoViewModel::class.java]
 
-        myInfoViewModel = ViewModelProvider(applicationContext as App)[MyInfoViewModel::class.java]
 
         Log.d("SPRING_API_DEBUG", "check5")
         // 레이아웃 바인딩

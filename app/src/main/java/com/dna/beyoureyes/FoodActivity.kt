@@ -43,7 +43,12 @@ class FoodActivity : AppCompatActivity() {
         // 레이아웃 바인딩
         binding = ActivityFoodBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        myInfoViewModel = ViewModelProvider(this.applicationContext as App)[MyInfoViewModel::class.java]
+        val app = applicationContext as App
+        myInfoViewModel =
+            ViewModelProvider(
+                app,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(app)
+            )[MyInfoViewModel::class.java]
         navController = findNavController(R.id.nav_host_fragment_activity_food)
 
     }
