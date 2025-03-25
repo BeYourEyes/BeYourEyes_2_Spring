@@ -60,10 +60,12 @@ class MyInfoFragment : Fragment() {
                     Log.d("ASSIGN_SUCCESS", "프로필이 업데이트되었습니다!")
                 }
                 AssignMode.DISEASE -> {
+                    // 질환 UI 업데이트
                     updateDiseaseUI(AppUser.info?.disease)
                     Log.d("ASSIGN_SUCCESS", "질환 정보가 업데이트되었습니다!")
                 }
                 AssignMode.ALLERGY -> {
+                    // 알레르기 UI 업데이트
                     updateAllergenUI(AppUser.info?.allergens)
                     Log.d("ASSIGN_SUCCESS", "알레르기 정보가 업데이트되었습니다!")
                 }
@@ -91,6 +93,12 @@ class MyInfoFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = foodHistoryAdapter
         }
+        // 프로필 UI 업데이트
+        updateProfileUI(AppUser.info?.name)
+        // 질환 UI 업데이트
+        updateDiseaseUI(AppUser.info?.disease)
+        // 알레르기 UI 업데이트
+        updateAllergenUI(AppUser.info?.allergens)
 
         // 프로필 이미지 UI 설정
         Glide.with(this)
@@ -239,6 +247,7 @@ class MyInfoFragment : Fragment() {
 
     private fun updateDiseaseUI(disease: Set<Disease>?) {
         // UI 업데이트
+        binding.diseaseChipGroup.removeAllViews()
         disease?.forEach { // 질환 칩 설정
             // 칩 스타일 및 표시 관련 설정
             val diseaseChip = IconChip(requireContext()) // 커스텀 아이콘 칩
@@ -255,6 +264,7 @@ class MyInfoFragment : Fragment() {
 
     private fun updateAllergenUI(allergens: Set<Allergen>?) {
         // UI 업데이트
+        binding.allergyChipGroup.removeAllViews()
         allergens?.forEach { alg -> // 알레르기 칩 설정
             // 칩 텍스트 및 사용자 조작 관련 설정
             val chip = Chip(context)

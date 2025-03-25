@@ -2,7 +2,6 @@ package com.dna.beyoureyes.ui.myInfo
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -11,8 +10,8 @@ import com.dna.beyoureyes.R
 import com.dna.beyoureyes.databinding.FoodHistoryItemBinding
 import com.dna.beyoureyes.data.model.FoodHistory
 import org.threeten.bp.LocalDateTime
-import java.text.SimpleDateFormat
-import java.util.Locale
+import org.threeten.bp.format.DateTimeFormatter
+
 
 class FoodHistoryView(context: Context, attrs: AttributeSet?) :
     FrameLayout(context, attrs) {
@@ -71,7 +70,7 @@ class FoodHistoryView(context: Context, attrs: AttributeSet?) :
     }
 
     private fun getTimeText(timestamp: LocalDateTime) : String { // 오전 HH시 mm분 형식의 텍스트 만들기
-        val timeFormat = SimpleDateFormat("a H시 m분", Locale.KOREA) // 시간 형식
+        val timeFormat = DateTimeFormatter.ofPattern("a H시 m분") // 시간 형식
         return timeFormat.format(timestamp)
     }
 }

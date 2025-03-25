@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.dna.beyoureyes.MainActivity
 import com.dna.beyoureyes.ui.foodDetail.ResultKcalFragment
@@ -13,8 +12,7 @@ import com.dna.beyoureyes.ui.foodDetail.ResultNutriBarFragment
 import com.dna.beyoureyes.databinding.FragmentMyPastDetailBinding
 import com.dna.beyoureyes.data.model.NutritionWrapper
 import com.dna.beyoureyes.ui.common.CustomToolbar
-import java.text.SimpleDateFormat
-import java.util.Locale
+import org.threeten.bp.format.DateTimeFormatter
 
 
 class MyPastDetailFragment : Fragment() {
@@ -49,8 +47,8 @@ class MyPastDetailFragment : Fragment() {
                 .into(binding.imageView)
 
             // 기록 날짜
-            val dateFormat = SimpleDateFormat("yyyy.MM.dd (E)", Locale.KOREA) // 날짜 형식
-            val timeFormat = SimpleDateFormat("HH:mm a", Locale.US) // 시간 형식
+            val dateFormat = DateTimeFormatter.ofPattern("yyyy.MM.dd (E)") // 날짜 형식
+            val timeFormat = DateTimeFormatter.ofPattern("HH:mm a") // 시간 형식
             binding.dateTextView.text = dateFormat.format(history.timestamp)
             binding.timeTextView.text = timeFormat.format(history.timestamp)
 
