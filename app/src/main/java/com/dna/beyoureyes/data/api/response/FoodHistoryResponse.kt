@@ -7,10 +7,10 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
 data class FoodHistoryResponse(
-    @SerializedName("logId") val id: Int,
-    @SerializedName("dateTime") val dateTime: String,
-    @SerializedName("foodPhoto") val imgUrl: String,
-    @SerializedName("nutritionInfo") val nutritionInfo: NutritionInfo
+    @SerializedName("log_id") val id: Int,
+    @SerializedName("datetime") val datetime: String,
+    @SerializedName("food_photo") val imgUrl: String,
+    @SerializedName("nutrition_info") val nutritionInfo: NutritionInfo
 ) {
     // FoodHistoryResponse(API 응답 형식) -> FoodHistory(앱 내 데이터 형식)로 변환하는 메소드 정의
     companion object {
@@ -18,12 +18,12 @@ data class FoodHistoryResponse(
             return FoodHistory(
                 timestamp = try {
                     LocalDateTime.parse(
-                        this.dateTime,
+                        this.datetime,
                         DateTimeFormatter.ISO_LOCAL_DATE_TIME
                     )
                 } catch (e: Exception) {
                     throw IllegalArgumentException("Failed to convert FoodHistoryResponse:" +
-                            " can't parse ${this.dateTime} to LocalDateTime")
+                            " can't parse ${this.datetime} to LocalDateTime")
                 },
                 kcal = this.nutritionInfo.kcal,
                 nutritions = this.nutritionInfo.nutritionList,

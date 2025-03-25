@@ -159,11 +159,11 @@ class ResultEatFragment : Fragment() {
                                         ?: throw IllegalArgumentException("Received Null Food Image Response"),
                                     timestamp = try {
                                         LocalDateTime.parse(
-                                            foodImgResponse.dateTime,
+                                            foodImgResponse.datetime,
                                             DateTimeFormatter.ISO_LOCAL_DATE_TIME
                                         )
                                     } catch (e: Exception) {
-                                        throw IllegalArgumentException("Can't parse ${foodImgResponse.dateTime} to LocalDateTime")
+                                        throw IllegalArgumentException("Can't parse ${foodImgResponse.datetime} to LocalDateTime")
                                     },
                                     foodData.kcal!!,
                                     foodData.nutritions!!)

@@ -3,7 +3,7 @@ package com.dna.beyoureyes.data.api.response
 import com.google.gson.annotations.SerializedName
 
 data class UserInfoResponse(
-    @SerializedName("userInfo") val profile: BasicProfile,
+    @SerializedName("user_info") val profile: BasicProfile,
     val allergy: Map<String, Boolean>,
     val disease: Map<String, Boolean>
 ) {

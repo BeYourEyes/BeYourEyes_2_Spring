@@ -231,14 +231,14 @@ class AssignViewModel : ViewModel() {
             )
             // 신규 가입 요청 객체 만들기
             val joinRequest = JoinRequest(
-                device_id = AppUser.id
+                deviceId = AppUser.id
                     ?: throw IllegalArgumentException("Failed to create JoinRequest: AppUser ID is NULL"),
-                user_birth = try { _birth!!.format(birthDateFormatter) } catch (e: Exception) {
+                userBirth = try { _birth!!.format(birthDateFormatter) } catch (e: Exception) {
                     throw IllegalArgumentException("Failed to create JoinRequest: can't convert LocalDate(${_birth}) to String")
                 },
-                user_gender = _gender
+                userGender = _gender
                     ?: throw IllegalArgumentException("Failed to create JoinRequest: GENDER value is NULL"),
-                user_nickname = _name
+                userNickname = _name
                     ?: throw IllegalArgumentException("Failed to create JoinRequest: NAME value is NULL"),
                 allergy = allergenSet?.toMap() ?: emptyMap(),
                 disease = diseaseSet?.toMap() ?: emptyMap()

@@ -36,9 +36,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("SPRING_API_DEBUG", "check4")
 
-        myInfoViewModel = ViewModelProvider(this.applicationContext as App)[MyInfoViewModel::class.java]
+        myInfoViewModel = ViewModelProvider(applicationContext as App)[MyInfoViewModel::class.java]
 
+        Log.d("SPRING_API_DEBUG", "check5")
         // 레이아웃 바인딩
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -67,8 +69,9 @@ class MainActivity : AppCompatActivity() {
         // Spring 서버에서 데이터 불러와 홈 화면에 반영
         lifecycleScope.launch {
             loadUserDataWithExceptionHandling()
-            navController.navigate(R.id.navigation_home) // 프래그먼트 화면 갱신
         }
+
+        navController.navigate(R.id.navigation_home) // 프래그먼트 화면 갱신
     }
 
     override fun onRestart() {

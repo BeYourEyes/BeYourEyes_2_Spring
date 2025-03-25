@@ -1,10 +1,12 @@
 package com.dna.beyoureyes.data.api.request
 
+import com.google.gson.annotations.SerializedName
+
 data class JoinRequest(
-    val device_id: String,
-    val user_birth: String,
-    val user_gender: Int,
-    val user_nickname: String,
+    @SerializedName("device_id") val deviceId: String,
+    @SerializedName("user_birth") val userBirth: String,
+    @SerializedName("user_gender") val userGender: Int,
+    @SerializedName("user_nickname") val userNickname: String,
     val allergy: Map<String, Boolean>,
     val disease: Map<String, Boolean>
 )

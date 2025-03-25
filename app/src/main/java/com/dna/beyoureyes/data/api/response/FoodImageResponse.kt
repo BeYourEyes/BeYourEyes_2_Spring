@@ -1,6 +1,8 @@
 package com.dna.beyoureyes.data.api.response
 
+import com.google.gson.annotations.SerializedName
+
 data class FoodImageResponse(
-    val imgUrl: String,
-    val dateTime: String
+    @SerializedName("img_url") val imgUrl: String,
+    val datetime: String
 )
