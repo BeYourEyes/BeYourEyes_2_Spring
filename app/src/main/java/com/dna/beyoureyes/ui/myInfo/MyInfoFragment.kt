@@ -175,9 +175,9 @@ class MyInfoFragment : Fragment() {
             val userName = AppUser.info?.name ?: "사용자"
             CustomDialog(
                 msg = "정말로 탈퇴하시겠습니까?\n${userName}님의 정보와 기록이\n영구적으로 삭제될 거에요.",
-                buttonText = "취소하기",
-                secondaryButtonText = "그래도 탈퇴하기",
-                secondaryButtonCallback = { signOutWithExceptionHandling() } // 예외 처리가 포함된 탈퇴 로직
+                buttonText = "그래도 탈퇴하기",
+                buttonCallback = { signOutWithExceptionHandling() }, // 예외 처리가 포함된 탈퇴 로직
+                secondaryButtonText = "취소하기"
             ).show(childFragmentManager, "Dialog")
         }
 
