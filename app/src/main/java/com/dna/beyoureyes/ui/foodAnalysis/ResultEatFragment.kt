@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dna.beyoureyes.FoodActivity
+import com.dna.beyoureyes.MainActivity
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.data.api.SpringApiResponseHandler
 import com.dna.beyoureyes.data.api.interceptor.AuthInterceptor
@@ -43,7 +44,9 @@ class ResultEatFragment : Fragment() {
     private var _binding: FragmentResultEatBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
-    private val myInfoViewModel: MyInfoViewModel by activityViewModels()
+    private val myInfoViewModel: MyInfoViewModel by lazy {
+        (requireActivity() as FoodActivity).myInfoViewModel
+    }
     private var scale = 0f
 
     override fun onCreateView(

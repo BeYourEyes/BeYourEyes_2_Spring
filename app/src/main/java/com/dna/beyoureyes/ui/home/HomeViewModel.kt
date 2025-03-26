@@ -46,6 +46,18 @@ class HomeViewModel: ViewModel() {
         evaluateKcalIntake(kcal, userEnergyRequirement)
     }
 
+    fun updateUserIntakeData(kcal: Int, nutritions: List<Nutrition>) {
+        _totalKcal.value = kcal
+        _nutriIntakeItems.value = nutritions.toMutableList()
+
+        // 목표 칼로리 설정
+        val userEnergyRequirement = AppUser.info?.getDailyEnergyRequirement() ?: 2000
+        _energyRequirement.value = userEnergyRequirement
+
+        // 칼로리 섭취 평가 로직 적용
+        evaluateKcalIntake(kcal, userEnergyRequirement)
+    }
+
     // 칼로리 섭취 평가 및 메시지 설정
     private fun evaluateKcalIntake(totalKcal: Int, energyRequirement: Int) {
         if (totalKcal < energyRequirement) {

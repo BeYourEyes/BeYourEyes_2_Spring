@@ -15,6 +15,18 @@ data class FoodHistory(
     companion object {
         // FoodHistory 리스트에서 Nutrition 타입별 합산 값 반환 함수
         fun List<FoodHistory>.sumNutritions(): List<Nutrition> {
+            if (this.isEmpty()) {
+                return listOf(
+                    Carbs(0),
+                    Sugar(0),
+                    Protein(0),
+                    Fat(0),
+                    SaturatedFat(0),
+                    Cholesterol(0),
+                    Natrium(0)
+                )
+            }
+
             return this.flatMap { it.nutritions } // 모든 nutritions 리스트를 하나로 펼침
                 .groupBy { it::class } // Nutrition 타입별로 그룹화
                 .mapNotNull { (type, group) ->

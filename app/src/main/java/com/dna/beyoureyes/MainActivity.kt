@@ -71,22 +71,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // 섭취 기록 변화를 감지해 HomeViewModel 데이터 업데이트 (총 섭취량 업데이트)
+        myInfoViewModel.foodHistoryItems.observe(this){ foodHistories ->
+            val kcal = foodHistories.sumOf { it.kcal }
+            val nutritions = foodHistories.sumNutritions()
+            homeViewModel.updateUserIntakeData(kcal, nutritions)
+        }
+
         // Spring 서버에서 데이터 불러와 홈 화면에 반영
         lifecycleScope.launch {
             loadUserDataWithExceptionHandling()
         }
 
         navController.navigate(R.id.navigation_home) // 프래그먼트 화면 갱신
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        // 다시 시작할 때(FoodActivity 종료 후) HomeViewModel 데이터 업데이트 (총 섭취량 업데이트)
-        myInfoViewModel.foodHistoryItems.value?.let{ foodHistories ->
-            val kcal = foodHistories.sumOf { it.kcal }
-            val nutritions = foodHistories.sumNutritions()
-            homeViewModel.setUserIntakeData(kcal, nutritions)
-        }
     }
 
     private suspend fun loadUserDataWithExceptionHandling() {

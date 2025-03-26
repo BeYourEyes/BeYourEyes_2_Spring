@@ -24,7 +24,7 @@ class FoodActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFoodBinding
     private lateinit var navController: NavController
 
-    private lateinit var myInfoViewModel: MyInfoViewModel
+    lateinit var myInfoViewModel: MyInfoViewModel
     private val viewModel: FoodViewModel by viewModels()
     private val imageProcessor: ImageProcessor = ImageProcessor(this) // 구 Camera 객체
 
