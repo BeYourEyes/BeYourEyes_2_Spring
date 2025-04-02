@@ -4,6 +4,7 @@
     android:focusable="false"
     android:layout_height="169dp"
     android:layout_width="136dp"
+    android:layout_marginEnd="16dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="0dp"
     android:background="@drawable/shape_background_g300_10_dash"
