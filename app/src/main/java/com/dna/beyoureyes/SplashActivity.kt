@@ -50,15 +50,21 @@ class SplashActivity : AppCompatActivity() {
                 ApiStatus.SUCCESS -> { // 기존 사용자 (로그인 성공)
                     // 메인 화면으로 이동
                     delay(4000) // 4초 지연
-                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-                    finish()
+                    startActivity(
+                        Intent(this@SplashActivity, MainActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
+                    )
                 }
 
                 ApiStatus.NO_DATA -> { // 신규 사용자 (FID와 일치하는 유저 없음)
                     // 온보딩 화면으로 이동
                     delay(4000) // 4초 지연
-                    startActivity(Intent(this@SplashActivity, OnboardingActivity::class.java))
-                    finish()
+                    startActivity(
+                        Intent(this@SplashActivity, OnboardingActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
+                    )
                 }
 
                 ApiStatus.SERVER_ERROR -> { // 서버 응답 에러
