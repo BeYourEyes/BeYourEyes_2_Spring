@@ -166,7 +166,6 @@ class AssignActivity : AppCompatActivity() {
                     }
                 } else -> { }
             }
-            finish()
         }
     }
 
@@ -183,10 +182,10 @@ class AssignActivity : AppCompatActivity() {
             } ApiStatus.NETWORK_ERROR -> { // 기타 오류(아마 네트워크 오류)
             CustomDialog("네트워크 연결에 실패했습니다.\n설정을 다시 확인한 후\n다시 시도해주세요.")
                 .show(supportFragmentManager, "Dialog")
-        } ApiStatus.UNKNOWN -> { // 알 수 없는 오류(null response body?)
-            CustomDialog("알 수 없는 오류가 발생했습니다.\n다시 시도해 봐도 오류가 반복되면\n앱을 다시 시작해 주세요.")
-                .show(supportFragmentManager, "Dialog")
-        } else -> {} // 존재 X
+            } ApiStatus.UNKNOWN -> { // 알 수 없는 오류(null response body?)
+                CustomDialog("알 수 없는 오류가 발생했습니다.\n다시 시도해 봐도 오류가 반복되면\n앱을 다시 시작해 주세요.")
+                    .show(supportFragmentManager, "Dialog")
+            } else -> {} // 존재 X
         }
     }
 
