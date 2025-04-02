@@ -15,6 +15,7 @@ class CustomDialog(
     private val buttonText: String? = null,
     private val secondaryButtonCallback: (() -> Unit)? = null,
     private val secondaryButtonText: String? = null,
+    private val isLoadingDialog: Boolean = false
 ): DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -25,34 +26,42 @@ class CustomDialog(
 
         // 다이얼로그 뷰 설정
         builder.setView(dialogBinding.root)
+        setCancelable(false)  // 백버튼 dismiss 방지
 
         // 표시 텍스트(메세지) 설정
         dialogBinding.resultEatDialog.text = msg
 
-        // 다이얼로그 내부 버튼(기본) 텍스트 설정
-        buttonText?.let { dialogBinding.button.text = it }
-
-        // 다이얼로그 내부 버튼(기본) 리스너 설정
-        dialogBinding.button.setOnClickListener {
-            dismiss() // 다이얼로그 닫기
-            buttonCallback?.invoke()
-
-        }
-
-        // 두번째 버튼(하단) 활성화(기본은 숨김 처리)
-        if (secondaryButtonCallback== null && secondaryButtonText == null) {
+        if (isLoadingDialog) {
+            // 로딩용 다이얼로그면 모든 버튼 숨김 처리
+            dialogBinding.button.visibility = View.GONE
             dialogBinding.secondaryButton.visibility = View.GONE
+
         } else {
-            dialogBinding.secondaryButton.visibility = View.VISIBLE
-        }
 
-        // 두번째 버튼(하단) 텍스트 설정
-        secondaryButtonText?.let { dialogBinding.secondaryButton.text = it }
+            // 다이얼로그 내부 버튼(기본) 텍스트 설정
+            buttonText?.let { dialogBinding.button.text = it }
 
-        // 두번째 버튼(하단) 리스너 설정
-        dialogBinding.secondaryButton.setOnClickListener {
-            dismiss()
-            secondaryButtonCallback?.invoke()
+            // 다이얼로그 내부 버튼(기본) 리스너 설정
+            dialogBinding.button.setOnClickListener {
+                dismiss() // 다이얼로그 닫기
+                buttonCallback?.invoke()
+            }
+
+            // 두번째 버튼(하단) 활성화(기본은 숨김 처리)
+            if (secondaryButtonCallback== null && secondaryButtonText == null) {
+                dialogBinding.secondaryButton.visibility = View.GONE
+            } else {
+                dialogBinding.secondaryButton.visibility = View.VISIBLE
+            }
+
+            // 두번째 버튼(하단) 텍스트 설정
+            secondaryButtonText?.let { dialogBinding.secondaryButton.text = it }
+
+            // 두번째 버튼(하단) 리스너 설정
+            dialogBinding.secondaryButton.setOnClickListener {
+                dismiss()
+                secondaryButtonCallback?.invoke()
+            }
         }
 
         return builder.create()

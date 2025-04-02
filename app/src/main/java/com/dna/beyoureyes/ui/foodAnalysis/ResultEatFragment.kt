@@ -14,7 +14,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.dna.beyoureyes.FoodActivity
-import com.dna.beyoureyes.MainActivity
 import com.dna.beyoureyes.R
 import com.dna.beyoureyes.data.api.SpringApiResponseHandler
 import com.dna.beyoureyes.data.api.interceptor.AuthInterceptor
@@ -91,11 +90,19 @@ class ResultEatFragment : Fragment() {
             binding.ImageCaptured.setImageURI(uri)
         }
 
+        binding.resultButtonEat.isEnabled = true
+        binding.resultButtonEat.isActivated = true
         binding.resultButtonEat.setOnClickListener {
             if (scale == 0f) {
                 Toast.makeText(requireContext(), "섭취하신 양을 선택해주세요!", Toast.LENGTH_SHORT).show()
             }
             else {
+                binding.resultButtonEat.isEnabled = false
+                val loadingDialog = CustomDialog(
+                    msg="섭취량을 저장 중입니다.\n잠시만 기다려 주세요.",
+                    isLoadingDialog = true
+                )
+                loadingDialog.show(childFragmentManager, "Dialog")
                 // 식품 기록 데이터 중 사진 데이터 전송
                 val capturedImgUri: Uri = viewModel.getCapturedImageUri()!!
                 val foodData: Food = viewModel.getFoodData()!!
@@ -104,13 +111,13 @@ class ResultEatFragment : Fragment() {
 
                 lifecycleScope.launch {
                     val status = recordFoodDataToServer(foodData, resizedImage)
+                    loadingDialog.dismiss()
                     when(status){
                         ApiStatus.SUCCESS -> {
                             CustomDialog(
                                 msg = "섭취량 입력이 완료되었습니다.",
                                 buttonCallback = { requireActivity().finish() }
                             ).show(childFragmentManager, "Dialog")
-
                         } ApiStatus.NETWORK_ERROR, ApiStatus.SERVER_ERROR -> {
 
                             CustomDialog("서버와의 연결에 실패했습니다.\n" +
@@ -127,6 +134,7 @@ class ResultEatFragment : Fragment() {
 
                         } else -> { }
                     }
+                    binding.resultButtonEat.isEnabled = true
                 }
             }
         }
