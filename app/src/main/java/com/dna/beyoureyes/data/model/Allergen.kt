@@ -9,8 +9,8 @@ enum class Allergen(val displayName: String, val ocrKeywords: List<String>) {
     SOYBEAN("대두", listOf("대두")),
     PEANUT("땅콩", listOf("땅콩")),
     WALNUT("호두", listOf("호두")),
-    PINE_NUT("잣", listOf("잣")),
-    SULFUR_DIOXIDE("아황산류", listOf("아황산류")),
+    PINENUT("잣", listOf("잣")),
+    SULFURDIOXIDE("아황산류", listOf("아황산류")),
     PEACH("복숭아", listOf("복숭아")),
     TOMATO("토마토", listOf("토마토")),
     EGG("난류", listOf("난류", "계란")), // 가금류 한함
