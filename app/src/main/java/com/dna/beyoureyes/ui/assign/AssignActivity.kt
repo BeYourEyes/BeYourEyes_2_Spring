@@ -115,7 +115,9 @@ class AssignActivity : AppCompatActivity() {
             when (editMode) {
                 AssignMode.REGISTER -> { // 정보 최초 등록 시
                     try {
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this, MainActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
                         lifecycleScope.launch { // 가입 시도 후 결과 상태 받기
                             val status = viewModel.registerUserInfo(authRepository)
                             exceptionHandlingAfterApiCall(

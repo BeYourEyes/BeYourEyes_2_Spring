@@ -1,6 +1,7 @@
 package com.dna.beyoureyes.ui.onboarding
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
@@ -18,11 +19,20 @@ class OnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+
         // 레이아웃 바인딩
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val viewPager = binding.registerViewpager
         val dotsIndicator = binding.dotsIndicator
+
+        // 개인정보처리방침 확인하기
+        binding.privacyPolicy.setOnClickListener{
+            val policyLink = "https://polar-wolf-52e.notion.site/3ff38ff000ef47b99fa8d4e890a6b4a7?pvs=74"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(policyLink))
+            startActivity(intent)
+        }
 
         // 어댑터 설정
         val adapter = RegisterPagerAdapter(supportFragmentManager)
@@ -37,15 +47,6 @@ class OnboardingActivity : AppCompatActivity() {
                 val totalPages = adapter.count
                 val pageInfo = "총 $totalPages 페이지 중 $pageNumber 페이지. "
                 viewPager.announceForAccessibility(pageInfo) // 페이지 내용 읽기전 페이지 위치 알림
-
-                /*
-                val pageDescription = when(position) {
-                    0 -> "나만을 위한 더 쉬운 식품 정보\n"+"당신의 안식은 시력이 좋지 않은 노인 및 식품 알레르기가 있는 사용자를 위한 어플입니다"
-                    1 -> "카메라로 읽어주는 식품 정보 음성 인식 기능\n" + "카메라로 촬영한 식품 정보의 작은 글씨를 터치하면, 인공지능이 해당 정보를 음성으로 읽어줍니다."
-                    2 -> "건강한 식사 습관 촉진과 식품 섭취 관련 문제 최소화\n" + "건강한 식사 습관을 촉진하고 식품 섭취와 관련된 문제를 최소화하는 것을 목표로 합니다."
-                    else -> ""
-                }
-                 */
 
                 val dotsContainer = dotsIndicator.getChildAt(0) as? ViewGroup
                 dotsContainer?.let {
@@ -73,7 +74,6 @@ class OnboardingActivity : AppCompatActivity() {
             val intent = Intent(this, AssignActivity::class.java)
             intent.putExtra("EDIT_MODE", AssignMode.REGISTER)
             startActivity(intent)
-            finish()
         }
     }
 

@@ -1,6 +1,7 @@
 <resources>
     <!-- onboarding Activity -->
     <string name="onboarding_title">앱 소개</string>
+    <string name="onboarding_privacy_policy">이 서비스의 <u>개인정보처리방침</u> 확인하기</string>
 
     <!-- Main Activity -->
     <string name="main_title">홈 화면</string>
