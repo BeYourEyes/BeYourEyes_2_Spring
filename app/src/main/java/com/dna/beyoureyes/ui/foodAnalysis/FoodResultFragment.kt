@@ -28,7 +28,7 @@ class FoodResultFragment: Fragment() {
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
     private val resultFragments = mutableListOf<Fragment>()
-    private val ttsManager by lazy { TTSManager.getInstance(requireContext()) } // 싱글톤
+    lateinit var ttsManager: TTSManager // 싱글톤
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -110,6 +110,13 @@ class FoodResultFragment: Fragment() {
             Log.d("Result", "알레르기 인식 실패")
         }
 
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        ttsManager = TTSManager.getInstance(requireContext())
+
         // TTS 재생 상태 변경 리스너 설정 - UI 업뎃을 위한 콜백 정의
         binding.resultButtonVoice // 버튼 초기화
         ttsManager.setTTSStateListener(object: TTSManager.TTSStateListener {
@@ -159,12 +166,11 @@ class FoodResultFragment: Fragment() {
             }
         }
 
-
-        return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        ttsManager.stop()
         _binding = null
     }
 

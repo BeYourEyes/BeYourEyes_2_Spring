@@ -82,7 +82,7 @@ class UserInfo(
     }
 
     fun findMatchingAllergy(foodAllergens: Set<Allergen>) : Set<Allergen>? {
-        return allergens?.intersect(foodAllergens)
+        return allergens?.intersect(foodAllergens)?.ifEmpty { null }
     }
 
 }

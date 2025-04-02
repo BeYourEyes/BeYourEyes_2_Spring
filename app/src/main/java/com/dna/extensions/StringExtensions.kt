@@ -7,5 +7,6 @@ fun String.hasBatchim(): Boolean {
 }
 
 fun String.addSubjectMarker(): String {
-    return if(this.hasBatchim()) "${this}이" else "${this}가"
+    if (this.isBlank()) return this // 빈 문자열이면 마커 추가 안함
+    return if (this.hasBatchim()) "${this}이" else "${this}가"
 }
