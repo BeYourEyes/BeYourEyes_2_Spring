@@ -199,6 +199,7 @@ class MyInfoFragment : Fragment() {
             val status = signOut()
             when(status) {
                 ApiStatus.SUCCESS -> { // 탈퇴 성공
+                    AppUser.signOut()
                     CustomDialog(
                         msg = "탈퇴 처리를 마쳤습니다.\n다음에 또 이용해주세요!",
                         buttonCallback = { requireActivity().finishAffinity() }

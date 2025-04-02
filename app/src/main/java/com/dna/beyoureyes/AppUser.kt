@@ -32,9 +32,10 @@ object AppUser {
         id = userId
     }
 
-    // 프로필 이미지 URI 설정도 UserInfo 내부에서만 관리
-    fun setProfileImgUri(uri: Uri) {
-        info?.setProfileImgUri(uri)
+    // 탈퇴 처리
+    fun signOut() {
+        id = null
+        info = null
     }
 
 }
