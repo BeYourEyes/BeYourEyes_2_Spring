@@ -1,5 +1,5 @@
 # 📱 당신의 안식 BeYourEyes 어플리케이션 - v2.0
-노인을 위한 영양정보 제공 앱 버전 2 어플리케이션 Android 입니다.
+노인을 위한 영양정보 제공 앱 버전 2 어플리케이션 Spring 연결 버전 Android 입니다.
 <br><br>
 ![그래픽 이미지(좌측 정렬)](https://github.com/user-attachments/assets/4d825943-db4f-4674-8d5a-4c9cb50b030f)
 ## 당신의 안식
@@ -22,7 +22,7 @@
 * 영양 정보 추출 로직 개선
   * OCR API + OPEN API를 통해 추출 정확도 개선   
 * CI
-* 서버 구축 (✔ 진행 중)
+* 서버 구축
   * firebase를 spring으로 전환 진행 중   
 
 ## 🎨 UI/UX Figma
