@@ -21,9 +21,9 @@
   * 정보 수정
 * 영양 정보 추출 로직 개선
   * OCR API + OPEN API를 통해 추출 정확도 개선   
-* CI
+* 온프레미스 기반 CI/CD
 * 서버 구축
-  * firebase를 spring으로 전환 진행 중   
+  * firebase를 spring으로 전환
 
 ## 🎨 UI/UX Figma
 
